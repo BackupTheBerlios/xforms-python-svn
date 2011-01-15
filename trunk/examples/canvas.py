@@ -121,8 +121,8 @@ class Flcanvas(object):
         xfl.fl_set_button(fdui.keyboard, 1)
         #canvasGC = XCreateGC( fl_get_display( ),fl_state[ fl_vmode ].trailblazer,
         #					  0, 0 );
-        #XSetForeground( fl_get_display( ), canvasGC, fl_get_flcolor( FL_BLACK ) );
-        #xfl.fl_set_foreground(xfl.fl_root, xfl.fl_get_flcolor(xfl.FL_BLACK))
+        #XSetForeground( fl_get_display( ), canvasGC, fl_get_pixel( FL_BLACK ) );
+        #xfl.fl_set_foreground(xfl.fl_root, xfl.fl_get_pixel(xfl.FL_BLACK))
 
 
     # callbacks

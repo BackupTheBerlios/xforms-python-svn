@@ -43,7 +43,7 @@ from xformslib import xfdata
 
 def fl_set_cursor(win, cursornum):
     """fl_set_cursor(win, cursornum)
-    
+
     Defines cursor for window to a specific cursor number.
 
     Parameters
@@ -59,14 +59,14 @@ def fl_set_cursor(win, cursornum):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_cursor = library.cfuncproto(
         library.load_so_libforms(), "fl_set_cursor",
         None, [xfdata.Window, cty.c_int],
         """void fl_set_cursor(Window win, int name)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_cursornum = library.convert_to_intc(cursornum)
     library.keep_elem_refs(win, cursornum, ul_win, i_cursornum)
@@ -75,7 +75,7 @@ def fl_set_cursor(win, cursornum):
 
 def fl_set_cursor_color(cursornum, fgcolr, bgcolr):
     """fl_set_cursor_color(cursornum, fgcolr, bgcolr)
-    
+
     Defines foreground and background colors of a cursor.
 
     Parameters
@@ -94,14 +94,14 @@ def fl_set_cursor_color(cursornum, fgcolr, bgcolr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_cursor_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_cursor_color",
         None, [cty.c_int, xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_cursor_color(int name, FL_COLOR fg, FL_COLOR bg)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
     #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
     i_cursornum = library.convert_to_intc(cursornum)
@@ -115,26 +115,26 @@ def fl_set_cursor_color(cursornum, fgcolr, bgcolr):
 def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
     """fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty)
     -> cursornum
-    
+
     Creates a bitmap cursor, using cursors other than those defined by
     the standard cursor font.
 
     Parameters
     ----------
-        source : str of ubytes?
+        source : str of ubytes
             bitmap to be used as cursor.
-        maskstr : str of ubytes?
+        maskstr : str of ubytes
             bitmap defining the shape of the cursor. The pixels set to 1
-            define which source pixels are displayed. If it is None all
+            define which source pixels are displayed. If it is empty ("") all
             bits in source are displayed.
         width : int
             width of cursor
         height : int
             height of cursor
         hotx : int
-            horizontal hotspot of the cursor (relative to the source's origin)
+            horizontal hotspot of the cursor (relative to the source origin)
         hoty : int
-            vertical hotspot of the cursor (relative to the source's origin)
+            vertical hotspot of the cursor (relative to the source origin)
 
     Returns
     -------
@@ -147,7 +147,7 @@ def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_create_bitmap_cursor = library.cfuncproto(
@@ -156,11 +156,11 @@ def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
         cty.c_int, cty.c_int],
         """int fl_create_bitmap_cursor(const char * source,
            const char * mask, int w, int h, int hotx, int hoty)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_source = library.convert_to_stringc(source)
-    if not maskstr:    # if it is None
+    if not maskstr:    # if it is empty
         s_maskstr = cty.cast(maskstr, cty.c_void_p)
-    else:       # *todo* to be verified
+    else:
         s_maskstr = library.convert_to_stringc(maskstr)
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_FL_Coord(height)
@@ -175,7 +175,7 @@ def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
 
 def fl_create_animated_cursor(curseries, timeout):
     """fl_create_animated_cursor(curseries, timeout) -> cursornum
-    
+
     Creates an animated series of cursors, that change after timeout
     is expired (several cursors are displayed one after another). Internally
     animated cursor works by utilizing the timeout callback, this means that
@@ -185,8 +185,8 @@ def fl_create_animated_cursor(curseries, timeout):
     Parameters
     ----------
         curseries : list of int
-            sequence of cursor names, either X standard cursors or cursor
-            names returned by fl_create_bitmap_cursor(), terminated by -1.
+            sequence of cursor ids, either X standard cursors or cursor
+            numbers returned by fl_create_bitmap_cursor(), terminated by -1.
         timeout : int
             time after which the cursor is changed, replacing by the next in
             sequence. An interval about 150 msec is a good value for typical
@@ -203,14 +203,14 @@ def fl_create_animated_cursor(curseries, timeout):
 
     Notes
     -----
-        Status: HalfTested + Doc + Demo = NOT OK (curnums data problematic)
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_create_animated_cursor = library.cfuncproto(
         library.load_so_libforms(), "fl_create_animated_cursor",
         cty.c_int, [cty.POINTER(cty.c_int), cty.c_int],
         """int fl_create_animated_cursor(int * cur_names, int timeout)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ptr_curseries = library.convert_to_ptr_intc(curseries)
     #print "pcurnums", pcurnums
     i_timeout = library.convert_to_intc(timeout)
@@ -219,14 +219,14 @@ def fl_create_animated_cursor(curseries, timeout):
     return retval
 
 
-def fl_get_cursor_byname(cursnum):
-    """fl_get_cursor_byname(cursnum) -> cursor
-    
+def fl_get_cursor_byname(cursornum):
+    """fl_get_cursor_byname(cursornum) -> cursor
+
     Finds out cursor corresponding to its number (cursor id).
 
     Parameters
     ----------
-        cursnum : int
+        cursornum : int
             cursor id
 
     Returns
@@ -240,17 +240,17 @@ def fl_get_cursor_byname(cursnum):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = OK
 
     """
     _fl_get_cursor_byname = library.cfuncproto(
         library.load_so_libforms(), "fl_get_cursor_byname",
         xfdata.Cursor, [cty.c_int],
         """Cursor fl_get_cursor_byname(int name)""")
-    library.check_if_initialized()
-    i_cursnum = library.convert_to_intc(cursnum)
-    library.keep_elem_refs(cursnum, i_cursnum)
-    retval = _fl_get_cursor_byname(i_cursnum)
+    library.check_if_flinitialized()
+    i_cursornum = library.convert_to_intc(cursornum)
+    library.keep_elem_refs(cursornum, i_cursornum)
+    retval = _fl_get_cursor_byname(i_cursornum)
     return retval
 
 
@@ -270,7 +270,7 @@ def fl_reset_cursor(win):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_set_cursor(win, xfdata.FL_DEFAULT_CURSOR)

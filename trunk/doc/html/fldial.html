@@ -34,10 +34,10 @@ Adds&nbsp;a&nbsp;dial&nbsp;flobject&nbsp;to&nbsp;the&nbsp;form.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dialtype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;dial&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_DIAL&nbsp;(A&nbsp;dial&nbsp;with&nbsp;a&nbsp;knob&nbsp;indicating&nbsp;the&nbsp;position),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LINE_DIAL&nbsp;(A&nbsp;dial&nbsp;with&nbsp;a&nbsp;line&nbsp;indicating&nbsp;the&nbsp;position),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FILL_DIAL&nbsp;(The&nbsp;area&nbsp;between&nbsp;initial&nbsp;and&nbsp;current&nbsp;is&nbsp;filled)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;dial&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_DIAL<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;dial&nbsp;with&nbsp;a&nbsp;knob&nbsp;indicating&nbsp;the&nbsp;position),&nbsp;FL_LINE_DIAL&nbsp;(A&nbsp;dial<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;a&nbsp;line&nbsp;indicating&nbsp;the&nbsp;position),&nbsp;FL_FILL_DIAL&nbsp;(The&nbsp;area<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;between&nbsp;initial&nbsp;and&nbsp;current&nbsp;is&nbsp;filled)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -60,10 +60,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_dial_bounds"><strong>fl_get_dial_bounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_dial_bounds">fl_get_dial_bounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbounds,&nbsp;maxbounds<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;values&nbsp;of&nbsp;a&nbsp;dial&nbsp;flobject.<br>
+Finds&nbsp;out&nbsp;the&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;dial&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -73,9 +73,9 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbounds&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;of&nbsp;dial<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;of&nbsp;dial<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbounds&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;of&nbsp;dial<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;of&nbsp;dial<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -88,7 +88,7 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_dial_value"><strong>fl_get_dial_value</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_dial_value">fl_get_dial_value</a>(ptr_flobject)&nbsp;-&gt;&nbsp;dialval<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;a&nbsp;dial&nbsp;flobject.<br>
@@ -109,7 +109,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_angles"><strong>fl_set_dial_angles</strong></a>(ptr_flobject, anglmin, anglmax)</dt><dd><tt><a href="#-fl_set_dial_angles">fl_set_dial_angles</a>(ptr_flobject,&nbsp;anglmin,&nbsp;anglmax)<br>
 &nbsp;<br>
 Limits&nbsp;the&nbsp;angular&nbsp;range&nbsp;a&nbsp;dial&nbsp;can&nbsp;take&nbsp;or&nbsp;choose&nbsp;an&nbsp;angle&nbsp;other<br>
@@ -132,19 +132,19 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_bounds"><strong>fl_set_dial_bounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_dial_bounds">fl_set_dial_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
-Defines&nbsp;the&nbsp;minimum&nbsp;and&nbsp;the&nbsp;maximum&nbsp;values&nbsp;of&nbsp;a&nbsp;dial&nbsp;flobject.<br>
+Defines&nbsp;the&nbsp;minimum&nbsp;and&nbsp;the&nbsp;maximum&nbsp;limit&nbsp;of&nbsp;values&nbsp;of&nbsp;a&nbsp;dial&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dial&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;of&nbsp;dial.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;of&nbsp;dial.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;0.0.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;of&nbsp;dial.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;1.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;of&nbsp;dial.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;1.0.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -152,11 +152,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_cross"><strong>fl_set_dial_cross</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_dial_cross">fl_set_dial_cross</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
-Allows&nbsp;crossing&nbsp;over&nbsp;of&nbsp;dial&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;crossing&nbsp;from<br>
-359.9&nbsp;to&nbsp;0&nbsp;or&nbsp;from&nbsp;0&nbsp;to&nbsp;359.9&nbsp;is&nbsp;not&nbsp;allowed.<br>
+Allows&nbsp;crossing&nbsp;over&nbsp;of&nbsp;dial&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;crossing&nbsp;from&nbsp;359.9<br>
+to&nbsp;0&nbsp;or&nbsp;from&nbsp;0&nbsp;to&nbsp;359.9&nbsp;is&nbsp;not&nbsp;allowed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -171,11 +171,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_crossover"><strong>fl_set_dial_crossover</strong></a> = fl_set_dial_cross(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_dial_cross">fl_set_dial_cross</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
-Allows&nbsp;crossing&nbsp;over&nbsp;of&nbsp;dial&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;crossing&nbsp;from<br>
-359.9&nbsp;to&nbsp;0&nbsp;or&nbsp;from&nbsp;0&nbsp;to&nbsp;359.9&nbsp;is&nbsp;not&nbsp;allowed.<br>
+Allows&nbsp;crossing&nbsp;over&nbsp;of&nbsp;dial&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;crossing&nbsp;from&nbsp;359.9<br>
+to&nbsp;0&nbsp;or&nbsp;from&nbsp;0&nbsp;to&nbsp;359.9&nbsp;is&nbsp;not&nbsp;allowed.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -190,7 +190,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_direction"><strong>fl_set_dial_direction</strong></a>(ptr_flobject, directn)</dt><dd><tt><a href="#-fl_set_dial_direction">fl_set_dial_direction</a>(ptr_flobject,&nbsp;directn)<br>
 &nbsp;<br>
 Changes&nbsp;what&nbsp;rotation&nbsp;modifies&nbsp;dial&nbsp;value.&nbsp;By&nbsp;default,&nbsp;clock-wise<br>
@@ -210,7 +210,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_step"><strong>fl_set_dial_step</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_dial_step">fl_set_dial_step</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;dial&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to&nbsp;a&nbsp;specified&nbsp;step&nbsp;or&nbsp;a<br>
@@ -229,7 +229,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_dial_value"><strong>fl_set_dial_value</strong></a>(ptr_flobject, dialval)</dt><dd><tt><a href="#-fl_set_dial_value">fl_set_dial_value</a>(ptr_flobject,&nbsp;dialval)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;dial&nbsp;flobject.&nbsp;By&nbsp;default&nbsp;the&nbsp;value&nbsp;is&nbsp;0.<br>
@@ -247,6 +247,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

@@ -44,23 +44,25 @@ from xformslib import xfdata
 def fl_add_box(boxtype, xpos, ypos, width, height, label):
     """fl_add_box(boxtype, xpos, ypos, width, height, label) -> ptr_flobject
 
-    Adds a box flobject.
+    Adds a ractangular box area flobject. It is simply used to give the
+    dialogue form a nicer appearance. It can be used to visually group other
+    objects together. The bottom of each form is a box.
 
     Parameters
     ----------
         boxtype : int
-            type of the box to be added. Values (from xfdata.py)
-            FL_NO_BOX (No box at all, it is transparent, just a label),
-            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
-            that goes down into the screen), FL_BORDER_BOX (A flat box with a
-            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
-            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
-            flat box without a border, normally invisible unless given a
+            type of the box to be added. Values (from xfdata.py) FL_NO_BOX (No
+            box at all, it is transparent, just a label), FL_UP_BOX (A box
+            that comes out of the screen), FL_DOWN_BOX (A box that goes down
+            into the screen), FL_BORDER_BOX (A flat box with a border),
+            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat box
+            with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
+            (A flat box without a border, normally invisible unless given a
             different color than the surroundings), FL_RFLAT_BOX (A rounded box
             without a border, normally invisible unless given a different color
             than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            shadow), FL_OVAL_BOX (A box shaped like an ellipse),
             FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
             FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
             FL_OVAL3D_UPBOX (An oval box coming out of the screen),
@@ -85,12 +87,12 @@ def fl_add_box(boxtype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> boxobj = fl_add_box(xfdata.FL_UP_BOX, 120, 150, 200, 250,
+        >>> pboxobj = fl_add_box(xfdata.FL_UP_BOX, 120, 150, 200, 250,
                 "MyBox")
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_box = library.cfuncproto(
@@ -99,7 +101,7 @@ def fl_add_box(boxtype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_box(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
     i_boxtype = library.convert_to_intc(boxtype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -118,26 +120,26 @@ def fl_add_box(boxtype, xpos, ypos, width, height, label):
 # forms.h (choice.h)
 #####################
 
-# fl_create_choice function placeholder (internal and deprecated)
-# fl_add_choice function placeholder (deprecated)
-# fl_clear_choice function placeholder (deprecated)
-# fl_addto_choice function placeholder (deprecated)
-# fl_replace_choice function placeholder (deprecated)
-# fl_delete_choice function placeholder (deprecated)
-# fl_set_choice function placeholder (deprecated)
-# fl_set_choice_text function placeholder (deprecated)
-# fl_get_choice function placeholder (deprecated)
-# fl_get_choice_item_text function placeholder (deprecated)
-# fl_get_choice_maxitems function placeholder (deprecated)
-# fl_get_choice_text function placeholder (deprecated)
-# fl_set_choice_fontsize function placeholder (deprecated)
-# fl_set_choice_fontstyle function placeholder (deprecated)
-# fl_set_choice_align function placeholder (deprecated)
-# fl_get_choice_item_mode function placeholder (deprecated)
-# fl_set_choice_item_mode function placeholder (deprecated)
-# fl_set_choice_item_shortcut function placeholder (deprecated)
-# fl_set_choice_item_entries function placeholder (deprecated)
-# fl_set_choice_notitle function placeholder (deprecated)
+# fl_create_choice() function placeholder (internal and deprecated)
+# fl_add_choice() function placeholder (deprecated)
+# fl_clear_choice() function placeholder (deprecated)
+# fl_addto_choice() function placeholder (deprecated)
+# fl_replace_choice() function placeholder (deprecated)
+# fl_delete_choice() function placeholder (deprecated)
+# fl_set_choice() function placeholder (deprecated)
+# fl_set_choice_text() function placeholder (deprecated)
+# fl_get_choice() function placeholder (deprecated)
+# fl_get_choice_item_text() function placeholder (deprecated)
+# fl_get_choice_maxitems() function placeholder (deprecated)
+# fl_get_choice_text() function placeholder (deprecated)
+# fl_set_choice_fontsize() function placeholder (deprecated)
+# fl_set_choice_fontstyle() function placeholder (deprecated)
+# fl_set_choice_align() function placeholder (deprecated)
+# fl_get_choice_item_mode() function placeholder (deprecated)
+# fl_set_choice_item_mode() function placeholder (deprecated)
+# fl_set_choice_item_shortcut() function placeholder (deprecated)
+# fl_set_choice_item_entries() function placeholder (deprecated)
+# fl_set_choice_notitle() function placeholder (deprecated)
 
 
 
@@ -182,7 +184,7 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, datablock, size, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_LOSE_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
@@ -194,7 +196,7 @@ def fl_stuff_clipboard(ptr_flobject, clipbdtype, datablock, size, \
         """int fl_stuff_clipboard(FL_OBJECT * ob, long int type,
            const char * data, long int size,
            FL_LOSE_SELECTION_CB lose_callback)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_clipbdtype = library.convert_to_longc(clipbdtype)
     ptr_vdata = cty.cast(datablock, cty.c_void_p)
@@ -243,7 +245,7 @@ def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_SELECTION_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FL_OBJECT),
@@ -254,7 +256,7 @@ def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
         xfdata.FL_SELECTION_CB],
         """int fl_request_clipboard(FL_OBJECT * ob, long int type,
            FL_SELECTION_CB got_it_callback)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_clipbdtype = library.convert_to_longc(clipbdtype)
     library.verify_function_type(pyfn_SelectionCb)
@@ -277,8 +279,7 @@ def fl_request_clipboard(ptr_flobject, clipbdtype, pyfn_SelectionCb):
 def flps_init():
     """flps_init() -> ptr_flpscontrol
 
-    Customizes the output by changing the PostScript output control
-    parameters.
+    Customizes the output by changing the PostScript output control parameters.
 
     Returns
     -------
@@ -291,14 +292,14 @@ def flps_init():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _flps_init = library.cfuncproto(
         library.load_so_libflimage(), "flps_init",
         cty.POINTER(xfdata.FLPS_CONTROL), [],
         """FLPS_CONTROL * flps_init()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _flps_init()
     return retval
 
@@ -307,45 +308,45 @@ def fl_object_ps_dump(ptr_flobject, fname):
     """fl_object_ps_dump(ptr_flobject, fname) -> result
 
     Finds out hardcopies of some flobjects in a what-you-see-is-what-you-get
-    (WYSIWYG) way, especially those that are dynamic and of vector-graphics
-    in nature. It outputs the specified flobject in PostScript. The flobject
-    must be visible at the time of the function call. The hardcopy should
-    mostly be WYSIWYG and centered on the printed page. The orientation is
-    determined such that a balanced margin results, i.e., if the width of
-    the flobject is larger than the height, landscape mode will be used.
-    Further, if the flobject is too big to fit on the printed page, a scale
-    factor will be applied so the flobject fits. The box underneath the
-    flobject is by default not drawn and in the default black&white mode,
-    all curves are drawn in black.
+    (WYSIWYG) way, especially those that are dynamic and of vector-graphics in
+    nature. It outputs the specified flobject in PostScript. The flobject must
+    be visible at the time of the function call. The hardcopy should mostly be
+    WYSIWYG and centered on the printed page. The orientation is determined
+    such that a balanced margin results, i.e., if the width of the flobject is
+    larger than the height, landscape mode will be used. Further, if the
+    flobject is too big to fit on the printed page, a scale factor will be
+    applied so the flobject fits. The box underneath the flobject is by
+    default not drawn and in the default black&white mode, all curves are
+    drawn in black.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             object. Only the xfdata.FL_XYPLOT flobject is supported.
         fname : str
-            name of output file. If it is empty (""), a fselector will
-            be shown to ask the user for a file name.
+            name of output file. If it is empty (""), a fselector will be shown
+            to ask the user for a file name.
 
     Returns
     -------
         result : int
-            0 on success, or -1 (on errors)
+            0 (on success), or -1 (on errors)
 
     Examples
     --------
-        >>> if fl_object_ps_dump(xyplobj, "myhardcopy.ps") < 0:
+        >>> if fl_object_ps_dump(pxyplobj, "myhardcopy.ps") < 0:
         >>> ... <something>
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_object_ps_dump = library.cfuncproto(
         library.load_so_libflimage(), "fl_object_ps_dump",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
@@ -364,19 +365,27 @@ def fl_add_frame(frametype, xpos, ypos, width, height, label):
     """fl_add_frame(frametype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a frame flobject.
+    Adds a frame flobject. It is simply used to give the dialogue form a nicer
+    appearance. It can be used to visually group other objects together.
+    Frames are almost the same as a box, except that the interior of the
+    bounding box is not filled. Use of frames can speed up drawing in certain
+    situations, e.g. to place a group of radio buttons within an
+    xfdata.FL_ENGRAVED_FRAME. If we were to use an xfdata.FL_FRAME_BOX to
+    group the buttons, visually they would look the same; however, the latter
+    is faster as we do not have to fill the interior of the bounding box and
+    can also reduce flicker. Frames are useful in decorating free objects and
+    canvases.
 
     Parameters
     ----------
         frametype : int
-            type of frame to be added. Values (from xfdata.py)
-            FL_NO_FRAME (Nothing is drawn), FL_UP_FRAME (A frame appears
-            coming out of the screen), FL_DOWN_FRAME (A frame that goes down
-            into the screen), FL_BORDER_FRAME (A frame with a simple outline),
-            FL_SHADOW_FRAME (A frame with a shadow), FL_ENGRAVED_FRAME (A
-            frame appears to be engraved), FL_ROUNDED_FRAME (A rounded frame),
-            FL_EMBOSSED_FRAME (A frame appears embossed), FL_OVAL_FRAME (An
-            elliptic box).
+            type of frame to be added. Values (from xfdata.py) FL_NO_FRAME
+            (Nothing is drawn), FL_UP_FRAME (A frame appears coming out of the
+            screen), FL_DOWN_FRAME (A frame that goes down into the screen),
+            FL_BORDER_FRAME (A frame with a simple outline), FL_SHADOW_FRAME
+            (A frame with a shadow), FL_ENGRAVED_FRAME (A frame appears to be
+            engraved), FL_ROUNDED_FRAME (A rounded frame), FL_EMBOSSED_FRAME
+            (A frame appears embossed), FL_OVAL_FRAME (An elliptic box).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -400,7 +409,7 @@ def fl_add_frame(frametype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_frame = library.cfuncproto(
@@ -409,7 +418,7 @@ def fl_add_frame(frametype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_frame(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(frametype, \
             xfdata.FRAMETYPE_list)
     i_frametype = library.convert_to_intc(frametype)
@@ -427,26 +436,27 @@ def fl_add_frame(frametype, xpos, ypos, width, height, label):
 
 # labeld frame
 
-# fl_create_labelframe function placeholder (internal)
+# fl_create_labelframe() function placeholder (internal)
 
 
 def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
     """fl_add_labelframe(frametype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a labelframe flobject.
+    Adds a labelframe flobject. It is almost the same as a frame except that
+    the label is placed on the frame instead of inside or outside of the
+    bounding box as in a regular frame.
 
     Parameters
     ----------
         frametype : int
-            type of labelframe to be added. Values (from xfdata.py)
-            FL_NO_FRAME (Nothing is drawn), FL_UP_FRAME (A frame appears
-            coming out of the screen), FL_DOWN_FRAME (A frame that goes down
-            into the screen), FL_BORDER_FRAME (A frame with a simple outline),
-            FL_SHADOW_FRAME (A frame with a shadow), FL_ENGRAVED_FRAME (A
-            frame appears to be engraved), FL_ROUNDED_FRAME (A rounded frame),
-            FL_EMBOSSED_FRAME (A frame appears embossed), FL_OVAL_FRAME (An
-            elliptic box).
+            type of labelframe to be added. Values (from xfdata.py) FL_NO_FRAME
+            (Nothing is drawn), FL_UP_FRAME (A frame appears coming out of the
+            screen), FL_DOWN_FRAME (A frame that goes down into the screen),
+            FL_BORDER_FRAME (A frame with a simple outline), FL_SHADOW_FRAME
+            (A frame with a shadow), FL_ENGRAVED_FRAME (A frame appears to be
+            engraved), FL_ROUNDED_FRAME (A rounded frame), FL_EMBOSSED_FRAME
+            (A frame appears embossed), FL_OVAL_FRAME (An elliptic box).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -470,7 +480,7 @@ def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_labelframe = library.cfuncproto(
@@ -479,7 +489,7 @@ def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_labelframe(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(frametype, \
             xfdata.FRAMETYPE_list)
     i_frametype = library.convert_to_intc(frametype)
@@ -513,21 +523,21 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
     Parameters
     ----------
         freetype : int
-            type of free to be added. Value (from xfdata.py)
-            FL_NORMAL_FREE (The flobject will receive the events FL_DRAW,
-            FL_ENTER, FL_LEAVE, FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE),
-            FL_INACTIVE_FREE or FL_SLEEPING_FREE (The flobject only receives
-            FL_DRAW events. This should be used for flobjects without
-            interaction, e.g. a picture), FL_INPUT_FREE (Same as FL_NORMAL_FREE
-            but the flobject also receives FL_FOCUS, FL_UNFOCUS and FL_KEYBOARD
-            events. The ptr_flobject.contents.wantkey is by default set to
-            FL_KEY_NORMAL, i.e., the free flobject will receive all normal keys
-            (0-255) except <Tab> and <Return> key. If you're interested in
-            <Tab> or <Return> key, you need to change obj->wantkey to
-            FL_KEY_TAB or FL_KEY_ALL), FL_CONTINUOUS_FREE (Same as
-            FL_NORMAL_FREE but the flobject also receives FL_STEP events. This
-            should be used for flobjects that change themselves continuously),
-            FL_ALL_FREE (The flobject receives all types of events).
+            type of free to be added. Value (from xfdata.py) FL_NORMAL_FREE
+            (The flobject will receive the events FL_DRAW, FL_ENTER, FL_LEAVE,
+            FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE), FL_INACTIVE_FREE or
+            FL_SLEEPING_FREE (The flobject only receives FL_DRAW events. This
+            should be used for flobjects without interaction, e.g. a picture),
+            FL_INPUT_FREE (Same as FL_NORMAL_FREE but the flobject also
+            receives FL_FOCUS, FL_UNFOCUS and FL_KEYBOARD events. The
+            ptr_flobject.contents.wantkey is by default set to FL_KEY_NORMAL,
+            i.e., the free flobject will receive all normal keys (0-255) except
+            <Tab> and <Return> key. If you're interested in <Tab> or <Return>
+            key, you need to change obj->wantkey to FL_KEY_TAB or FL_KEY_ALL),
+            FL_CONTINUOUS_FREE (Same as FL_NORMAL_FREE but the flobject also
+            receives FL_STEP events. This should be used for flobjects that
+            change themselves continuously), FL_ALL_FREE (The flobject receives
+            all types of events).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -564,7 +574,7 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     #FL_HANDLEPTR = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_OBJECT), \
@@ -576,7 +586,7 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
         xfdata.FL_HANDLEPTR],
         """FL_OBJECT * fl_add_free(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label, FL_HANDLEPTR handle)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(freetype, xfdata.FREETYPE_list)
     i_freetype = library.convert_to_intc(freetype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -600,46 +610,46 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
 # Object Class: Menu
 #####################
 
-# fl_create_menu function placeholder (internal and deprecated)
-# fl_add_menu function placeholder (deprecated)
-# fl_clear_menu function placeholder (deprecated)
-# fl_set_menu function placeholder (deprecated)
-# fl_addto_menu function placeholder (deprecated)
-# fl_replace_menu function placeholder (deprecated)
-# fl_delete_menu function placeholder (deprecated)
-# fl_set_menu_item_callback function placeholder (deprecated)
-# fl_set_menu_item_shortcut function placeholder (deprecated)
-# fl_set_menu_item_mode function placeholder (deprecated)
-# fl_show_menu_symbol function placeholder (deprecated)
-# fl_set_menu_popup function placeholder (deprecated)
-# fl_get_menu_popup function placeholder (deprecated)
-# fl_get_menu function placeholder (deprecated)
-# fl_get_menu_item_text function placeholder (deprecated)
-# fl_get_menu_maxitems function placeholder (deprecated)
-# fl_get_menu_item_mode function placeholder (deprecated)
-# fl_get_menu_text function placeholder (deprecated)
-# fl_set_menu_entries function placeholder (deprecated)
-# fl_set_menu_notitle function placeholder (deprecated)
-# fl_set_menu_item_id function placeholder (deprecated)
+# fl_create_menu() function placeholder (internal and deprecated)
+# fl_add_menu() function placeholder (deprecated)
+# fl_clear_menu() function placeholder (deprecated)
+# fl_set_menu() function placeholder (deprecated)
+# fl_addto_menu() function placeholder (deprecated)
+# fl_replace_menu() function placeholder (deprecated)
+# fl_delete_menu() function placeholder (deprecated)
+# fl_set_menu_item_callback() function placeholder (deprecated)
+# fl_set_menu_item_shortcut() function placeholder (deprecated)
+# fl_set_menu_item_mode() function placeholder (deprecated)
+# fl_show_menu_symbol() function placeholder (deprecated)
+# fl_set_menu_popup() function placeholder (deprecated)
+# fl_get_menu_popup() function placeholder (deprecated)
+# fl_get_menu() function placeholder (deprecated)
+# fl_get_menu_item_text() function placeholder (deprecated)
+# fl_get_menu_maxitems() function placeholder (deprecated)
+# fl_get_menu_item_mode() function placeholder (deprecated)
+# fl_get_menu_text() function placeholder (deprecated)
+# fl_set_menu_entries() function placeholder (deprecated)
+# fl_set_menu_notitle() function placeholder (deprecated)
+# fl_set_menu_item_id() function placeholder (deprecated)
 
 
 ###################
 # forms.h (text.h)
 ###################
 
-# fl_create_text function placeholder (internal)
+# fl_create_text() function placeholder (internal)
 
 
 def fl_add_text(texttype, xpos, ypos, width, height, label):
     """fl_add_text(texttype, xpos, ypos, width, height, label) -> ptr_flobject
 
-    Adds a text flobject.
+    Adds a text flobject. It simply consists of a label maybe placed in a box.
 
     Parameters
     ----------
         texttype : int
-            type of text to be added. Values (from xfdata.py)
-            FL_NORMAL_TEXT (Normal text type)
+            type of text to be added. Values (from xfdata.py) FL_NORMAL_TEXT
+            (Normal text type)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -658,12 +668,12 @@ def fl_add_text(texttype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> txtobj = fl_add_text(xfdata.FL_NORMAL_TEXT, 140, 120, 400, 500,
+        >>> ptxtobj = fl_add_text(xfdata.FL_NORMAL_TEXT, 140, 120, 400, 500,
                 "My text flobject")
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_text = library.cfuncproto(
@@ -672,7 +682,7 @@ def fl_add_text(texttype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_text(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(texttype, xfdata.TEXTTYPE_list)
     i_texttype = library.convert_to_intc(texttype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -692,48 +702,48 @@ def fl_add_text(texttype, xpos, ypos, width, height, label):
 # Prototypes for xpop-up menus
 ###############################
 
-# fl_setpup_entries function placeholder (deprecated)
-# fl_newpup function placeholder (deprecated)
-# fl_defpup function placeholder (deprecated)
-# fl_addtopup function placeholder (deprecated)
-# fl_setpup_mode function placeholder (deprecated)
-# fl_freepup function placeholder (deprecated)
-# fl_dopup function placeholder (deprecated)
-# fl_setpup_default_cursor function placeholder (deprecated)
-# fl_setpup_default_color function placeholder (deprecated)
-# fl_setpup_default_pup_checked_color function placeholder (deprecated)
-# fl_setpup_default_fontsize function placeholder (deprecated)
-# fl_setpup_default_fontstyle function placeholder (deprecated)
-#fl_setpup_fontsize placeholder (deprecated)
-#fl_setpup_fontstyle placeholder (deprecated)
-#fl_setpup_color placeholder (deprecated)
-#fl_setpup_default_checkcolor placeholder (deprecated)
-#fl_setpup_checkcolor placeholder (deprecated)
-# fl_setpup_default_bw function placeholder (deprecated)
-# fl_setpup_shortcut function placeholder (deprecated)
-# fl_setpup_position function placeholder (deprecated)
-# fl_setpup_selection function placeholder (deprecated)
-# fl_setpup_shadow function placeholder (deprecated)
-# fl_setpup_softedge function placeholder (deprecated)
-# fl_setpup_bw function placeholder (deprecated)
-# fl_setpup_title function placeholder (deprecated)
-#FL_PUP_ENTERCB placeholder (deprecated)
-# fl_setpup_entercb function placeholder (deprecated)
-#FL_PUP_LEAVECB placeholder (deprecated)
-# fl_setpup_leavecb function placeholder (deprecated)
-# fl_setpup_pad function placeholder (deprecated)
-# fl_setpup_cursor function placeholder (deprecated)
-# fl_setpup_maxpup function placeholder (deprecated)
-# fl_getpup_mode function placeholder (deprecated)
-# fl_getpup_text function placeholder (deprecated)
-# fl_showpup function placeholder (deprecated)
-# fl_hidepup function placeholder (deprecated)
-# fl_getpup_items function placeholder (deprecated)
-# fl_current_pup function placeholder (deprecated)
-# fl_setpup_itemcb function placeholder (deprecated)
-# fl_setpup_menucb function placeholder (deprecated)
-# fl_setpup_submenu function placeholder (deprecated)
-# fl_setpup placeholder
+# fl_setpup_entries() function placeholder (deprecated)
+# fl_newpup() function placeholder (deprecated)
+# fl_defpup() function placeholder (deprecated)
+# fl_addtopup() function placeholder (deprecated)
+# fl_setpup_mode() function placeholder (deprecated)
+# fl_freepup() function placeholder (deprecated)
+# fl_dopup() function placeholder (deprecated)
+# fl_setpup_default_cursor() function placeholder (deprecated)
+# fl_setpup_default_color() function placeholder (deprecated)
+# fl_setpup_default_pup_checked_color() function placeholder (deprecated)
+# fl_setpup_default_fontsize() function placeholder (deprecated)
+# fl_setpup_default_fontstyle() function placeholder (deprecated)
+# fl_setpup_fontsize placeholder (deprecated)
+# fl_setpup_fontstyle placeholder (deprecated)
+# fl_setpup_color placeholder (deprecated)
+# fl_setpup_default_checkcolor placeholder (deprecated)
+# fl_setpup_checkcolor placeholder (deprecated)
+# fl_setpup_default_bw() function placeholder (deprecated)
+# fl_setpup_shortcut() function placeholder (deprecated)
+# fl_setpup_position() function placeholder (deprecated)
+# fl_setpup_selection() function placeholder (deprecated)
+# fl_setpup_shadow() function placeholder (deprecated)
+# fl_setpup_softedge() function placeholder (deprecated)
+# fl_setpup_bw() function placeholder (deprecated)
+# fl_setpup_title() function placeholder (deprecated)
+# FL_PUP_ENTERCB placeholder (deprecated)
+# fl_setpup_entercb() function placeholder (deprecated)
+# FL_PUP_LEAVECB placeholder (deprecated)
+# fl_setpup_leavecb() function placeholder (deprecated)
+# fl_setpup_pad() function placeholder (deprecated)
+# fl_setpup_cursor() function placeholder (deprecated)
+# fl_setpup_maxpup() function placeholder (deprecated)
+# fl_getpup_mode() function placeholder (deprecated)
+# fl_getpup_text() function placeholder (deprecated)
+# fl_showpup() function placeholder (deprecated)
+# fl_hidepup() function placeholder (deprecated)
+# fl_getpup_items() function placeholder (deprecated)
+# fl_current_pup() function placeholder (deprecated)
+# fl_setpup_itemcb() function placeholder (deprecated)
+# fl_setpup_menucb() function placeholder (deprecated)
+# fl_setpup_submenu() function placeholder (deprecated)
+# fl_setpup() function placeholder (deprecated)
 
 
 # from XForms upstream: the following (fl_fheight) etc. were never documented
@@ -747,7 +757,7 @@ def fl_gc_():
 
     Returns
     -------
-        gc : xfdata.GC
+        gctx : xfdata.GC
             graphics context id
 
     Examples
@@ -756,14 +766,14 @@ def fl_gc_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_gc_ = library.cfuncproto(
         library.load_so_libforms(), "fl_gc_",
         xfdata.GC, [],
         """GC fl_gc_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_gc_()
     return retval
 
@@ -787,14 +797,14 @@ def fl_textgc_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_textgc_ = library.cfuncproto(
         library.load_so_libforms(), "fl_textgc_",
         xfdata.GC, [],
         """GC fl_textgc_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_textgc_()
     return retval
 
@@ -818,30 +828,29 @@ def fl_fheight_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_fheight_ = library.cfuncproto(
         library.load_so_libforms(), "fl_fheight_",
         cty.c_int, [],
         """int fl_fheight_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_fheight_()
     return retval
-
 
 #fl_fheight = fl_fheight_()  # commented to prevent a SegmentationFault? --LK
 fl_fheight = fl_fheight_
 
 
 def fl_fdesc_():
-    """fl_fdesc_() -> descndt
+    """fl_fdesc_() -> fdescndt
 
     Finds out descendent of font.
 
     Returns
     -------
-        descndt : int
+        fdescndt : int
             font descendent
 
     Examples
@@ -850,14 +859,14 @@ def fl_fdesc_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_fdesc_ = library.cfuncproto(
         library.load_so_libforms(), "fl_fdesc_",
         cty.c_int, [],
         """int fl_fdesc_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_fdesc_()
     return retval
 
@@ -881,14 +890,14 @@ def fl_cur_win_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_cur_win_ = library.cfuncproto(
         library.load_so_libforms(), "fl_cur_win_",
         xfdata.Window, [],
         """Window fl_cur_win_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_cur_win_()
     return retval
 
@@ -903,7 +912,7 @@ def fl_cur_fs_():
 
     Returns
     -------
-        ptr_xforntstruct : pointer to xfdata.XFontStruct
+        ptr_xfontstruct : pointer to xfdata.XFontStruct
             font structure class instance
 
     Examples
@@ -912,14 +921,14 @@ def fl_cur_fs_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_cur_fs_ = library.cfuncproto(
         library.load_so_libforms(), "fl_cur_fs_",
         cty.POINTER(xfdata.XFontStruct), [],
         """XFontStruct * fl_cur_fs_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_cur_fs_()
     return retval
 
@@ -936,7 +945,7 @@ def fl_display_():
     Returns
     -------
         ptr_display : pointer to xfdata.Display
-            current display?
+            current display
 
     Examples
     --------
@@ -944,68 +953,56 @@ def fl_display_():
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_display_ = library.cfuncproto(
         library.load_so_libforms(), "fl_display_",
         cty.POINTER(xfdata.Display), [],
         """Display * fl_display_()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_display_()
     return retval
 
 
 
-# flps_apply_gamma(p1) function placeholder (internal)
-# flps_arc(fill, xpos, ypos, r, t1, t2, colr)function placeholder (internal)
-# flps_circ(fill, xpos, ypos, r, colr) function placeholder (internal)
-# flps_color(colr) function placeholder (internal)
-# flps_draw_box(style, xpos, ypos, width, height, colr, bwIn) function
-#placeholder (internal)
-# flps_draw_checkbox(boxtype, xpos, ypos, width, height, colr, bw)
-#  function placeholder (internal)
-# flps_draw_frame(style, xpos, ypos, width, height, colr, bw) function
-#placeholder (internal)
-# flps_draw_symbol(label, xpos, ypos, width, height, colr) function
-# placeholder (internal)
-# flps_draw_tbox(style, xpos, ypos, width, height, colr, bw) function
-#placeholder (internal)
-# flps_draw_text(align, xpos, ypos, width, height, colr, style, size, text)
-#  function placeholder (internal)
-# flps_draw_text_beside(align, xpos, ypos, width, height, colr, style,
-#size, text) function placeholder (internal)
-# flps_emit_header(title, npages, xi, yi, xf, yf)
-#  function placeholder (internal)
+# flps_apply_gamma() function placeholder (internal)
+# flps_arc() function placeholder (internal)
+# flps_circ() function placeholder (internal)
+# flps_color() function placeholder (internal)
+# flps_draw_box() function placeholder (internal)
+# flps_draw_checkbox() function placeholder (internal)
+# flps_draw_frame() function placeholder (internal)
+# flps_draw_symbol() function placeholder (internal)
+# flps_draw_tbox() function placeholder (internal)
+# flps_draw_text() function placeholder (internal)
+# flps_draw_text_beside() function placeholder (internal)
+# flps_emit_header() function placeholder (internal)
 # flps_emit_prolog() function placeholder (internal)
-# flps_get_gray255(colr) function placeholder (internal)
+# flps_get_gray255() function placeholder (internal)
 # flps_get_linestyle() function placeholder (internal)
 # flps_get_linewidth() function placeholder (internal)
-# flps_get_namedcolor(colrname) function placeholder (internal)
+# flps_get_namedcolor() function placeholder (internal)
 # flps_invalidate_color_cache() function placeholder (internal)
 # flps_invalidate_font_cache() function placeholder (internal)
 # flps_invalidate_linewidth_cache() function placeholder (internal)
 # flps_invalidate_symbol_cache() function placeholder (internal)
-# flps_line(xi, yi, xf, yf, colr) function placeholder (internal)
-# flps_lines(Point, numpt, colr) function placeholder (internal)
-# flps_linestyle(linestyle) function placeholder (internal)
-# flps_linewidth(linewidth) function placeholder (internal)
-# flps_log(text) function placeholder (internal)
-# flps_output(fmt) function placeholder (internal)
-# flps_oval(fill, xpos, ypos, width, height, colr) function
-#placeholder (internal)
-# flps_pieslice(fill, xpos, ypos, width, height, t1, t2, colr)
-# function placeholder (internal)
-# flps_poly(fill, Point, numpt, colr) function placeholder (internal)
-# flps_rectangle(fill, xpos, ypos, width, height, colr) function
-#placeholder (internal)
+# flps_line() function placeholder (internal)
+# flps_lines() function placeholder (internal)
+# flps_linestyle() function placeholder (internal)
+# flps_linewidth() function placeholder (internal)
+# flps_log() function placeholder (internal)
+# flps_output() function placeholder (internal)
+# flps_oval() function placeholder (internal)
+# flps_pieslice() function placeholder (internal)
+# flps_poly() function placeholder (internal)
+# flps_rectangle() function placeholder (internal)
 # flps_reset_cache() function placeholder (internal)
 # flps_reset_linewidth() function placeholder (internal)
 # flps_restore_flps() function placeholder (internal)
-# flps_rgbcolor(r, g, b) function placeholder (internal)
-# flps_roundrectangle(fill, xpos, ypos, width, height, colr) function
-#placeholder (internal)
-# flps_set_clipping(xpos, ypos, width, height) function placeholder (internal)
-# flps_set_font(style, size) function placeholder (internal)
+# flps_rgbcolor() function placeholder (internal)
+# flps_roundrectangle() function placeholder (internal)
+# flps_set_clipping() function placeholder (internal)
+# flps_set_font() function placeholder (internal)
 # flps_unset_clipping() function placeholder (internal)
 

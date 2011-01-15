@@ -55,8 +55,8 @@ def fl_get_dirlist(dirname, pattern, rescan):
         pattern : str
             regular expression that is used to filter the directory entries
         rescan : int
-            flag to request a re-read or not. Values 0 (no re-read)
-            or non-zero (to do a re-read)
+            flag to request a re-read or not. Values 0 (no re-read) or
+            non-zero (to do a re-read)
 
     Returns
     -------
@@ -68,8 +68,7 @@ def fl_get_dirlist(dirname, pattern, rescan):
 
     Examples
     --------
-        >>> pdirlist, nfiles = dirlistfl_get_dirlist("/home/userdir",
-                "*.*", 1)
+        >>> pdirlist, nfiles = fl_get_dirlist("/home/userdir", "*.*", 1)
         >>> print pdirlist[1].name
 
     API_diversion
@@ -79,7 +78,7 @@ def fl_get_dirlist(dirname, pattern, rescan):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_dirlist = library.cfuncproto(
@@ -88,7 +87,7 @@ def fl_get_dirlist(dirname, pattern, rescan):
         cty.POINTER(cty.c_int), cty.c_int],
         """const FL_Dirlist * fl_get_dirlist(const char * dir,
            const char * pattern, int * n, int rescan)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_dirname = library.convert_to_stringc(dirname)
     s_pattern = library.convert_to_stringc(pattern)
     i_numfiles, ptr_numfiles = library.make_intc_and_pointer()
@@ -109,9 +108,9 @@ def fl_set_dirlist_filter(pyfn_DirFilter):
     Parameters
     ----------
         pyfn_DirFilter : python function, returned value
-            name referring to function (strname, inttype) -> (non-zero if
+            name referring to function ([str]name, [int]type) -> (non-zero if
             is to be included, 0 otherwise)
-            function used to filter types
+            Function used to filter types
 
     Returns
     -------
@@ -120,16 +119,16 @@ def fl_set_dirlist_filter(pyfn_DirFilter):
 
     Examples
     --------
-        >>> def dirfilter(fname, ftype):
+        >>> def dirfiltercb(fname, ftype):
         >>> ... return (ftype == xfdata.FT_DIR || ftype == xfdata.FT_FILE ||
         >>>     ftype == xfdata.FT_SOCK || ftype == xfdata.FT_FIFO ||
         >>>     ftype == xfdata.FT_LINK || ftype == xfdata.FT_BLK ||
         >>>     ftype == xfdata.FT_CHR || type == xfdata.FT_OTHER)
-        >>> olddirfiltfunc = fl_set_dirlist_filter(dirfilter)
+        >>> olddirfiltfunc = fl_set_dirlist_filter(dirfiltercb)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_DIRLIST_FILTER = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_int)
@@ -138,7 +137,7 @@ def fl_set_dirlist_filter(pyfn_DirFilter):
         xfdata.FL_DIRLIST_FILTER, [xfdata.FL_DIRLIST_FILTER],
         """FL_DIRLIST_FILTER fl_set_dirlist_filter( \
            FL_DIRLIST_FILTER filter)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_function_type(pyfn_DirFilter)
     cfn_DirFilter = xfdata.FL_DIRLIST_FILTER(pyfn_DirFilter)
     library.keep_cfunc_refs(cfn_DirFilter, pyfn_DirFilter)
@@ -149,23 +148,23 @@ def fl_set_dirlist_filter(pyfn_DirFilter):
 def fl_set_dirlist_sort(method):
     """fl_set_dirlist_sort(method) -> oldmethod
 
-    Changes the default sorting of files in directory. By default the
-    files returned are sorted alphabetically.
+    Changes the default sorting of files in directory. By default the files
+    returned are sorted alphabetically.
 
     Parameters
     ----------
         method : int
-            method of sorting. Values (from xfdata.py)
-            FL_NONE (Do not sort the entries), FL_ALPHASORT (Sorts the
-            entries in alphabetic order, default), FL_RALPHASORT (Sorts the
-            entries in reverse alphabetic order), FL_MTIMESORT (Sorts the
-            entries according to the modification time), FL_RMTIMESORT (Sorts
-            the entries according to the modification time, but reverse the
-            order, i.e., latest first), FL_SIZESORT (Sorts the entries in
-            increasing size order), FL_RSIZESORT (Sorts the entries in
-            decreasing size order), FL_CASEALPHASORT (Sorts the entries in
-            alphabetic order with no regard to case), FL_RCASEALPHASORT (Sorts
-            the entries in reverse alphabetic order with no regard to case).
+            method of sorting. Values (from xfdata.py) FL_NONE (Do not sort
+            the entries), FL_ALPHASORT (Sorts the entries in alphabetic order,
+            default), FL_RALPHASORT (Sorts the entries in reverse alphabetic
+            order), FL_MTIMESORT (Sorts the entries according to the
+            modification time), FL_RMTIMESORT (Sorts the entries according to
+            the modification time, but reverse the order, i.e., latest first),
+            FL_SIZESORT (Sorts the entries in increasing size order),
+            FL_RSIZESORT (Sorts the entries in decreasing size order),
+            FL_CASEALPHASORT (Sorts the entries in alphabetic order with no
+            regard to case), FL_RCASEALPHASORT (Sorts the entries in reverse
+            alphabetic order with no regard to case).
 
     Returns
     -------
@@ -178,14 +177,14 @@ def fl_set_dirlist_sort(method):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_dirlist_sort = library.cfuncproto(
         library.load_so_libforms(), "fl_set_dirlist_sort",
         cty.c_int, [cty.c_int],
         """int fl_set_dirlist_sort(int method)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_method = library.convert_to_intc(method)
     library.keep_elem_refs(method, i_method)
     retval = _fl_set_dirlist_sort(i_method)
@@ -215,14 +214,14 @@ def fl_set_dirlist_filterdir(yesno):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_dirlist_filterdir = library.cfuncproto(
         library.load_so_libforms(), "fl_set_dirlist_filterdir",
         cty.c_int, [cty.c_int],
         """int fl_set_dirlist_filterdir(int yes)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(yesno, i_yesno)
     retval = _fl_set_dirlist_filterdir(i_yesno)
@@ -245,14 +244,14 @@ def fl_free_dirlist(ptr_dirlist):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_free_dirlist = library.cfuncproto(
         library.load_so_libforms(), "fl_free_dirlist",
         None, [cty.POINTER(xfdata.FL_Dirlist)],
         """void fl_free_dirlist(FL_Dirlist * dl)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_otherclassptr_type(ptr_dirlist, \
             cty.POINTER(xfdata.FL_Dirlist))
     library.keep_elem_refs(ptr_dirlist)
@@ -272,21 +271,21 @@ def fl_free_all_dirlist():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_free_all_dirlist = library.cfuncproto(
         library.load_so_libforms(), "fl_free_all_dirlist",
         None, [],
         """void fl_free_all_dirlist()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_free_all_dirlist()
 
 
 def fl_is_valid_dir(dirname):
     """fl_is_valid_dir(dirname) -> yesno
 
-    Checks if dirname is a valid name of a directory. You can use
+    Checks if dirname is a valid name of a directory. You can use python's
     os.path.isdir(), instead.
 
     Parameters
@@ -307,14 +306,14 @@ def fl_is_valid_dir(dirname):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_is_valid_dir = library.cfuncproto(
         library.load_so_libforms(), "fl_is_valid_dir",
         cty.c_int, [xfdata.STRING],
         """int fl_is_valid_dir(const char * name)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_dirname = library.convert_to_stringc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_is_valid_dir(s_dirname)
@@ -324,7 +323,8 @@ def fl_is_valid_dir(dirname):
 def fl_fmtime(fname):
     """fl_fmtime(fname) -> mtime
 
-    Finds out the modification time of a specified file.
+    Finds out the modification time of a specified file. You can then use
+    python time.ctime() to have a textual representation of time.
 
     Parameters
     ----------
@@ -342,14 +342,14 @@ def fl_fmtime(fname):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_fmtime = library.cfuncproto(
         library.load_so_libforms(), "fl_fmtime",
         cty.c_ulong, [xfdata.STRING],
         """long unsigned int fl_fmtime(const char * s)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _fl_fmtime(s_fname)
@@ -378,14 +378,14 @@ def fl_fix_dirname(dirname):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_fix_dirname = library.cfuncproto(
         library.load_so_libforms(), "fl_fix_dirname",
         xfdata.STRING, [xfdata.STRING],
         """char * fl_fix_dirname(char * dir)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_dirname = library.convert_to_stringc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_fix_dirname(s_dirname)

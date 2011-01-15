@@ -48,8 +48,7 @@ def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
     """fl_add_nmenu(nmenutype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a new generation menu (nmenu) object. It heavily depends on
-    popups.
+    Adds a new generation menu (nmenu) object. It heavily depends on popups.
 
     Parameters
     ----------
@@ -62,8 +61,8 @@ def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
             (When not active shown as text on borderless background, when
             clicked on popup is shown and the flobject itself being displayed
             as a button), FL_BUTTON_TOUCH_NMENU (When not active shown as text
-            on borderless background, when mouse is moved onto it the popup
-            is shown and the flobject itself is displayed as a button)
+            on borderless background, when mouse is moved onto it the popup is
+            shown and the flobject itself is displayed as a button)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -87,7 +86,7 @@ def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_nmenu = library.cfuncproto(
@@ -96,7 +95,7 @@ def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_nmenu(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(nmenutype, \
             xfdata.NMENUTYPE_list)
     i_nmenutype = library.convert_to_intc(nmenutype)
@@ -125,7 +124,7 @@ def fl_clear_nmenu(ptr_flobject):
     Returns
     -------
         result : int
-            0 on success, or -1 (on failure)
+            0 (on success), or -1 (on failure)
 
     Examples
     --------
@@ -133,14 +132,14 @@ def fl_clear_nmenu(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_clear_nmenu = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_nmenu",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_clear_nmenu(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_clear_nmenu(ptr_flobject)
@@ -163,43 +162,40 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
         entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if required). Text
-            may contain newline characters which allows to create entries
-            that span more than a single line. Special sequences who are
-            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
-            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+            may contain "|" for more than one entry and newline character which
+            allows to create entries that span more than a single line. Special
+            sequences who are allowed are: %x, %u, %f, %E, %L, %m or %T or %t,
+            %R or %r or %l, %d, %h, %S, %s, %%. Special sequences of same type
+            cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to function; invoked callback has to take
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
-            name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            name referring to function(ptr_flpopupreturn) -> [int]num
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
-            name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            name referring to function(ptr_flpopupreturn) -> [int]num
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
-            name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            name referring to function(ptr_flpopupreturn) -> [int]num
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         m : pointer to xfdata.FL_POPUP
-            popup class to be used as sub-popup
-            (separated additional argument corresponding to %m in-text
-            special sequence)
+            popup class to be used as sub-popup (separated additional argument
+            corresponding to %m in-text special sequence)
         Rr : int
-            group number of a radio entry type
-            (separated additional argument corresponding to %R or %r
-            in-text special sequence)
+            group number of a radio entry type (separated additional argument
+            corresponding to %R or %r in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -212,8 +208,8 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
 
     Notes
     -----
-        Status: HalfTested + NoDoc + Demo = NOT OK (sequence param.)
-        See: Special sequences in entry text documentation.
+        Status: HalfTested + Doc + Demo = OK
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -270,7 +266,7 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
         xfdata.STRING, cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_add_nmenu_items(FL_OBJECT * p1,
            const char * p2, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, entryitemstxt, s_entryitemstxt, \
@@ -282,8 +278,7 @@ def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
 
 
 def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
-                          x=None, u=None, f=None, E=None, L=None, m=None, \
-                          Rr=None, s=None):
+        x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None):
     """fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
@@ -302,43 +297,40 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         entryitemstxt : str
             text of the entry to be inserted and in-text special sequences
             with or without not separated additional arguments (if required).
-            Text may contain newline characters which allows to create entries
-            that span more than a single line. Special sequences who are
-            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
-            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+            Text may contain "|" for more than one entry newline characters
+            which allows to create entries that span more than a single line.
+            Special sequences who are allowed are: %x, %u, %f, %E, %L, %m or
+            %T or %t, %R or %r or %l, %d, %h, %S, %s, %%. Special sequences of
+            same type cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         m : pointer to xfdata.FL_POPUP
-            popup class to be used as sub-popup
-            (separated additional argument corresponding to %m in-text
-            special sequence)
+            popup class to be used as sub-popup (separated additional argument
+            corresponding to %m in-text special sequence)
         Rr : int
-            group number of a radio entry type
-            (separated additional argument corresponding to %R or %r
-            in-text special sequence)
+            group number of a radio entry type (separated additional argument
+            corresponding to %R or %r in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -351,8 +343,8 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 
     Notes
     -----
-        Status: HalfTested + NoDoc + Demo = NOT OK (special sequences)
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + Demo = OK
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -410,7 +402,7 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_insert_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
@@ -423,8 +415,7 @@ def fl_insert_nmenu_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 
 
 def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
-                          x=None, u=None, f=None, E=None, L=None, m=None, \
-                          Rr=None, s=None):
+            x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None):
     """fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
@@ -442,43 +433,40 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
         entryitemstxt : str
             text of the entry to be replaced and in-text special sequences
             with or without not separated additional arguments (if required).
-            Text may contain newline characters which allows to create entries
-            that span more than a single line. Special sequences who are
-            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
-            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+            Text may contain "|" for more than one entry newline character
+            which allows to create entries that span more than a single line.
+            Special sequences who are allowed are: %x, %u, %f, %E, %L, %m or
+            %T or %t, %R or %r or %l, %d, %h, %S, %s, %%. Special sequences of
+            same type cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         m : pointer to xfdata.FL_POPUP
-            popup class to be used as sub-popup
-            (separated additional argument corresponding to %m in-text
-            special sequence)
+            popup class to be used as sub-popup (separated additional argument
+            corresponding to %m in-text special sequence)
         Rr : int
-            group number of a radio entry type
-            (separated additional argument corresponding to %R or %r
-            in-text special sequence)
+            group number of a radio entry type (separated additional argument
+            corresponding to %R or %r in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -491,8 +479,8 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + Demo = OK
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -550,7 +538,7 @@ def fl_replace_nmenu_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
         cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_replace_nmenu_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
@@ -577,7 +565,7 @@ def fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry):
     Returns
     -------
         result : int
-            0 on success, or -1 (on failure)
+            0 (on success), or -1 (on failure)
 
     Examples
     --------
@@ -585,7 +573,7 @@ def fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_nmenu_item = library.cfuncproto(
@@ -593,7 +581,7 @@ def fl_delete_nmenu_item(ptr_flobject, ptr_flpopupentry):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_delete_nmenu_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry)
@@ -626,7 +614,7 @@ def fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_nmenu_items = library.cfuncproto(
@@ -635,7 +623,7 @@ def fl_set_nmenu_items(ptr_flobject, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_set_nmenu_items(FL_OBJECT * p1,
            FL_POPUP_ITEM * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupitem)
@@ -668,7 +656,7 @@ def fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_nmenu_items2 = library.cfuncproto(
@@ -677,7 +665,7 @@ def fl_add_nmenu_items2(ptr_flobject, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_add_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupitem)
@@ -697,7 +685,7 @@ def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
             nmenu flobject
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             existing popup entry, after which the new items are to be
-            inserted. If it is None, it inserts items at the very start.
+            inserted. If it is None, it inserts items at the real start.
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             popup item to be set. It can be prepared passing a dict (whose
             keys are corresponding to xfdata.FL_POPUP_ITEM's members) to
@@ -714,7 +702,7 @@ def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_insert_nmenu_items2 = library.cfuncproto(
@@ -723,7 +711,7 @@ def fl_insert_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
         cty.c_void_p, cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_insert_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ITEM * p2, FL_POPUP_ITEM * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     if not ptr_flpopupentry:        # it is None
         ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, \
@@ -767,7 +755,7 @@ def fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_replace_nmenu_items2 = library.cfuncproto(
@@ -776,7 +764,7 @@ def fl_replace_nmenu_items2(ptr_flobject, ptr_flpopupentry, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_replace_nmenu_items2(FL_OBJECT * obj,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
@@ -807,7 +795,7 @@ def fl_get_nmenu_popup(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_nmenu_popup = library.cfuncproto(
@@ -844,7 +832,7 @@ def fl_set_nmenu_popup(ptr_flobject, ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_nmenu_popup = library.cfuncproto(
@@ -852,7 +840,7 @@ def fl_set_nmenu_popup(ptr_flobject, ptr_flpopup):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP)],
         """int fl_set_nmenu_popup(FL_OBJECT * p1, FL_POPUP * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flobject, ptr_flpopup)
@@ -873,8 +861,8 @@ def fl_get_nmenu_item(ptr_flobject):
     Returns
     -------
         ptr_flpopupreturn : pointer to xfdata.FL_POPUP_RETURN
-            popup return class instance, or None (if no selection
-            was made the last time the nmenu flobject was used)
+            popup return class instance, or None (if no selection was made the
+            last time the nmenu flobject was used)
 
     Examples
     --------
@@ -885,14 +873,14 @@ def fl_get_nmenu_item(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_nmenu_item = library.cfuncproto(
         library.load_so_libforms(), "fl_get_nmenu_item",
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP_RETURN * fl_get_nmenu_item(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_nmenu_item(ptr_flobject)
@@ -902,8 +890,8 @@ def fl_get_nmenu_item(ptr_flobject):
 def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
     """fl_get_nmenu_item_by_value(ptr_flobject, itemval) -> ptr_flpopupentry
 
-    Searches through the list of all items (including items in sub-popups)
-    and returns the first one with the val associated with the item
+    Searches through the list of all items (including items in sub-popups) and
+    returns the first one with the val associated with the item.
 
     Parameters
     ----------
@@ -915,7 +903,7 @@ def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
     Returns
     -------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            first item associated, or None (if none is found)
+            first item associated, or None (if is not found)
 
     Examples
     --------
@@ -923,7 +911,7 @@ def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_nmenu_item_by_value = library.cfuncproto(
@@ -932,7 +920,7 @@ def fl_get_nmenu_item_by_value(ptr_flobject, itemval):
         cty.c_long],
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_value(FL_OBJECT * p1,
            long int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_itemval = library.convert_to_longc(itemval)
     library.keep_elem_refs(ptr_flobject, itemval, l_itemval)
@@ -956,7 +944,7 @@ def fl_get_nmenu_item_by_label(ptr_flobject, label):
     Returns
     -------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            first item associated, or None (if none is found)
+            first item associated, or None (if is not found)
 
     Examples
     --------
@@ -964,7 +952,7 @@ def fl_get_nmenu_item_by_label(ptr_flobject, label):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_nmenu_item_by_label = library.cfuncproto(
@@ -973,7 +961,7 @@ def fl_get_nmenu_item_by_label(ptr_flobject, label):
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_label(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_label = library.convert_to_stringc(label)
     library.keep_elem_refs(ptr_flobject, label, s_label)
@@ -997,7 +985,7 @@ def fl_get_nmenu_item_by_text(ptr_flobject, text):
     Returns
     -------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            first item associated, or None (if none is found)
+            first item associated, or None (if is not found)
 
     Examples
     --------
@@ -1005,7 +993,7 @@ def fl_get_nmenu_item_by_text(ptr_flobject, text):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_nmenu_item_by_text = library.cfuncproto(
@@ -1014,7 +1002,7 @@ def fl_get_nmenu_item_by_text(ptr_flobject, text):
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_get_nmenu_item_by_text(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_text = library.convert_to_stringc(text)
     library.keep_elem_refs(ptr_flobject, text, s_text)
@@ -1026,9 +1014,9 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
     """fl_set_nmenu_policy(ptr_flobject, policy) -> oldpol
 
     Changes nmenu policy about closing, so that the popup also gets closed
-    (without a selection) when the mouse button is clicked or released on
-    a non-selectable item (giving the impression of a "pull-down" menu).
-    By default, the popup is closed when an item is selected or (without a
+    (without a selection) when the mouse button is clicked or released on a
+    non-selectable item (giving the impression of a "pull-down" menu). By
+    default, the popup is closed when an item is selected or (without a
     selection) when the user clicks somehwere outside of the popups area.
 
     Parameters
@@ -1036,9 +1024,11 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             nmenu flobject
         policy : int
-            under which conditions the nmenu's popup gets closed. Values
-            (from xfdata.py) FL_POPUP_NORMAL_SELECT (default) or
-            FL_POPUP_DRAG_SELECT
+            under which conditions the nmenu's popup gets closed. Values (from
+            xfdata.py) FL_POPUP_NORMAL_SELECT (default, keeps the popup opened
+            when the mouse is not released on one of the selectable items),
+            FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
+            button is released)
 
     Returns
     -------
@@ -1051,17 +1041,16 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_nmenu_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_set_nmenu_policy",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_nmenu_policy(FL_OBJECT * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(policy, \
-            xfdata.POPUPPOLICY_list)
+    library.checkfatal_allowed_value_in_list(policy, xfdata.POPUPPOLICY_list)
     i_policy = library.convert_to_intc(policy)
     library.keep_elem_refs(ptr_flobject, policy, i_policy)
     retval = _fl_set_nmenu_policy(ptr_flobject, i_policy)
@@ -1071,12 +1060,11 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
 def fl_set_nmenu_hl_text_color(ptr_flobject, colr):
     """fl_set_nmenu_hl_text_color(ptr_flobject, colr) -> oldcolr
 
-    Defines the color of label when it is in "active" state (i.e. while
-    the popup is shown). In "inactive" state this is set by
-    fl_set_object_lcol(). By default, this color is xfdata.FL_BLACK for
-    nmenus that are shown as a button while being "active", while for
-    normal nmenus it is the same color that is used items in the popup
-    when the mouse is hovering over them.
+    Defines the color of label when it is in "active" state (i.e. while the
+    popup is shown). In "inactive" state this is set by fl_set_object_lcol().
+    By default, this color is xfdata.FL_BLACK for nmenus that are shown as a
+    button while being "active", while for normal nmenus it is the same color
+    that is used items in the popup when the mouse is hovering over them.
 
     Parameters
     ----------
@@ -1096,7 +1084,7 @@ def fl_set_nmenu_hl_text_color(ptr_flobject, colr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_nmenu_hl_text_color = library.cfuncproto(
@@ -1104,7 +1092,7 @@ def fl_set_nmenu_hl_text_color(ptr_flobject, colr):
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR],
         """FL_COLOR fl_set_nmenu_hl_text_color(FL_OBJECT * p1,
            FL_COLOR p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)

@@ -46,10 +46,11 @@ from xformslib import xfdata
 
 def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     """fl_add_xyplot(plottype, xpos, ypos, width, height, label)
-    -> ptr_flflobject
+    -> ptr_flobject
 
-    Adds an xyplot flobject. It gives an easy way to display a tabulated
-    function generated on the fly or from an existing data file.
+    Adds an xyplot flobject. It gives an easy way to display a tabulated math
+    function generated on the fly or from an existing data file. An active
+    xyplot is also available to model and/or change such a function.
 
     Parameters
     ----------
@@ -61,8 +62,8 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
             FL_POINTS_XYPLOT (xyplot type has only data points),
             FL_DASHED_XYPLOT (xyplot type has dashed line), FL_IMPULSE_XYPLOT
             (Data drawn by vertical lines), FL_ACTIVE_XYPLOT (xyplot type
-            accepts interactive manipulations), FL_EMPTY_XYPLOT (Only the axes
-            are drawn), FL_DOTTED_XYPLOT (Data drawn as a dotted line),
+            accepts interactive manipulations), FL_EMPTY_XYPLOT (Only the
+            axes are drawn), FL_DOTTED_XYPLOT (Data drawn as a dotted line),
             FL_DOTDASHED_XYPLOT (Data drawn as a dash-dot-dash line),
             FL_LONGDASHED_XYPLOT (xyplot type has long dashed line),
             FL_LINEPOINTS_XYPLOT (xyplot type has lines and points).
@@ -84,12 +85,12 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> xyplobj = fl_add_xyplot(xfdata.FL_CIRCLE_XYPLOT,
+        >>> pxyplobj = fl_add_xyplot(xfdata.FL_CIRCLE_XYPLOT,
                 124, 145, 320, 230, "MyXyplot")
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_xyplot = library.cfuncproto(
@@ -98,7 +99,7 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_xyplot(int t, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(plottype, xfdata.XYPLOTTYPE_list)
     i_plottype = library.convert_to_intc(plottype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -108,19 +109,18 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     s_label = library.convert_to_stringc(label)
     library.keep_elem_refs(plottype, xpos, ypos, width, height, label, \
             i_plottype, i_xpos, i_ypos, i_width, i_height, s_label)
-    retval = _fl_add_xyplot(i_plottype, i_xpos, i_ypos, i_width, \
-            i_height, s_label)
+    retval = _fl_add_xyplot(i_plottype, i_xpos, i_ypos, i_width, i_height, \
+            s_label)
     return retval
 
 
 def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
-                       xlabel, ylabel):
+        xlabel, ylabel):
     """fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints,
     title, xlabel, ylabel)
 
-    Defines or replaces data for a xyplot flobject, using supplied values.
-    If the xyplot flobject being set exists already, old data will be
-    cleared.
+    Defines or replaces data for a xyplot flobject, using supplied values. If
+    the xyplot flobject being set exists already, old data will be cleared.
 
     Parameters
     ----------
@@ -145,7 +145,7 @@ def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_data = library.cfuncproto(
@@ -156,19 +156,9 @@ def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
         """void fl_set_xyplot_data(FL_OBJECT * ob, float * x, float * y,
            int n, const char * title, const char * xlabel,
            const char * ylabel)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    #p_x = cty.cast(x, cty.POINTER(cty.c_float))
-    #fxlist = []
-    #for a in range(xlist):
-    #    fxlist[a] = library.convert_to_floatc(xlist[a])
-    #ptr_xlist = cty.pointer(fxlist)
     ptr_xposlist = library.convert_to_ptr_floatc(xposlist)
-    #py = cty.cast(y, cty.POINTER(cty.c_float))
-    #fylist = []
-    #for a in range(ylist):
-    #    fylist[a] = library.convert_to_floatc(ylist[a])
-    #pylist = cty.pointer(fylist)
     ptr_yposlist = library.convert_to_ptr_floatc(yposlist)
     i_numpoints = library.convert_to_intc(numpoints)
     s_title = library.convert_to_stringc(title)
@@ -182,7 +172,7 @@ def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
 
 
 def fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
-                              title, xlabel, ylabel):
+        title, xlabel, ylabel):
     """fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
     title, xlabel, ylabel)
 
@@ -214,7 +204,7 @@ def fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_data_double = library.cfuncproto(
@@ -225,7 +215,7 @@ def fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
         """void fl_set_xyplot_data_double(FL_OBJECT * ob, double * x,
            double * y, int n, const char * title, const char * xlabel,
            const char * ylabel)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #ptr_xlist = cty.cast(xlist, cty.POINTER(cty.c_double))
     ptr_xposlist = library.convert_to_ptr_doublec(xposlist)
@@ -247,8 +237,8 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
     -> numpoints
 
     Defines or replaces data for a xyplot flobject, by loading a tabulated
-    function from a file. The data file should be an ASCII file consisting
-    of data lines. Each data line must have two columns, indicating the (x,y)
+    function from a file. The data file should be an ASCII file consisting of
+    data lines. Each data line must have two columns, indicating the (x,y)
     pair with a space, tab or comma (,) separating the two columns. Lines
     that start with any of "!", ";" or "#" are considered to be comments and
     are ignored.
@@ -278,7 +268,7 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_file = library.cfuncproto(
@@ -287,7 +277,7 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
         xfdata.STRING, xfdata.STRING, xfdata.STRING],
         """int fl_set_xyplot_file(FL_OBJECT * ob, const char * f,
            const char * title, const char * xl, const char * yl)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_fname = library.convert_to_stringc(fname)
     s_title = library.convert_to_stringc(title)
@@ -314,8 +304,8 @@ def fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos):
             the number set via fl_set_xyplot_maxoverlays()
         indxpt : int
             the index of the point after which the data new point is to be
-            inserted. If it is -1 inserts the point in front. To append to
-            the data, set it to be equal or larger than the return value of
+            inserted. If it is -1 inserts the point in front. To append to the
+            data, set it to be equal or larger than the return value of
             fl_get_xyplot_numdata().
         xpos : float
             horizontal position of the point
@@ -328,7 +318,7 @@ def fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_insert_xyplot_data = library.cfuncproto(
@@ -337,7 +327,7 @@ def fl_insert_xyplot_data(ptr_flobject, ovlnum, indxpt, xpos, ypos):
         cty.c_double, cty.c_double],
         """void fl_insert_xyplot_data(FL_OBJECT * ob, int id, int n,
            double x, double y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     i_indxpt = library.convert_to_intc(indxpt)
@@ -367,18 +357,18 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
             text to be added to xyplot. If it starts with '@', a symbol
             is drawn.
         align : int
-            alignment of text. Values (from xfdata.py)
-            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
-            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
-            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
-            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
-            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In the
+            middle of the box, inside it), FL_ALIGN_TOP (To the top of the box,
+            outside it), FL_ALIGN_BOTTOM (To the bottom of the box, outside
+            it), FL_ALIGN_LEFT (To the left of the box, outside it),
+            FL_ALIGN_RIGHT (To the right of the box, outside it),
+            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
+            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+            outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
+            is allowed.
         colr : long_pos
             XForms colormap index as color
 
@@ -388,7 +378,7 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_xyplot_text = library.cfuncproto(
@@ -397,7 +387,7 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
         xfdata.STRING, cty.c_int, xfdata.FL_COLOR],
         """void fl_add_xyplot_text(FL_OBJECT * ob, double x, double y,
            const char * text, int al, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     f_xpos = library.convert_to_doublec(xpos)
@@ -429,14 +419,14 @@ def fl_delete_xyplot_text(ptr_flobject, text):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_xyplot_text = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_xyplot_text",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_text = library.convert_to_stringc(text)
     library.keep_elem_refs(ptr_flobject, text, s_text)
@@ -446,8 +436,8 @@ def fl_delete_xyplot_text(ptr_flobject, text):
 def fl_set_xyplot_maxoverlays(ptr_flobject, numovls):
     """fl_set_xyplot_maxoverlays(ptr_flobject, numovls) -> oldmaxovls
 
-    Changes the maximum number of overlays a flobject can have. By
-    default, it is 32.
+    Changes the maximum number of overlays a flobject can have. By default,
+    it is 32.
 
     Parameters
     ----------
@@ -467,14 +457,14 @@ def fl_set_xyplot_maxoverlays(ptr_flobject, numovls):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_maxoverlays = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_maxoverlays",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_xyplot_maxoverlays(FL_OBJECT * ob, int maxover)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_numovls = library.convert_to_intc(numovls)
     library.keep_elem_refs(ptr_flobject, numovls, i_numovls)
@@ -483,7 +473,7 @@ def fl_set_xyplot_maxoverlays(ptr_flobject, numovls):
 
 
 def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
-                          numpoints, colr):
+        numpoints, colr):
     """fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
     numpoints, colr)
 
@@ -494,8 +484,8 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-            or the number set via fl_set_xyplot_maxoverlays()
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
+            the number set via fl_set_xyplot_maxoverlays()
         xposlist : list_of_float
             horizontal position values
         yposlist : list_of_float
@@ -511,7 +501,7 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_xyplot_overlay = library.cfuncproto(
@@ -521,7 +511,7 @@ def fl_add_xyplot_overlay(ptr_flobject, ovlnum, xposlist, yposlist,
         xfdata.FL_COLOR],
         """void fl_add_xyplot_overlay(FL_OBJECT * ob, int id, float * x,
            float * y, int n, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_ovlnum = library.convert_to_intc(ovlnum)
@@ -548,8 +538,8 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-            or the number set via fl_set_xyplot_maxoverlays()
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
+            the number set via fl_set_xyplot_maxoverlays()
         fname : str
             name of file
         colr : long_pos
@@ -566,7 +556,7 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_add_xyplot_overlay_file = library.cfuncproto(
@@ -575,7 +565,7 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
         xfdata.FL_COLOR],
         """int fl_add_xyplot_overlay_file(FL_OBJECT * ob, int id,
         const char * f, FL_COLOR c)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     s_fname = library.convert_to_stringc(fname)
@@ -588,20 +578,19 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
     return retval
 
 
-# fl_set_xyplot_return(ptr_flobject, when) function placeholder (internal)
+# fl_set_xyplot_return() function placeholder (internal)
 
 
 def fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor)
 
-    Changes the number of tic marks of a xyplot flobject on x-axis. The
-    actual scaling routine may choose a value other than that requested if
-    it decides that this would make the plot look nicer, thus major and
-    minor are only taken as a hint to the scaling routine. However, in
-    almost all cases the scaling routine will not generate a major that
-    differs from the requested value by more than 3.
-    fl_set_xyplot_alphaxtics() cannot be active at the same time and the
-    one that gets used is the one that was set last.
+    Changes the number of tic marks of a xyplot flobject on x-axis. The actual
+    scaling routine may choose a value other than that requested if it decides
+    that this would make the plot look nicer, thus major and minor are only
+    taken as a hint to the scaling routine. However, in almost all cases the
+    scaling routine will not generate a major that differs from the requested
+    value by more than 3. fl_set_xyplot_alphaxtics() cannot be active at the
+    same time and the one that gets used is the one that was set last.
 
     Parameters
     ----------
@@ -622,14 +611,14 @@ def fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_xtics = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_xtics",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_xyplot_xtics(FL_OBJECT * ob, int major, int minor)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ticmajor = library.convert_to_intc(ticmajor)
     i_ticminor = library.convert_to_intc(ticminor)
@@ -641,14 +630,13 @@ def fl_set_xyplot_xtics(ptr_flobject, ticmajor, ticminor):
 def fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor)
 
-    Changes the number of tic marks of a xyplot flobject on y-axis. The
-    actual scaling routine may choose a value other than that requested if
-    it decides that this would make the plot look nicer, thus major and
-    minor are only taken as a hint to the scaling routine. However, in
-    almost all cases the scaling routine will not generate a major that
-    differs from the requested value by more than 3.
-    fl_set_xyplot_alphaytics() cannot be active at the same time and the
-    one that gets used is the one that was set last.
+    Changes the number of tic marks of a xyplot flobject on y-axis. The actual
+    scaling routine may choose a value other than that requested if it decides
+    that this would make the plot look nicer, thus major and minor are only
+    taken as a hint to the scaling routine. However, in almost all cases the
+    scaling routine will not generate a major that differs from the requested
+    value by more than 3. fl_set_xyplot_alphaytics() cannot be active at the
+    same time and the one that gets used is the one that was set last.
 
     Parameters
     ----------
@@ -669,14 +657,14 @@ def fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_ytics = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_ytics",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_xyplot_ytics(FL_OBJECT * ob, int major, int minor)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ticmajor = library.convert_to_intc(ticmajor)
     i_ticminor = library.convert_to_intc(ticminor)
@@ -688,8 +676,8 @@ def fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor):
 def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
     """fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound)
 
-    Defines and uses absolute value limits on x-axis of a xyplot flobject
-    as opposed to actual bounds in data.
+    Defines and uses absolute value limits on x-axis of a xyplot flobject as
+    opposed to actual bounds in data.
 
     Parameters
     ----------
@@ -706,7 +694,7 @@ def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_xbounds = library.cfuncproto(
@@ -714,7 +702,7 @@ def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_xyplot_xbounds(FL_OBJECT * ob, double xmin,
            double xmax)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -726,8 +714,8 @@ def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
 def fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound):
     """fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound)
 
-    Defines and uses absolute value limits on y-axis of a xyplot flobject
-    as opposed to actual bounds in data.
+    Defines and uses absolute value limits on y-axis of a xyplot flobject as
+    opposed to actual bounds in data.
 
     Parameters
     ----------
@@ -744,7 +732,7 @@ def fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_ybounds = library.cfuncproto(
@@ -752,7 +740,7 @@ def fl_set_xyplot_ybounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_xyplot_ybounds(FL_OBJECT * ob, double ymin,
            double ymax)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -766,8 +754,8 @@ def fl_get_xyplot_xbounds(ptr_flobject):
 
     Finds out the current value limits for x-axis of a xyplot flobject. The
     bounds returned are those used in clipping the data, which are not
-    necessarily the bounds used in computing the world/screen mapping due
-    to tic rounding.
+    necessarily the bounds used in computing the world/screen mapping due to
+    tic rounding.
 
     Parameters
     ----------
@@ -792,7 +780,7 @@ def fl_get_xyplot_xbounds(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_xbounds = library.cfuncproto(
@@ -801,7 +789,7 @@ def fl_get_xyplot_xbounds(ptr_flobject):
         cty.POINTER(cty.c_float)],
         """void fl_get_xyplot_xbounds(FL_OBJECT * ob, float * xmin,
            float * xmax)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_floatc_and_pointer()
     f_maxbound, ptr_maxbound = library.make_floatc_and_pointer()
@@ -816,8 +804,8 @@ def fl_get_xyplot_ybounds(ptr_flobject):
 
     Finds out the current value limits for y-axis of a xyplot flobject. The
     bounds returned are those used in clipping the data, which are not
-    necessarily the bounds used in computing the world/screen mapping due
-    to tic rounding.
+    necessarily the bounds used in computing the world/screen mapping due to
+    tic rounding.
 
     Parameters
     ----------
@@ -842,7 +830,7 @@ def fl_get_xyplot_ybounds(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_ybounds = library.cfuncproto(
@@ -851,7 +839,7 @@ def fl_get_xyplot_ybounds(ptr_flobject):
         cty.POINTER(cty.c_float)],
         """void fl_get_xyplot_ybounds(FL_OBJECT * ob, float * ymin,
            float * ymax)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_floatc_and_pointer()
     f_maxbound, ptr_maxbound = library.make_floatc_and_pointer()
@@ -879,8 +867,7 @@ def fl_get_xyplot(ptr_flobject):
         ypos : float
             vertical position of data point
         dataindx : int
-            the data index starting from 0, or -1 (if no point
-            is changed)
+            the data index starting from 0, or -1 (if no point is changed)
 
     Examples
     --------
@@ -893,7 +880,7 @@ def fl_get_xyplot(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_xyplot = library.cfuncproto(
@@ -902,7 +889,7 @@ def fl_get_xyplot(ptr_flobject):
         cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
         """void fl_get_xyplot(FL_OBJECT * ob, float * x, float * y,
            int * i)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_xpos, ptr_xpos = library.make_floatc_and_pointer()
     f_ypos, ptr_ypos = library.make_floatc_and_pointer()
@@ -916,8 +903,7 @@ def fl_get_xyplot(ptr_flobject):
 def fl_get_xyplot_data_size(ptr_flobject):
     """fl_get_xyplot_data_size(ptr_flobject) -> numpoints
 
-    Finds out the number of points a call of fl_get_xyplot_data()
-    will return.
+    Finds out the number of points a call of fl_get_xyplot_data() will return.
 
     Parameters
     ----------
@@ -935,14 +921,14 @@ def fl_get_xyplot_data_size(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_data_size = library.cfuncproto(
         library.load_so_libforms(), "fl_get_xyplot_data_size",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_xyplot_data_size(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_xyplot_data_size(ptr_flobject)
@@ -961,9 +947,9 @@ def fl_get_xyplot_data(ptr_flobject):
 
     Returns
     -------
-        xvalarray : float
+        xvalarray : list of floats?
             array of x-axis values
-        yvalarray : float
+        yvalarray : list of floats?
             array of y-axis values
         numpoints : int
             number of data points
@@ -979,7 +965,7 @@ def fl_get_xyplot_data(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_data = library.cfuncproto(
@@ -988,7 +974,7 @@ def fl_get_xyplot_data(ptr_flobject):
         cty.POINTER(cty.c_float), cty.POINTER(cty.c_int)],
         """void fl_get_xyplot_data(FL_OBJECT * ob, float * x, float * y,
            int * n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_xpos, ptr_xpos = library.make_floatc_and_pointer()
     f_ypos, ptr_ypos = library.make_floatc_and_pointer()
@@ -1004,16 +990,16 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlnum):
     """fl_get_xyplot_data_pointer(ptr_flobject, ovlnum)
     -> ptr_xposval, ptr_yposval, numpoints
 
-    Finds out the pointer to the data of xyplot flobject rather (instead
-    of a copy of the data).
+    Finds out the pointer to the data of xyplot flobject rather (instead of a
+    copy of the data).
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-            or the number set via fl_set_xyplot_maxoverlays()
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
+            the number set via fl_set_xyplot_maxoverlays()
 
     Returns
     -------
@@ -1035,7 +1021,7 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_data_pointer = library.cfuncproto(
@@ -1045,7 +1031,7 @@ def fl_get_xyplot_data_pointer(ptr_flobject, ovlnum):
         cty.POINTER(cty.POINTER(cty.c_float)), cty.POINTER(cty.c_int)],
         """void fl_get_xyplot_data_cty.POINTER(FL_OBJECT * ob, int id,
            float * * x, float * * y, int * n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     f_xpos, ptr_xpos = library.make_floatc_and_pointer()
@@ -1093,7 +1079,7 @@ def fl_get_xyplot_overlay_data(ptr_flobject, ovlnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_overlay_data = library.cfuncproto(
@@ -1103,7 +1089,7 @@ def fl_get_xyplot_overlay_data(ptr_flobject, ovlnum):
         cty.POINTER(cty.c_int)],
         """void fl_get_xyplot_overlay_data(FL_OBJECT * ob, int id,
            float * x, float * y, int * n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     f_xpos, ptr_xpos = library.make_floatc_and_pointer()
@@ -1130,14 +1116,21 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-            or the number set via fl_set_xyplot_maxoverlays()
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
+            the number set via fl_set_xyplot_maxoverlays()
         plottype : int
-            type of xyplot.  Values (from xfdata.py) FL_NORMAL_XYPLOT,
-            FL_SQUARE_XYPLOT, FL_CIRCLE_XYPLOT, FL_FILL_XYPLOT,
-            FL_POINTS_XYPLOT, FL_DASHED_XYPLOT, FL_IMPULSE_XYPLOT,
-            FL_ACTIVE_XYPLOT, FL_EMPTY_XYPLOT, FL_DOTTED_XYPLOT,
-            FL_DOTDASHED_XYPLOT, FL_LONGDASHED_XYPLOT, FL_LINEPOINTS_XYPLOT
+            type of xyplot.  Values (from xfdata.py) FL_NORMAL_XYPLOT (xyplot
+            type with solid line), FL_SQUARE_XYPLOT (xyplot type has added
+            square), FL_CIRCLE_XYPLOT (xyplot type has added circle),
+            FL_FILL_XYPLOT (xyplot type is filled completely), FL_POINTS_XYPLOT
+            (xyplot type has only data points), FL_DASHED_XYPLOT (xyplot type
+            has dashed line), FL_IMPULSE_XYPLOT (Data drawn by vertical lines),
+            FL_ACTIVE_XYPLOT (xyplot type accepts interactive manipulations),
+            FL_EMPTY_XYPLOT (Only the axes are drawn), FL_DOTTED_XYPLOT (Data
+            drawn as a dotted line), FL_DOTDASHED_XYPLOT (Data drawn as a
+            dash-dot-dash line), FL_LONGDASHED_XYPLOT (xyplot type has long
+            dashed line), FL_LINEPOINTS_XYPLOT (xyplot type has lines and
+            points).
 
     Examples
     --------
@@ -1145,7 +1138,7 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_overlay_type = library.cfuncproto(
@@ -1153,13 +1146,14 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_xyplot_overlay_type(FL_OBJECT * ob, int id,
            int type)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     library.checkfatal_allowed_value_in_list(plottype, \
             xfdata.XYPLOTTYPE_list)
     i_plottype = library.convert_to_intc(plottype)
-    library.keep_elem_refs(ptr_flobject, ovlnum, plottype, i_ovlnum, i_plottype)
+    library.keep_elem_refs(ptr_flobject, ovlnum, plottype, i_ovlnum, \
+            i_plottype)
     _fl_set_xyplot_overlay_type(ptr_flobject, i_ovlnum, i_plottype)
 
 
@@ -1173,8 +1167,8 @@ def fl_delete_xyplot_overlay(ptr_flobject, ovlnum):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-            or the number set via fl_set_xyplot_maxoverlays()
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
+            the number set via fl_set_xyplot_maxoverlays()
 
     Examples
     --------
@@ -1182,14 +1176,14 @@ def fl_delete_xyplot_overlay(ptr_flobject, ovlnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_xyplot_overlay = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_xyplot_overlay",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_delete_xyplot_overlay(FL_OBJECT * ob, int id)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum)
@@ -1221,7 +1215,7 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_interpolate = library.cfuncproto(
@@ -1230,7 +1224,7 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
         cty.c_double],
         """void fl_set_xyplot_interpolate(FL_OBJECT * ob, int id,
            int degree, double grid)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     i_degree = library.convert_to_intc(degree)
@@ -1243,7 +1237,7 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
 def fl_set_xyplot_inspect(ptr_flobject, yesno):
     """fl_set_xyplot_inspect(ptr_flobject, yesno)
 
-    Makes aware or not xyplot flobjects of mouse clicks. Once an XYPlot is in
+    Makes aware or not xyplot flobjects of mouse clicks. Once an xyplot is in
     inspect mode, whenever the mouse is released and the mouse position is on
     one of the data point, the flobject is returned to the caller or its
     callback is invoked. You can use fl_get_xyplot() to find out which point
@@ -1254,8 +1248,8 @@ def fl_set_xyplot_inspect(ptr_flobject, yesno):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         yesno : int
-            flag to enable/disable inspect mode. Values 0 (disabled) or
-            1 (enabled)
+            flag to enable/disable inspect mode. Values 0 (disabled) or 1
+            (enabled)
 
     Examples
     --------
@@ -1263,14 +1257,14 @@ def fl_set_xyplot_inspect(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_inspect = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_inspect",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_xyplot_inspect(FL_OBJECT * ob, int yes)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -1280,15 +1274,14 @@ def fl_set_xyplot_inspect(ptr_flobject, yesno):
 def fl_set_xyplot_symbolsize(ptr_flobject, symsize):
     """fl_set_xyplot_symbolsize(ptr_flobject, symsize)
 
-    Changes the size of the symbols drawn at data points of a xyplot
-    object. By default it is 4.
+    Changes the size of the symbols drawn at data points of a xyplot flobject.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         symsize : int
-            size of symbol in pixel
+            size of symbol in pixel. By default it is 4.
 
     Examples
     --------
@@ -1296,14 +1289,14 @@ def fl_set_xyplot_symbolsize(ptr_flobject, symsize):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_symbolsize = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_symbolsize",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_xyplot_symbolsize(FL_OBJECT * ob, int n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_symsize = library.convert_to_intc(symsize)
     library.keep_elem_refs(ptr_flobject, symsize, i_symsize)
@@ -1321,8 +1314,7 @@ def fl_replace_xyplot_point(ptr_flobject, indxpt, xpos, ypos):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         indxpt : int
-            index of the value to be replaced. The first value has
-            an index of 0.
+            index of the value to be replaced. The first value has index of 0
         xpos : float
             new horizontal position
         ypos : float
@@ -1334,7 +1326,7 @@ def fl_replace_xyplot_point(ptr_flobject, indxpt, xpos, ypos):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_replace_xyplot_point = library.cfuncproto(
@@ -1343,7 +1335,7 @@ def fl_replace_xyplot_point(ptr_flobject, indxpt, xpos, ypos):
         cty.c_double],
         """void fl_replace_xyplot_point(FL_OBJECT * ob, int i,
            double x, double y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_indxpt = library.convert_to_intc(indxpt)
     f_xpos = library.convert_to_doublec(xpos)
@@ -1354,12 +1346,12 @@ def fl_replace_xyplot_point(ptr_flobject, indxpt, xpos, ypos):
 
 
 def fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid, \
-                                       xpos, ypos):
+        xpos, ypos):
     """fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid,
     xpos, ypos)
 
     Replaces the value of a particular point in specified dataset. This
-    routine is an extension of fl_replace_xyplot_point() for more than one
+    function is an extension of fl_replace_xyplot_point() for more than one
     dataset.
 
     Parameters
@@ -1367,8 +1359,7 @@ def fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid, \
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         indxpt : int
-            index of the value to be replaced. The first value has an index
-            of 0.
+            index of the value to be replaced. The first value has index of 0
         dsetid : int
             dataset the points belongs to. The first data set is 0.
         xpos : float
@@ -1382,7 +1373,7 @@ def fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_replace_xyplot_point_in_overlay = library.cfuncproto(
@@ -1391,7 +1382,7 @@ def fl_replace_xyplot_point_in_overlay(ptr_flobject, indxpt, dsetid, \
         cty.c_double, cty.c_double],
         """void fl_replace_xyplot_point_in_overlay(FL_OBJECT * ob,
            int i, int setID, double x, double y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_indxpt = library.convert_to_intc(indxpt)
     i_dsetid = library.convert_to_intc(dsetid)
@@ -1435,7 +1426,7 @@ def fl_get_xyplot_xmapping(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_xmapping = library.cfuncproto(
@@ -1444,7 +1435,7 @@ def fl_get_xyplot_xmapping(ptr_flobject):
         cty.POINTER(cty.c_float)],
         """void fl_get_xyplot_xmapping(FL_OBJECT * ob, float * a,
            float * b)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_mapcnst1, ptr_mapcnst1 = library.make_floatc_and_pointer()
     f_mapcnst2, ptr_mapcnst2 = library.make_floatc_and_pointer()
@@ -1486,7 +1477,7 @@ def fl_get_xyplot_ymapping(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_ymapping = library.cfuncproto(
@@ -1495,7 +1486,7 @@ def fl_get_xyplot_ymapping(ptr_flobject):
         cty.POINTER(cty.c_float)],
         """void fl_get_xyplot_ymapping(FL_OBJECT * ob, float * a,
            float * b)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_mapcnst1, ptr_mapcnst1 = library.make_floatc_and_pointer()
     f_mapcnst2, ptr_mapcnst2 = library.make_floatc_and_pointer()
@@ -1508,11 +1499,11 @@ def fl_get_xyplot_ymapping(ptr_flobject):
 def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
     """fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align)
 
-    Adds a series of keys to a particular plot and sets the position for
-    each key. A key is the combination of drawing a segment of the plot line
-    style with a piece of text that describes what the corresponding line
-    represents. Obviously, keys are most useful when you have more than one
-    plot (i.e. overlays).
+    Adds a series of keys to a particular plot and sets the position for each
+    key. A key is the combination of drawing a segment of the plot line style
+    with a piece of text that describes what the corresponding line represents.
+    Obviously, keys are most useful when you have more than one plot (i.e.
+    overlays).
 
     Parameters
     ----------
@@ -1520,9 +1511,9 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
             xyplot flobject
         keystxtlist : list_of_str
             series of keys for each plot. The last element of the array must
-            be None to indicate the end. The array index is the plot id,
-            i.e. key[0] is the key for the base plot, key[1] the key for the
-            first overlay, etc.
+            be None to indicate the end. The array index is the plot id, i.e.
+            key[0] is the key for the base plot, key[1] the key for the first
+            overlay, etc.
         xposlist : list_of_float
             series of horizontal positions in world coordinate system
         yposlist : list_of_float
@@ -1531,16 +1522,16 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
             alignment of the entire key box relative to the given position.
             Values (from xfdata.py)
             FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
-            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
-            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
-            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
-            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the bottom
+            of the box, outside it), FL_ALIGN_LEFT (To the left of the box,
+            outside it), FL_ALIGN_RIGHT (To the right of the box, outside it),
+            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
+            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+            outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
+            is allowed.
 
     Examples
     --------
@@ -1548,7 +1539,7 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_keys = library.cfuncproto(
@@ -1557,7 +1548,7 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
         cty.c_float, cty.c_float, cty.c_int],
         """void fl_set_xyplot_keys(FL_OBJECT * ob, char * * keys, float x,
            float y, int align)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ptr_keystxtlist = library.convert_to_ptr_stringc(keystxtlist)  # verify
     f_xposlist = library.convert_to_floatc(xposlist)
@@ -1573,11 +1564,11 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
 def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
     """fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt)
 
-    Adds or removes a key to a particular plot. A key is the combination
-    of drawing a segment of the plot line style with a piece of text that
-    describes what the corresponding line represents. Obviously, keys are
-    most useful when you have more than one plot (i.e. overlays). All the
-    keys will be drawn together inside a box.
+    Adds or removes a key to a particular plot. A key is the combination of
+    drawing a segment of the plot line style with a piece of text that
+    describes what the corresponding line represents. Obviously, keys are most
+    useful when you have more than one plot (i.e. overlays). All the keys will
+    be drawn together inside a box.
 
     Parameters
     ----------
@@ -1595,7 +1586,7 @@ def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_key = library.cfuncproto(
@@ -1603,7 +1594,7 @@ def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, xfdata.STRING],
         """void fl_set_xyplot_key(FL_OBJECT * ob, int id,
            const char * key)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     s_keytxt = library.convert_to_stringc(keytxt)
@@ -1626,18 +1617,17 @@ def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
             horizontal position in world coordinate system
         align : int
             alignment of the entire key box relative to the given position.
-            Values (from xfdata.py)
-            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
-            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
-            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
-            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
-            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            Values (from xfdata.py) FL_ALIGN_CENTER (In the middle of the box,
+            inside it), FL_ALIGN_TOP (To the top of the box, outside it),
+            FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            FL_ALIGN_LEFT (To the left of the box, outside it), FL_ALIGN_RIGHT
+            (To the right of the box, outside it), FL_ALIGN_LEFT_TOP (To the
+            left and top of the box, outside it), FL_ALIGN_RIGHT_TOP (To the
+            right and top of the box, outside it), FL_ALIGN_LEFT_BOTTOM (To
+            the left and bottom of the box, outside it), FL_ALIGN_RIGHT_BOTTOM
+            (To the right and bottom of the box, outside it), FL_ALIGN_INSIDE
+            (places the text inside the box), FL_ALIGN_VERT (not functional
+            yet). Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -1645,7 +1635,7 @@ def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_key_position = library.cfuncproto(
@@ -1654,7 +1644,7 @@ def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
         cty.c_int],
         """void fl_set_xyplot_key_position(FL_OBJECT * ob, float x,
            float y, int align)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_xpos = library.convert_to_floatc(xpos)
     f_ypos = library.convert_to_floatc(ypos)
@@ -1675,29 +1665,29 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         style : int
-            label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
@@ -1705,7 +1695,7 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_key_font = library.cfuncproto(
@@ -1713,7 +1703,7 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_xyplot_key_font(FL_OBJECT * ob, int style,
            int size)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -1732,9 +1722,9 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
-            or the number set via fl_set_xyplot_maxoverlays(). If it is
-            0 uses the base dataset
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
+            the number set via fl_set_xyplot_maxoverlays(). If it is 0 uses
+            the base dataset
 
     Returns
     -------
@@ -1747,14 +1737,14 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_xyplot_numdata = library.cfuncproto(
         library.load_so_libforms(), "fl_get_xyplot_numdata",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_get_xyplot_numdata(FL_OBJECT * ob, int id)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     library.keep_elem_refs(ptr_flobject, ovlnum, i_ovlnum)
@@ -1762,8 +1752,8 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
     return retval
 
 
-# fl_set_xyplot_fontsize function placeholder (deprecated)
-# fl_set_xyplot_fontstyle function placeholder (deprecated)
+# fl_set_xyplot_fontsize() function placeholder (deprecated)
+# fl_set_xyplot_fontstyle() function placeholder (deprecated)
 
 
 def fl_xyplot_s2w(ptr_flobject, scrnxpos, scrnypos):
@@ -1799,7 +1789,7 @@ def fl_xyplot_s2w(ptr_flobject, scrnxpos, scrnypos):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_xyplot_s2w = library.cfuncproto(
@@ -1808,7 +1798,7 @@ def fl_xyplot_s2w(ptr_flobject, scrnxpos, scrnypos):
         cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
         """void fl_xyplot_s2w(FL_OBJECT * ob, double sx, double sy,
            float * wx, float * wy)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_scrnxpos = library.convert_to_doublec(scrnxpos)
     f_scrnypos = library.convert_to_doublec(scrnypos)
@@ -1854,7 +1844,7 @@ def fl_xyplot_w2s(ptr_flobject, wrldxpos, wrldypos):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_xyplot_w2s = library.cfuncproto(
@@ -1863,7 +1853,7 @@ def fl_xyplot_w2s(ptr_flobject, wrldxpos, wrldypos):
         cty.POINTER(cty.c_float), cty.POINTER(cty.c_float)],
         """void fl_xyplot_w2s(FL_OBJECT * ob, double wx, double wy,
            float * sx, float * sy)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_wrldxpos = library.convert_to_doublec(wrldxpos)
     f_wrldypos = library.convert_to_doublec(wrldypos)
@@ -1900,7 +1890,7 @@ def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_xscale = library.cfuncproto(
@@ -1908,7 +1898,7 @@ def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_double],
         """void fl_set_xyplot_xscale(FL_OBJECT * ob, int scale,
            double base)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(scale, xfdata.XYPLOTSCALE_list)
     i_scale = library.convert_to_intc(scale)
@@ -1928,8 +1918,8 @@ def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         scale : int
-            scaling to be used. Values (from xfdata.py) FL_LINEAR (default)
-            or FL_LOG
+            scaling to be used. Values (from xfdata.py) FL_LINEAR (default) or
+            FL_LOG
         logbase : float
             base of the logarithm to be used. Used only if scale is
             xfdata.FL_LOG
@@ -1940,7 +1930,7 @@ def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_yscale = library.cfuncproto(
@@ -1948,7 +1938,7 @@ def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_double],
         """void fl_set_xyplot_yscale(FL_OBJECT * ob, int scale,
            double base)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(scale, xfdata.XYPLOTSCALE_list)
     i_scale = library.convert_to_intc(scale)
@@ -1977,14 +1967,14 @@ def fl_clear_xyplot(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_clear_xyplot = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_xyplot",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_xyplot(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     _fl_clear_xyplot(ptr_flobject)
@@ -2013,7 +2003,7 @@ def fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
 
@@ -2021,7 +2011,7 @@ def fl_set_xyplot_linewidth(ptr_flobject, ovlnum, lnwidth):
         library.load_so_libforms(), "fl_set_xyplot_linewidth",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_xyplot_linewidth(FL_OBJECT * ob, int id, int lw)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     i_lnwidth = library.convert_to_intc(lnwidth)
@@ -2039,10 +2029,10 @@ def fl_set_xyplot_xgrid(ptr_flobject, grid):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         grid : int
-            level of grid to be set. Values (from xfdata.py)
-            FL_GRID_NONE (No grid for xyplot), FL_GRID_MAJOR (Grid for the
-            major divisions of xyplot), FL_GRID_MINOR (Grid for the major
-            and minor divisions of xyplot).
+            level of grid to be set. Values (from xfdata.py) FL_GRID_NONE (No
+            grid for xyplot), FL_GRID_MAJOR (Grid for the major divisions of
+            xyplot), FL_GRID_MINOR (Grid for the major and minor divisions of
+            xyplot).
 
     Examples
     --------
@@ -2050,7 +2040,7 @@ def fl_set_xyplot_xgrid(ptr_flobject, grid):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
 
@@ -2058,7 +2048,7 @@ def fl_set_xyplot_xgrid(ptr_flobject, grid):
         library.load_so_libforms(), "fl_set_xyplot_xgrid",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_xyplot_xgrid(FL_OBJECT * ob, int xgrid)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID_list)
     i_grid = library.convert_to_intc(grid)
@@ -2076,8 +2066,10 @@ def fl_set_xyplot_ygrid(ptr_flobject, grid):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         grid : int
-            level of grid to be set. Values (from xfdata.py) FL_GRID_NONE,
-            FL_GRID_MAJOR, FL_GRID_MINOR
+            level of grid to be set. Values (from xfdata.py)  FL_GRID_NONE (No
+            grid for xyplot), FL_GRID_MAJOR (Grid for the major divisions of
+            xyplot), FL_GRID_MINOR (Grid for the major and minor divisions of
+            xyplot)
 
     Examples
     --------
@@ -2085,14 +2077,14 @@ def fl_set_xyplot_ygrid(ptr_flobject, grid):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_ygrid = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_ygrid",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_xyplot_ygrid(FL_OBJECT * ob, int ygrid)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(grid, xfdata.XYPLOTGRID_list)
     i_grid = library.convert_to_intc(grid)
@@ -2111,16 +2103,15 @@ def fl_set_xyplot_grid_linestyle(ptr_flobject, lnstyle):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         lnstyle : int
-            style of the line to draw. Values (from xfdata.py)
-            FL_SOLID (Solid line. Default and most efficient), FL_USERDASH
-            (Dashed line, but the dash pattern is used-definable via
-            fl_dashedlinestyle(). Only the odd numbered segments are
-            drawn with the foreground color), FL_USERDOUBLEDASH (Similar to
-            FL_LINE_USERDASH but both even and odd numbered segments are
-            drawn, with the even numbered segments drawn in the background
-            color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
-            FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
-            [----]), FL_LONGDASH (Long dashed line [--------]).
+            style of the line to draw. Values (from xfdata.py) FL_SOLID (Solid
+            line. Default and most efficient), FL_USERDASH (Dashed line, but
+            the dash pattern is used-definable via fl_dashedlinestyle(). Only
+            the odd numbered segments are drawn with the foreground color),
+            FL_USERDOUBLEDASH (Similar to FL_LINE_USERDASH but both even and
+            odd numbered segments are drawn, with the even numbered segments
+            drawn in the background color, as set by fl_bk_color(), FL_DOT
+            (Dotted line [....]), FL_DOTDASH (Dash-dot-dash line [-.-.]),
+            FL_DASH (Dashed line [----]), FL_LONGDASH (Long dashed line [_ _ _])
 
     Returns
     -------
@@ -2133,14 +2124,14 @@ def fl_set_xyplot_grid_linestyle(ptr_flobject, lnstyle):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_grid_linestyle = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_grid_linestyle",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_xyplot_grid_linestyle(FL_OBJECT * ob, int style)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(lnstyle, xfdata.LINESTYLE_list)
     i_lnstyle = library.convert_to_intc(lnstyle)
@@ -2172,8 +2163,8 @@ def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
             describes major divisions. E.g. to label a plot with Monday,
             Tuesday etc, major should be given as Monday|Tuesday|...
         ticminor : str
-            currently unused. It is set to 1, i.e, no divisions between
-            major tic marks.
+            currently unused. It is set to 1, i.e, no divisions between major
+            tic marks.
 
     Examples
     --------
@@ -2181,7 +2172,7 @@ def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_xyplot_alphaxtics = library.cfuncproto(
@@ -2189,7 +2180,7 @@ def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING, xfdata.STRING],
         """void fl_set_xyplot_alphaxtics(FL_OBJECT * ob, const char * m,
             const char * s)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_ticmajor = library.convert_to_stringc(ticmajor)
     s_ticminor = library.convert_to_stringc(ticminor)
@@ -2221,8 +2212,8 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
             describes major divisions. E.g. to label a plot with Monday,
             Tuesday etc, major should be given as Monday|Tuesday|...
         ticminor : str
-            currently unused. It is set to 1, i.e, no divisions between
-            major tic marks.
+            currently unused. It is set to 1, i.e, no divisions between major
+            tic marks.
 
     Examples
     --------
@@ -2230,7 +2221,7 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_alphaytics = library.cfuncproto(
@@ -2238,7 +2229,7 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING, xfdata.STRING],
         """void fl_set_xyplot_alphaytics(FL_OBJECT * ob, const char * m,
             const char * s)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_ticmajor = library.convert_to_stringc(ticmajor)
     s_ticminor = library.convert_to_stringc(ticminor)
@@ -2250,11 +2241,11 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
 def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
     """fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg)
 
-    Controls the plotting area for x-axis of xyplot flobject. By default,
-    the plotting area is automatically adjusted for tic labels and titles so
-    that a maximum plotting area results, but this can be undesirable in
-    certain situations. The pixel amounts are computed using the current
-    label font and size.
+    Controls the plotting area for x-axis of xyplot flobject. By default, the
+    plotting area is automatically adjusted for tic labels and titles so that
+    a maximum plotting area results, but this can be undesirable in certain
+    situations. The pixel amounts are computed using the current label font
+    and size.
 
     Parameters
     ----------
@@ -2273,7 +2264,7 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_fixed_xaxis = library.cfuncproto(
@@ -2281,7 +2272,7 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING, xfdata.STRING],
         """void fl_set_xyplot_fixed_xaxis(FL_OBJECT * ob, const char * lm,
             const char * rm)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_leftmrg = library.convert_to_stringc(leftmrg)
     s_rightmrg = library.convert_to_stringc(rightmrg)
@@ -2293,14 +2284,13 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
 def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
     """fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg)
 
-    Controls the plotting area for y-axis of xyplot flobject. By default,
-    the plotting area is automatically adjusted for tic labels and titles so
-    that a maximum plotting area results, but this can be undesirable in
-    certain situations. The pixel amounts are computed using the current
-    label font and size. Even for y-axis margins the length of the string,
-    not the height, is used as the margin, thus to leave space for one line
-    of text, a single character (say m) or two narrow characters (say ii)
-    should be used.
+    Controls the plotting area for y-axis of xyplot flobject. By default, the
+    plotting area is automatically adjusted for tic labels and titles so that
+    a maximum plotting area results, but this can be undesirable in certain
+    situations. The pixel amounts are computed using the current label font
+    and size. Even for y-axis margins the length of the string, not the height,
+    is used as the margin, thus to leave space for one line of text, a single
+    character (say m) or two narrow characters (say ii) should be used.
 
     Parameters
     ----------
@@ -2319,7 +2309,7 @@ def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_fixed_yaxis = library.cfuncproto(
@@ -2327,7 +2317,7 @@ def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING, xfdata.STRING],
         """void fl_set_xyplot_fixed_yaxis(FL_OBJECT * ob, const char * bm,
             const char * tm)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_bottommrg = library.convert_to_stringc(bottommrg)
     s_topmrg = library.convert_to_stringc(topmrg)
@@ -2341,9 +2331,9 @@ def fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree):
     """fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree)
     -> numpoints, outxpos, outypos
 
-    Manages polynomial interpolation function and obtains the number of
-    points in interpolated function ((wx[num - 1] - wx[0]) / grid + 1.01)
-    and the interpolate values.
+    Manages polynomial interpolation function and obtains the number of points
+    in interpolated function ((wx[num - 1] - wx[0]) / grid + 1.01) and the
+    interpolate values.
 
     Parameters
     ----------
@@ -2379,7 +2369,7 @@ def fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_interpolate = library.cfuncproto(
@@ -2389,7 +2379,7 @@ def fl_interpolate(wrldxposlist, wrldyposlist, numpoints, grid, degree):
         cty.c_double, cty.c_int],
         """int fl_interpolate(const float * wx, const float * wy, int nin,
             float * x, float * y, double grid, int ndegree)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ptr_wrldxposlist = library.convert_to_ptr_floatc(wrldxposlist)  # unsure
     ptr_wrldyposlist = library.convert_to_ptr_floatc(wrldyposlist)  # unsure
     i_numpoints = library.convert_to_intc(numpoints)
@@ -2409,8 +2399,8 @@ def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
     """fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid)
     -> numpoints, outxpos, outypos
 
-    Manages spline interpolation function. Spline interpolation is a form
-    of interpolation where the interpolant is a special type of piecewise
+    Manages spline interpolation function. Spline interpolation is a form of
+    interpolation where the interpolant is a special type of piecewise
     polynomial called a spline. Obtain number of points in interpolate
     function and the interpolate values.
 
@@ -2428,7 +2418,7 @@ def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
     Returns
     -------
         numpoints : int
-            number of points in the interpolated function or -1 (on failure)
+            number of points in the interpolated function, or -1 (on failure)
         outxpos : float
             interpolated value for x-axis
         outypos : float
@@ -2445,7 +2435,7 @@ def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_spline_interpolate = library.cfuncproto(
@@ -2455,7 +2445,7 @@ def fl_spline_interpolate(wrldxposlist, wrldyposlist, numpoints, grid):
         cty.c_double],
         """int fl_spline_interpolate(const float * wx, const float * wy,
             int nin, float * x, float * y, double grid)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ptr_wrldxposlist = library.convert_to_ptr_floatc(wrldxposlist)  # unsure
     ptr_wrldyposlist = library.convert_to_ptr_floatc(wrldyposlist)  # unsure
     i_numpoints = library.convert_to_intc(numpoints)
@@ -2504,7 +2494,7 @@ def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_XYPLOT_SYMBOL = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_OBJECT),
@@ -2516,7 +2506,7 @@ def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
         xfdata.FL_XYPLOT_SYMBOL],
         """FL_XYPLOT_SYMBOL fl_set_xyplot_symbol(FL_OBJECT * ob, int id,
            FL_XYPLOT_SYMBOL symbol)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
     library.verify_function_type(pyfn_XyPlotSymbol)
@@ -2537,8 +2527,7 @@ def fl_set_xyplot_mark_active(ptr_flobject, yesno):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         yesno : int
-            flag to enable/disable drawing. Values 0 (disabled)
-            or 1 (enabled)
+            flag to enable/disable drawing. Values 0 (disabled) or 1 (enabled)
 
     Returns
     -------
@@ -2551,14 +2540,14 @@ def fl_set_xyplot_mark_active(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_xyplot_mark_active = library.cfuncproto(
         library.load_so_libforms(), "fl_set_xyplot_mark_active",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_xyplot_mark_active(FL_OBJECT * ob, int y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)

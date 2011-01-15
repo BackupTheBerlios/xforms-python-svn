@@ -42,7 +42,7 @@ from xformslib import xfdata
 
 # Routines
 
-# fl_create_slider function placeholder (internal)
+# fl_create_slider() function placeholder (internal)
 
 
 def fl_add_slider(slidertype, xpos, ypos, width, height, label):
@@ -54,8 +54,8 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
     Parameters
     ----------
         slidertype : int
-            type of slider to be added. Values (from xfdata.py)
-            FL_VERT_SLIDER (normal slider), FL_HOR_SLIDER (horizontal slider),
+            type of slider to be added. Values (from xfdata.py) FL_VERT_SLIDER
+            (normal slider), FL_HOR_SLIDER (horizontal slider),
             FL_VERT_FILL_SLIDER (filled slider), FL_HOR_FILL_SLIDER (horizontal
             filled slider), FL_VERT_NICE_SLIDER (*todo*), FL_HOR_NICE_SLIDER
             (horizontal *todo*), FL_VERT_BROWSER_SLIDER (*todo*),
@@ -90,7 +90,7 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_slider = library.cfuncproto(
@@ -99,7 +99,7 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_slider(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(slidertype, \
             xfdata.SLIDERTYPE_list)
     i_slidertype = library.convert_to_intc(slidertype)
@@ -115,20 +115,20 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
     return retval
 
 
-# fl_create_valslider function placeholder (internal)
+# fl_create_valslider() function placeholder (internal)
 
 
 def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
     """fl_add_valslider(slidertype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a slider to a form. Its value is displayed above or to the left
-    of the slider.
+    Adds a slider to a form. Its value is displayed above or to the left of
+    the slider.
 
     Parameters
     ----------
         slidertype : int
-            type of the slider. Values (from xfdata.py)
+            type of the slider to be added. Values (from xfdata.py)
             FL_VERT_SLIDER (normal slider), FL_HOR_SLIDER (horizontal slider),
             FL_VERT_FILL_SLIDER (filled slider), FL_HOR_FILL_SLIDER (horizontal
             filled slider), FL_VERT_NICE_SLIDER (*todo*), FL_HOR_NICE_SLIDER
@@ -164,7 +164,7 @@ def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_valslider = library.cfuncproto(
@@ -173,7 +173,7 @@ def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_valslider(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(slidertype, \
             xfdata.SLIDERTYPE_list)
     i_slidertype = library.convert_to_intc(slidertype)
@@ -207,14 +207,14 @@ def fl_set_slider_value(ptr_flobject, slvalue):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_slider_value = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_value",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_slider_value(FL_OBJECT * ob, double val)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_slvalue = library.convert_to_doublec(slvalue)
     library.keep_elem_refs(ptr_flobject, slvalue, f_slvalue)
@@ -242,14 +242,14 @@ def fl_get_slider_value(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_slider_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_slider_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_slider_value(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_slider_value(ptr_flobject)
@@ -276,7 +276,7 @@ def fl_set_slider_bounds(ptr_flobject, minbound, maxbound):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_slider_bounds = library.cfuncproto(
@@ -284,7 +284,7 @@ def fl_set_slider_bounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_slider_bounds(FL_OBJECT * ob, double min,
            double max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -321,7 +321,7 @@ def fl_get_slider_bounds(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_slider_bounds = library.cfuncproto(
@@ -330,7 +330,7 @@ def fl_get_slider_bounds(ptr_flobject):
         cty.POINTER(cty.c_double)],
         """void fl_get_slider_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_doublec_and_pointer()
     f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
@@ -340,7 +340,7 @@ def fl_get_slider_bounds(ptr_flobject):
     return f_minbound.value, f_maxbound.value
 
 
-# fl_set_slider_return function placeholder (deprecated)
+# fl_set_slider_return() function placeholder (deprecated)
 
 
 def fl_set_slider_step(ptr_flobject, step):
@@ -362,14 +362,14 @@ def fl_set_slider_step(ptr_flobject, step):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_slider_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_step",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_slider_step(FL_OBJECT * ob, double value)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_step = library.convert_to_doublec(step)
     library.keep_elem_refs(ptr_flobject, step, f_step)
@@ -379,8 +379,7 @@ def fl_set_slider_step(ptr_flobject, step):
 def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
     """fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval)
 
-    Defines slider increments for clicks with left and middle
-    mouse button.
+    Defines slider increments for clicks with left and middle mouse button.
 
     Parameters
     ----------
@@ -397,7 +396,7 @@ def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_slider_increment = library.cfuncproto(
@@ -405,7 +404,7 @@ def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_slider_increment(FL_OBJECT * ob, double l,
            double r)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_leftbtnval = library.convert_to_doublec(leftbtnval)
     f_midbtnval = library.convert_to_doublec(midbtnval)
@@ -417,8 +416,8 @@ def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
 def fl_get_slider_increment(ptr_flobject):
     """fl_get_slider_increment(ptr_flobject) -> leftbtnval, midbtnval
 
-    Finds out current slider increments for clicks with left and middle
-    mouse button.
+    Finds out current slider increments for clicks with left and middle mouse
+    buttons.
 
     Parameters
     ----------
@@ -443,7 +442,7 @@ def fl_get_slider_increment(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_slider_increment = library.cfuncproto(
@@ -452,7 +451,7 @@ def fl_get_slider_increment(ptr_flobject):
         cty.POINTER(cty.c_double)], \
         """void fl_get_slider_increment(FL_OBJECT * ob, double * l,
            double * r)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_leftbtnval, ptr_leftbtnval = library.make_doublec_and_pointer()
     f_midlbtnval, ptr_midlbtnval = library.make_doublec_and_pointer()
@@ -480,14 +479,14 @@ def fl_set_slider_size(ptr_flobject, size):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_slider_size = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_size",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_slider_size(FL_OBJECT * ob, double size)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_size = library.convert_to_doublec(size)
     library.keep_elem_refs(ptr_flobject, size, f_size)
@@ -512,14 +511,14 @@ def fl_set_slider_precision(ptr_flobject, precis):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_slider_precision = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_precision",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_slider_precision(FL_OBJECT * ob, int prec)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_precis = library.convert_to_intc(precis)
     library.keep_elem_refs(ptr_flobject, precis, i_precis)
@@ -529,17 +528,17 @@ def fl_set_slider_precision(ptr_flobject, precis):
 def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
     """fl_set_slider_filter(ptr_flobject, pyfn_ValFilter)
 
-    Registers a filter function to show values in a slider flobject.
-    By default, slider value shown in floating point format.
+    Registers a filter function to show values in a slider flobject. By
+    default, slider value shown in floating point format.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             slider flobject
         pyfn_ValFilter : python function, returned value
-            name referring to function(ptr_flobject, valfloat,
-            intprecis) -> string
-            function to show values in slider
+            name referring to function(ptr_flobject, [float]value, [int]precis)
+            -> [str]text
+            function to show values in slider, text is what will be shown
 
     Examples
     --------
@@ -547,16 +546,16 @@ def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
-    # FL_VAL_FILTER = cty.CFUNCTYPE(STRING, cty.POINTER(FL_OBJECT),
-    #                               cty.c_double, cty.c_int)
+    # FL_VAL_FILTER = cty.CFUNCTYPE(xfdata.STRING, cty.POINTER(FL_OBJECT),
+    #            cty.c_double, cty.c_int)
     _fl_set_slider_filter = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_filter",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_VAL_FILTER],
         """void fl_set_slider_filter(FL_OBJECT * ob, FL_VAL_FILTER filter)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_ValFilter)
     cfn_ValFilter = xfdata.FL_VAL_FILTER(pyfn_ValFilter)
@@ -568,12 +567,11 @@ def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
 def fl_get_slider_repeat(ptr_flobject):
     """fl_get_slider_repeat(ptr_flobject) -> tdelay
 
-    Finds out the time delay (in milliseconds) between jumps of the
-    scrollbar knob when the mouse button is kept pressed down on the
-    scrollbar outside of the knobs area. The delay for the very first
-    jump is twice that long in order to avoid jumping to start too soon
-    when only a single click was intended but the user is a bit slow in
-    releasing the mouse button.
+    Finds out the time delay (in milliseconds) between jumps of the scrollbar
+    knob when the mouse button is kept pressed down on the scrollbar outside
+    of the knobs area. The delay for the very first jump is twice that long in
+    order to avoid jumping to start too soon when only a single click was
+    intended but the user is a bit slow in releasing the mouse button.
 
     Parameters
     ----------
@@ -587,18 +585,18 @@ def fl_get_slider_repeat(ptr_flobject):
 
     Examples
     --------
-        >>> *todo*
+        >>> msecs = fl_get_slider_repeat(pslobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_slider_repeat = library.cfuncproto(
         library.load_so_libforms(), "fl_get_slider_repeat",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_slider_repeat(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_slider_repeat(ptr_flobject)
@@ -608,34 +606,33 @@ def fl_get_slider_repeat(ptr_flobject):
 def fl_set_slider_repeat(ptr_flobject, tdelay):
     """fl_set_slider_repeat(ptr_flobject, tdelay)
 
-    Defines the time delay between jumps of the scrollbar knob when the
-    mouse button is kept pressed down on the scrollbar outside of the
-    knobs area. The delay for the very first jump is twice that long in
-    order to avoid jumping to start too soon when only a single click
-    was intended but the user is a bit slow in releasing the mouse button.
+    Defines the time delay between jumps of the scrollbar knob when the mouse
+    button is kept pressed down on the scrollbar outside of the knobs area.
+    The delay for the very first jump is twice that long in order to avoid
+    jumping to start too soon when only a single click was intended but the
+    user is a bit slow in releasing the mouse button.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             slider flobject
         tdelay : int
-            time delay (in milliseconds) to be set. The default
-            value is 100 ms.
+            time delay (in milliseconds) to be set. Default value is 100 ms
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_slider_repeat(pslobj, 200)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_slider_repeat = library.cfuncproto(
         library.load_so_libforms(), "fl_set_slider_repeat",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_get_slider_repeat(FL_OBJECT * obj, int)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_tdelay = library.convert_to_intc(tdelay)
     library.keep_elem_refs(ptr_flobject, tdelay, i_tdelay)

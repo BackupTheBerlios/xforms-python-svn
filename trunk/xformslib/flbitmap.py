@@ -76,13 +76,12 @@ def fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> xbmobj = fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200,
+        >>> pxbmobj = fl_add_bitmap(xfdata.FL_NORMAL_BITMAP, 320, 200,
                 100, 100, "MyBitmap")
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
-        Review: UT+
+        Status: UnitTest + Doc + Demo = OK
 
     """
     _fl_add_bitmap = library.cfuncproto(
@@ -91,7 +90,7 @@ def fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_bitmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(bitmaptype, \
             xfdata.BITMAPTYPE_list)
     i_bitmaptype = library.convert_to_intc(bitmaptype)
@@ -129,12 +128,11 @@ def fl_set_bitmap_data(ptr_flobject, width, height, xbmcontentslist):
     --------
         >>> bitmapcontents = [0x01, 0x1a, 0x27, 0x34, 0x41, 0x4e, 0x5b,
         >>>         0x68, 0x75, 0x82, 0x8f, 0x9c, 0xa9, 0xb6, 0xc3, 0xd0]
-        >>> fl_set_bitmap_data(xbmobj, 4, 4, bitmapcontents)
+        >>> fl_set_bitmap_data(pxbmobj, 4, 4, bitmapcontents)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = NOT OK
-        Review: UT+
+        Status: UnitTest + Doc + Demo = OK
 
     """
     _fl_set_bitmap_data = library.cfuncproto(
@@ -143,7 +141,7 @@ def fl_set_bitmap_data(ptr_flobject, width, height, xbmcontentslist):
         cty.POINTER(cty.c_ubyte)],
         """void fl_set_bitmap_data(FL_OBJECT * ob, int w, int h,
            unsigned char * data)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_intc(height)
@@ -175,15 +173,14 @@ def fl_set_bitmap_file(ptr_flobject, fname):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
-        Review: UT+
+        Status: UnitTest + Doc + Demo = OK
 
     """
     _fl_set_bitmap_file = library.cfuncproto(
         library.load_so_libforms(), "fl_set_bitmap_file",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
@@ -232,8 +229,7 @@ def fl_read_bitmapfile(win, fname):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
-        Review: UT+
+        Status: UnitTest + Doc + NoDemo = OK
 
     """
     _fl_read_bitmapfile = library.cfuncproto(
@@ -243,7 +239,7 @@ def fl_read_bitmapfile(win, fname):
         cty.POINTER(cty.c_int)],
         """Pixmap fl_read_bitmapfile(Window win, const char * file,
            unsigned int * w, unsigned int * h, int * hotx, int * hoty)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     s_fname = library.convert_to_stringc(fname)
     i_width, ptr_width = library.make_uintc_and_pointer()
@@ -285,8 +281,7 @@ def fl_create_from_bitmapdata(win, xbmdata, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = NOT OK
-        Review: UT+
+        Status: UnitTest + Doc + NoDemo = OK
 
     """
     _fl_create_from_bitmapdata = library.cfuncproto(
@@ -294,7 +289,7 @@ def fl_create_from_bitmapdata(win, xbmdata, width, height):
         xfdata.Pixmap, [xfdata.Window, xfdata.STRING, cty.c_int, cty.c_int],
         """Pixmap fl_create_from_bitmapdata(Window win, const
            char * data, int width, int height)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     s_xbmdata = library.convert_to_stringc(xbmdata)
     i_width = library.convert_to_intc(width)
@@ -347,8 +342,7 @@ def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
-        Review: UT+
+        Status: UnitTest + Doc + Demo = OK
 
     """
     _fl_add_pixmap = library.cfuncproto(
@@ -357,7 +351,7 @@ def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_pixmap(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(pixmaptype, \
             xfdata.PIXMAPTYPE_list)
     i_pixmaptype = library.convert_to_intc(pixmaptype)
@@ -404,15 +398,14 @@ def fl_set_pixmap_data(ptr_flobject, xpmdatalist):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = NOT OK
-        Review: UT+ ok_broken
+        Status: Half-UTest + Doc + Demo = OK
 
     """
     _fl_set_pixmap_data = library.cfuncproto(
         library.load_so_libforms(), "fl_set_pixmap_data",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.STRING)],
         """void fl_set_pixmap_data(FL_OBJECT * ob, char * * bits)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ptr_xpmdatalist = library.convert_to_ptr_stringc(xpmdatalist)
     library.keep_elem_refs(ptr_flobject, xpmdatalist, ptr_xpmdatalist)
@@ -435,18 +428,18 @@ def fl_set_pixmap_file(ptr_flobject, fname):
 
     Examples
     --------
-        >>> fl_set_pixmap_file(xpmobj, "mypixmapfile.xpm")
+        >>> fl_set_pixmap_file(pxpmobj, "mypixmapfile.xpm")
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: UnitTest + Doc + Demo = OK
 
     """
     _fl_set_pixmap_file = library.cfuncproto(
         library.load_so_libforms(), "fl_set_pixmap_file",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
@@ -469,17 +462,17 @@ def fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             pixmap flobject
         align : int
-            alignment of pixmap. Values (from xfdata.py)
-            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
-            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
-            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
-            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
-            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
+            alignment of pixmap. Values (from xfdata.py) FL_ALIGN_CENTER (In
+            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
+            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
+            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
+            FL_ALIGN_RIGHT (To the right of the box, outside it),
+            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
+            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+            outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            FL_ALIGN_VERT (not functional yet). Bitwise OR with
             FL_ALIGN_INSIDE is allowed.
         xmargin : int
             extra margin to leave in addition to the flobject border
@@ -494,8 +487,7 @@ def fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
-        Review: UT+
+        Status: UnitTest + Doc + Demo = OK
 
     """
     _fl_set_pixmap_align = library.cfuncproto(
@@ -504,7 +496,7 @@ def fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin):
         cty.c_int],
         """void fl_set_pixmap_align(FL_OBJECT * ob, int align,
            int xmargin, int ymargin)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     i_align = library.convert_to_intc(align)
@@ -522,8 +514,8 @@ def fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask):
     """fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask)
 
     Changes the pixmap for the flobject with a pixmap resource id you
-    already may have. It does not free the pixmap ID nor the mask already
-    associated with the flobject.
+    already may have. It does not free the pixmap ID nor the mask
+    already associated with the flobject.
 
     Parameters
     ----------
@@ -532,8 +524,8 @@ def fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask):
         pixmapid : long_pos
             pixmap resource id to be used
         mask : long_pos
-            mask used for transparency. If no special clipping attributes
-            are desired, use 0.
+            mask used for transparency. If no special clipping
+            attributes are desired, use 0.
 
     Examples
     --------
@@ -541,7 +533,7 @@ def fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_pixmap_pixmap = library.cfuncproto(
@@ -549,7 +541,7 @@ def fl_set_pixmap_pixmap(ptr_flobject, pixmapid, mask):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.Pixmap, xfdata.Pixmap],
         """void fl_set_pixmap_pixmap(FL_OBJECT * ob, Pixmap id,
            Pixmap mask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ul_pixmapid = library.convert_to_ulongc(pixmapid)
     ul_mask = library.convert_to_ulongc(mask)
@@ -567,7 +559,7 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
     Changes difference between the requested color and the color found
     being smaller than some pre-set threshold values between 0 and 65535 (0
     means exact match), if a pixmap has more colors than that available in
-    the colormap. The library will use substitute colors that are judged
+    the colormap. XForms will use substitute colors that are judged
     "close enough".
 
     Parameters
@@ -585,14 +577,14 @@ def fl_set_pixmap_colorcloseness(red, green, blue):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_pixmap_colorcloseness = library.cfuncproto(
         library.load_so_libforms(), "fl_set_pixmap_colorcloseness",
         None, [cty.c_int, cty.c_int, cty.c_int],
         """void fl_set_pixmap_colorcloseness(int red, int green, int blue)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_red = library.convert_to_intc(red)
     i_green = library.convert_to_intc(green)
     i_blue = library.convert_to_intc(blue)
@@ -617,14 +609,14 @@ def fl_free_pixmap_pixmap(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_free_pixmap_pixmap = library.cfuncproto(
         library.load_so_libforms(), "fl_free_pixmap_pixmap",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_free_pixmap_pixmap(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     _fl_free_pixmap_pixmap(ptr_flobject)
@@ -663,7 +655,7 @@ def fl_get_pixmap_pixmap(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_pixmap_pixmap = library.cfuncproto(
@@ -672,7 +664,7 @@ def fl_get_pixmap_pixmap(ptr_flobject):
         cty.POINTER(xfdata.Pixmap), cty.POINTER(xfdata.Pixmap)],
         """Pixmap fl_get_pixmap_pixmap(FL_OBJECT * ob, Pixmap * p,
            Pixmap * m)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ul_pixmapid2, ptr_pixmapid2 = library.make_ulongc_and_pointer()
     ul_pmask, ptr_pmask = library.make_ulongc_and_pointer()
@@ -727,7 +719,7 @@ def fl_read_pixmapfile(win, fname, tran):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_read_pixmapfile = library.cfuncproto(
@@ -738,7 +730,7 @@ def fl_read_pixmapfile(win, fname, tran):
         """Pixmap fl_read_pixmapfile(Window win, const char * file,
            unsigned int * w, unsigned int * h, Pixmap * shape_mask,
            int * hotx, int * hoty, FL_COLOR tran)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     s_fname = library.convert_to_stringc(fname)
     #library.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
@@ -801,7 +793,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_create_from_pixmapdata = library.cfuncproto(
@@ -813,7 +805,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
         """Pixmap fl_create_from_pixmapdata(Window win, char * * data,
         unsigned int * w, unsigned int * h, Pixmap * sm, int * hotx,
         int * hoty, FL_COLOR tran)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     ptr_xpmdata = library.convert_to_ptr_stringc(xpmdata)
     ui_width, ptr_width = library.make_uintc_and_pointer()
@@ -848,14 +840,14 @@ def fl_free_pixmap(pixmapid):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_free_pixmap = library.cfuncproto(
         library.load_so_libforms(), "fl_free_pixmap",
         None, [xfdata.Pixmap],
         """void fl_free_pixmap(Pixmap id)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_pixmapid = library.convert_to_Pixmap(pixmapid)
     library.keep_elem_refs(pixmapid, ul_pixmapid)
     _fl_free_pixmap(ul_pixmapid)

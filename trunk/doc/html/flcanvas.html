@@ -61,9 +61,9 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_add_canvas_handler"><strong>fl_add_canvas_handler</strong></a>(ptr_flobject, evtnum, pyfn_HandleCanvas, userdata)</dt><dd><tt><a href="#-fl_add_canvas_handler">fl_add_canvas_handler</a>(ptr_flobject,&nbsp;evtnum,&nbsp;pyfn_HandleCanvas,&nbsp;userdata)<br>
--&gt;&nbsp;HandleCnavas<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_add_canvas_handler"><strong>fl_add_canvas_handler</strong></a>(ptr_flobject, evtnum, pyfn_HandleCanvas, userdata)</dt><dd><tt><a href="#-fl_add_canvas_handler">fl_add_canvas_handler</a>(ptr_flobject,&nbsp;evtnum,&nbsp;pyfn_HandleCanvas,<br>
+userdata)&nbsp;-&gt;&nbsp;HandleCnavas<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;callback&nbsp;to&nbsp;be&nbsp;invoked&nbsp;in&nbsp;a&nbsp;canvas&nbsp;flobject&nbsp;for&nbsp;a&nbsp;specific<br>
 X&nbsp;event.<br>
@@ -76,11 +76,13 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;xfdata.py):&nbsp;Expose,&nbsp;KeyPress,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyRelease,&nbsp;ButtonRelease,&nbsp;etc..<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandleCanvas&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;canvas,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long_pos]win,&nbsp;[int]width,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]height,&nbsp;ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)&nbsp;-&gt;&nbsp;[int]num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long_pos]win,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]width,&nbsp;[int]height,&nbsp;ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -93,7 +95,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_canvas_yield_to_shortcut"><strong>fl_canvas_yield_to_shortcut</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_canvas_yield_to_shortcut">fl_canvas_yield_to_shortcut</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
 Enables&nbsp;or&nbsp;disables&nbsp;keyboard&nbsp;input's&nbsp;stealing&nbsp;by&nbsp;canvas.&nbsp;By&nbsp;default,<br>
@@ -105,7 +107,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;keyboard&nbsp;inputs&nbsp;stealing&nbsp;by&nbsp;canvas.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;keyboard&nbsp;input's&nbsp;stealing&nbsp;by&nbsp;canvas.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;0&nbsp;(to&nbsp;disable)&nbsp;or&nbsp;1&nbsp;(to&nbsp;enable)<br>
 &nbsp;<br>
 Examples<br>
@@ -114,11 +116,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_clear_canvas"><strong>fl_clear_canvas</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_clear_canvas">fl_clear_canvas</a>(ptr_flobject)<br>
 &nbsp;<br>
-Clears&nbsp;the&nbsp;canvas&nbsp;to&nbsp;the&nbsp;background&nbsp;color.&nbsp;If&nbsp;no&nbsp;background&nbsp;is<br>
-defined,&nbsp;uses&nbsp;black.<br>
+Clears&nbsp;the&nbsp;canvas&nbsp;to&nbsp;the&nbsp;background&nbsp;color.&nbsp;If&nbsp;no&nbsp;background&nbsp;is&nbsp;defined,<br>
+uses&nbsp;black.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -131,7 +133,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_canvas_colormap"><strong>fl_get_canvas_colormap</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_canvas_colormap">fl_get_canvas_colormap</a>(ptr_flobject)&nbsp;-&gt;&nbsp;colormap<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;colormap&nbsp;of&nbsp;a&nbsp;canvas&nbsp;flobject.<br>
@@ -152,7 +154,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_canvas_depth"><strong>fl_get_canvas_depth</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_canvas_depth">fl_get_canvas_depth</a>(ptr_flobject)&nbsp;-&gt;&nbsp;depth<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;depth&nbsp;of&nbsp;a&nbsp;canvas&nbsp;flobject.<br>
@@ -173,7 +175,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_canvas_id"><strong>fl_get_canvas_id</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_canvas_id">fl_get_canvas_id</a>(ptr_flobject)&nbsp;-&gt;&nbsp;win<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;window&nbsp;id&nbsp;of&nbsp;the&nbsp;canvas&nbsp;flobject.<br>
@@ -194,7 +196,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_canvas"><strong>fl_hide_canvas</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_hide_canvas">fl_hide_canvas</a>(ptr_flobject)<br>
 &nbsp;<br>
 Hides&nbsp;a&nbsp;canvas&nbsp;flobject.<br>
@@ -210,7 +212,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_modify_canvas_prop"><strong>fl_modify_canvas_prop</strong></a>(ptr_flobject, pyfn_initModifyCanvasProp, pyfn_activateModifyCanvasProp, pyfn_cleanupModifyCanvasProp)</dt><dd><tt><a href="#-fl_modify_canvas_prop">fl_modify_canvas_prop</a>(ptr_flobject,&nbsp;pyfn_initModifyCanvasProp,<br>
 pyfn_activateModifyCanvasProp,&nbsp;pyfn_cleanupModifyCanvasProp)<br>
 &nbsp;<br>
@@ -234,7 +236,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_remove_canvas_handler"><strong>fl_remove_canvas_handler</strong></a>(ptr_flobject, evtnum, pyfn_HandleCanvas)</dt><dd><tt><a href="#-fl_remove_canvas_handler">fl_remove_canvas_handler</a>(ptr_flobject,&nbsp;evtnum,&nbsp;pyfn_HandleCanvas)<br>
 &nbsp;<br>
 Removes&nbsp;a&nbsp;particular&nbsp;handler&nbsp;for&nbsp;a&nbsp;specified&nbsp;X&nbsp;event,&nbsp;previously<br>
@@ -245,12 +247,13 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;canvas&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;evtnum&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;xfdata.py):&nbsp;Expose,&nbsp;KeyPress,&nbsp;KeyRelease,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ButtonRelease,&nbsp;etc..&nbsp;If&nbsp;it&nbsp;is&nbsp;invalid,&nbsp;removes&nbsp;all&nbsp;handlers&nbsp;and<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;their&nbsp;corresponding&nbsp;event&nbsp;mask.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;event&nbsp;number.&nbsp;Values&nbsp;(from&nbsp;xfdata.py):&nbsp;Expose,&nbsp;KeyPress,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KeyRelease,&nbsp;ButtonRelease,&nbsp;etc..&nbsp;If&nbsp;it&nbsp;is&nbsp;invalid,&nbsp;removes&nbsp;all<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handlers&nbsp;and&nbsp;their&nbsp;corresponding&nbsp;event&nbsp;mask.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_HandleCanvas&nbsp;:&nbsp;python&nbsp;function&nbsp;to&nbsp;handle&nbsp;canvas,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long_pos]win,&nbsp;[int]width,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]height,&nbsp;ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)&nbsp;-&gt;&nbsp;[int]num<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[long_pos]win,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[int]width,&nbsp;[int]height,&nbsp;ptr_xevent,&nbsp;[pointer&nbsp;to&nbsp;void]vdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -258,7 +261,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_canvas_attributes"><strong>fl_set_canvas_attributes</strong></a>(ptr_flobject, mask, ptr_xsetwindowattributes)</dt><dd><tt><a href="#-fl_set_canvas_attributes">fl_set_canvas_attributes</a>(ptr_flobject,&nbsp;mask,&nbsp;ptr_xsetwindowattributes)<br>
 &nbsp;<br>
 Modifies&nbsp;attributes&nbsp;of&nbsp;a&nbsp;canvas&nbsp;flobject&nbsp;(e.g.&nbsp;visual,&nbsp;depth&nbsp;and<br>
@@ -281,7 +284,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_canvas_colormap"><strong>fl_set_canvas_colormap</strong></a>(ptr_flobject, colormap)</dt><dd><tt><a href="#-fl_set_canvas_colormap">fl_set_canvas_colormap</a>(ptr_flobject,&nbsp;colormap)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;color&nbsp;property&nbsp;of&nbsp;canvas.&nbsp;Caution:&nbsp;when&nbsp;the&nbsp;canvas&nbsp;window<br>
@@ -303,7 +306,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_canvas_depth"><strong>fl_set_canvas_depth</strong></a>(ptr_flobject, depth)</dt><dd><tt><a href="#-fl_set_canvas_depth">fl_set_canvas_depth</a>(ptr_flobject,&nbsp;depth)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;depth&nbsp;of&nbsp;canvas&nbsp;flobject.&nbsp;Changing&nbsp;depth&nbsp;does&nbsp;not&nbsp;generally<br>
@@ -323,7 +326,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_canvas_visual"><strong>fl_set_canvas_visual</strong></a>(ptr_flobject, ptr_visual)</dt><dd><tt><a href="#-fl_set_canvas_visual">fl_set_canvas_visual</a>(ptr_flobject,&nbsp;ptr_visual)<br>
 &nbsp;<br>
 Defines&nbsp;visual&nbsp;property&nbsp;of&nbsp;canvas&nbsp;flobject.&nbsp;Changing&nbsp;visual&nbsp;does&nbsp;not<br>
@@ -345,7 +348,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_share_canvas_colormap"><strong>fl_share_canvas_colormap</strong></a>(ptr_flobject, colormap)</dt><dd><tt><a href="#-fl_share_canvas_colormap">fl_share_canvas_colormap</a>(ptr_flobject,&nbsp;colormap)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;color&nbsp;property&nbsp;of&nbsp;canvas&nbsp;flobject.&nbsp;It&nbsp;also&nbsp;sets&nbsp;an&nbsp;internal<br>
@@ -364,6 +367,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

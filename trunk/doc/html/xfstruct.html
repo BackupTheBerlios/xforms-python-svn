@@ -77,6 +77,31 @@ than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;t
 attributes,&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
 xfdata.FL_CMD_OPT.&nbsp;Keys&nbsp;are:&nbsp;'option',&nbsp;'specifier',&nbsp;'argKind',<br>
 'value'.</tt></dd></dl>
+ <dl><dt><a name="-make_ptr_fleditkeymap"><strong>make_ptr_fleditkeymap</strong></a>(dictfleditkeymap)</dt><dd><tt><a href="#-make_ptr_fleditkeymap">make_ptr_fleditkeymap</a>(dictfleditkeymap)&nbsp;-&gt;&nbsp;ptr_fleditkeymap<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_EditKeymap<br>
+attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FL_EditKeymap.&nbsp;Keys&nbsp;are:&nbsp;'del_prev_char',&nbsp;'del_next_char',<br>
+'del_prev_word',&nbsp;'del_next_word',&nbsp;'moveto_prev_line',&nbsp;'moveto_next_line',<br>
+'moveto_prev_char',&nbsp;'moveto_next_char',&nbsp;'moveto_prev_word',<br>
+'moveto_next_word',&nbsp;'moveto_prev_page',&nbsp;'moveto_next_page',&nbsp;'moveto_bol',<br>
+'moveto_eol',&nbsp;'moveto_bof',&nbsp;'moveto_eof',&nbsp;'transpose',&nbsp;'paste',<br>
+'backspace',&nbsp;'del_to_bol',&nbsp;'del_to_eol',&nbsp;'clear_field',&nbsp;'del_to_eos'.<br>
+You&nbsp;are&nbsp;not&nbsp;required&nbsp;to&nbsp;manually&nbsp;pass&nbsp;all&nbsp;keys'&nbsp;values;&nbsp;remaining&nbsp;keys<br>
+are&nbsp;filled&nbsp;with&nbsp;0,&nbsp;so&nbsp;default&nbsp;keymap&nbsp;will&nbsp;be&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-make_ptr_flimagemarker"><strong>make_ptr_flimagemarker</strong></a>(dictflimagemarker)</dt><dd><tt><a href="#-make_ptr_flimagetext">make_ptr_flimagetext</a>(dictflimagemarker)&nbsp;-&gt;&nbsp;ptr_flimagemarker<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FLIMAGE_MARKER<br>
+attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FLIMAGE_MARKER.&nbsp;Keys&nbsp;are:&nbsp;'name',&nbsp;'w',&nbsp;'h',&nbsp;'x',&nbsp;'y',&nbsp;'color',<br>
+'bcolor',&nbsp;'angle',&nbsp;'fill',&nbsp;'thickness',&nbsp;'style'.&nbsp;Other&nbsp;keys&nbsp;('display',<br>
+'gc',&nbsp;'win',&nbsp;'psdraw')&nbsp;are&nbsp;filled&nbsp;by&nbsp;XForms.</tt></dd></dl>
+ <dl><dt><a name="-make_ptr_flimagetext"><strong>make_ptr_flimagetext</strong></a>(dictflimagetext)</dt><dd><tt><a href="#-make_ptr_flimagetext">make_ptr_flimagetext</a>(dictflimagetext)&nbsp;-&gt;&nbsp;ptr_flimagetext<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FLIMAGE_TEXT<br>
+attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
+xfdata.FLIMAGE_TEXT.&nbsp;Keys&nbsp;are:&nbsp;'str',&nbsp;'len',&nbsp;'x',&nbsp;'y',&nbsp;'color',&nbsp;'bcolor',<br>
+'nobk',&nbsp;'size',&nbsp;'style',&nbsp;'angle'&nbsp;and&nbsp;'align'.</tt></dd></dl>
  <dl><dt><a name="-make_ptr_fliopt"><strong>make_ptr_fliopt</strong></a>(dictfliopt)</dt><dd><tt><a href="#-make_ptr_fliopt">make_ptr_fliopt</a>(dictfliopt)&nbsp;-&gt;&nbsp;ptr_fliopt<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to<br>
@@ -101,6 +126,12 @@ more&nbsp;than&nbsp;one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;correspond
 attributes,&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to<br>
 xfdata.FL_POPUP_ITEM.&nbsp;Keys&nbsp;are:&nbsp;'text',&nbsp;'callback',&nbsp;'shortcut',&nbsp;'type'<br>
 and&nbsp;'state'.</tt></dd></dl>
+ <dl><dt><a name="-make_ptr_flrect"><strong>make_ptr_flrect</strong></a>(dictflrect)</dt><dd><tt><a href="#-make_ptr_flrect">make_ptr_flrect</a>(dictflrect)&nbsp;-&gt;&nbsp;ptr_flrect<br>
+&nbsp;<br>
+Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more&nbsp;than<br>
+one&nbsp;dict&nbsp;item)&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_RECT&nbsp;attributes<br>
+prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RECT.&nbsp;Keys&nbsp;are:<br>
+'x',&nbsp;'y',&nbsp;'width'&nbsp;and&nbsp;'height'.</tt></dd></dl>
  <dl><dt><a name="-make_ptr_flresource"><strong>make_ptr_flresource</strong></a>(dictflresource)</dt><dd><tt><a href="#-make_ptr_flresource">make_ptr_flresource</a>(dictflresource)&nbsp;-&gt;&nbsp;ptr_flresource<br>
 &nbsp;<br>
 Taking&nbsp;a&nbsp;python&nbsp;dict&nbsp;(for&nbsp;one&nbsp;dict&nbsp;item)&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(for&nbsp;more<br>
@@ -109,4 +140,4 @@ attributes&nbsp;prepares&nbsp;and&nbsp;returns&nbsp;a&nbsp;C-compatible&nbsp;poi
 xfdata.FL_RESOURCE.&nbsp;Keys&nbsp;are:&nbsp;'res_name',&nbsp;'res_class',&nbsp;'type',&nbsp;'var',<br>
 'defval',&nbsp;'nbytes'.</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

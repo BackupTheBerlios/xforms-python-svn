@@ -244,20 +244,33 @@ def cfuncproto(library, cfuncname, retval, arglist, doc=""):
     return loadedfunc
 
 
-flinitialized = False           # if fl_initialize() not called before
+flinitialized = False         # if flxbasic.fl_initialize() not called before
+flimageinitialized = False    # if flflimage.flimage_setup() not called before
 
-def check_if_initialized():
-    """ Check if fl_initialize() has been called before caller function.
-        Needed for most functions, except those supposed to be used
-        *BEFORE* initialization or those freely useable. """
-    if not flinitialized:       # fl_initialize() not called
-        raise XFormsInitError("fl_initialize() should be called before " \
-                "using this function.")
+def check_if_flinitialized():
+    """ Check if flxbasic.fl_initialize() has been called before caller
+    function. Needed for most functions, except those supposed to be used
+    *BEFORE* initialization or those freely useable. """
+    if not flinitialized:       # not called
+        raise XFormsInitError("flxbasic.fl_initialize() should be called " \
+                "to setup XForms environment before using this function.")
 
-def set_initialized():
-    """ fl_initialize() has been called """
+def set_flinitialized():
+    """ flxbasic.fl_initialize() has been called """
     global flinitialized
     flinitialized = True
+
+def check_if_flimageinitialized():
+    """ Check if flflimage.flimage_setup() has been called before caller
+    function. Needed for flimage_* functions."""
+    if not flimageinitialized:       # not called
+        raise XFormsInitError("flflimage.flimage_setup() should be called " \
+                "to setup flimage environment before using this function.")
+
+def set_flimageinitialized():
+    """ flflimage.flimage_setup() has been called """
+    global flimageinitialized
+    flimageinitialized = True
 
 
 # functions to convert a parameter into a python type then into the
@@ -365,6 +378,21 @@ def convert_to_shortc(paramname):
                     "but an 'int'/'c_short' type should be used." % \
                     (paramname, type(paramname)))
         retv = cty.c_short(retv0)
+        return retv
+    else:
+        return paramname
+
+
+def convert_to_ushortc(paramname):
+    """ Converts paramname to python int and to ctypes c_ushort """
+    if not isinstance(paramname, cty.c_ushort):
+        try:
+            retv0 = int(paramname)
+        except ValueError:
+            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+                    "but an 'int'/'c_ushort' type should be used." % \
+                    (paramname, type(paramname)))
+        retv = cty.c_ushort(retv0)
         return retv
     else:
         return paramname
@@ -643,13 +671,13 @@ def checknonfatal_allowed_value_in_list(paramname, valueslist):
 
 # TODO: verify where can be used
 #def check_param_length(paramname, predeflen):
-#    """ Checks if paramname's length equals to a predefined length,
-#        otherwise raises a fatal error."""
+#    """ Checks if paramname's length equals to a predefined length, otherwise
+#    raises a fatal error."""
 #    paramlen = len(paramname)
 #    if paramlen != predeflen:
-#        raise XFormsValueError("Length of parameter %s is %d, but it should"
-#	         " be %d, in accordance to other parameters in called "
-#		 "function." % (paramname, paramlen, predeflen))
+#        raise XFormsValueError("Length of parameter %s is %d, but it " \
+#            " should be %d, in accordance to other parameters in called " \
+#            "function." % (paramname, paramlen, predeflen))
 
 def verify_tuplelist_type(paramname):
     """Checks if paramname is a valid list or tuple."""

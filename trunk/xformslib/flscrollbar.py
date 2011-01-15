@@ -57,12 +57,12 @@ def fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label):
             looking vertical scrollbar), FL_HOR_THIN_SCROLLBAR (A different
             looking horizontal scrollbar), FL_VERT_NICE_SCROLLBAR (A vertical
             scrollbar using FL_NICE_SLIDER), FL_HOR_NICE_SCROLLBAR (A
-            horizontal scrollbar using FL_NICE_SLIDER),
-            FL_VERT_PLAIN_SCROLLBAR or FL_VERT_BASIC_SCROLLBAR (Similar to
-            FL_THIN_SCROLLBAR), FL_HOR_PLAIN_SCROLLBAR or
-            FL_HOR_BASIC_SCROLLBAR (Similar to FL_HOR_THIN_SCROLLBAR),
-            FL_NORMAL_SCROLLBAR (*todo*), FL_THIN_SCROLLBAR (*todo*),
-            FL_NICE_SCROLLBAR (*todo*), FL_PLAIN_SCROLLBAR (*todo*)
+            horizontal scrollbar using FL_NICE_SLIDER), FL_VERT_PLAIN_SCROLLBAR
+            or FL_VERT_BASIC_SCROLLBAR (Similar to FL_THIN_SCROLLBAR),
+            FL_HOR_PLAIN_SCROLLBAR or FL_HOR_BASIC_SCROLLBAR (Similar to
+            FL_HOR_THIN_SCROLLBAR), FL_NORMAL_SCROLLBAR (*todo*),
+            FL_THIN_SCROLLBAR (*todo*), FL_NICE_SCROLLBAR (*todo*),
+            FL_PLAIN_SCROLLBAR (*todo*)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -81,12 +81,12 @@ def fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> scrbobj = fl_add_scrollbar(scrolltype, 182, 140, 50, 150,
+        >>> pscrbobj = fl_add_scrollbar(scrolltype, 182, 140, 50, 150,
                 "MyScrollbar")
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_scrollbar = library.cfuncproto(
@@ -95,7 +95,7 @@ def fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_scrollbar(int type, FL_Coord x, FL_Coord y,
             FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(scrolltype, \
             xfdata.SCROLLTYPE_list)
     i_scrolltype = library.convert_to_intc(scrolltype)
@@ -128,18 +128,18 @@ def fl_get_scrollbar_value(ptr_flobject):
 
     Examples
     --------
-        >>> val = fl_get_scrollbar_value(scrbobj)
+        >>> val = fl_get_scrollbar_value(pscrbobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_scrollbar_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_scrollbar_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_scrollbar_value(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_scrollbar_value(ptr_flobject)
@@ -160,18 +160,18 @@ def fl_set_scrollbar_value(ptr_flobject, scrvalue):
 
     Examples
     --------
-        >>> fl_set_scrollbar_value(scrbobj, 0.75)
+        >>> fl_set_scrollbar_value(pscrbobj, 0.75)
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_scrollbar_value = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_value",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_scrollbar_value(FL_OBJECT * ob, double val)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_scrvalue = library.convert_to_doublec(scrvalue)
     library.keep_elem_refs(ptr_flobject, scrvalue, f_scrvalue)
@@ -181,8 +181,8 @@ def fl_set_scrollbar_value(ptr_flobject, scrvalue):
 def fl_set_scrollbar_size(ptr_flobject, barsize):
     """fl_set_scrollbar_size(ptr_flobject, barsize)
 
-    Controls the size of the sliding bar inside the box. This function
-    does nothing if applied to scrollbars of type xfdata.FL_NICE_SCROLLBAR.
+    Controls the size of the sliding bar inside the box. This function does
+    nothing if applied to scrollbars of type xfdata.FL_NICE_SCROLLBAR.
 
     Parameters
     ----------
@@ -190,24 +190,24 @@ def fl_set_scrollbar_size(ptr_flobject, barsize):
             scrollbar flobject
         barsize : float
             size of bar. Values between 0.0 and 1.0. The default is
-            xfdata.FL_SLIDER_WIDTH (which is 0.15 for all scrollbars). If it
-            is 1.0, the scrollbar covers the box completely and can no longer
-            be moved.
+            xfdata.FL_SLIDER_WIDTH (which is 0.15 for all scrollbars). If it is
+            1.0, the scrollbar covers the box completely and can no longer be
+            moved.
 
     Examples
     --------
-        >>> fl_set_scrollbar_size(scrbobj, 0.2)
+        >>> fl_set_scrollbar_size(pscrbobj, 0.2)
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_scrollbar_size = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_size",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_scrollbar_size(FL_OBJECT * ob, double val)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_barsize = library.convert_to_doublec(barsize)
     library.keep_elem_refs(ptr_flobject, barsize, f_barsize)
@@ -217,9 +217,9 @@ def fl_set_scrollbar_size(ptr_flobject, barsize):
 def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
     """fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval)
 
-    Defines the size of the steps of a scrollbar jump. By default, if the
-    mouse is pressed beside the the sliding bar, the bar starts to jumps
-    in the direction of the mouse position.
+    Defines the size of the steps of a scrollbar jump. By default, if the mouse
+    is pressed beside the the sliding bar, the bar starts to jumps in the
+    direction of the mouse position.
 
     Parameters
     ----------
@@ -236,7 +236,7 @@ def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_scrollbar_increment = library.cfuncproto(
@@ -244,7 +244,7 @@ def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_scrollbar_increment(FL_OBJECT * ob, double l,
            double r)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_leftbtnval = library.convert_to_doublec(leftbtnval)
     f_midlbtnval = library.convert_to_doublec(midlbtnval)
@@ -256,8 +256,8 @@ def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
 def fl_get_scrollbar_increment(ptr_flobject):
     """fl_get_scrollbar_increment(ptr_flobject) -> leftbtnval, midbtnval
 
-    Finds out the increment of size of a scrollbar for left and middle
-    mouse buttons.
+    Finds out the increment of size of a scrollbar for left and middle mouse
+    buttons.
 
     Parameters
     ----------
@@ -273,7 +273,7 @@ def fl_get_scrollbar_increment(ptr_flobject):
 
     Examples
     --------
-        >>> leftbv, midbv = fl_get_scrollbar_increment(scrbobj)
+        >>> leftbv, midbv = fl_get_scrollbar_increment(pscrbobj)
 
     API_diversion
     -------------
@@ -282,7 +282,7 @@ def fl_get_scrollbar_increment(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_scrollbar_increment = library.cfuncproto(
@@ -291,7 +291,7 @@ def fl_get_scrollbar_increment(ptr_flobject):
         cty.POINTER(cty.c_double)],
         """void fl_get_scrollbar_increment(FL_OBJECT * ob, double * a,
            double * b)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_leftbtnval, ptr_leftbtnval = library.make_doublec_and_pointer()
     f_midlbtnval, ptr_midlbtnval = library.make_doublec_and_pointer()
@@ -317,19 +317,19 @@ def fl_set_scrollbar_bounds(ptr_flobject, minbound, maxbound):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             scrollbar flobject
         minbound : float
-            minimum value bound of scrollbar. By default, the minimum
-            value for a slider is 0.0.
+            minimum value bound of scrollbar. By default, the minimum value
+            for a slider is 0.0.
         maxbound : float
-            maximum value bound of scrollbar. By default, the maximum
-            value for a slider is 1.0.
+            maximum value bound of scrollbar. By default, the maximum value
+            for a slider is 1.0.
 
     Examples
     --------
-        >>> fl_set_scrollbar_bounds(scrbobj, 1.0, 2.0)
+        >>> fl_set_scrollbar_bounds(pscrbobj, 1.0, 2.0)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_scrollbar_bounds = library.cfuncproto(
@@ -337,7 +337,7 @@ def fl_set_scrollbar_bounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_scrollbar_bounds(FL_OBJECT * ob, double b1, double
            b2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -365,7 +365,7 @@ def fl_get_scrollbar_bounds(ptr_flobject):
 
     Examples
     --------
-        >>> minb, maxb = fl_get_scrollbar_bounds(scrbobj)
+        >>> minb, maxb = fl_get_scrollbar_bounds(pscrbobj)
 
     API_diversion
     -------------
@@ -374,7 +374,7 @@ def fl_get_scrollbar_bounds(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_scrollbar_bounds = library.cfuncproto(
@@ -383,7 +383,7 @@ def fl_get_scrollbar_bounds(ptr_flobject):
         cty.POINTER(cty.c_double)],
         """void fl_get_scrollbar_bounds(FL_OBJECT * ob, double * b1,
            double * b2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_doublec_and_pointer()
     f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
@@ -410,18 +410,18 @@ def fl_set_scrollbar_step(ptr_flobject, step):
 
     Examples
     --------
-        >>> fl_set_scrollbar_step(scrbobj, 1)
+        >>> fl_set_scrollbar_step(pscrbobj, 1)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_scrollbar_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_scrollbar_step",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_scrollbar_step(FL_OBJECT * ob, double step)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_step = library.convert_to_doublec(step)
     library.keep_elem_refs(ptr_flobject, step, f_step)

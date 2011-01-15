@@ -498,10 +498,11 @@ FL_RETURN_TRIGGERED = 1024
 FL_RETURN_ALWAYS = ~ FL_RETURN_END_CHANGED
 
 
-# from /usr/include/limits.h, my add --LK
+# from /usr/include/limits.h or other, my add --LK
 INT_MAX = 2147483647        # long upstreams --LK
 INT_MIN = (-INT_MAX - 1)
 UINT_MAX = 4294967295
+DBL_MAX = 1.79769313486231470e+308
 
 
 # Some special color indices for FL private colormap.
@@ -1617,10 +1618,10 @@ class FL_OBJECT_(cty.Structure):
             and which automatically get adjusted when the above function is
             used. Values are: FL_RETURN_NONE (flobject gets never returned or
             its callback invoked), FL_RETURN_CHANGED (returns flobject or
-            invokes callback when state of object changed), FL_RETURN_END 
+            invokes callback when state of object changed), FL_RETURN_END
             (returns flobject or invokes callback at end of interaction,
             normally when the mouse key is released or, in the case of input
-            flobjects, the object has lost focus), FL_RETURN_END_CHANGED 
+            flobjects, the object has lost focus), FL_RETURN_END_CHANGED
             (returns flobject or invokes callback only when interaction has
             ended and the state of the flobject has changed),
             FL_RETURN_SELECTION (returns flobject or invokes callback if e.g.
@@ -1760,7 +1761,7 @@ VisualID = cty.c_ulong
 
 # /usr/include/X11/Xlib.h 249
 class Visual(cty.Structure):
-    """Visual class. It contains information about colormapping possible.
+    """Visual class. It contains information about possible colormapping.
 
     Attributes
     ----------
@@ -2566,8 +2567,7 @@ Window = XID    # cty.c_ulong
 Pixmap = XID    # cty.c_ulong
 
 
-FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
-        cty.c_void_p)
+FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent), cty.c_void_p)
 
 
 # Draw mode
@@ -2605,9 +2605,8 @@ GreyScale = GrayScale
 StaticGrey = StaticGray
 
 # my add - list of possible values --LK
-VISUALMODE_list = [StaticGray, GrayScale, StaticColor, PseudoColor,
-                   TrueColor, DirectColor, DefaultVisual, GreyScale,
-                   StaticGrey]
+VISUALMODE_list = [StaticGray, GrayScale, StaticColor, PseudoColor, TrueColor,
+        DirectColor, DefaultVisual, GreyScale, StaticGrey]
 
 # values for unnamed enumeration
 FL_North = 2                            #NorthGravity
@@ -3005,7 +3004,7 @@ RTYPE_list = [FL_NONE, FL_SHORT, FL_BOOL, FL_INT, FL_LONG, FL_FLOAT,
               FL_STRING]
 
 class FL_RESOURCE(cty.Structure):
-    """XForms Library built-in resource.
+    """XForms built-in resource.
 
     Attributes
     ----------
@@ -3014,13 +3013,13 @@ class FL_RESOURCE(cty.Structure):
         res_class : str
             resource class
         type : int
-            variable type, e.g. FL_INT, FL_FLOAT, FL_BOOL, etc..
+            variable type, e.g. FL_INT, FL_FLOAT, FL_BOOL, FL_STRING, etc..
         var : pointer to any type
-            address for the variable
+            address for the variable value
         defval : str
             default setting in string form
         nbytes : int
-            size used only if var has 'str' type
+            size in bytes+1 used only if var has 'str' type
 
     List of resources
     -----------------
@@ -3073,12 +3072,12 @@ class FL_RESOURCE(cty.Structure):
 FL_RESOURCE.__slots__ = ['res_name', 'res_class', 'type', 'var', \
         'defval', 'nbytes',]
 FL_RESOURCE._fields_ = [
-        ('res_name', STRING),           # resource name
-        ('res_class', STRING),          # resource class
-        ('type', FL_RTYPE),             # FL_INT, FL_FLOAT, FL_BOOL, etc..
-        ('var', cty.c_void_p),          # address for the variable
-        ('defval', STRING),             # default setting in string form
-        ('nbytes', cty.c_int), ]        # size used only for strings
+        ('res_name', STRING),       # resource name
+        ('res_class', STRING),      # resource class
+        ('type', FL_RTYPE),         # FL_INT, FL_FLOAT, FL_BOOL, FL_STRING ..
+        ('var', cty.c_void_p),      # address for the variable
+        ('defval', STRING),         # default setting in string form
+        ('nbytes', cty.c_int), ]    # size used only for strings
 
 
 # values for enumeration 'XrmOptionKind'
@@ -3943,7 +3942,13 @@ XKeymapEvent._fields_ = [
 
 # /usr/include/X11/Xlib.h 682
 class XExposeEvent(cty.Structure):
-    """X11 XExposeEvent class
+    """X11 XExposeEvent class. The expose event is one of the most basic events
+    an application may receive. It will be sent in one of several cases:
+    - A window that covered part of our window has moved away, exposing part
+    (or all) of our window;
+    - Our window was raised above other windows;
+    - Our window mapped for the first time;
+    - Our window was de-iconified.
 
     Attributes
     ----------
@@ -3956,17 +3961,22 @@ class XExposeEvent(cty.Structure):
         display : pointer to Display
             Display the event was read from
         window : long_pos
-            Window of the event
+            The id of the window this expose event was sent for
         x : int
-            horizontal position *todo*
+            horizontal position (in pixels) from the top-left of the window,
+            of the window's region that needs to be redrawn
         y : int
-            vertical position *todo*
+            vertical position (in pixels) from the top-left of the window, of
+            the window's region that needs to be redrawn
         width : int
-            *todo*
+            width (in pixels) of the window's region that needs to be redraw
         height : int
-            *todo*
+            height (in pixels) of the window's region that needs to be redraw
         count : int
-            if non-zero, at least this many more?
+            number of other expose events waiting in the server's events queue.
+            This may be useful if we got several expose events in a row, we
+            will usually avoid redrawing the window until we get the last of
+            them (i.e. until count is 0)
     """
     pass
 XExposeEvent.__slots__ = ['type', 'serial', 'send_event', 'display', \
@@ -4121,9 +4131,9 @@ class XCreateWindowEvent(cty.Structure):
         window : long_pos
             Window id of window created
         x : int
-            window horizontal location 
+            window horizontal location
         y : int
-            window vertical location 
+            window vertical location
         width : int
             width of the window
         height : int
@@ -5231,11 +5241,11 @@ FL_BROWSER_SCROLL_CALLBACK = cty.CFUNCTYPE(None, cty.POINTER(FL_OBJECT),
 class admitted_value_for_BROWSERLINES_APPEARANCE(object):
     """Values to be used for changing appearance of individual lines in the
     browser.
-    
+
     Whenever a line starts with the symbol '@' the next letter indicates
     the special characteristics associated with this line. The following
     possibilities exist at the moment:
-        f    Fixed width font. 
+        f    Fixed width font.
         n    Normal (Helvetica) font.
         t    Times-Roman like font.
         b    Boldface modifier.
@@ -5250,9 +5260,9 @@ class admitted_value_for_BROWSERLINES_APPEARANCE(object):
         r    Right aligned.
         _    Draw underlined text.
         -    An engraved separator. Text following '-' is ignored.
-        C    The next number indicates the color index for this line. 
-        N    Non-selectable line (in selectable browsers). 
-        @@    Regular '@' character. 
+        C    The next number indicates the color index for this line.
+        N    Non-selectable line (in selectable browsers).
+        @@    Regular '@' character.
     The modifiers (bold and itatic) work by adding FL_BOLD_STYLE and
     FL_ITALIC_STYLE to the current active font index to look up the font in
     the font table; you can modify the table using flbasic.fl_set_font_name()
@@ -5455,8 +5465,8 @@ FL_CANVAS_ALIGN = FL_ALIGN_TOP
 
 # /usr/include/X11/Xlib.h 317
 class XSetWindowAttributes(cty.Structure):
-    """XSetWindowAttributes class. Data structure for setting
-    window attributes.
+    """XSetWindowAttributes class. Data structure for setting window
+    attributes.
 
     Attributes
     ----------
@@ -5889,8 +5899,38 @@ FL_FORMBROWSER_ALIGN = FL_ALIGN_TOP
 #############
 
 # my add --LK
-class GLXContext (cty.Structure):
-    _fields_ = []
+# *** start - from /usr/include/GL/*.h
+GLboolean = cty.c_ubyte
+GLXDrawable = XID
+
+class __GLXcontextRec(cty.Structure):
+    """GLXContext class.
+
+    Attributes
+    ----------
+        currentDpy : pointer to Display
+            *todo*
+        isDirect : ubyte?
+            todo*
+        currentDrawable : long_pos
+            *todo*
+        currentReadable : long_pos
+            *todo*
+        xid : long_pos
+            *todo*
+    """
+    pass
+__GLXcontextRec.__slot__ = ['currentDpy', 'isDirect', 'currentDrawable',
+        'currentReadable', 'xid']
+__GLXcontextRec._fields_ = [
+        ('currentDpy', cty.POINTER(Display)),
+        ('isDirect', GLboolean),
+        ('currentDrawable', GLXDrawable),
+        ('currentReadable', GLXDrawable),
+        ('xid', XID),]
+__GLXcontext = __GLXcontextRec
+GLXContext = cty.POINTER(__GLXcontext)
+# *** end - from /usr/include/GL/*.h
 
 
 # values for GL configuration attributes - my add --LK
@@ -5922,80 +5962,79 @@ class admitted_values_for_GLCONFIGATTR(object):
         GLX_USE_GL
             Ignored. Only visuals that can be rendered with GLX are
             considered.
-        GLX_BUFFER_SIZE
-            Must be followed by a nonnegative integer that indicates
-            the desired color index buffer size. The smallest index
-            buffer of at least the specified size is preferred.
-            Ignored if GLX_RGBA is asserted.
-        GLX_LEVEL
-            Must be followed by an integer buffer-level specification.
-            This specification is honored exactly. Buffer level zero
-            corresponds to the main frame buffer of the display. Buffer
-            level one is the first overlay frame buffer, level two the
-            second overlay frame buffer, and so on. Negative buffer
-            levels correspond to underlay frame buffers.
+        GLX_BUFFER_SIZE, int_pos
+            Must be followed by a non-negative integer that indicates the
+            desired color index buffer size. The smallest index buffer of at
+            least the specified size is preferred. Ignored if GLX_RGBA is
+            asserted.
+        GLX_LEVEL, int
+            Must be followed by an integer buffer-level specification. This
+            specification is honored exactly. Buffer level zero corresponds
+            to the main frame buffer of the display. Buffer level one is the
+            first overlay frame buffer, level two the second overlay frame
+            buffer, and so on. Negative buffer levels correspond to underlay
+            frame buffers.
         GLX_RGBA
-            If present, only TrueColor and DirectColor visuals are
-            considered. Otherwise, only PseudoColor and StaticColor
-            visuals are considered.
+            If present, only TrueColor and DirectColor visuals are considered.
+            Otherwise, only PseudoColor and StaticColor visuals are considered.
         GLX_DOUBLEBUFFER
             If present, only double-buffered visuals are considered.
             Otherwise, only single-buffered visuals are considered.
         GLX_STEREO
-            If present, only stereo visuals are considered. Otherwise,
-            only monoscopic visuals are considered.
-        GLX_AUX_BUFFERS
-            Must be followed by a nonnegative integer that indicates the
+            If present, only stereo visuals are considered. Otherwise, only
+            monoscopic visuals are considered.
+        GLX_AUX_BUFFERS, int_pos
+            Must be followed by a non-negative integer that indicates the
             desired number of auxiliary buffers. Visuals with the smallest
             number of auxiliary buffers that meets or exceeds the specified
             number are preferred.
-        GLX_RED_SIZE
-            Must be followed by a nonnegative minimum size specification.
-            If this value is zero, the smallest available red buffer is
-            preferred. Otherwise, the largest available red buffer of at
-            least the minimum size is preferred.
-        GLX_GREEN_SIZE
-            Must be followed by a nonnegative minimum size specification.
-            If this value is zero, the smallest available green buffer is
+        GLX_RED_SIZE, int_pos
+            Must be followed by a non-negative minimum size specification. If
+            this value is zero, the smallest available red buffer is preferred.
+            Otherwise, the largest available red buffer of at least the
+            minimum size is preferred.
+        GLX_GREEN_SIZE, int_pos
+            Must be followed by a non-negative minimum size specification. If
+            this value is zero, the smallest available green buffer is
             preferred. Otherwise, the largest available green buffer of at
             least the minimum size is preferred.
-        GLX_BLUE_SIZE
-            Must be followed by a nonnegative minimum size specification.
-            If this value is zero, the smallest available blue buffer is
+        GLX_BLUE_SIZE, int_pos
+            Must be followed by a nonnegative minimum size specification. If
+            this value is zero, the smallest available blue buffer is
             preferred. Otherwise, the largest available blue buffer of at
             least the minimum size is preferred.
-        GLX_ALPHA_SIZE
-            Must be followed by a nonnegative minimum size specification.
-            If this value is zero, the smallest available alpha buffer is
+        GLX_ALPHA_SIZE, int_pos
+            Must be followed by a nonnegative minimum size specification. If
+            this value is zero, the smallest available alpha buffer is
             preferred. Otherwise, the largest available alpha buffer of at
             least the minimum size is preferred.
-        GLX_DEPTH_SIZE
+        GLX_DEPTH_SIZE, int_pos
             Must be followed by a nonnegative minimum size specification.
             If this value is zero, visuals with no depth buffer are
             preferred. Otherwise, the largest available depth buffer of at
             least the minimum size is preferred.
-        GLX_STENCIL_SIZE
+        GLX_STENCIL_SIZE, int_pos
             Must be followed by a nonnegative integer that indicates the
             desired number of stencil bitplanes. The smallest stencil buffer
             of at least the specified size is preferred. If the desired
             value is zero, visuals with no stencil buffer are preferred.
-        GLX_ACCUM_RED_SIZE
-            Must be followed by a nonnegative minimum size specification.
-            If this value is zero, visuals with no red accumulation buffer
+        GLX_ACCUM_RED_SIZE, int_pos
+            Must be followed by a nonnegative minimum size specification. If
+            this value is zero, visuals with no red accumulation buffer
             are preferred. Otherwise, the largest possible red accumulation
             buffer of at least the minimum size is preferred.
-        GLX_ACCUM_GREEN_SIZE
-            Must be followed by a nonnegative minimum size specification.
-            If this value is zero, visuals with no green accumulation buffer
+        GLX_ACCUM_GREEN_SIZE, int_pos
+            Must be followed by a non-negative minimum size specification. If
+            this value is zero, visuals with no green accumulation buffer
             are preferred. Otherwise, the largest possible green accumulation
             buffer of at least the minimum size is preferred.
-        GLX_ACCUM_BLUE_SIZE
-            Must be followed by a nonnegative minimum size specification. If
+        GLX_ACCUM_BLUE_SIZE, int_pos
+            Must be followed by a non-negative minimum size specification. If
             this value is zero, visuals with no blue accumulation buffer are
             preferred. Otherwise, the largest possible blue accumulation
             buffer of at least the minimum size is preferred.
-        GLX_ACCUM_ALPHA_SIZE
-            Must be followed by a nonnegative minimum size specification. If
+        GLX_ACCUM_ALPHA_SIZE, int_pos
+            Must be followed by a non-negative minimum size specification. If
             this value is zero, visuals with no alpha accumulation buffer are
             preferred. Otherwise, the largest possible alpha accumulation
             buffer of at least the minimum size is preferred.
@@ -7425,7 +7464,7 @@ class flimage_marker_(cty.Structure):
     pass
 flimage_marker_.__slots__ = ['name', 'w', 'h', 'x', 'y', 'color', \
         'bcolor', 'angle', 'fill', 'thickness', 'style', 'display', \
-        'gc', 'win, psdraw',]
+        'gc', 'win', 'psdraw',]
 flimage_marker_._fields_ = [
         ('name', STRING),               # marker name
         ('w', cty.c_int),               # width
@@ -7438,7 +7477,7 @@ flimage_marker_._fields_ = [
         ('fill', cty.c_int),
         ('thickness', cty.c_int),       # line thickness
         ('style', cty.c_int),           # line style
-        # the following is filled by the library
+        # the following are filled by the library
         ('display', cty.c_void_p),
         ('gc', cty.c_void_p),
         ('win', FL_WINDOW),
@@ -7470,7 +7509,7 @@ class flimage_setup_(cty.Structure):
             processing routines. It is meant to give the user some visual
             feedback about what is happening. For lengthy tasks, this
             function is called repeatedly and periodically to indicate what
-            percentage of the task is completed and to give the application 
+            percentage of the task is completed and to give the application
             program a chance to check and process GUI activities (for example,
             via fl_check_forms()). The 1st parameter to the function is the
             image (pointer to FL_IMAGE) currently being worked on and the
@@ -7485,7 +7524,7 @@ class flimage_setup_(cty.Structure):
             ptr_flimage.contents.total, multiplied by 100. At the begin of a
             task ptr_flimage.contents.completed is set to a value less or equal
             1, and at the end of the task, ptr_flimage.contents.completed is
-            set to ptr_flimage.contents.total. A special value of -1 for 
+            set to ptr_flimage.contents.total. A special value of -1 for
             ptr_flimage.contents.completed may be used to indicate a task of
             unknown length.
         error_message : function, no return
@@ -7676,10 +7715,10 @@ class flimage_(cty.Structure):
             is a 1D array of length image->map len.
         green_lut : pointer to int
             green lookup tables for a color index image. Each of the table
-            is a 1D array of length image->map len. 
+            is a 1D array of length image->map len.
         blue_lut : pointer to int
             blue lookup tables for a color index image. Each of the table
-            is a 1D array of length image->map len. 
+            is a 1D array of length image->map len.
         alpha_lut : pointer to int
             alpha lookup tables. Although alpha lut is always allocated for
             a color index image, it is currently not used by XForms.

@@ -38,8 +38,8 @@ the&nbsp;timeouts),&nbsp;the&nbsp;animation&nbsp;will&nbsp;stop.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;curseries&nbsp;:&nbsp;list&nbsp;of&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;of&nbsp;cursor&nbsp;names,&nbsp;either&nbsp;X&nbsp;standard&nbsp;cursors&nbsp;or&nbsp;cursor<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;names&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_create_bitmap_cursor">fl_create_bitmap_cursor</a>(),&nbsp;terminated&nbsp;by&nbsp;-1.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;of&nbsp;cursor&nbsp;ids,&nbsp;either&nbsp;X&nbsp;standard&nbsp;cursors&nbsp;or&nbsp;cursor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numbers&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_create_bitmap_cursor">fl_create_bitmap_cursor</a>(),&nbsp;terminated&nbsp;by&nbsp;-1.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;timeout&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;after&nbsp;which&nbsp;the&nbsp;cursor&nbsp;is&nbsp;changed,&nbsp;replacing&nbsp;by&nbsp;the&nbsp;next&nbsp;in<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence.&nbsp;An&nbsp;interval&nbsp;about&nbsp;150&nbsp;msec&nbsp;is&nbsp;a&nbsp;good&nbsp;value&nbsp;for&nbsp;typical<br>
@@ -56,7 +56,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(curnums&nbsp;data&nbsp;problematic)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_create_bitmap_cursor"><strong>fl_create_bitmap_cursor</strong></a>(source, maskstr, width, height, hotx, hoty)</dt><dd><tt><a href="#-fl_create_bitmap_cursor">fl_create_bitmap_cursor</a>(source,&nbsp;maskstr,&nbsp;width,&nbsp;height,&nbsp;hotx,&nbsp;hoty)<br>
 -&gt;&nbsp;cursornum<br>
 &nbsp;<br>
@@ -65,20 +65,20 @@ the&nbsp;standard&nbsp;cursor&nbsp;font.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;source&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;source&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;to&nbsp;be&nbsp;used&nbsp;as&nbsp;cursor.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;maskstr&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maskstr&nbsp;:&nbsp;str&nbsp;of&nbsp;ubytes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitmap&nbsp;defining&nbsp;the&nbsp;shape&nbsp;of&nbsp;the&nbsp;cursor.&nbsp;The&nbsp;pixels&nbsp;set&nbsp;to&nbsp;1<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;define&nbsp;which&nbsp;source&nbsp;pixels&nbsp;are&nbsp;displayed.&nbsp;If&nbsp;it&nbsp;is&nbsp;None&nbsp;all<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;define&nbsp;which&nbsp;source&nbsp;pixels&nbsp;are&nbsp;displayed.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;("")&nbsp;all<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bits&nbsp;in&nbsp;source&nbsp;are&nbsp;displayed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;cursor<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;cursor<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hotx&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;hotspot&nbsp;of&nbsp;the&nbsp;cursor&nbsp;(relative&nbsp;to&nbsp;the&nbsp;source's&nbsp;origin)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;hotspot&nbsp;of&nbsp;the&nbsp;cursor&nbsp;(relative&nbsp;to&nbsp;the&nbsp;source&nbsp;origin)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;hoty&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;hotspot&nbsp;of&nbsp;the&nbsp;cursor&nbsp;(relative&nbsp;to&nbsp;the&nbsp;source's&nbsp;origin)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;hotspot&nbsp;of&nbsp;the&nbsp;cursor&nbsp;(relative&nbsp;to&nbsp;the&nbsp;source&nbsp;origin)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -91,14 +91,14 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_cursor_byname"><strong>fl_get_cursor_byname</strong></a>(cursnum)</dt><dd><tt><a href="#-fl_get_cursor_byname">fl_get_cursor_byname</a>(cursnum)&nbsp;-&gt;&nbsp;cursor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_cursor_byname"><strong>fl_get_cursor_byname</strong></a>(cursornum)</dt><dd><tt><a href="#-fl_get_cursor_byname">fl_get_cursor_byname</a>(cursornum)&nbsp;-&gt;&nbsp;cursor<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;cursor&nbsp;corresponding&nbsp;to&nbsp;its&nbsp;number&nbsp;(cursor&nbsp;id).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;cursnum&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cursornum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cursor&nbsp;id<br>
 &nbsp;<br>
 Returns<br>
@@ -112,7 +112,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_reset_cursor"><strong>fl_reset_cursor</strong></a>(win)</dt><dd><tt><a href="#-fl_reset_cursor">fl_reset_cursor</a>(win)<br>
 &nbsp;<br>
 Resets&nbsp;used&nbsp;cursor,&nbsp;reverting&nbsp;to&nbsp;default&nbsp;one.<br>
@@ -128,7 +128,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_cursor"><strong>fl_set_cursor</strong></a>(win, cursornum)</dt><dd><tt><a href="#-fl_set_cursor">fl_set_cursor</a>(win,&nbsp;cursornum)<br>
 &nbsp;<br>
 Defines&nbsp;cursor&nbsp;for&nbsp;window&nbsp;to&nbsp;a&nbsp;specific&nbsp;cursor&nbsp;number.<br>
@@ -146,7 +146,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_cursor_color"><strong>fl_set_cursor_color</strong></a>(cursornum, fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_cursor_color">fl_set_cursor_color</a>(cursornum,&nbsp;fgcolr,&nbsp;bgcolr)<br>
 &nbsp;<br>
 Defines&nbsp;foreground&nbsp;and&nbsp;background&nbsp;colors&nbsp;of&nbsp;a&nbsp;cursor.<br>
@@ -167,6 +167,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

@@ -48,10 +48,10 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
     """fl_add_select(selecttype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a select (new generation choice) flobject to the form. It is a
-    rather simple flobject that allows the user to pick alternatives from a
-    linear list that pops up when he clicks on the flobject. It remembers the
-    last selected item, which is also shown on top of the select flobject. It
+    Adds a select (new generation choice) flobject to the form. It is a rather
+    simple flobject that allows the user to pick alternatives from a linear
+    list that pops up when he clicks on the flobject. It remembers the last
+    selected item, which is also shown on top of the select flobject. It
     internally uses a popup.
 
     Parameters
@@ -65,9 +65,9 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
             button with a little extra box at its right side, just like a
             FL_MENU_BUTTON and the text of the currently selected item is
             drawn on the button-like object), FL_DROPLIST_SELECT (This type
-            looks like a button with the text of the currently selected item
-            on top of it and a second square button directly beside it with
-            an downward pointing arrow on it)
+            looks like a button with the text of the currently selected item on
+            top of it and a second square button directly beside it with a
+            downward pointing arrow on it)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -91,7 +91,7 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_select = library.cfuncproto(
@@ -100,7 +100,7 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_select(int p1, FL_Coord p2, FL_Coord p3,
            FL_Coord p4, FL_Coord p5, const char * p6)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(selecttype, \
             xfdata.SELECTTYPE_list)
     i_selecttype = library.convert_to_intc(selecttype)
@@ -119,11 +119,11 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
 def fl_clear_select(ptr_flobject):
     """fl_clear_select(ptr_flobject) -> result
 
-    Removes all items from a select flobject. If you used
-    fl_set_select_popup() to set a popup for the select flobject then
-    that popup gets deleted automatically on calling fl_clear_select().
-    The values automatically associated with items when calling
-    fl_add_select_items() will start at 0 again.
+    Removes all items from a select flobject. If you used fl_set_select_popup()
+    to set a popup for the select flobject then that popup gets deleted
+    automatically on calling fl_clear_select(). The values automatically
+    associated with items when calling fl_add_select_items() will start at 0
+    again.
 
     Parameters
     ----------
@@ -133,29 +133,29 @@ def fl_clear_select(ptr_flobject):
     Returns
     -------
         result : int
-            0 on success, or -1 (on failure)
+            0 (on success), or -1 (on failure)
 
     Examples
     --------
-        >>> fl_clear_select(selobj)
+        >>> fl_clear_select(pselobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_clear_select = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_select",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_clear_select(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     _fl_clear_select(ptr_flobject)
 
 
 def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
-                        f=None, E=None, L=None, s=None):
+        f=None, E=None, L=None, s=None):
     """fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
     f=None, E=None, L=None, s=None)) -> ptr_flpopupentry
 
@@ -170,36 +170,34 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
         entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if required). Text
-            may contain newline characters which allows to create entries
-            that span more than a single line. Only some special sequences
-            are allowed: %x, %u, %f, %E, %L, %d, %h, %S, %s, %% (other
-            combinations do not make sense here). Only one entry is supported
-            in xforms-python.
+            may contain "|" for more than one entry and newline character which
+            allows to create entries that span more than a single line. Only
+            some special sequences are allowed: %x, %u, %f, %E, %L, %d, %h, %S,
+            %s, %% (other combinations do not make sense here). Special
+            sequences of same type cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -212,8 +210,8 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
 
     Notes
     -----
-        Status: HalfTested + NoDoc + Demo = NOT OK
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + Demo = OK
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -260,7 +258,7 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
         xfdata.STRING, cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_add_select_items(FL_OBJECT * p1,
            const char * p2, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, entryitemstxt, s_entryitemstxt, \
@@ -272,56 +270,53 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
 
 
 def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
-                           x=None, u=None, f=None, E=None, L=None, s=None):
+        x=None, u=None, f=None, E=None, L=None, s=None):
     """fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, s=None)
     -> ptr_flpopupentry
 
-    Inserts a new item somewhere in the middle of a list of already
-    existing items (it can be used several times). If additional separated
-    arguments are required by in-text special sequences, user must respect
-    the same sequences' order.
+    Inserts a new item somewhere in the middle of a list of already existing
+    items (it can be used several times). If additional separated arguments
+    are required by in-text special sequences, user must respect the same
+    sequences' order.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry. If it is None new items are inserted at the very
-            start.
+            popup entry. If it is None new items are inserted at the real start
         entryitemstxt : str
             text of the entry to be inserted and in-text special sequences
             with or without not separated additional arguments (if required).
-            Text may contain newline characters which allows to create entries
-            that span more than a single line. Only some special sequences
-            are allowed: %x, %u, %f, %E, %L, %d, %h, %S, %s, %% (other
-            combinations do not make sense here). Only one entry is supported
-            in xforms-python.
+            Text may contain "|" for more than one entry and newline character
+            which allows to create entries that span more than a single line.
+            Only some special sequences are allowed: %x, %u, %f, %E, %L, %d,
+            %h, %S, %s, %% (other combinations do not make sense here). Special
+            sequences of same type cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -334,8 +329,8 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 
     Notes
     -----
-        Status: HalfTested + NoDoc + Demo = NOT OK (special sequence)
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + Demo = OK
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -384,7 +379,7 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_insert_select_items(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
@@ -397,7 +392,7 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 
 
 def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
-                           x=None, u=None, f=None, E=None, L=None, s=None):
+        x=None, u=None, f=None, E=None, L=None, s=None):
     """fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt,
     x=None, u=None, f=None, E=None, L=None, s=None)
     -> ptr_flpopupentry
@@ -415,36 +410,33 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         entryitemstxt : str
             text of the entry to be replaced and in-text special sequences
             with or without not separated additional arguments (if required).
-            Text may contain newline characters which allows to create entries
-            that span more than a single line. Only some special sequences
-            are allowed: %x, %u, %f, %E, %L, %d, %h, %S, %s, %% (other
-            combinations do not make sense here). Only one entry is supported
-            in xforms-python.
+            Text may contain "|" for more than one entry and newline character
+            which allows to create entries that span more than a single line.
+            Only some special sequences are allowed: %x, %u, %f, %E, %L, %d,
+            %h, %S, %s, %% (other combinations do not make sense here). .
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -457,8 +449,8 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + NoDemo = Maybe
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -507,7 +499,7 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_replace_select_item(FL_OBJECT * p1,
             FL_POPUP_ENTRY * p2, const char * p3, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
@@ -522,8 +514,8 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
     """fl_delete_select_item(ptr_flobject, ptr_flpopupentry) -> result
 
-    Deletes an item of a select flobject. The values associated with items
-    will not change due to removing an item.
+    Deletes an item of a select flobject. The values associated with items will
+    not change due to removing an item.
 
     Parameters
     ----------
@@ -535,7 +527,7 @@ def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
     Returns
     -------
         result : int
-            0 on success, or -1 (on failure)
+            0 (on success), or -1 (on failure)
 
     Examples
     --------
@@ -543,7 +535,7 @@ def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_select_item = library.cfuncproto(
@@ -551,7 +543,7 @@ def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_delete_select_item(FL_OBJECT * p1, FL_POPUP_ENTRY * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry)
     retval = _fl_delete_select_item(ptr_flobject, ptr_flpopupentry)
@@ -583,7 +575,7 @@ def fl_set_select_items(ptr_flobject, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_select_items = library.cfuncproto(
@@ -592,7 +584,7 @@ def fl_set_select_items(ptr_flobject, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """long int fl_set_select_items(FL_OBJECT * p1,
            FL_POPUP_ITEM * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupitem)
@@ -621,14 +613,14 @@ def fl_get_select_popup(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_select_popup = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_popup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP * fl_get_select_popup(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_select_popup(ptr_flobject)
@@ -638,10 +630,10 @@ def fl_get_select_popup(ptr_flobject):
 def fl_set_select_popup(ptr_flobject, ptr_flpopup):
     """fl_set_select_popup(ptr_flobject, ptr_flpopup) -> result
 
-    Creates a popup directly and then associates it with the select
-    flobject. Supplied popup may not contain any entries other than
-    those of type xfdata.FL_POPUP_NORMAL, and, of course, the popup
-    cannot be a sub-popup of another popup).
+    Creates a popup directly and then associates it with the select flobject.
+    Supplied popup may not contain any entries other than those of type
+    xfdata.FL_POPUP_NORMAL, and, of course, the popup cannot be a sub-popup
+    of another popup).
 
     Parameters
     ----------
@@ -661,7 +653,7 @@ def fl_set_select_popup(ptr_flobject, ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_select_popup = library.cfuncproto(
@@ -669,7 +661,7 @@ def fl_set_select_popup(ptr_flobject, ptr_flpopup):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT),
         cty.POINTER(xfdata.FL_POPUP)],
         """int fl_set_select_popup(FL_OBJECT * p1, FL_POPUP * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flobject, ptr_flpopup)
@@ -698,14 +690,14 @@ def fl_get_select_item(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_select_item = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_item",
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_POPUP_RETURN * fl_get_select_item(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_select_item(ptr_flobject)
@@ -722,7 +714,8 @@ def fl_set_select_item(ptr_flobject, ptr_flpopupentry):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry class instance
+            popup entry class instance. For it you can use the return value
+            of any of fl_get_select_item_by_*() functions
 
     Returns
     -------
@@ -735,8 +728,7 @@ def fl_set_select_item(ptr_flobject, ptr_flpopupentry):
 
     Notes
     -----
-        Status: HalfTested + NoDoc + Demo = NOT OK (FL_POPUP_ENTRY not
-        prepared)
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_select_item = library.cfuncproto(
@@ -745,7 +737,7 @@ def fl_set_select_item(ptr_flobject, ptr_flpopupentry):
         cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """FL_POPUP_RETURN * fl_set_select_item(FL_OBJECT * p1,
            FL_POPUP_ENTRY * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry)
@@ -777,7 +769,7 @@ def fl_get_select_item_by_value(ptr_flobject, itemval):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_select_item_by_value = library.cfuncproto(
@@ -786,7 +778,7 @@ def fl_get_select_item_by_value(ptr_flobject, itemval):
         cty.c_long],
         """FL_POPUP_ENTRY * fl_get_select_item_by_value(FL_OBJECT * p1,
            long int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_itemval = library.convert_to_longc(itemval)
     library.keep_elem_refs(ptr_flobject, itemval, l_itemval)
@@ -797,8 +789,8 @@ def fl_get_select_item_by_value(ptr_flobject, itemval):
 def fl_get_select_item_by_label(ptr_flobject, label):
     """fl_get_select_item_by_label(ptr_flobject, label) -> ptr_flpopupentry
 
-    Finds out an item of select flobject who has a certain label as
-    displayed for the item in the popup.
+    Finds out an item of select flobject who has a certain label as displayed
+    for the item in the popup.
 
     Parameters
     ----------
@@ -818,7 +810,7 @@ def fl_get_select_item_by_label(ptr_flobject, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_select_item_by_label = library.cfuncproto(
@@ -827,7 +819,7 @@ def fl_get_select_item_by_label(ptr_flobject, label):
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_get_select_item_by_label(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_label = library.convert_to_stringc(label)
     library.keep_elem_refs(ptr_flobject, label, s_label)
@@ -838,8 +830,8 @@ def fl_get_select_item_by_label(ptr_flobject, label):
 def fl_get_select_item_by_text(ptr_flobject, txtstr):
     """fl_get_select_item_by_text(ptr_flobject, txtstr) -> ptr_flpopupentry
 
-    Finds out an item of select flobject who has supplied text
-    (that might be the same as the label text in simple cases).
+    Finds out an item of select flobject who has supplied text (that might be
+    the same as the label text in simple cases).
 
     Parameters
     ----------
@@ -859,7 +851,7 @@ def fl_get_select_item_by_text(ptr_flobject, txtstr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_select_item_by_text = library.cfuncproto(
@@ -868,7 +860,7 @@ def fl_get_select_item_by_text(ptr_flobject, txtstr):
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_get_select_item_by_text(FL_OBJECT * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_txtstr = library.convert_to_stringc(txtstr)
     library.keep_elem_refs(ptr_flobject, txtstr, s_txtstr)
@@ -879,8 +871,8 @@ def fl_get_select_item_by_text(ptr_flobject, txtstr):
 def fl_get_select_text_color(ptr_flobject):
     """fl_get_select_text_color(ptr_flobject) -> colr
 
-    Finds out the color of the text of the currenty selected item
-    on top of the flobject.
+    Finds out the color of the text of the currenty selected item on top of
+    the select flobject.
 
     Parameters
     ----------
@@ -894,18 +886,18 @@ def fl_get_select_text_color(ptr_flobject):
 
     Examples
     --------
-        >>> txtcolr = fl_get_select_text_color(selobj)
+        >>> txtcolr = fl_get_select_text_color(pselobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_select_text_color = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_text_color",
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_COLOR fl_get_select_text_color(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_select_text_color(ptr_flobject)
@@ -915,15 +907,15 @@ def fl_get_select_text_color(ptr_flobject):
 def fl_set_select_text_color(ptr_flobject, colr):
     """fl_set_select_text_color(ptr_flobject, colr) -> oldcolr
 
-    Defines the color of the text of the currenty selected item on
-    top of the flobject.
+    Defines the color of the text of the currenty selected item on top of
+    the select flobject.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         colr : long_pos
-            color value
+            XForms colormap index as new color
 
     Returns
     -------
@@ -932,18 +924,18 @@ def fl_set_select_text_color(ptr_flobject, colr):
 
     Examples
     --------
-        >>> oldcol = fl_set_select_text_color(selobj, xfdata.FL_BLUE)
+        >>> oldcol = fl_set_select_text_color(pselobj, xfdata.FL_BLUE)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_select_text_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_text_color",
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR],
         """FL_COLOR fl_set_select_text_color(FL_OBJECT * p1, FL_COLOR p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
@@ -955,8 +947,7 @@ def fl_set_select_text_color(ptr_flobject, colr):
 def fl_get_select_text_font(ptr_flobject):
     """fl_get_select_text_font(ptr_flobject) -> result, style, size
 
-    Finds out the font style and size used for the text of a select
-    flobject.
+    Finds out the font style and size used for the text of a select flobject.
 
     Parameters
     ----------
@@ -966,7 +957,7 @@ def fl_get_select_text_font(ptr_flobject):
     Returns
     -------
         result : int
-            0 or -1 (on failure)
+            0, or -1 (on failure)
         style : int
             font style
         size : int
@@ -974,7 +965,7 @@ def fl_get_select_text_font(ptr_flobject):
 
     Examples
     --------
-        >>> rslt, style, size = fl_get_select_text_font(selobj)
+        >>> rslt, style, size = fl_get_select_text_font(pselobj)
 
     API_diversion
     -------------
@@ -983,7 +974,7 @@ def fl_get_select_text_font(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_select_text_font = library.cfuncproto(
@@ -991,7 +982,7 @@ def fl_get_select_text_font(ptr_flobject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int)],
         """int fl_get_select_text_font(FL_OBJECT * p1, int * p2, int * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_style, ptr_style = library.make_intc_and_pointer()
     i_size, ptr_size = library.make_intc_and_pointer()
@@ -1003,37 +994,36 @@ def fl_get_select_text_font(ptr_flobject):
 def fl_set_select_text_font(ptr_flobject, style, size):
     """fl_set_select_text_font(ptr_flobject, style, size) -> result
 
-    Defines the font style and size used for the text of a select
-    flobject.
+    Defines the font style and size used for the text of a select flobject.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         style : int
-            text style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            text style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
-            text size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            text size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Returns
     -------
@@ -1042,19 +1032,19 @@ def fl_set_select_text_font(ptr_flobject, style, size):
 
     Examples
     --------
-        >>> rslt = fl_set_select_text_font(selobj,
+        >>> rslt = fl_set_select_text_font(pselobj,
                 xfdata.FL_TIMESBOLD_STYLE, xfdata.FL_LARGE_SIZE)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_select_text_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_text_font",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """int fl_set_select_text_font(FL_OBJECT * p1, int p2, int p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -1067,8 +1057,8 @@ def fl_set_select_text_font(ptr_flobject, style, size):
 def fl_get_select_text_align(ptr_flobject):
     """fl_get_select_text_align(ptr_flobject) -> align
 
-    Finds out the alignment of the text with the currently selected
-    item on top of the select flobject.
+    Finds out the alignment of the text with the currently selected item on
+    top of the select flobject.
 
     Parameters
     ----------
@@ -1079,22 +1069,22 @@ def fl_get_select_text_align(ptr_flobject):
     -------
         align : int
             alignment of text (from xfdata.py, e.g. FL_ALIGN_CENTER,
-            FL_ALIGN_TOP
+            FL_ALIGN_TOP)
 
     Examples
     --------
-        >>> algn = fl_get_select_text_align(selobj)
+        >>> algn = fl_get_select_text_align(pselobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_select_text_align = library.cfuncproto(
         library.load_so_libforms(), "fl_get_select_text_align",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_select_text_align(FL_OBJECT * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_select_text_align(ptr_flobject)
@@ -1104,28 +1094,28 @@ def fl_get_select_text_align(ptr_flobject):
 def fl_set_select_text_align(ptr_flobject, align):
     """fl_set_select_text_align(ptr_flobject, align) -> oldalign
 
-    Defines the alignment of the text with the currently selected item on
-    top of the select flobject. The xfdata.FL_ALIGN_INSIDE flag should be
-    set with align since the text always will be drawn withing the
-    boundaries of the flobject.
+    Defines the alignment of the text with the currently selected item on top
+    of the select flobject. The xfdata.FL_ALIGN_INSIDE flag should be set with
+    align since the text always will be drawn withing the boundaries of the
+    flobject.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         align : int
-            alignment of text. Values (from xfdata.py)
-            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
-            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
-            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
-            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
-            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In the
+            middle of the box, inside it), FL_ALIGN_TOP (To the top of the box,
+            outside it), FL_ALIGN_BOTTOM (To the bottom of the box, outside
+            it), FL_ALIGN_LEFT (To the left of the box, outside it),
+            FL_ALIGN_RIGHT (To the right of the box, outside it),
+            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
+            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+            outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
+            is allowed.
 
     Returns
     -------
@@ -1138,14 +1128,14 @@ def fl_set_select_text_align(ptr_flobject, align):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_select_text_align = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_text_align",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_select_text_align(FL_OBJECT * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     library.verify_flobjectptr_type(ptr_flobject)
     i_align = library.convert_to_intc(align)
@@ -1157,11 +1147,10 @@ def fl_set_select_text_align(ptr_flobject, align):
 def fl_set_select_policy(ptr_flobject, policy):
     """fl_set_select_policy(ptr_flobject, policy) -> oldpol
 
-    Defines a policy of a select flobject. By default, the popup of a
-    select flobjects remains shown when the user releases the mouse
-    somewhere outside the popup window (or on its title area). The
-    alternative is to close the popup immediately when the user releases
-    the mouse, independent of where it is.
+    Defines a policy of a select flobject. By default, the popup of a select
+    flobjects remains shown when the user releases the mouse somewhere outside
+    the popup window (or on its title area). The alternative is closing the
+    popup immediately when user releases the mouse, regardless of where is it.
 
     Parameters
     ----------
@@ -1169,7 +1158,10 @@ def fl_set_select_policy(ptr_flobject, policy):
             select flobject
         policy : int
             popup policy to be set. Values (from xfdata.py)
-            FL_POPUP_NORMAL_SELECT, FL_POPUP_DRAG_SELECT
+            FL_POPUP_NORMAL_SELECT (default, keeps the popup opened when the
+            mouse is not released on one of the selectable items),
+            FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
+            button is released)
 
     Returns
     -------
@@ -1182,14 +1174,14 @@ def fl_set_select_policy(ptr_flobject, policy):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_select_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_set_select_policy",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_select_policy(FL_OBJECT * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(policy, xfdata.POPUPPOLICY_list)
     library.verify_flobjectptr_type(ptr_flobject)
     i_policy = library.convert_to_intc(policy)

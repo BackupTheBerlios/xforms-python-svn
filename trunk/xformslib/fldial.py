@@ -52,10 +52,10 @@ def fl_add_dial(dialtype, xpos, ypos, width, height, label):
     Parameters
     ----------
         dialtype : int
-            type of dial to be added. Values (from xfdata.py)
-            FL_NORMAL_DIAL (A dial with a knob indicating the position),
-            FL_LINE_DIAL (A dial with a line indicating the position),
-            FL_FILL_DIAL (The area between initial and current is filled)
+            type of dial to be added. Values (from xfdata.py) FL_NORMAL_DIAL
+            (A dial with a knob indicating the position), FL_LINE_DIAL (A dial
+            with a line indicating the position), FL_FILL_DIAL (The area
+            between initial and current is filled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -78,7 +78,7 @@ def fl_add_dial(dialtype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_dial = library.cfuncproto(
@@ -87,7 +87,7 @@ def fl_add_dial(dialtype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_dial(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(dialtype, xfdata.DIALTYPE_list)
     i_dialtype = library.convert_to_intc(dialtype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -120,14 +120,14 @@ def fl_set_dial_value(ptr_flobject, dialval):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_dial_value = library.cfuncproto(
         library.load_so_libforms(), "fl_set_dial_value",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_dial_value(FL_OBJECT * ob, double val)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_dialval = library.convert_to_doublec(dialval)
     library.keep_elem_refs(ptr_flobject, dialval, f_dialval)
@@ -155,14 +155,14 @@ def fl_get_dial_value(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_dial_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_dial_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_dial_value(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_dial_value(ptr_flobject)
@@ -172,16 +172,16 @@ def fl_get_dial_value(ptr_flobject):
 def fl_set_dial_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_dial_bounds(ptr_flobject, minbound, maxbound)
 
-    Defines the minimum and the maximum values of a dial flobject.
+    Defines the minimum and the maximum limit of values of a dial flobject.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             dial flobject
         minbound : float
-            minimum value of dial. By default it is 0.0.
+            minimum value limit of dial. By default it is 0.0.
         maxbound : float
-            maximum value of dial. By default it is 1.0.
+            maximum value limit of dial. By default it is 1.0.
 
     Examples
     --------
@@ -189,7 +189,7 @@ def fl_set_dial_bounds(ptr_flobject, minbound, maxbound):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_dial_bounds = library.cfuncproto(
@@ -197,7 +197,7 @@ def fl_set_dial_bounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_dial_bounds(FL_OBJECT * ob, double min,
            double max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -209,7 +209,7 @@ def fl_set_dial_bounds(ptr_flobject, minbound, maxbound):
 def fl_get_dial_bounds(ptr_flobject):
     """fl_get_dial_bounds(ptr_flobject) -> minbounds, maxbounds
 
-    Finds out the minimum and maximum values of a dial flobject.
+    Finds out the minimum and maximum value limits of a dial flobject.
 
     Parameters
     ----------
@@ -219,9 +219,9 @@ def fl_get_dial_bounds(ptr_flobject):
     Returns
     -------
         minbounds : float
-            minimum value of dial
+            minimum value limit of dial
         maxbounds : float
-            maximum value of dial
+            maximum value limit of dial
 
     Examples
     --------
@@ -234,7 +234,7 @@ def fl_get_dial_bounds(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_dial_bounds = library.cfuncproto(
@@ -243,7 +243,7 @@ def fl_get_dial_bounds(ptr_flobject):
         cty.POINTER(cty.c_double)],
         """void fl_get_dial_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_doublec_and_pointer()
     f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
@@ -272,14 +272,14 @@ def fl_set_dial_step(ptr_flobject, step):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_dial_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_dial_step",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_dial_step(FL_OBJECT * ob, double value)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_step = library.convert_to_doublec(step)
     library.keep_elem_refs(ptr_flobject, step, f_step)
@@ -312,7 +312,7 @@ def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_dial_angles = library.cfuncproto(
@@ -320,7 +320,7 @@ def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_dial_angles(FL_OBJECT * ob, double amin,
            double amax)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_anglmin = library.convert_to_doublec(anglmin)
     f_anglmax = library.convert_to_doublec(anglmax)
@@ -332,8 +332,8 @@ def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):
 def fl_set_dial_cross(ptr_flobject, yesno):
     """fl_set_dial_cross(ptr_flobject, yesno)
 
-    Allows crossing over of dial flobject. By default, crossing from
-    359.9 to 0 or from 0 to 359.9 is not allowed.
+    Allows crossing over of dial flobject. By default, crossing from 359.9
+    to 0 or from 0 to 359.9 is not allowed.
 
     Parameters
     ----------
@@ -348,14 +348,14 @@ def fl_set_dial_cross(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_dial_cross = library.cfuncproto(
         library.load_so_libforms(), "fl_set_dial_cross",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_dial_cross(FL_OBJECT * ob, int flag)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -385,14 +385,14 @@ def fl_set_dial_direction(ptr_flobject, directn):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_dial_direction = library.cfuncproto(
         library.load_so_libforms(), "fl_set_dial_direction",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_dial_direction(FL_OBJECT * ob, int dir)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(directn, xfdata.DIALROTN_list)
     i_directn = library.convert_to_intc(directn)

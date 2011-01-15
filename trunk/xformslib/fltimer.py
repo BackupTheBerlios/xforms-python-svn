@@ -49,16 +49,25 @@ def fl_add_timer(timertype, xpos, ypos, width, height, label):
     """fl_add_timer(timertype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a timer flobject.
+    Adds a timer flobject. It can be used to make a timer that runs down
+    toward 0.0 or runs up toward a pre-set value after which it starts blinking
+    and returns itself to the application program. This can be used in many
+    different ways, e.g. to give a user a particular amount of time for a
+    task, etc. Also a hidden timer object can be created, so the application
+    program can take action at the moment the timer expires§; e.g. you can use
+    this to show a message that remains visible until the user presses the OK
+    button or until a particular amount of time has passed. The precision of
+    the timer is not very good. Do not count on anything better than, say,
+    0.05 seconds.
 
     Parameters
     ----------
         timertype : int
-            type of timer to be added. Values (from xfdata.py)
-            FL_NORMAL_TIMER (Visible, showing a label in a box which blinks
-            when the timer expires), FL_VALUE_TIMER (Visible, showing the
-            time left or the elapsed time. Blinks if the timer expires),
-            FL_HIDDEN_TIMER (Not visible).
+            type of timer to be added. Values (from xfdata.py) FL_NORMAL_TIMER
+            (Visible, showing a label in a box which blinks when the timer
+            expires), FL_VALUE_TIMER (Visible, showing the time left or the
+            elapsed time. Blinks if the timer expires), FL_HIDDEN_TIMER (Not
+            visible).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -82,7 +91,7 @@ def fl_add_timer(timertype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_timer = library.cfuncproto(
@@ -91,7 +100,7 @@ def fl_add_timer(timertype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_timer(int type, FL_Coord x, FL_Coord y,
         FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(timertype, \
             xfdata.TIMERTYPE_list)
     i_timertype = library.convert_to_intc(timertype)
@@ -126,14 +135,14 @@ def fl_set_timer(ptr_flobject, tdelay):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_set_timer",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_timer(FL_OBJECT * ob, double total)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_tdelay = library.convert_to_doublec(tdelay)
     library.keep_elem_refs(ptr_flobject, tdelay, f_tdelay)
@@ -161,14 +170,14 @@ def fl_get_timer(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_get_timer",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_timer(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_timer(ptr_flobject)
@@ -178,8 +187,8 @@ def fl_get_timer(ptr_flobject):
 def fl_set_timer_countup(ptr_flobject, yesno):
     """fl_set_timer_countup(ptr_flobject, yesno)
 
-    Changes timer behavior so the timer counts up and shows elapsed time.
-    By default, a timer counts down toward zero and the value shown (for
+    Changes timer behavior so the timer counts up and shows elapsed time. By
+    default, a timer counts down toward zero and the value shown (for
     xfdata.FL_VALUE_TIMERs) is the time left until the timer expires.
 
     Parameters
@@ -187,8 +196,8 @@ def fl_set_timer_countup(ptr_flobject, yesno):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             timer flobject
         yesno : int
-            flag to set count up or down. Values 0 (counts down and shows
-            time left) or 1 (counts up and shows elapsed time)
+            flag to set count up or down. Values 0 (counts down and shows time
+            left) or 1 (counts up and shows elapsed time)
 
     Examples
     --------
@@ -196,19 +205,18 @@ def fl_set_timer_countup(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_timer_countup = library.cfuncproto(
         library.load_so_libforms(), "fl_set_timer_countup",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_timer_countup(FL_OBJECT * ob, int yes)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
     _fl_set_timer_countup(ptr_flobject, i_yesno)
-
 
 
 def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
@@ -223,10 +231,11 @@ def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             timer flobject
         pyfn_TimerFilter : python callback function, returned value
-            name referring to function(ptr_flobject, [float]secs) -> [str]time
-            Parameter floatsecs is time left for count-down timers and the
+            name referring to function(ptr_flobject, [float]totalsecs)
+            -> [str]time
+            Param totalsecs is time left for count-down timers and the
             elapsed time for up-counting timers (in units of seconds).
-            It gives string representation of time.
+            It gives textual formatted representation of time.
 
     Returns
     -------
@@ -235,14 +244,14 @@ def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
 
     Examples
     --------
-        >>> def timefilt(pobj, elapsedsecs):
+        >>> def timefiltcb(pobj, elapsedsecs):
         >>> ... <something>
-        >>> ... return newstr
-        >>> oldtimerfunc = fl_set_timer_filter(ptimerobj, timefilt)
+        >>> ... return fmtnewstr
+        >>> oldtimerfunc = fl_set_timer_filter(ptimerobj, timefiltcb)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_TIMER_FILTER = cty.CFUNCTYPE(xfdata.STRING,
@@ -253,7 +262,7 @@ def fl_set_timer_filter(ptr_flobject, pyfn_TimerFilter):
         xfdata.FL_TIMER_FILTER],
         """FL_TIMER_FILTER fl_set_timer_filter(FL_OBJECT * ob,
            FL_TIMER_FILTER filter)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_TimerFilter)
     cfn_TimerFilter = xfdata.FL_TIMER_FILTER(pyfn_TimerFilter)
@@ -279,14 +288,14 @@ def fl_suspend_timer(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_suspend_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_suspend_timer",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_suspend_timer(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     _fl_suspend_timer(ptr_flobject)
@@ -296,9 +305,9 @@ def fl_resume_timer(ptr_flobject):
     """fl_resume_timer(ptr_flobject)
 
     Resumes timer previously paused (with fl_suspend_timer). Unlike
-    fl_set_timer() a suspended timer keeps its internal state (total
-    delay, time left etc.), so when it is resumed, it starts from
-    where it was suspended.
+    fl_set_timer() a suspended timer keeps its internal state (total delay,
+    time left etc.), so when it is resumed, it starts from where it was
+    suspended.
 
     Parameters
     ----------
@@ -311,14 +320,14 @@ def fl_resume_timer(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_resume_timer = library.cfuncproto(
         library.load_so_libforms(), "fl_resume_timer",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_resume_timer(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     _fl_resume_timer(ptr_flobject)

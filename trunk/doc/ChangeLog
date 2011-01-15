@@ -2,10 +2,21 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110115 (beta17)
+    * reviewed status of fl*.py functions to reflect real development status.
+    Some more unit-tests for flbasic functions, and readjustments in some
+    examples.
+    * some more docstring corrections and bugfixes in fl*.py.
+    * in flflimage.py introduced new checks for flimage_setup() before calling
+    flimage_* functions.
+    * in xfstruct.py created new functions to prepare some class instance params:
+    make_ptr_flimagetext() for xfdata.FLIMAGE_TEXT, make_ptr_flimagemarker()
+    for xfdata.FLIMAGE_MARKER, make_ptr_fleditkeymap() for xfdata.FL_EditKeymap,
+    and make_ptr_flrect() for xfdata.FL_RECT.
     20110110 (beta16)
     * in fd2python.py character ':' of a value text in a fd. file is now
     recognized and supported.
-    * in flflimage.py removed unneeded check for flxbasic.fl_initialize().
+    * in flflimage.py removed unneeded checks for flxbasic.fl_initialize()
     * iconvert.py example added.
     * Userdata params in callback/handlers caller functions are handled in
     different manner, you need to re-cast type from ptr_void to chosen type
@@ -16,15 +27,15 @@ BETA
     and flxbasic.py. Adapting browserall.py, demo27.py, pmbrowse.py, canvas.py
     to show how to retrieve passed value (re-casting pointer to void param) in
     called function.
-    * in library.py Function to handle userdata has been renamed to
+    * in library.py function to handle userdata has been renamed to
     convert_userdata_to_ptrvoid to reflect its real purpose.
     20110109 (beta15)
     * in xfstruct.py functions to prepare complex xfdata.py'structure to be
     passed as functions' params has been renamed from make_<name> to
     make_ptr_<name> (as this reflects real returned type). make_ptr_flpoint()
-    function stores n+1 elements in FL_POINT() to prevent Segfault.
+    function stores n+1 elements in xfdata.FL_POINT() to prevent Segfault.
     * free_minimal.py example added.
-    * removed create_generic_canvas() function as internal.
+    * removed fl_create_generic_canvas() function in flcanvas.py as internal.
     * some other bugfixes in fd2python.py
     20110108 (beta14)
     * created a new convenience function in library.py to handle userdata

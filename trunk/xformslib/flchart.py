@@ -84,7 +84,7 @@ def fl_add_chart(charttype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_chart = library.cfuncproto(
@@ -93,7 +93,7 @@ def fl_add_chart(charttype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_chart(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(charttype, \
             xfdata.CHARTTYPE_list)
     i_charttype = library.convert_to_intc(charttype)
@@ -125,14 +125,14 @@ def fl_clear_chart(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_clear_chart = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_chart",
         None, [cty.POINTER(xfdata.FL_OBJECT)],
         """void fl_clear_chart(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     _fl_clear_chart(ptr_flobject)
@@ -160,7 +160,7 @@ def fl_add_chart_value(ptr_flobject, itemval, label, colr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_chart_value = library.cfuncproto(
@@ -169,7 +169,7 @@ def fl_add_chart_value(ptr_flobject, itemval, label, colr):
         xfdata.FL_COLOR],
         """void fl_add_chart_value(FL_OBJECT * ob, double val,
            const char * str, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_itemval = library.convert_to_doublec(itemval)
     s_label = library.convert_to_stringc(label)
@@ -189,8 +189,8 @@ def fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         indx : int
-            index before which the new item should be inserted. The
-            first item is number 1.
+            index before which the new item should be inserted. The first
+            item is number 1.
         itemval : float
             value of new chart item
         label : str
@@ -205,7 +205,7 @@ def fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_insert_chart_value = library.cfuncproto(
@@ -214,7 +214,7 @@ def fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr):
         xfdata.STRING, xfdata.FL_COLOR],
         """void fl_insert_chart_value(FL_OBJECT * ob, int indx,
            double val, const char * str, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_indx = library.convert_to_intc(indx)
     f_itemval = library.convert_to_doublec(itemval)
@@ -235,8 +235,7 @@ def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         indx : int
-            index position of item to be replaced. The first item
-            is number 1.
+            index position of item to be replaced. The first item is number 1
         itemval : float
             value of chart item
         label : str
@@ -251,7 +250,7 @@ def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_replace_chart_value = library.cfuncproto(
@@ -260,7 +259,7 @@ def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
         xfdata.STRING, xfdata.FL_COLOR],
         """void fl_replace_chart_value(FL_OBJECT * ob, int indx,
            double val, const char * str, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_indx = library.convert_to_intc(indx)
     f_itemval = library.convert_to_doublec(itemval)
@@ -294,7 +293,7 @@ def fl_set_chart_bounds(ptr_flobject, minbound, maxbound):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_chart_bounds = library.cfuncproto(
@@ -302,7 +301,7 @@ def fl_set_chart_bounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_chart_bounds(FL_OBJECT * ob, double min,
            double max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -339,7 +338,7 @@ def fl_get_chart_bounds(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_chart_bounds = library.cfuncproto(
@@ -348,7 +347,7 @@ def fl_get_chart_bounds(ptr_flobject):
         cty.POINTER(cty.c_double)],
         """void fl_get_chart_bounds(FL_OBJECT * ob, double * min,
            double * max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_doublec_and_pointer()
     f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
@@ -361,8 +360,8 @@ def fl_get_chart_bounds(ptr_flobject):
 def fl_set_chart_maxnumb(ptr_flobject, maxnumvals):
     """fl_set_chart_maxnumb(ptr_flobject, maxnumvals)
 
-    Defines the maximum number of values displayed in the chart. Defaults
-    is xfdata.FL_CHART_MAX; maximum set cannot be more than that.
+    Defines the maximum number of values displayed in the chart. Defaults is
+    xfdata.FL_CHART_MAX; maximum set cannot be more than that.
 
     Parameters
     ----------
@@ -377,14 +376,14 @@ def fl_set_chart_maxnumb(ptr_flobject, maxnumvals):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_chart_maxnumb = library.cfuncproto(
         library.load_so_libforms(), "fl_set_chart_maxnumb",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_maxnumb(FL_OBJECT * ob, int maxnumb)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_maxnumvals = library.convert_to_intc(maxnumvals)
     library.keep_elem_refs(ptr_flobject, maxnumvals, i_maxnumvals)
@@ -409,18 +408,18 @@ def fl_set_chart_autosize(ptr_flobject, yesno):
 
     Examples
     --------
-        >>> fl_set_chart_autosize(chrtobj, 1)
+        >>> fl_set_chart_autosize(pchrtobj, 1)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_chart_autosize = library.cfuncproto(
         library.load_so_libforms(), "fl_set_chart_autosize",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_autosize(FL_OBJECT * ob, int autosize)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -438,38 +437,38 @@ def fl_set_chart_lstyle(ptr_flobject, style):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         style : int
-            label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
 
     Examples
     --------
-        >>> fl_set_chart_lstyle(chrtobj, xfdata.FL_TIMESBOLD_STYLE)
+        >>> fl_set_chart_lstyle(pchrtobj, xfdata.FL_TIMESBOLD_STYLE)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_chart_lstyle = library.cfuncproto(
         library.load_so_libforms(), "fl_set_chart_lstyle",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_lstyle(FL_OBJECT * ob, int lstyle)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -488,26 +487,26 @@ def fl_set_chart_lsize(ptr_flobject, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         size : int
-            label size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
-        >>> fl_set_chart_lsize(chrtobj, xfdata.FL_SMALL_SIZE)
+        >>> fl_set_chart_lsize(pchrtobj, xfdata.FL_SMALL_SIZE)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_chart_lsize = library.cfuncproto(
         library.load_so_libforms(), "fl_set_chart_lsize",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_lsize(FL_OBJECT * ob, int lsize)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(ptr_flobject, size, i_size)
@@ -517,8 +516,8 @@ def fl_set_chart_lsize(ptr_flobject, size):
 def fl_set_chart_lcolor(ptr_flobject, colr):
     """fl_set_chart_lcolor(ptr_flobject, colr)
 
-    Changes the color of chart's label. By default, the label is
-    drawn in black.
+    Changes the color of chart's label. By default, the label is drawn
+    in black.
 
     Parameters
     ----------
@@ -529,18 +528,18 @@ def fl_set_chart_lcolor(ptr_flobject, colr):
 
     Examples
     --------
-        >>> fl_set_chart_lcolor(chrtobj, xfdata.FL_FORESTGREEN)
+        >>> fl_set_chart_lcolor(pchrtobj, xfdata.FL_FORESTGREEN)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_chart_lcolor = library.cfuncproto(
         library.load_so_libforms(), "fl_set_chart_lcolor",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.FL_COLOR],
         """void fl_set_chart_lcolor(FL_OBJECT * ob, FL_COLOR lcol)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
@@ -564,18 +563,18 @@ def fl_set_chart_baseline(ptr_flobject, yesno):
 
     Examples
     --------
-        >>> fl_set_chart_baseline(chrtobj, 1)
+        >>> fl_set_chart_baseline(pchrtobj, 1)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_chart_baseline = library.cfuncproto(
         library.load_so_libforms(), "fl_set_chart_baseline",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_chart_baseline(FL_OBJECT * ob, int iYesNo)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)

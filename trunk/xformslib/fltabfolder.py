@@ -46,11 +46,10 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
     """fl_add_tabfolder(foldertype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a tabfolder flobject. It is a special container that is capable
-    of holding multiple groups of objects (folders) to maximize the
-    utilization of the screen real estate. Each folder has its own tab
-    the user can click on to call up a specific folder from which option
-    can be selected.
+    Adds a tabfolder flobject. It is a special container that is capable of
+    holding multiple groups of objects (folders) to maximize the utilization
+    of the screen space. Each folder has its own tab the user can click on to
+    call up a specific folder from which option can be selected.
 
     Parameters
     ----------
@@ -78,12 +77,12 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> tbfobj = fl_add_tabfolder(xfdata.FL_TOP_TABFOLDER, 120, 120,
+        >>> ptbfobj = fl_add_tabfolder(xfdata.FL_TOP_TABFOLDER, 120, 120,
                 250, 400, "myTabFolder")
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_tabfolder = library.cfuncproto(
@@ -92,7 +91,7 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_tabfolder(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(foldertype, \
             xfdata.TABFOLDERTYPE_list)
     i_foldertype = library.convert_to_intc(foldertype)
@@ -123,7 +122,6 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
     not associate the same form with two different tabs; however, you can
     create copies of a form and use these copies.
 
-
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
@@ -131,7 +129,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
         tabtitle : str
             text of the tab rider (with possible embedded newlines in it)
         ptr_flform : pointer to xfdata.FL_FORM
-            form
+            form to be added
 
     Returns
     -------
@@ -144,7 +142,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_addto_tabfolder = library.cfuncproto(
@@ -153,7 +151,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
         xfdata.STRING, cty.POINTER(xfdata.FL_FORM)],
         """FL_OBJECT * fl_addto_tabfolder(FL_OBJECT * ob,
            const char * title, FL_FORM * form)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flformptr_type(ptr_flform)
     s_tabtitle = library.convert_to_stringc(tabtitle)
@@ -172,8 +170,7 @@ def fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
         seqnum : int
-            sequence number. The first tab on the left is 1,
-            the second 2 etc..)
+            sequence number. The first tab on the left is 1, the second 2 etc..
 
     Returns
     -------
@@ -186,7 +183,7 @@ def fl_get_tabfolder_folder_bynumber(ptr_flobject, seqnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_tabfolder_folder_bynumber = library.cfuncproto(
@@ -225,7 +222,7 @@ def fl_get_tabfolder_folder_byname(ptr_flobject, name):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_tabfolder_folder_byname = library.cfuncproto(
@@ -234,7 +231,7 @@ def fl_get_tabfolder_folder_byname(ptr_flobject, name):
         xfdata.STRING],
         """FL_FORM * fl_get_tabfolder_folder_byname(FL_OBJECT * ob,
            const char * name)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_name = library.convert_to_stringc(name)
     library.keep_elem_refs(ptr_flobject, name, s_name)
@@ -245,10 +242,10 @@ def fl_get_tabfolder_folder_byname(ptr_flobject, name):
 def fl_delete_folder(ptr_flobject, ptr_flform):
     """fl_delete_folder(ptr_flobject, ptr_flform)
 
-    Removes a folder from a tabfolder flobject. After deletion, the number
-    of folders in the tabfolder as well as the sequence numbers are
-    updated. This means if you want to delete all folders after the
-    second folder, you can do that by deleting the third folder repeatedly.
+    Removes a folder from a tabfolder flobject. After deletion, the number of
+    folders in the tabfolder as well as the sequence numbers are updated. This
+    means if you want to delete all folders after the second folder, you can
+    do that by deleting the third folder repeatedly.
 
     Parameters
     ----------
@@ -263,14 +260,14 @@ def fl_delete_folder(ptr_flobject, ptr_flform):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_folder",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_FORM)],
         """void fl_delete_folder(FL_OBJECT * ob, FL_FORM * form)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flformptr_type(ptr_flform)
     library.keep_elem_refs(ptr_flobject, ptr_flform)
@@ -280,11 +277,10 @@ def fl_delete_folder(ptr_flobject, ptr_flform):
 def fl_delete_folder_bynumber(ptr_flobject, seqnum):
     """fl_delete_folder_bynumber(ptr_flobject, seqnum)
 
-    Removes a folder from a tabfolder flobject by its sequence number.
-    After deletion, the number of folders in the tabfolder as well as
-    the sequence numbers are updated. This means if you want to delete
-    all folders after the second folder, you can do that by deleting
-    the third folder repeatedly.
+    Removes a folder from a tabfolder flobject by its sequence number. After
+    deletion, the number of folders in the tabfolder as well as the sequence
+    numbers are updated. This means if you want to delete all folders after
+    the second folder, you can do that by deleting the third folder repeatedly.
 
     Parameters
     ----------
@@ -299,14 +295,14 @@ def fl_delete_folder_bynumber(ptr_flobject, seqnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_folder_bynumber = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_folder_bynumber",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_delete_folder_bynumber(FL_OBJECT * ob, int num)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_seqnum = library.convert_to_intc(seqnum)
     library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
@@ -316,11 +312,10 @@ def fl_delete_folder_bynumber(ptr_flobject, seqnum):
 def fl_delete_folder_byname(ptr_flobject, name):
     """fl_delete_folder_byname(ptr_flobject, name)
 
-    Removes a folder from a tabfolder flobject by its name. After
-    deletion, the number of folders in the tabfolder as well as the
-    sequence numbers are updated. This means if you want to delete
-    all folders after the second folder, you can do that by deleting
-    the third folder repeatedly.
+    Removes a folder from a tabfolder flobject by its name. After deletion,
+    the number of folders in the tabfolder as well as the sequence numbers are
+    updated. This means if you want to delete all folders after the second
+    folder, you can do that by deleting the third folder repeatedly.
 
     Parameters
     ----------
@@ -335,14 +330,14 @@ def fl_delete_folder_byname(ptr_flobject, name):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_delete_folder_byname = library.cfuncproto(
         library.load_so_libforms(), "fl_delete_folder_byname",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_name = library.convert_to_stringc(name)
     library.keep_elem_refs(ptr_flobject, name, s_name)
@@ -367,14 +362,14 @@ def fl_set_folder(ptr_flobject, ptr_flform):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_set_folder",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.FL_FORM)],
         """void fl_set_folder(FL_OBJECT * ob, FL_FORM * form)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flformptr_type(ptr_flform)
     library.keep_elem_refs(ptr_flobject, ptr_flform)
@@ -399,14 +394,14 @@ def fl_set_folder_byname(ptr_flobject, name):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_folder_byname = library.cfuncproto(
         library.load_so_libforms(), "fl_set_folder_byname",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     sname = library.convert_to_stringc(name)
     library.keep_elem_refs(ptr_flobject, name, sname)
@@ -423,22 +418,23 @@ def fl_set_folder_bynumber(ptr_flobject, seqnum):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
         seqnum : int
-            sequence number of folder to show
+            sequence number of folder to show. The first tab on the left has
+            a sequence number 1, the second 2 etc..
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_floder_bynumber(ptbfobj, 2)
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_folder_bynumber = library.cfuncproto(
         library.load_so_libforms(), "fl_set_folder_bynumber",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_folder_bynumber(FL_OBJECT * ob, int num)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_seqnum = library.convert_to_intc(seqnum)
     library.keep_elem_refs(ptr_flobject, seqnum, i_seqnum)
@@ -448,8 +444,8 @@ def fl_set_folder_bynumber(ptr_flobject, seqnum):
 def fl_get_folder(ptr_flobject):
     """fl_get_folder(ptr_flobject) -> ptr_flform
 
-    Finds out what the last active folder is (which may be of greater
-    interest than the currently active one).
+    Finds out what the last active folder is (which may be of greater interest
+    than the currently active one).
 
     Parameters
     ----------
@@ -467,14 +463,14 @@ def fl_get_folder(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder",
         cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_FORM * fl_get_folder(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_folder(ptr_flobject)
@@ -482,10 +478,10 @@ def fl_get_folder(ptr_flobject):
 
 
 def fl_get_folder_number(ptr_flobject):
-    """fl_get_folder_number(ptr_flobject)
+    """fl_get_folder_number(ptr_flobject) -> seqnum
 
-    Finds out what the sequence number of the last active folder is (which
-    may be of greater interest than the currently active one).
+    Finds out what the sequence number of the last active folder is (which may
+    be of greater interest than the currently active one).
 
     Parameters
     ----------
@@ -494,7 +490,7 @@ def fl_get_folder_number(ptr_flobject):
 
     Returns
     -------
-        seqnum. : int
+        seqnum : int
             sequence number of the last active folder form
 
     Examples
@@ -503,14 +499,14 @@ def fl_get_folder_number(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_folder_number = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder_number",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_folder_number(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_folder_number(ptr_flobject)
@@ -539,14 +535,14 @@ def fl_get_folder_name(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_folder_name = library.cfuncproto(
         library.load_so_libforms(), "fl_get_folder_name",
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)],
         """const char * fl_get_folder_name(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_folder_name(ptr_flobject)
@@ -574,14 +570,14 @@ def fl_get_tabfolder_numfolders(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_tabfolder_numfolders = library.cfuncproto(
         library.load_so_libforms(), "fl_get_tabfolder_numfolders",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_tabfolder_numfolders(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_tabfolder_numfolders(ptr_flobject)
@@ -609,14 +605,14 @@ def fl_get_active_folder(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_active_folder = library.cfuncproto(
         library.load_so_libforms(), "fl_get_active_folder",
         cty.POINTER(xfdata.FL_FORM), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_FORM * fl_get_active_folder(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_active_folder(ptr_flobject)
@@ -626,8 +622,7 @@ def fl_get_active_folder(ptr_flobject):
 def fl_get_active_folder_number(ptr_flobject):
     """fl_get_active_folder_number(ptr_flobject) -> seqnum
 
-    Finds out the sequence number of which folder is currently
-    active, starting from 1 on the left.
+    Finds out the sequence number of which folder is currently active.
 
     Parameters
     ----------
@@ -637,7 +632,8 @@ def fl_get_active_folder_number(ptr_flobject):
     Returns
     -------
         seqnum : int
-            sequence number of active folder
+            sequence number of active folder. The first on the left is 1, the
+            second 2 etc..
 
     Examples
     --------
@@ -645,14 +641,14 @@ def fl_get_active_folder_number(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_active_folder_number = library.cfuncproto(
         library.load_so_libforms(), "fl_get_active_folder_number",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_active_folder_number(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_active_folder_number(ptr_flobject)
@@ -680,14 +676,14 @@ def fl_get_active_folder_name(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_active_folder_name = library.cfuncproto(
         library.load_so_libforms(), "fl_get_active_folder_name",
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)],
         """const char * fl_get_active_folder_name(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_active_folder_name(ptr_flobject)
@@ -730,7 +726,7 @@ def fl_get_folder_area(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_folder_area = library.cfuncproto(
@@ -740,7 +736,7 @@ def fl_get_folder_area(ptr_flobject):
         cty.POINTER(xfdata.FL_Coord)],
         """void fl_get_folder_area(FL_OBJECT * ob, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_xpos, ptr_xpos = library.make_intc_and_pointer()
     i_ypos, ptr_ypos = library.make_intc_and_pointer()
@@ -756,14 +752,14 @@ def fl_get_folder_area(ptr_flobject):
 def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
     """fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform)
 
-    Replaces a form associated with folder having a particular sequence
-    number with a new form
+    Replaces a form associated with folder having a particular sequence number
+    with a new form.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
-        num : int
+        seqnum : int
             sequence number of folder to be replaced
         ptr_flform : pointer to xfdata.FL_FORM
             new form associated with folder
@@ -774,7 +770,7 @@ def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_replace_folder_bynumber = library.cfuncproto(
@@ -783,7 +779,7 @@ def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
         cty.POINTER(xfdata.FL_FORM)],
         """void fl_replace_folder_bynumber(FL_OBJECT * ob, int num,
            FL_FORM * form)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flformptr_type(ptr_flform)
     i_seqnum = library.convert_to_intc(seqnum)
@@ -794,20 +790,19 @@ def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
 def fl_set_tabfolder_autofit(ptr_flobject, howfit):
     """fl_set_tabfolder_autofit(ptr_flobject, howfit) -> oldhowfit
 
-    Adjusts dynamically the sizes of the folders in the tab folder so they
-    fit. Since tab size can vary depending on monitor/font resolutions, it
-    is in general not possible to design the forms (folders) so they fit
-    exactly into the folder area.
+    Adjusts dynamically the sizes of the folders in the tab folder so they fit.
+    Since tab size can vary depending on monitor/font resolutions, it is in
+    general not possible to design the forms (folders) so they fit exactly into
+    the folder area.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
         howfit : int
-            how do folders' sizes fit . Values (from xfdata.py)
-            FL_NO (do not scale the form), FL_FIT (Always scale the form),
-            FL_ENLARGE_ONLY (Scale the form only if it is smaller than folder
-            area).
+            how do folders' sizes fit . Values (from xfdata.py) FL_NO (do not
+            scale the form), FL_FIT (Always scale the form), FL_ENLARGE_ONLY
+            (Scale the form only if it is smaller than folder area).
 
     Returns
     -------
@@ -820,14 +815,14 @@ def fl_set_tabfolder_autofit(ptr_flobject, howfit):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tabfolder_autofit = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tabfolder_autofit",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_tabfolder_autofit(FL_OBJECT * ob, int y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(howfit, \
             xfdata.FOLDERSIZESFIT_list)
@@ -845,7 +840,7 @@ def fl_set_default_tabfolder_corner(numpixels):
     Parameters
     ----------
         numpixels : int
-            number of corner pixels (default 3)
+            number of corner pixels. By default it is 3.
 
     Returns
     -------
@@ -858,14 +853,14 @@ def fl_set_default_tabfolder_corner(numpixels):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_default_tabfolder_corner = library.cfuncproto(
         library.load_so_libforms(), "fl_set_default_tabfolder_corner",
         cty.c_int, [cty.c_int],
         """int fl_set_default_tabfolder_corner(int n):""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_numpixels = library.convert_to_intc(numpixels)
     library.keep_elem_refs(numpixels, i_numpixels)
     retval = _fl_set_default_tabfolder_corner(i_numpixels)
@@ -889,18 +884,18 @@ def fl_get_tabfolder_offset(ptr_flobject):
 
     Examples
     --------
-        >>> *todo*
+        >>> offs = fl_get_tabfolder_offset(ptbfobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_tabfolder_offset = library.cfuncproto(
         library.load_so_libforms(), "fl_get_tabfolder_offset",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_tabfolder_offset(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_tabfolder_offset(ptr_flobject)
@@ -930,14 +925,14 @@ def fl_set_tabfolder_offset(ptr_flobject, offset):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tabfolder_offset = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tabfolder_offset",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_tabfolder_offset(FL_OBJECT * ob, int offset)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_offset = library.convert_to_intc(offset)
     library.keep_elem_refs(ptr_flobject, offset, i_offset)

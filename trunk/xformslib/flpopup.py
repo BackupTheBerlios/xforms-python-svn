@@ -43,8 +43,8 @@ from xformslib import xfdata
 def fl_popup_add(win, title):
     """fl_popup_add(win, title) -> ptr_flpopup
 
-    Defines a new popup. There is no built-in limit to the number
-    of popups that can be created.
+    Defines a new popup. There is no built-in limit to the number of popups
+    that can be created.
 
     Parameters
     ----------
@@ -69,25 +69,25 @@ def fl_popup_add(win, title):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_add = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_add",
         cty.POINTER(xfdata.FL_POPUP), [xfdata.Window, xfdata.STRING],
         """FL_POPUP * fl_popup_add(Window p1, const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     if not win:         # if it is None
         win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_stringc(title)     # empty string handled
     library.keep_elem_refs(win, title, ul_win, s_title)
     retval = _fl_popup_add(ul_win, s_title)
     return retval
 
 
 def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
-                         f=None, E=None, L=None, m=None, Rr=None, s=None):
+        f=None, E=None, L=None, m=None, Rr=None, s=None):
     """fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
     f=None, E=None, L=None, m=None, Rr=None, s=None)
     -> ptr_flpopupentry
@@ -103,43 +103,40 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if required). Text
-            may contain newline characters which allows to create entries
-            that span more than a single line. Special sequences who are
-            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
-            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+            may contain "|" for more than one entry and newline character
+            which allows to create entries that span more than a single line.
+            Special sequences who are allowed are %x, %u, %f, %E, %L, %m or
+            %T or %t, %R or %r or %l, %d, %h, %S, %s, %%. Special sequences of
+            same type cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on set
-            (separated additional argument corresponding to %f in-text
-            special sequence)
+            function to be invoked on set (separated additional argument
+            corresponding to %f in-text special sequence)
         E : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on enter
-            (separated additional argument corresponding to %E in-text
-            special sequence)
+            function to be invoked on enter (separated additional argument
+            corresponding to %E in-text special sequence)
         L : python callback function, returned unused value
             name referring to function(ptr_flpopupreturn) -> int
-            function to be invoked on leave
-            (separated additional argument corresponding to %L in-text
-            special sequence)
+            function to be invoked on leave (separated additional argument
+            corresponding to %L in-text special sequence)
         m : pointer to xfdata.FL_POPUP
-            popup class to be used as sub-popup
-            (separated additional argument corresponding to %m in-text
-            special sequence)
+            popup class to be used as sub-popup (separated additional argument
+            corresponding to %m in-text special sequence)
         Rr : int
-            group number of a radio entry type
-            (separated additional argument corresponding to %R or %r
-            in-text special sequence)
+            group number of a radio entry type (separated additional argument
+            corresponding to %R or %r in-text special sequence)
         s : str
-            shortcut text for the entry
-            (separated additional argument corresponding to %s in-text
-            special sequence)
+            shortcut text for the entry (separated additional argument
+            corresponding to %s in-text special sequence)
 
     Returns
     -------
@@ -152,8 +149,8 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + NoDemo = Maybe
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -210,7 +207,7 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         xfdata.STRING, cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_popup_add_entries(FL_POPUP * p1,
            const char * p2, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
     library.keep_cfunc_refs(f, E, L, cfn_f, cfn_E, cfn_L)
@@ -243,15 +240,18 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         entryitemstxt : str
             text of the entry to be added and in-text special sequences with
             or without not separated additional arguments (if required). Text
-            may contain newline characters which allows to create entries
-            that span more than a single line. Special sequences who are
-            allowed are: %x, %u, %f, %E, %L, %m or %T or %t, %R or %r or %l,
-            %d, %h, %S, %s, %%. Only one entry is supported in xforms-python.
+            may contain "|" for more than one entry and newline character
+            which allows to create entries that span more than a single line.
+            Special sequences who are allowed are: %x, %u, %f, %E, %L, %m or
+            %T or %t, %R or %r or %l, %d, %h, %S, %s, %%. Special sequences of
+            same type cannot be repeated in xforms-python.
         x : long
-            user data to be passed to callbacks for entry (separated
+            numeric data to be passed to callbacks for entry (separated
             additional argument corresponding to %x in-text special sequence)
         u : pointer to any type
-            user data to be passed to callbacks for entry (separated
+            user data to be passed to callbacks for entry; invoked callback
+            has to take care of type check and re-cast ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
@@ -292,8 +292,8 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
-        See: Special sequences in entry text documentation.
+        Status: NA-UTest + Doc + NoDemo = Maybe
+        See: Special sequences in entry text documentation in xfdata.py.
 
     """
     # managing additional separate parameters
@@ -350,7 +350,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         cty.c_void_p, xfdata.STRING, cparam_argstypelist],
         """FL_POPUP_ENTRY * fl_popup_insert_entries(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, const char * p3, ...)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     if not ptr_flpopupentry:         # it is None
         ptr_flpopupentry_alt = cty.cast(ptr_flpopupentry, \
@@ -403,7 +403,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_create = library.cfuncproto(
@@ -412,7 +412,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP * fl_popup_create(Window p1, const char * p2,
            FL_POPUP_ITEM * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     if not win:         # if it is None
         win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
@@ -448,7 +448,7 @@ def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_add_items = library.cfuncproto(
@@ -457,7 +457,7 @@ def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_popup_add_items(FL_POPUP * p1,
            FL_POPUP_ITEM * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
     library.keep_elem_refs(ptr_flpopup, ptr_flpopupitem)
@@ -494,7 +494,7 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_insert_items = library.cfuncproto(
@@ -503,7 +503,7 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
         cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.POINTER(xfdata.FL_POPUP_ITEM)],
         """FL_POPUP_ENTRY * fl_popup_insert_items(FL_POPUP * p1,
            FL_POPUP_ENTRY * p2, FL_POPUP_ITEM * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
@@ -516,11 +516,11 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
 def fl_popup_delete(ptr_flpopup):
     """fl_popup_delete(ptr_flpopup) -> result
 
-    Deletes a popup. It is not possible to call the function while the
-    popup is still visible on the screen. Calling it from any callback
-    function is problematic unless you know for sure that the popup to be
-    deleted (and sub-popups of it) will not be used later and thus normally
-    should be avoided.
+    Deletes a popup. It is not possible to call the function while the popup
+    is still visible on the screen. Calling it from any callback function is
+    problematic unless you know for sure that the popup to be deleted (and
+    sub-popups of it) will not be used later and thus normally should be
+    avoided.
 
     Parameters
     ----------
@@ -538,14 +538,14 @@ def fl_popup_delete(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_delete = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_delete",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_delete(FL_POPUP * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flpopup)
     retval = _fl_popup_delete(ptr_flpopup)
@@ -573,14 +573,14 @@ def fl_popup_entry_delete(ptr_flpopupentry):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_delete = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_delete",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_popup_entry_delete(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.keep_elem_refs(ptr_flpopupentry)
     retval = _fl_popup_entry_delete(ptr_flpopupentry)
@@ -610,14 +610,14 @@ def fl_popup_do(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_do = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_do",
         cty.POINTER(xfdata.FL_POPUP_RETURN), [cty.POINTER(xfdata.FL_POPUP)],
         """FL_POPUP_RETURN * fl_popup_do(FL_POPUP * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flpopup)
     retval = _fl_popup_do(ptr_flpopup)
@@ -645,14 +645,14 @@ def fl_popup_set_position(ptr_flpopup, xpos, ypos):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_set_position = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_position",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_position(FL_POPUP * p1, int p2, int p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_xpos = library.convert_to_intc(xpos)
     i_ypos = library.convert_to_intc(ypos)
@@ -663,20 +663,20 @@ def fl_popup_set_position(ptr_flpopup, xpos, ypos):
 def fl_popup_get_policy(ptr_flpopup):
     """fl_popup_get_policy(ptr_flpopup) -> policy
 
-    Finds out current policy setting for handling the popups, or changes
-    the default setting for new popup to be created.
+    Finds out current policy setting for handling the popups, or changes the
+    default setting for new popup to be created.
 
     Parameters
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
-            popup class instance. If it is None, gives the default setting
-            for the popups created afterwards
+            popup class instance. If it is None, gives the default setting for
+            the popups created afterwards
 
     Returns
     -------
         policy : int
-            policy for supplied popup, or default policy used in creating
-            new popups is returned (if None is supplied), or -1 (on errors).
+            policy for supplied popup, or default policy used in creating new
+            popups is returned (if None is supplied), or -1 (on errors).
 
     Examples
     --------
@@ -684,14 +684,14 @@ def fl_popup_get_policy(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_policy",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_policy(FL_POPUP * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     if not ptr_flpopup:         # it is None
         ptr_flpopup_alt = cty.cast(ptr_flpopup, cty.POINTER(cty.c_void_p))
     else:                  # real pointer to FL_POPUP
@@ -705,10 +705,9 @@ def fl_popup_get_policy(ptr_flpopup):
 def fl_popup_set_policy(ptr_flpopup, policy):
     """fl_popup_set_policy(ptr_flpopup, policy) -> oldpol
 
-    Defines policy for handling the popup (i.e. does it get closed when
-    the user releases the mouse button outside an active entry or not?)
-    or changes the default setting of the policy, used in the creation
-    of new popups.
+    Defines policy for handling the popup (i.e. does it get closed when the
+    user releases the mouse button outside an active entry or not?) or changes
+    the default setting of the policy, used in the creation of new popups.
 
     Parameters
     ----------
@@ -716,10 +715,10 @@ def fl_popup_set_policy(ptr_flpopup, policy):
             popup class instance. If it is None, changes the default
             setting of the policy, used in the creation of new popups.
         policy : int
-            policy to be set. Values (from xfdata.py)
-            FL_POPUP_NORMAL_SELECT (Keeps the popup opened when the mouse is
-            not released on one of the selectable items), FL_POPUP_DRAG_SELECT
-            (Close the popup immediately when the mouse button is released).
+            policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT
+            (default, keeps the popup opened when the mouse is not released on
+            one of the selectable items), FL_POPUP_DRAG_SELECT (Closes the
+            popup immediately when the mouse button is released).
 
     Returns
     -------
@@ -732,14 +731,14 @@ def fl_popup_set_policy(ptr_flpopup, policy):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_set_policy = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_policy",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_policy(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     if not ptr_flpopup:         # it is None
         ptr_flpopup_alt = cty.cast(ptr_flpopup, cty.POINTER(cty.c_void_p))
     else:                  # real pointer to FL_POPUP
@@ -756,8 +755,8 @@ def fl_popup_set_policy(ptr_flpopup, policy):
 def fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb):
     """fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb) -> Popupcb
 
-    Associates with a popup or changes a callback function to be invoked
-    when an entry (or an entry of a sub-popup) is selected.
+    Associates with a popup or changes a callback function to be invoked when
+    an entry (or an entry of a sub-popup) is selected.
 
     Parameters
     ----------
@@ -765,15 +764,14 @@ def fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb):
             popup class instance
         pyfn_PopupCb : python function callback, returned value
             callback that is called after entry selection.
-            name referring to function(ptr_flpopupreturn) -> num.
-            parameter ptr_flpopopreturn is of type
-            xfdata.FL_POPUP_RETURN
+            name referring to function(ptr_flpopupreturn) -> [int]num.
+            parameter ptr_flpopopreturn is of type xfdata.FL_POPUP_RETURN
 
     Returns
     -------
-        PopupCb : pointer ot xfdata.FL_POPUP_CB
-            old popup callback, or None (on errors or if no callback
-            was defined)
+        PopupCb : pointer to xfdata.FL_POPUP_CB
+            old popup callback, or None (on errors or if no callback was
+            defined)
 
     Examples
     --------
@@ -781,18 +779,16 @@ def fl_popup_set_callback(ptr_flpopup, pyfn_PopupCb):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, \
-    #            cty.POINTER(xfdata.FL_POPUP_RETURN))
+    #        cty.POINTER(xfdata.FL_POPUP_RETURN))
     _fl_popup_set_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_callback",
-        xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP),
-        xfdata.FL_POPUP_CB],
-        """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1,
-           FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+        xfdata.FL_POPUP_CB, [cty.POINTER(xfdata.FL_POPUP), xfdata.FL_POPUP_CB],
+        """FL_POPUP_CB fl_popup_set_callback(FL_POPUP * p1, FL_POPUP_CB p2)""")
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.verify_function_type(pyfn_PopupCb)
     cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
@@ -830,7 +826,7 @@ def fl_popup_get_title_font(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_title_font = library.cfuncproto(
@@ -839,7 +835,7 @@ def fl_popup_get_title_font(ptr_flpopup):
         cty.POINTER(cty.c_int)],
         """void fl_popup_get_title_font(FL_POPUP * p1, int * p2,
            int * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_style, ptr_style = library.make_intc_and_pointer()
     i_size, ptr_size = library.make_intc_and_pointer()
@@ -861,29 +857,29 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
-            title style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            title style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
           size : int
-            title size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            title size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
@@ -891,14 +887,14 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_set_title_font = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_title_font",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_set_title_font(FL_POPUP * p1, int p2, int p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -935,7 +931,7 @@ def fl_popup_entry_get_font(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_font = library.cfuncproto(
@@ -943,7 +939,7 @@ def fl_popup_entry_get_font(ptr_flpopup):
         None, [cty.POINTER(xfdata.FL_POPUP), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int)],
         """void fl_popup_entry_get_font(FL_POPUP * p1, int * p2, int * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_style, ptr_style = library.make_intc_and_pointer()
     i_size, ptr_size = library.make_intc_and_pointer()
@@ -962,29 +958,29 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
-            style of popup entries. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            style of popup entries. Values (from xfdata.py) FL_NORMAL_STYLE
+            (Helvetica normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
-            size of popup entries. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            size of popup entries. Values (from xfdata.py) FL_TINY_SIZE (8
+            points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font,
+            default), FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14
+            points font), FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24
+            points font), or other numeric odd or even value
 
     Examples
     --------
@@ -992,14 +988,14 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_set_font = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_font",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int, cty.c_int],
         """void fl_popup_entry_set_font(FL_POPUP * p1, int p2, int p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     #library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -1029,14 +1025,14 @@ def fl_popup_get_bw(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_bw = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_bw",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_bw(FL_POPUP * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flpopup)
     retval = _fl_popup_get_bw(ptr_flpopup)
@@ -1066,14 +1062,14 @@ def fl_popup_set_bw(ptr_flpopup, borderwidth):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_set_bw = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_bw",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_bw(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_borderwidth = library.convert_to_intc(borderwidth)
     library.keep_elem_refs(ptr_flpopup, borderwidth, i_borderwidth)
@@ -1116,14 +1112,14 @@ def fl_popup_get_color(ptr_flpopup, colrpos):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_color = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_color",
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """FL_COLOR fl_popup_get_color(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(colrpos, xfdata.POPUPCOLOR_list)
     i_colrpos = library.convert_to_intc(colrpos)
@@ -1142,7 +1138,6 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         colrpos : int
-            color type position. Values (from xfdata.py)
             color type position. Values (from xfdata.py)
             FL_POPUP_BACKGROUND_COLOR (Background color of the popup, default
             is FL_MCOL), FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is
@@ -1171,7 +1166,7 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_set_color = library.cfuncproto(
@@ -1179,7 +1174,7 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
         xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_POPUP), cty.c_int,
         xfdata.FL_COLOR],
         """FL_COLOR fl_popup_set_color(FL_POPUP * p1, int p2, FL_COLOR p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.checkfatal_allowed_value_in_list(colrpos, \
             xfdata.POPUPCOLOR_list)
@@ -1201,7 +1196,7 @@ def fl_popup_set_cursor(ptr_flpopup, cursornum):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         cursornum : int
-            id of a symbolic cursor shape's name
+            id of a symbolic cursor shape
 
     Examples
     --------
@@ -1209,14 +1204,14 @@ def fl_popup_set_cursor(ptr_flpopup, cursornum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_set_cursor = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_cursor",
         None, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """void fl_popup_set_cursor(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_cursornum = library.convert_to_intc(cursornum)
     library.keep_elem_refs(ptr_flpopup, cursornum, i_cursornum)
@@ -1244,14 +1239,14 @@ def fl_popup_get_title(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_title = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_title",
         xfdata.STRING, [cty.POINTER(xfdata.FL_POPUP)],
         """const char * fl_popup_get_title(FL_POPUP * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flpopup)
     retval = _fl_popup_get_title(ptr_flpopup)
@@ -1261,8 +1256,8 @@ def fl_popup_get_title(ptr_flpopup):
 def fl_popup_set_title(ptr_flpopup, title):
     """fl_popup_set_title(ptr_flpopup, title) -> ptr_flpopup
 
-    Defines the title of a popup. By default, the popup of a select
-    flobject does not have a title drawn on top of it.
+    Defines the title of a popup. By default, the popup of a select flobject
+    does not have a title drawn on top of it.
 
     Parameters
     ----------
@@ -1282,7 +1277,7 @@ def fl_popup_set_title(ptr_flpopup, title):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_set_title = library.cfuncproto(
@@ -1290,7 +1285,7 @@ def fl_popup_set_title(ptr_flpopup, title):
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP),
         xfdata.STRING],
         """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(ptr_flpopup, title, s_title)
@@ -1308,13 +1303,12 @@ def fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         pyfn_PopupCb : python callback function, returned value
-            name referring to function(ptr_flpopupreturn) -> num.
+            name referring to function(ptr_flpopupreturn) -> [int]num.
 
     Returns
     -------
         PopupCb : pointer to xfdata.FL_POPUP_CB
-            old popup callback, or None (when none was set or an error
-            occured).
+            old popup callback, or None (when was not set or an error occured)
 
     Examples
     --------
@@ -1322,7 +1316,7 @@ def fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     # FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
@@ -1332,7 +1326,7 @@ def fl_popup_entry_set_callback(ptr_flpopupentry, pyfn_PopupCb):
         xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_entry_set_callback(FL_POPUP_ENTRY * p1,
            FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.verify_function_type(pyfn_PopupCb)
     cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
@@ -1354,13 +1348,12 @@ def fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         pyfn_PopupCb : python callback function, returned value
-            name referring to function(ptr_flpopupreturn) -> num.
+            name referring to function(ptr_flpopupreturn) -> [int]num.
 
     Returns
     -------
         PopupCb : pointer to xfdata.FL_POPUP_CB
-            old popup callback, or None (when none was set or an error
-            occured).
+            old popup callback, or None (when was not set or an error occured)
 
     Examples
     --------
@@ -1368,7 +1361,7 @@ def fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     # FL_POPUP_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(FL_POPUP_RETURN))
@@ -1378,7 +1371,7 @@ def fl_popup_entry_set_enter_callback(ptr_flpopupentry, pyfn_PopupCb):
         xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_entry_set_enter_callback(
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.verify_function_type(pyfn_PopupCb)
     cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
@@ -1400,13 +1393,12 @@ def fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         pyfn_PopupCb : python callback function, returned value
-            name referring to function(ptr_flpopupreturn) -> num.
+            name referring to function(ptr_flpopupreturn) -> [int]num.
 
     Returns
     -------
         PopupCb : pointer to xfdata.FL_POPUP_CB
-            old popup callback, or None (when none was set or an error
-            occured).
+            old popup callback, or None (when was not set or an error occured)
 
     Examples
     --------
@@ -1414,7 +1406,7 @@ def fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_set_leave_callback = library.cfuncproto(
@@ -1423,7 +1415,7 @@ def fl_popup_entry_set_leave_callback(ptr_flpopupentry, pyfn_PopupCb):
         xfdata.FL_POPUP_CB],
         """FL_POPUP_CB fl_popup_entry_set_leave_callback(
            FL_POPUP_ENTRY * p1, FL_POPUP_CB p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.verify_function_type(pyfn_PopupCb)
     cfn_PopupCb = xfdata.FL_POPUP_CB(pyfn_PopupCb)
@@ -1455,14 +1447,14 @@ def fl_popup_entry_get_state(ptr_flpopupentry):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_state = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_state",
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """unsigned int fl_popup_entry_get_state(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.keep_elem_refs(ptr_flpopupentry)
     retval = _fl_popup_entry_get_state(ptr_flpopupentry)
@@ -1479,12 +1471,12 @@ def fl_popup_entry_set_state(ptr_flpopupentry, state):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
-            state to be set. Values (from xfdata.py)
-            FL_POPUP_DISABLED (The popup is disabled and cannot be selected),
-            FL_POPUP_HIDDEN (The popup is hidden, i.e. does not get shown, and
-            thus cannot be selected), FL_POPUP_CHECKED (Only relevant for
-            toggle or radio popups, marks it as in "on" state). FL_POPUP_NONE
-            should not be used here.
+            state to be set. Values (from xfdata.py) FL_POPUP_DISABLED (The
+            popup is disabled and cannot be selected), FL_POPUP_HIDDEN (The
+            popup is hidden, i.e. does not get shown, and thus cannot be
+            selected), FL_POPUP_CHECKED (Only relevant for toggle or radio
+            popups, marks it as in "on" state). FL_POPUP_NONE should not be
+            used here.
 
     Returns
     -------
@@ -1497,7 +1489,7 @@ def fl_popup_entry_set_state(ptr_flpopupentry, state):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_set_state = library.cfuncproto(
@@ -1505,7 +1497,7 @@ def fl_popup_entry_set_state(ptr_flpopupentry, state):
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_set_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     ui_state = library.convert_to_uintc(state)
@@ -1538,7 +1530,7 @@ def fl_popup_entry_clear_state(ptr_flpopupentry, state):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_clear_state = library.cfuncproto(
@@ -1546,7 +1538,7 @@ def fl_popup_entry_clear_state(ptr_flpopupentry, state):
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_clear_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     ui_state = library.convert_to_uintc(state)
@@ -1566,7 +1558,8 @@ def fl_popup_entry_raise_state(ptr_flpopupentry, state):
             popup entry
         state : int_pos
             state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
-            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
+            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. A bitwise OR of them is
+            allowed.
 
     Returns
     -------
@@ -1579,7 +1572,7 @@ def fl_popup_entry_raise_state(ptr_flpopupentry, state):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_raise_state = library.cfuncproto(
@@ -1587,7 +1580,7 @@ def fl_popup_entry_raise_state(ptr_flpopupentry, state):
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_raise_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     ui_state = library.convert_to_uintc(state)
@@ -1607,7 +1600,8 @@ def fl_popup_entry_toggle_state(ptr_flpopupentry, state):
             popup entry
         state : int_pos
             state to be toggled. Values (from xfdata.py) FL_POPUP_DISABLED,
-            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
+            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. A bitwise OR of them is
+            allowed
 
     Returns
     -------
@@ -1620,7 +1614,7 @@ def fl_popup_entry_toggle_state(ptr_flpopupentry, state):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_toggle_state = library.cfuncproto(
@@ -1628,7 +1622,7 @@ def fl_popup_entry_toggle_state(ptr_flpopupentry, state):
         cty.c_uint, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_uint],
         """unsigned int fl_popup_entry_toggle_state(FL_POPUP_ENTRY * p1,
            unsigned int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.checkfatal_allowed_value_in_list(state, xfdata.POPUPSTATE_list)
     ui_state = library.convert_to_uintc(state)
@@ -1662,7 +1656,7 @@ def fl_popup_entry_set_text(ptr_flpopupentry, text):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_set_text = library.cfuncproto(
@@ -1670,7 +1664,7 @@ def fl_popup_entry_set_text(ptr_flpopupentry, text):
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """int fl_popup_entry_set_text(FL_POPUP_ENTRY * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     s_text = library.convert_to_stringc(text)
     library.keep_elem_refs(ptr_flpopupentry, text, s_text)
@@ -1678,8 +1672,8 @@ def fl_popup_entry_set_text(ptr_flpopupentry, text):
     return retval
 
 
-def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
-    """fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc)
+def fl_popup_entry_set_shortcut(ptr_flpopupentry, sctext):
+    """fl_popup_entry_set_shortcut(ptr_flpopupentry, sctext)
 
     Changes the shortcut keys for a popup label.
 
@@ -1687,7 +1681,7 @@ def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
     ----------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
-        textsc : str
+        sctext : str
             text for the shortcut
 
     Examples
@@ -1696,7 +1690,7 @@ def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_set_shortcut = library.cfuncproto(
@@ -1704,11 +1698,11 @@ def fl_popup_entry_set_shortcut(ptr_flpopupentry, textsc):
         None, [cty.POINTER(xfdata.FL_POPUP_ENTRY), xfdata.STRING],
         """void fl_popup_entry_set_shortcut(FL_POPUP_ENTRY * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    s_textsc = library.convert_to_stringc(textsc)
-    library.keep_elem_refs(ptr_flpopupentry, textsc, s_textsc)
-    _fl_popup_entry_set_shortcut(ptr_flpopupentry, s_textsc)
+    s_sctext = library.convert_to_stringc(sctext)
+    library.keep_elem_refs(ptr_flpopupentry, sctext, s_sctext)
+    _fl_popup_entry_set_shortcut(ptr_flpopupentry, s_sctext)
 
 
 def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
@@ -1721,7 +1715,7 @@ def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         entryval : long
-            value to be assigned
+            value to be assigned to the entry
 
     Returns
     -------
@@ -1734,7 +1728,7 @@ def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_set_value = library.cfuncproto(
@@ -1742,7 +1736,7 @@ def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
         cty.c_long, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_long],
         """long int fl_popup_entry_set_value(FL_POPUP_ENTRY * p1,
            long int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     l_entryval = library.convert_to_longc(entryval)
     library.keep_elem_refs(ptr_flpopupentry, entryval, l_entryval)
@@ -1761,7 +1755,8 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, userdata):
             popup entry
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -1774,7 +1769,7 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, userdata):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_set_user_data = library.cfuncproto(
@@ -1782,7 +1777,7 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, userdata):
         cty.c_void_p, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_void_p],
         """void * fl_popup_entry_set_user_data(FL_POPUP_ENTRY * p1,
            void * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_elem_refs(ptr_flpopupentry, userdata, ptr_vdata)
@@ -1801,10 +1796,10 @@ def fl_popup_entry_get_by_position(ptr_flpopup, posnum):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         posnum : int
-            position number starting with 0 (e.g. when called with 0 the
-            first entry will be returned, when called with 1 you get the
-            second entry etc. Entries currently being hidden are counted
-            (but separator lines are not).
+            position number starting with 0 (e.g. when called with 0 the first
+            entry will be returned, when called with 1 you get the second
+            entry etc. Entries currently being hidden are counted (but
+            separator lines are not).
 
     Returns
     -------
@@ -1817,7 +1812,7 @@ def fl_popup_entry_get_by_position(ptr_flpopup, posnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_by_position = library.cfuncproto(
@@ -1826,7 +1821,7 @@ def fl_popup_entry_get_by_position(ptr_flpopup, posnum):
         cty.c_int],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_position(FL_POPUP * p1,
            int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_posnum = library.convert_to_intc(posnum)
     library.keep_elem_refs(ptr_flpopup, posnum, i_posnum)
@@ -1857,7 +1852,7 @@ def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_by_value = library.cfuncproto(
@@ -1866,7 +1861,7 @@ def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
         cty.c_long],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_value(FL_POPUP * p1,
            long int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     l_entryval = library.convert_to_longc(entryval)
     library.keep_elem_refs(ptr_flpopup, entryval, l_entryval)
@@ -1875,7 +1870,8 @@ def fl_popup_entry_get_by_value(ptr_flpopup, entryval):
 
 
 def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
-    """fl_popup_entry_get_by_user_data(ptr_flpopup, userdata) -> ptr_flpopupentry
+    """fl_popup_entry_get_by_user_data(ptr_flpopup, userdata)
+    -> ptr_flpopupentry
 
     Finds a popup entry by its assigned user data.
 
@@ -1885,7 +1881,8 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
             popup class instance
         userdata : any type (e.g. None, int, str, etc..)
             user data assigned to the popup entry; callback has to take
-            care of type check and re-cast from ptr_void to chosen type.
+            care of type check and re-cast from ptr_void to chosen type
+            using appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -1898,7 +1895,7 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_by_user_data = library.cfuncproto(
@@ -1907,7 +1904,7 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
         cty.c_void_p],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_user_data(FL_POPUP * p1,
            void * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_elem_refs(ptr_flpopup, userdata, ptr_vdata)
@@ -1918,8 +1915,8 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
 def fl_popup_entry_get_by_text(ptr_flpopup, text):
     """fl_popup_entry_get_by_text(ptr_flpopup, text) ->ptr_flpopupentry
 
-    Finds a popup entry that had been created with a certain text,
-    including all the special sequences.
+    Finds a popup entry that had been created with a certain text, including
+    all the special sequences.
 
     Parameters
     ----------
@@ -1931,8 +1928,8 @@ def fl_popup_entry_get_by_text(ptr_flpopup, text):
     Returns
     -------
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
-            popup entry, or None (on failure, if no entry with this
-            text was found or the popup does not exist)
+            popup entry, or None (on failure, if no entry with this text was
+            found or the popup does not exist)
 
     Examples
     --------
@@ -1940,7 +1937,7 @@ def fl_popup_entry_get_by_text(ptr_flpopup, text):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_by_text = library.cfuncproto(
@@ -1949,7 +1946,7 @@ def fl_popup_entry_get_by_text(ptr_flpopup, text):
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_text(FL_POPUP * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     s_text = library.convert_to_stringc(text)
     library.keep_elem_refs(ptr_flpopup, text, s_text)
@@ -1960,11 +1957,11 @@ def fl_popup_entry_get_by_text(ptr_flpopup, text):
 def fl_popup_entry_get_by_label(ptr_flpopup, label):
     """fl_popup_entry_get_by_label(ptr_flpopup, label) -> ptr_flpopupentry
 
-    Finds a popup entry by its left-flushed label parts of the entry as
-    shown on the screen. Note that tab characters (backslash-t) originally
-    embedded in the text used when creating the label have been replaced by
-    single spaces and backspace characters (backslash-b) were removed as
-    well as all special sequences).
+    Finds a popup entry by its left-flushed label parts of the entry as shown
+    on the screen. Note that tab characters (backslash-t) originally embedded
+    in the text used when creating the label have been replaced by single
+    spaces and backspace characters (backslash-b) were removed as well as all
+    special sequences).
 
     Parameters
     ----------
@@ -1984,7 +1981,7 @@ def fl_popup_entry_get_by_label(ptr_flpopup, label):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_by_label = library.cfuncproto(
@@ -1993,7 +1990,7 @@ def fl_popup_entry_get_by_label(ptr_flpopup, label):
         xfdata.STRING],
         """FL_POPUP_ENTRY * fl_popup_entry_get_by_label(FL_POPUP * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     s_label = library.convert_to_stringc(label)
     library.keep_elem_refs(ptr_flpopup, label, s_label)
@@ -2004,8 +2001,8 @@ def fl_popup_entry_get_by_label(ptr_flpopup, label):
 def fl_popup_entry_get_group(ptr_flpopupentry):
     """fl_popup_entry_get_group(ptr_flpopupentry) -> groupnum
 
-    Finds out which group a radio popup entry belongs. It makes much
-    sense when applied to radio entries.
+    Finds out which group a radio popup entry belongs. It makes much sense
+    when applied to radio entries.
 
     Parameters
     ----------
@@ -2023,14 +2020,14 @@ def fl_popup_entry_get_group(ptr_flpopupentry):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_group = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_group",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """int fl_popup_entry_get_group(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.keep_elem_refs(ptr_flpopupentry)
     retval = _fl_popup_entry_get_group(ptr_flpopupentry)
@@ -2062,14 +2059,14 @@ def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_set_group = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_set_group",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP_ENTRY), cty.c_int],
         """int fl_popup_entry_set_group(FL_POPUP_ENTRY * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     i_groupnum = library.convert_to_intc(groupnum)
     library.keep_elem_refs(ptr_flpopupentry, groupnum, i_groupnum)
@@ -2080,8 +2077,8 @@ def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
 def fl_popup_entry_get_subpopup(ptr_flpopupentry):
     """fl_popup_entry_get_subpopup(ptr_flpopupentry) -> ptr_flpopup
 
-    Finds out the sub-popup associated with a sub-popup-entry. It only
-    makes sense for sub-popup entries.
+    Finds out the sub-popup associated with a sub-popup-entry. It only makes
+    sense for sub-popup entries.
 
     Parameters
     ----------
@@ -2099,14 +2096,14 @@ def fl_popup_entry_get_subpopup(ptr_flpopupentry):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_get_subpopup = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_entry_get_subpopup",
         cty.POINTER(xfdata.FL_POPUP), [cty.POINTER(xfdata.FL_POPUP_ENTRY)],
         """FL_POPUP * fl_popup_entry_get_subpopup(FL_POPUP_ENTRY * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.keep_elem_refs(ptr_flpopupentry)
     retval = _fl_popup_entry_get_subpopup(ptr_flpopupentry)
@@ -2138,7 +2135,7 @@ def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_entry_set_subpopup = library.cfuncproto(
@@ -2147,7 +2144,7 @@ def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
         cty.POINTER(xfdata.FL_POPUP)],
         """FL_POPUP * fl_popup_entry_set_subpopup(FL_POPUP_ENTRY * p1,
            FL_POPUP * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flpopupentry, ptr_flpopup)
@@ -2158,9 +2155,9 @@ def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
 def fl_popup_get_size(ptr_flpopup):
     """fl_popup_get_size(ptr_flpopup) -> result, width, height
 
-    Finds out the exact sizes of its window. The reported values are
-    only valid until the popup is changed, e.g. by adding, deleting or
-    changing entries or changing the appearance of the popup.
+    Finds out the exact sizes of its window. The reported values are only
+    valid until the popup is changed, e.g. by adding, deleting or changing
+    entries or changing the appearance of the popup.
 
     Parameters
     ----------
@@ -2170,8 +2167,7 @@ def fl_popup_get_size(ptr_flpopup):
     Returns
     -------
         result : int
-            0 or -1 on error (if the supplied popup argument is
-            not valid)
+            0 or -1 on error (if the supplied popup argument is not valid)
         width : int_pos
             width of popup
         height : int_pos
@@ -2188,7 +2184,7 @@ def fl_popup_get_size(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_size = library.cfuncproto(
@@ -2197,7 +2193,7 @@ def fl_popup_get_size(ptr_flpopup):
         cty.POINTER(cty.c_uint)],
         """int fl_popup_get_size(FL_POPUP * p1, unsigned int * p2,
            unsigned int * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_width, ptr_width = library.make_uintc_and_pointer()
     i_height, ptr_height = library.make_uintc_and_pointer()
@@ -2220,7 +2216,7 @@ def fl_popup_get_min_width(ptr_flpopup):
     Returns
     -------
         width : int
-            width, or -1 (on errors)
+            minimum width, or -1 (on errors)
 
     Examples
     --------
@@ -2228,14 +2224,14 @@ def fl_popup_get_min_width(ptr_flpopup):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_get_min_width = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_get_min_width",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP)],
         """int fl_popup_get_min_width(FL_POPUP * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     library.keep_elem_refs(ptr_flpopup)
     retval = _fl_popup_get_min_width(ptr_flpopup)
@@ -2245,8 +2241,8 @@ def fl_popup_get_min_width(ptr_flpopup):
 def fl_popup_set_min_width(ptr_flpopup, width):
     """fl_popup_set_min_width(ptr_flpopup, width) -> oldwidth
 
-    Defines a new minimum width of a popup. By default the width of a popup
-    is calculated using the widths of the title and the entries.
+    Defines a new minimum width of a popup. By default the width of a popup is
+    calculated using the widths of the title and the entries.
 
     Parameters
     ----------
@@ -2267,14 +2263,14 @@ def fl_popup_set_min_width(ptr_flpopup, width):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popup_set_min_width = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_set_min_width",
         cty.c_int, [cty.POINTER(xfdata.FL_POPUP), cty.c_int],
         """int fl_popup_set_min_width(FL_POPUP * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
     i_width = library.convert_to_intc(width)
     library.keep_elem_refs(ptr_flpopup, width, i_width)

@@ -30,10 +30,10 @@
 <td width="100%"><dl><dt><a name="-fl_add_select"><strong>fl_add_select</strong></a>(selecttype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_select">fl_add_select</a>(selecttype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;select&nbsp;(new&nbsp;generation&nbsp;choice)&nbsp;flobject&nbsp;to&nbsp;the&nbsp;form.&nbsp;It&nbsp;is&nbsp;a<br>
-rather&nbsp;simple&nbsp;flobject&nbsp;that&nbsp;allows&nbsp;the&nbsp;user&nbsp;to&nbsp;pick&nbsp;alternatives&nbsp;from&nbsp;a<br>
-linear&nbsp;list&nbsp;that&nbsp;pops&nbsp;up&nbsp;when&nbsp;he&nbsp;clicks&nbsp;on&nbsp;the&nbsp;flobject.&nbsp;It&nbsp;remembers&nbsp;the<br>
-last&nbsp;selected&nbsp;item,&nbsp;which&nbsp;is&nbsp;also&nbsp;shown&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.&nbsp;It<br>
+Adds&nbsp;a&nbsp;select&nbsp;(new&nbsp;generation&nbsp;choice)&nbsp;flobject&nbsp;to&nbsp;the&nbsp;form.&nbsp;It&nbsp;is&nbsp;a&nbsp;rather<br>
+simple&nbsp;flobject&nbsp;that&nbsp;allows&nbsp;the&nbsp;user&nbsp;to&nbsp;pick&nbsp;alternatives&nbsp;from&nbsp;a&nbsp;linear<br>
+list&nbsp;that&nbsp;pops&nbsp;up&nbsp;when&nbsp;he&nbsp;clicks&nbsp;on&nbsp;the&nbsp;flobject.&nbsp;It&nbsp;remembers&nbsp;the&nbsp;last<br>
+selected&nbsp;item,&nbsp;which&nbsp;is&nbsp;also&nbsp;shown&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.&nbsp;It<br>
 internally&nbsp;uses&nbsp;a&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
@@ -47,9 +47,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;with&nbsp;a&nbsp;little&nbsp;extra&nbsp;box&nbsp;at&nbsp;its&nbsp;right&nbsp;side,&nbsp;just&nbsp;like&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MENU_BUTTON&nbsp;and&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawn&nbsp;on&nbsp;the&nbsp;button-like&nbsp;object),&nbsp;FL_DROPLIST_SELECT&nbsp;(This&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;looks&nbsp;like&nbsp;a&nbsp;button&nbsp;with&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;top&nbsp;of&nbsp;it&nbsp;and&nbsp;a&nbsp;second&nbsp;square&nbsp;button&nbsp;directly&nbsp;beside&nbsp;it&nbsp;with<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;downward&nbsp;pointing&nbsp;arrow&nbsp;on&nbsp;it)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;looks&nbsp;like&nbsp;a&nbsp;button&nbsp;with&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;of&nbsp;it&nbsp;and&nbsp;a&nbsp;second&nbsp;square&nbsp;button&nbsp;directly&nbsp;beside&nbsp;it&nbsp;with&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;downward&nbsp;pointing&nbsp;arrow&nbsp;on&nbsp;it)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -73,7 +73,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_add_select_items"><strong>fl_add_select_items</strong></a>(ptr_flobject, entryitemstxt, x<font color="#909090">=None</font>, u<font color="#909090">=None</font>, f<font color="#909090">=None</font>, E<font color="#909090">=None</font>, L<font color="#909090">=None</font>, s<font color="#909090">=None</font>)</dt><dd><tt><a href="#-fl_add_select_items">fl_add_select_items</a>(ptr_flobject,&nbsp;entryitemstxt,&nbsp;x=None,&nbsp;u=None,<br>
 f=None,&nbsp;E=None,&nbsp;L=None,&nbsp;s=None))&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
@@ -88,36 +88,34 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;added&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences&nbsp;with<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;required).&nbsp;Text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;newline&nbsp;characters&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Only&nbsp;some&nbsp;special&nbsp;sequences<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;Only&nbsp;one&nbsp;entry&nbsp;is&nbsp;supported<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;xforms-python.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;may&nbsp;contain&nbsp;"|"&nbsp;for&nbsp;more&nbsp;than&nbsp;one&nbsp;entry&nbsp;and&nbsp;newline&nbsp;character&nbsp;which<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Only<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;some&nbsp;special&nbsp;sequences&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,&nbsp;%h,&nbsp;%S,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s,&nbsp;%%&nbsp;(other&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;Special<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequences&nbsp;of&nbsp;same&nbsp;type&nbsp;cannot&nbsp;be&nbsp;repeated&nbsp;in&nbsp;xforms-python.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numeric&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%x&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry;&nbsp;invoked&nbsp;callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;E&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -130,15 +128,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK<br>
-&nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation&nbsp;in&nbsp;xfdata.py.</tt></dd></dl>
  <dl><dt><a name="-fl_clear_select"><strong>fl_clear_select</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_clear_select">fl_clear_select</a>(ptr_flobject)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Removes&nbsp;all&nbsp;items&nbsp;from&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;If&nbsp;you&nbsp;used<br>
-<a href="#-fl_set_select_popup">fl_set_select_popup</a>()&nbsp;to&nbsp;set&nbsp;a&nbsp;popup&nbsp;for&nbsp;the&nbsp;select&nbsp;flobject&nbsp;then<br>
-that&nbsp;popup&nbsp;gets&nbsp;deleted&nbsp;automatically&nbsp;on&nbsp;calling&nbsp;<a href="#-fl_clear_select">fl_clear_select</a>().<br>
-The&nbsp;values&nbsp;automatically&nbsp;associated&nbsp;with&nbsp;items&nbsp;when&nbsp;calling<br>
-<a href="#-fl_add_select_items">fl_add_select_items</a>()&nbsp;will&nbsp;start&nbsp;at&nbsp;0&nbsp;again.<br>
+Removes&nbsp;all&nbsp;items&nbsp;from&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;If&nbsp;you&nbsp;used&nbsp;<a href="#-fl_set_select_popup">fl_set_select_popup</a>()<br>
+to&nbsp;set&nbsp;a&nbsp;popup&nbsp;for&nbsp;the&nbsp;select&nbsp;flobject&nbsp;then&nbsp;that&nbsp;popup&nbsp;gets&nbsp;deleted<br>
+automatically&nbsp;on&nbsp;calling&nbsp;<a href="#-fl_clear_select">fl_clear_select</a>().&nbsp;The&nbsp;values&nbsp;automatically<br>
+associated&nbsp;with&nbsp;items&nbsp;when&nbsp;calling&nbsp;<a href="#-fl_add_select_items">fl_add_select_items</a>()&nbsp;will&nbsp;start&nbsp;at&nbsp;0<br>
+again.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -148,19 +146,19 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;on&nbsp;success,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(on&nbsp;success),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_select">fl_clear_select</a>(selobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_clear_select">fl_clear_select</a>(pselobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_delete_select_item"><strong>fl_delete_select_item</strong></a>(ptr_flobject, ptr_flpopupentry)</dt><dd><tt><a href="#-fl_delete_select_item">fl_delete_select_item</a>(ptr_flobject,&nbsp;ptr_flpopupentry)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Deletes&nbsp;an&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;The&nbsp;values&nbsp;associated&nbsp;with&nbsp;items<br>
-will&nbsp;not&nbsp;change&nbsp;due&nbsp;to&nbsp;removing&nbsp;an&nbsp;item.<br>
+Deletes&nbsp;an&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;The&nbsp;values&nbsp;associated&nbsp;with&nbsp;items&nbsp;will<br>
+not&nbsp;change&nbsp;due&nbsp;to&nbsp;removing&nbsp;an&nbsp;item.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -172,7 +170,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;on&nbsp;success,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(on&nbsp;success),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -180,7 +178,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_item"><strong>fl_get_select_item</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_item">fl_get_select_item</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_flpopupreturn<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;currently&nbsp;selected&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.<br>
@@ -201,11 +199,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_item_by_label"><strong>fl_get_select_item_by_label</strong></a>(ptr_flobject, label)</dt><dd><tt><a href="#-fl_get_select_item_by_label">fl_get_select_item_by_label</a>(ptr_flobject,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;who&nbsp;has&nbsp;a&nbsp;certain&nbsp;label&nbsp;as<br>
-displayed&nbsp;for&nbsp;the&nbsp;item&nbsp;in&nbsp;the&nbsp;popup.<br>
+Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;who&nbsp;has&nbsp;a&nbsp;certain&nbsp;label&nbsp;as&nbsp;displayed<br>
+for&nbsp;the&nbsp;item&nbsp;in&nbsp;the&nbsp;popup.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -225,11 +223,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_item_by_text"><strong>fl_get_select_item_by_text</strong></a>(ptr_flobject, txtstr)</dt><dd><tt><a href="#-fl_get_select_item_by_text">fl_get_select_item_by_text</a>(ptr_flobject,&nbsp;txtstr)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;who&nbsp;has&nbsp;supplied&nbsp;text<br>
-(that&nbsp;might&nbsp;be&nbsp;the&nbsp;same&nbsp;as&nbsp;the&nbsp;label&nbsp;text&nbsp;in&nbsp;simple&nbsp;cases).<br>
+Finds&nbsp;out&nbsp;an&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;who&nbsp;has&nbsp;supplied&nbsp;text&nbsp;(that&nbsp;might&nbsp;be<br>
+the&nbsp;same&nbsp;as&nbsp;the&nbsp;label&nbsp;text&nbsp;in&nbsp;simple&nbsp;cases).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -249,7 +247,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_item_by_value"><strong>fl_get_select_item_by_value</strong></a>(ptr_flobject, itemval)</dt><dd><tt><a href="#-fl_get_select_item_by_value">fl_get_select_item_by_value</a>(ptr_flobject,&nbsp;itemval)&nbsp;-&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
 Finds&nbsp;the&nbsp;first&nbsp;item&nbsp;of&nbsp;select&nbsp;flobject&nbsp;with&nbsp;the&nbsp;value&nbsp;associated&nbsp;with<br>
@@ -273,7 +271,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_popup"><strong>fl_get_select_popup</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_popup">fl_get_select_popup</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_flpopup<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;which&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject&nbsp;is&nbsp;currently&nbsp;selected.<br>
@@ -294,11 +292,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_text_align"><strong>fl_get_select_text_align</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_text_align">fl_get_select_text_align</a>(ptr_flobject)&nbsp;-&gt;&nbsp;align<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected<br>
-item&nbsp;on&nbsp;top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.<br>
+Finds&nbsp;out&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;on<br>
+top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -309,19 +307,19 @@ Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;text&nbsp;(from&nbsp;xfdata.py,&nbsp;e.g.&nbsp;FL_ALIGN_CENTER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_TOP)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;algn&nbsp;=&nbsp;<a href="#-fl_get_select_text_align">fl_get_select_text_align</a>(selobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;algn&nbsp;=&nbsp;<a href="#-fl_get_select_text_align">fl_get_select_text_align</a>(pselobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_text_color"><strong>fl_get_select_text_color</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_text_color">fl_get_select_text_color</a>(ptr_flobject)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item<br>
-on&nbsp;top&nbsp;of&nbsp;the&nbsp;flobject.<br>
+Finds&nbsp;out&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item&nbsp;on&nbsp;top&nbsp;of<br>
+the&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -335,15 +333,14 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;txtcolr&nbsp;=&nbsp;<a href="#-fl_get_select_text_color">fl_get_select_text_color</a>(selobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;txtcolr&nbsp;=&nbsp;<a href="#-fl_get_select_text_color">fl_get_select_text_color</a>(pselobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_select_text_font"><strong>fl_get_select_text_font</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(ptr_flobject)&nbsp;-&gt;&nbsp;result,&nbsp;style,&nbsp;size<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select<br>
-flobject.<br>
+Finds&nbsp;out&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -353,7 +350,7 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;failure)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;style<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
@@ -361,7 +358,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rslt,&nbsp;style,&nbsp;size&nbsp;=&nbsp;<a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(selobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rslt,&nbsp;style,&nbsp;size&nbsp;=&nbsp;<a href="#-fl_get_select_text_font">fl_get_select_text_font</a>(pselobj)<br>
 &nbsp;<br>
 API_diversion<br>
 -------------<br>
@@ -370,56 +367,53 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_insert_select_items"><strong>fl_insert_select_items</strong></a>(ptr_flobject, ptr_flpopupentry, entryitemstxt, x<font color="#909090">=None</font>, u<font color="#909090">=None</font>, f<font color="#909090">=None</font>, E<font color="#909090">=None</font>, L<font color="#909090">=None</font>, s<font color="#909090">=None</font>)</dt><dd><tt><a href="#-fl_insert_select_items">fl_insert_select_items</a>(ptr_flobject,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt,<br>
 x=None,&nbsp;u=None,&nbsp;f=None,&nbsp;E=None,&nbsp;L=None,&nbsp;s=None)<br>
 -&gt;&nbsp;ptr_flpopupentry<br>
 &nbsp;<br>
-Inserts&nbsp;a&nbsp;new&nbsp;item&nbsp;somewhere&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;a&nbsp;list&nbsp;of&nbsp;already<br>
-existing&nbsp;items&nbsp;(it&nbsp;can&nbsp;be&nbsp;used&nbsp;several&nbsp;times).&nbsp;If&nbsp;additional&nbsp;separated<br>
-arguments&nbsp;are&nbsp;required&nbsp;by&nbsp;in-text&nbsp;special&nbsp;sequences,&nbsp;user&nbsp;must&nbsp;respect<br>
-the&nbsp;same&nbsp;sequences'&nbsp;order.<br>
+Inserts&nbsp;a&nbsp;new&nbsp;item&nbsp;somewhere&nbsp;in&nbsp;the&nbsp;middle&nbsp;of&nbsp;a&nbsp;list&nbsp;of&nbsp;already&nbsp;existing<br>
+items&nbsp;(it&nbsp;can&nbsp;be&nbsp;used&nbsp;several&nbsp;times).&nbsp;If&nbsp;additional&nbsp;separated&nbsp;arguments<br>
+are&nbsp;required&nbsp;by&nbsp;in-text&nbsp;special&nbsp;sequences,&nbsp;user&nbsp;must&nbsp;respect&nbsp;the&nbsp;same<br>
+sequences'&nbsp;order.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry.&nbsp;If&nbsp;it&nbsp;is&nbsp;None&nbsp;new&nbsp;items&nbsp;are&nbsp;inserted&nbsp;at&nbsp;the&nbsp;very<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry.&nbsp;If&nbsp;it&nbsp;is&nbsp;None&nbsp;new&nbsp;items&nbsp;are&nbsp;inserted&nbsp;at&nbsp;the&nbsp;real&nbsp;start<br>
 &nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;inserted&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;required).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text&nbsp;may&nbsp;contain&nbsp;newline&nbsp;characters&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Only&nbsp;some&nbsp;special&nbsp;sequences<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;Only&nbsp;one&nbsp;entry&nbsp;is&nbsp;supported<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;xforms-python.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text&nbsp;may&nbsp;contain&nbsp;"|"&nbsp;for&nbsp;more&nbsp;than&nbsp;one&nbsp;entry&nbsp;and&nbsp;newline&nbsp;character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;some&nbsp;special&nbsp;sequences&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;Special<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequences&nbsp;of&nbsp;same&nbsp;type&nbsp;cannot&nbsp;be&nbsp;repeated&nbsp;in&nbsp;xforms-python.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numeric&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%x&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry;&nbsp;invoked&nbsp;callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;E&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -432,8 +426,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(special&nbsp;sequence)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation&nbsp;in&nbsp;xfdata.py.</tt></dd></dl>
  <dl><dt><a name="-fl_replace_select_item"><strong>fl_replace_select_item</strong></a>(ptr_flobject, ptr_flpopupentry, entryitemstxt, x<font color="#909090">=None</font>, u<font color="#909090">=None</font>, f<font color="#909090">=None</font>, E<font color="#909090">=None</font>, L<font color="#909090">=None</font>, s<font color="#909090">=None</font>)</dt><dd><tt><a href="#-fl_replace_select_item">fl_replace_select_item</a>(ptr_flobject,&nbsp;ptr_flpopupentry,&nbsp;entryitemstxt,<br>
 x=None,&nbsp;u=None,&nbsp;f=None,&nbsp;E=None,&nbsp;L=None,&nbsp;s=None)<br>
 -&gt;&nbsp;ptr_flpopupentry<br>
@@ -451,36 +445,33 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;entryitemstxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;the&nbsp;entry&nbsp;to&nbsp;be&nbsp;replaced&nbsp;and&nbsp;in-text&nbsp;special&nbsp;sequences<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;or&nbsp;without&nbsp;not&nbsp;separated&nbsp;additional&nbsp;arguments&nbsp;(if&nbsp;required).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text&nbsp;may&nbsp;contain&nbsp;newline&nbsp;characters&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.&nbsp;Only&nbsp;some&nbsp;special&nbsp;sequences<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;Only&nbsp;one&nbsp;entry&nbsp;is&nbsp;supported<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;xforms-python.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Text&nbsp;may&nbsp;contain&nbsp;"|"&nbsp;for&nbsp;more&nbsp;than&nbsp;one&nbsp;entry&nbsp;and&nbsp;newline&nbsp;character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;allows&nbsp;to&nbsp;create&nbsp;entries&nbsp;that&nbsp;span&nbsp;more&nbsp;than&nbsp;a&nbsp;single&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only&nbsp;some&nbsp;special&nbsp;sequences&nbsp;are&nbsp;allowed:&nbsp;%x,&nbsp;%u,&nbsp;%f,&nbsp;%E,&nbsp;%L,&nbsp;%d,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%h,&nbsp;%S,&nbsp;%s,&nbsp;%%&nbsp;(other&nbsp;combinations&nbsp;do&nbsp;not&nbsp;make&nbsp;sense&nbsp;here).&nbsp;.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;long<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numeric&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%x&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry;&nbsp;invoked&nbsp;callback<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;set&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%f&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;E&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;enter&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%E&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;unused&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;be&nbsp;invoked&nbsp;on&nbsp;leave&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%L&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(separated&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;special&nbsp;sequence)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;the&nbsp;entry&nbsp;(separated&nbsp;additional&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;%s&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -493,8 +484,8 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK<br>
-&nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation.</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See:&nbsp;Special&nbsp;sequences&nbsp;in&nbsp;entry&nbsp;text&nbsp;documentation&nbsp;in&nbsp;xfdata.py.</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_item"><strong>fl_set_select_item</strong></a>(ptr_flobject, ptr_flpopupentry)</dt><dd><tt><a href="#-fl_set_select_item">fl_set_select_item</a>(ptr_flobject,&nbsp;ptr_flpopupentry)&nbsp;-&gt;&nbsp;ptr_flpopupreturn<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;new&nbsp;item&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject&nbsp;as&nbsp;currently&nbsp;selected.<br>
@@ -504,7 +495,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupentry&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ENTRY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;entry&nbsp;class&nbsp;instance.&nbsp;For&nbsp;it&nbsp;you&nbsp;can&nbsp;use&nbsp;the&nbsp;return&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;any&nbsp;of&nbsp;fl_get_select_item_by_*()&nbsp;functions<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -517,8 +509,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;HalfTested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;NOT&nbsp;OK&nbsp;(FL_POPUP_ENTRY&nbsp;not<br>
-&nbsp;&nbsp;&nbsp;&nbsp;prepared)</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_items"><strong>fl_set_select_items</strong></a>(ptr_flobject, ptr_flpopupitem)</dt><dd><tt><a href="#-fl_set_select_items">fl_set_select_items</a>(ptr_flobject,&nbsp;ptr_flpopupitem)&nbsp;-&gt;&nbsp;numitems<br>
 &nbsp;<br>
 (Re)populates&nbsp;a&nbsp;select&nbsp;flobject.<br>
@@ -543,14 +534,13 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_policy"><strong>fl_set_select_policy</strong></a>(ptr_flobject, policy)</dt><dd><tt><a href="#-fl_set_select_policy">fl_set_select_policy</a>(ptr_flobject,&nbsp;policy)&nbsp;-&gt;&nbsp;oldpol<br>
 &nbsp;<br>
-Defines&nbsp;a&nbsp;policy&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;the&nbsp;popup&nbsp;of&nbsp;a<br>
-select&nbsp;flobjects&nbsp;remains&nbsp;shown&nbsp;when&nbsp;the&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse<br>
-somewhere&nbsp;outside&nbsp;the&nbsp;popup&nbsp;window&nbsp;(or&nbsp;on&nbsp;its&nbsp;title&nbsp;area).&nbsp;The<br>
-alternative&nbsp;is&nbsp;to&nbsp;close&nbsp;the&nbsp;popup&nbsp;immediately&nbsp;when&nbsp;the&nbsp;user&nbsp;releases<br>
-the&nbsp;mouse,&nbsp;independent&nbsp;of&nbsp;where&nbsp;it&nbsp;is.<br>
+Defines&nbsp;a&nbsp;policy&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.&nbsp;By&nbsp;default,&nbsp;the&nbsp;popup&nbsp;of&nbsp;a&nbsp;select<br>
+flobjects&nbsp;remains&nbsp;shown&nbsp;when&nbsp;the&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse&nbsp;somewhere&nbsp;outside<br>
+the&nbsp;popup&nbsp;window&nbsp;(or&nbsp;on&nbsp;its&nbsp;title&nbsp;area).&nbsp;The&nbsp;alternative&nbsp;is&nbsp;closing&nbsp;the<br>
+popup&nbsp;immediately&nbsp;when&nbsp;user&nbsp;releases&nbsp;the&nbsp;mouse,&nbsp;regardless&nbsp;of&nbsp;where&nbsp;is&nbsp;it.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -558,7 +548,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;policy&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;policy&nbsp;to&nbsp;be&nbsp;set.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_NORMAL_SELECT,&nbsp;FL_POPUP_DRAG_SELECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_NORMAL_SELECT&nbsp;(default,&nbsp;keeps&nbsp;the&nbsp;popup&nbsp;opened&nbsp;when&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mouse&nbsp;is&nbsp;not&nbsp;released&nbsp;on&nbsp;one&nbsp;of&nbsp;the&nbsp;selectable&nbsp;items),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_DRAG_SELECT&nbsp;(Closes&nbsp;the&nbsp;popup&nbsp;immediately&nbsp;when&nbsp;the&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;is&nbsp;released)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -571,13 +564,13 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_popup"><strong>fl_set_select_popup</strong></a>(ptr_flobject, ptr_flpopup)</dt><dd><tt><a href="#-fl_set_select_popup">fl_set_select_popup</a>(ptr_flobject,&nbsp;ptr_flpopup)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Creates&nbsp;a&nbsp;popup&nbsp;directly&nbsp;and&nbsp;then&nbsp;associates&nbsp;it&nbsp;with&nbsp;the&nbsp;select<br>
-flobject.&nbsp;Supplied&nbsp;popup&nbsp;may&nbsp;not&nbsp;contain&nbsp;any&nbsp;entries&nbsp;other&nbsp;than<br>
-those&nbsp;of&nbsp;type&nbsp;xfdata.FL_POPUP_NORMAL,&nbsp;and,&nbsp;of&nbsp;course,&nbsp;the&nbsp;popup<br>
-cannot&nbsp;be&nbsp;a&nbsp;sub-popup&nbsp;of&nbsp;another&nbsp;popup).<br>
+Creates&nbsp;a&nbsp;popup&nbsp;directly&nbsp;and&nbsp;then&nbsp;associates&nbsp;it&nbsp;with&nbsp;the&nbsp;select&nbsp;flobject.<br>
+Supplied&nbsp;popup&nbsp;may&nbsp;not&nbsp;contain&nbsp;any&nbsp;entries&nbsp;other&nbsp;than&nbsp;those&nbsp;of&nbsp;type<br>
+xfdata.FL_POPUP_NORMAL,&nbsp;and,&nbsp;of&nbsp;course,&nbsp;the&nbsp;popup&nbsp;cannot&nbsp;be&nbsp;a&nbsp;sub-popup<br>
+of&nbsp;another&nbsp;popup).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -597,31 +590,31 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_text_align"><strong>fl_set_select_text_align</strong></a>(ptr_flobject, align)</dt><dd><tt><a href="#-fl_set_select_text_align">fl_set_select_text_align</a>(ptr_flobject,&nbsp;align)&nbsp;-&gt;&nbsp;oldalign<br>
 &nbsp;<br>
-Defines&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;on<br>
-top&nbsp;of&nbsp;the&nbsp;select&nbsp;flobject.&nbsp;The&nbsp;xfdata.FL_ALIGN_INSIDE&nbsp;flag&nbsp;should&nbsp;be<br>
-set&nbsp;with&nbsp;align&nbsp;since&nbsp;the&nbsp;text&nbsp;always&nbsp;will&nbsp;be&nbsp;drawn&nbsp;withing&nbsp;the<br>
-boundaries&nbsp;of&nbsp;the&nbsp;flobject.<br>
+Defines&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;text&nbsp;with&nbsp;the&nbsp;currently&nbsp;selected&nbsp;item&nbsp;on&nbsp;top<br>
+of&nbsp;the&nbsp;select&nbsp;flobject.&nbsp;The&nbsp;xfdata.FL_ALIGN_INSIDE&nbsp;flag&nbsp;should&nbsp;be&nbsp;set&nbsp;with<br>
+align&nbsp;since&nbsp;the&nbsp;text&nbsp;always&nbsp;will&nbsp;be&nbsp;drawn&nbsp;withing&nbsp;the&nbsp;boundaries&nbsp;of&nbsp;the<br>
+flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;text.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_CENTER&nbsp;(In&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;box,&nbsp;inside&nbsp;it),&nbsp;FL_ALIGN_TOP<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_BOTTOM&nbsp;(To&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_LEFT&nbsp;(To&nbsp;the&nbsp;left&nbsp;of&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT&nbsp;(To&nbsp;the&nbsp;right&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_TOP&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_RIGHT_TOP&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_BOTTOM&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT_BOTTOM&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;bottom&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_INSIDE&nbsp;(places&nbsp;the&nbsp;text&nbsp;inside&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box),&nbsp;FL_ALIGN_VERT&nbsp;(not&nbsp;functional&nbsp;yet).&nbsp;Bitwise&nbsp;OR&nbsp;with<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;text.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER&nbsp;(In&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;middle&nbsp;of&nbsp;the&nbsp;box,&nbsp;inside&nbsp;it),&nbsp;FL_ALIGN_TOP&nbsp;(To&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;box,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_BOTTOM&nbsp;(To&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT&nbsp;(To&nbsp;the&nbsp;left&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT&nbsp;(To&nbsp;the&nbsp;right&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_TOP&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_BOTTOM&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_RIGHT_BOTTOM&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_INSIDE&nbsp;(places&nbsp;the&nbsp;text&nbsp;inside&nbsp;the&nbsp;box),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_VERT&nbsp;(not&nbsp;functional&nbsp;yet).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;FL_ALIGN_INSIDE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;allowed.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -634,18 +627,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_text_color"><strong>fl_set_select_text_color</strong></a>(ptr_flobject, colr)</dt><dd><tt><a href="#-fl_set_select_text_color">fl_set_select_text_color</a>(ptr_flobject,&nbsp;colr)&nbsp;-&gt;&nbsp;oldcolr<br>
 &nbsp;<br>
-Defines&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item&nbsp;on<br>
-top&nbsp;of&nbsp;the&nbsp;flobject.<br>
+Defines&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;text&nbsp;of&nbsp;the&nbsp;currenty&nbsp;selected&nbsp;item&nbsp;on&nbsp;top&nbsp;of<br>
+the&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;new&nbsp;color<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -654,44 +647,43 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldcol&nbsp;=&nbsp;<a href="#-fl_set_select_text_color">fl_set_select_text_color</a>(selobj,&nbsp;xfdata.FL_BLUE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldcol&nbsp;=&nbsp;<a href="#-fl_set_select_text_color">fl_set_select_text_color</a>(pselobj,&nbsp;xfdata.FL_BLUE)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_select_text_font"><strong>fl_set_select_text_font</strong></a>(ptr_flobject, style, size)</dt><dd><tt><a href="#-fl_set_select_text_font">fl_set_select_text_font</a>(ptr_flobject,&nbsp;style,&nbsp;size)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
-Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select<br>
-flobject.<br>
+Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;used&nbsp;for&nbsp;the&nbsp;text&nbsp;of&nbsp;a&nbsp;select&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;select&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;text),&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLDITALIC_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE&nbsp;(Courier&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;and&nbsp;italic<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),&nbsp;FL_MISCBOLD_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE&nbsp;(Charter&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow,&nbsp;modifier&nbsp;mask),&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form,&nbsp;modifier&nbsp;mask),&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),&nbsp;FL_BOLDITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_FIXED_STYLE&nbsp;(Courier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;italic&nbsp;text),&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;italic&nbsp;text),&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a&nbsp;shadow,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the&nbsp;form,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;font,&nbsp;default),&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10&nbsp;points&nbsp;font,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -700,11 +692,11 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rslt&nbsp;=&nbsp;<a href="#-fl_set_select_text_font">fl_set_select_text_font</a>(selobj,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rslt&nbsp;=&nbsp;<a href="#-fl_set_select_text_font">fl_set_select_text_font</a>(pselobj,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_TIMESBOLD_STYLE,&nbsp;xfdata.FL_LARGE_SIZE)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

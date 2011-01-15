@@ -1,18 +1,19 @@
 
-Here are a few demos (ported from XForms to xforms-python)
-demonstrating the usage and appearance of object classes in
-the xforms-python. These programs also serve as testing/QA
-programs, so if you have a problem with a particular object,
-see if the same object works in the demo program.
+Here are some demos (ported from XForms to xforms-python)
+demonstrating the usage and appearance of flobject classes
+in the xforms-python.
+Examples named as *_new, *_minimal, *_miscell are original,
+instead, as well as simpletable.py.
 
-Examples named as *_new and *_minimal are original, as well as
-simpletable.
+These programs also serve as testing/QA programs, so if you
+have a problem with a particular flobject, see if the same
+flobject works in the demo program.
 
 Note: not all XForms demos will be ported to python, as some
-of them use directly not avoidable X11 library functions whom
-I am not going to support in xforms-python.
+of them use directly not avoidable X11/OpenGL libraries'
+functions whom I am not going to support in xforms-python.
 
-All bitmap/pixmap image files are part of XForms (see CREDITS
-file for acknowledgements), and are used only for the purpose
-of related functions' usage demonstration.
+All bitmap/pixmap image files are part of upstream XForms
+(see CREDITS file for acknowledgements), and are used only
+for the purpose of related functions' usage demonstration.
 

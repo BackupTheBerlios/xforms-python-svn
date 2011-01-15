@@ -66,12 +66,14 @@ def flimage_setup(ptr_flimagesetup):
     """flimage_setup(ptr_flimagesetup)
 
     Defines up and configures image flobjects support and initializes
-    xfdata.FLIMAGE_SETUP class instance.
+    xfdata.FLIMAGE_SETUP class instance. To be used before any of flimage_*
+    functions.
 
     Parameters
     ----------
         ptr_flimagesetup : pointer to xfdata.FLIMAGE_SETUP
-            imagesetup class instance
+            imagesetup class instance. You can use
+            xfstruct.make_flimagesetup_and_pointer() to prepare it.
 
     Examples
     ---------
@@ -79,7 +81,7 @@ def flimage_setup(ptr_flimagesetup):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
 
     """
@@ -87,7 +89,7 @@ def flimage_setup(ptr_flimagesetup):
         library.load_so_libflimage(), "flimage_setup",
         None, [cty.POINTER(xfdata.FLIMAGE_SETUP)],
         """void flimage_setup(FLIMAGE_SETUP * setup)""")
-    #library.check_if_initialized()
+    library.set_flimageinitialized()
     library.verify_otherclassptr_type(ptr_flimagesetup, \
             cty.POINTER(xfdata.FLIMAGE_SETUP))
     library.keep_elem_refs(ptr_flimagesetup)
@@ -117,15 +119,16 @@ def flimage_load(fname):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_load = library.cfuncproto(
         library.load_so_libflimage(), "flimage_load",
         cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
         """FL_IMAGE * flimage_load(const char * file)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _flimage_load(s_fname)
@@ -135,8 +138,8 @@ def flimage_load(fname):
 def flimage_read(ptr_flimage):
     """flimage_read(ptr_flimage) -> ptr_flimage
 
-    Takes a xfdata.FL_IMAGE class instance returned by flimage_open()
-    and fills the image structure.
+    Takes a xfdata.FL_IMAGE class instance returned by flimage_open() and
+    fills the image structure.
 
     Parameters
     ----------
@@ -155,15 +158,16 @@ def flimage_read(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_read = library.cfuncproto(
         library.load_so_libflimage(), "flimage_read",
         cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
         """FL_IMAGE * flimage_read(FL_IMAGE * im)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_read(ptr_flimage)
@@ -184,15 +188,16 @@ def flimage_dump(ptr_flimage, fname, fmt):
         fname : str
             name of file to be saved
         fmt : str
-            formal name or short name of a supported image format.
-            Values: jpeg, ppm, gif, bmp, etc... or some other formats the
-            application knows how to write. If it is None, the original
+            formal name or short name of a supported image format. Values
+            'jpeg', 'ppm', 'gif', 'bmp', etc... or some other formats the
+            application knows how to write. If it is empty (""), the original
             format the image was in is used.
 
     Returns
     -------
         result : int
-            non-negative, or negative num. (on failure)
+            non-negative, or xfdata.FL_CANCEL (?), or -1 (on failure, invalid
+            or no image or file)
 
     Examples
     --------
@@ -200,8 +205,9 @@ def flimage_dump(ptr_flimage, fname, fmt):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_dump = library.cfuncproto(
@@ -210,11 +216,10 @@ def flimage_dump(ptr_flimage, fname, fmt):
         xfdata.STRING],
         """int flimage_dump(FL_IMAGE * p1, const char * p2,
            const char * p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     s_fname = library.convert_to_stringc(fname)
-    # *todo* take note of None case
-    s_fmt = library.convert_to_stringc(fmt)
+    s_fmt = library.convert_to_stringc(fmt)     # empty handled internally
     library.keep_elem_refs(ptr_flimage, fname, fmt, s_fname, s_fmt)
     retval = _flimage_dump(ptr_flimage, s_fname, s_fmt)
     return retval
@@ -233,7 +238,7 @@ def flimage_close(ptr_flimage):
     Returns
     -------
         result : int
-            0?, or -1 (on failure)
+            0 (on success), or -1 (on errors, if no image or files)
 
     Examples
     --------
@@ -242,15 +247,16 @@ def flimage_close(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_close = library.cfuncproto(
         library.load_so_libflimage(), "flimage_close",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_close(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_close(ptr_flimage)
@@ -275,15 +281,16 @@ def flimage_alloc():
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_alloc = library.cfuncproto(
         library.load_so_libflimage(), "flimage_alloc",
         cty.POINTER(xfdata.FL_IMAGE), [],
         """FL_IMAGE * flimage_alloc()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     retval = _flimage_alloc()
     return retval
 
@@ -311,15 +318,16 @@ def flimage_getmem(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_getmem = library.cfuncproto(
         library.load_so_libflimage(), "flimage_getmem",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_getmem(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_getmem(ptr_flimage)
@@ -347,15 +355,16 @@ def flimage_is_supported(fname):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_is_supported = library.cfuncproto(
         library.load_so_libflimage(), "flimage_is_supported",
         cty.c_int, [xfdata.STRING],
         """int flimage_is_supported(const char * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _flimage_is_supported(s_fname)
@@ -363,7 +372,8 @@ def flimage_is_supported(fname):
 
 
 def flimage_description_via_filter(ptr_flimage, cmds, what, verbose):
-    """flimage_description_via_filter(ptr_flimage, cmds, what, verbose) -> result
+    """flimage_description_via_filter(ptr_flimage, cmds, what, verbose)
+    -> result
 
     Adds a description to be used with flimage_add_format() to add image
     formats via an external filter's command.
@@ -393,8 +403,9 @@ def flimage_description_via_filter(ptr_flimage, cmds, what, verbose):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_description_via_filter = library.cfuncproto(
@@ -403,9 +414,9 @@ def flimage_description_via_filter(ptr_flimage, cmds, what, verbose):
         xfdata.STRING, cty.c_int],
         """int flimage_description_via_filter(FL_IMAGE * im, char *const
            *cmds, const char *what, int verbose)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    #s_cmds = library.convert_to_stringc(cmds)                # to be verified
+    #s_cmds = library.convert_to_stringc(cmds)            # to be verified
     s_cmds = library.convert_to_ptr_stringc(cmds)
     s_what = library.convert_to_stringc(what)
     i_verbose = library.convert_to_intc(verbose)
@@ -430,8 +441,9 @@ def flimage_write_via_filter(ptr_flimage, cmds, formats, verbose):
         cmds : list of str?
             a list of shell commands (filters) that convert the format in
             question into one of the supported formats.
-        formats : str?
-            list of strings. Values ppm, pgm, pbm, .. etc..
+        formats : list of str
+            sequence of recognized image formats. Values 'ppm', 'pgm', 'pbm',
+            .. etc..
         verbose : int
             controls if some information and error messages should be printed
             (mainly for debugging purpose). Values 0 (to disable) or 1
@@ -448,8 +460,9 @@ def flimage_write_via_filter(ptr_flimage, cmds, formats, verbose):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_write_via_filter = library.cfuncproto(
@@ -458,7 +471,7 @@ def flimage_write_via_filter(ptr_flimage, cmds, formats, verbose):
         cty.POINTER(xfdata.STRING), cty.c_int],
         """int flimage_write_via_filter(FL_IMAGE * p1, const * char * cmds,
            const char * formats[], int verbose)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     s_cmds = library.convert_to_ptr_stringc(cmds)    # *todo* to be verified
     s_formats = library.convert_to_stringc(formats)
@@ -487,15 +500,16 @@ def flimage_free(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_free = library.cfuncproto(
         library.load_so_libflimage(), "flimage_free",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_free(ptr_flimage)
@@ -524,15 +538,16 @@ def flimage_display(ptr_flimage, win):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_display = library.cfuncproto(
         library.load_so_libflimage(), "flimage_display",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Window],
         """int flimage_display(FL_IMAGE * p1, Window p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(ptr_flimage, win, ul_win)
@@ -563,15 +578,16 @@ def flimage_sdisplay(ptr_flimage, win):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_sdisplay = library.cfuncproto(
         library.load_so_libflimage(), "flimage_sdisplay",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Window],
         """int flimage_sdisplay(FL_IMAGE * p1, Window p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(ptr_flimage, win, ul_win)
@@ -582,8 +598,8 @@ def flimage_sdisplay(ptr_flimage, win):
 def flimage_convert(ptr_flimage, newimagetype, numcolors):
     """flimage_convert(ptr_flimage, newimagetype, numcolors) -> result
 
-    Converts an image to a new type. Depending on which quantization
-    function is used, the number of quantized colors may not be more than 256.
+    Converts an image to a new type. Depending on which quantization function
+    is used, the number of quantized colors may not be more than 256.
 
     Parameters
     ----------
@@ -595,8 +611,8 @@ def flimage_convert(ptr_flimage, newimagetype, numcolors):
             FL_IMAGE_RGB, FL_IMAGE_PACKED, FL_IMAGE_GRAY16, FL_IMAGE_RGB16,
             FL_IMAGE_FLEX
         numcolors : int
-            number of colors to generate. It makes sense only when newtype is
-            xfdata.FL_IMAGE_CI.
+            number of colors to generate. It makes sense only when image type
+            is xfdata.FL_IMAGE_CI.
 
     Returns
     -------
@@ -609,15 +625,16 @@ def flimage_convert(ptr_flimage, newimagetype, numcolors):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_convert = library.cfuncproto(
         library.load_so_libflimage(), "flimage_convert",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_convert(FL_IMAGE * p1, int p2, int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.checkfatal_allowed_value_in_list(newimagetype, \
             xfdata.FLIMAGETYPE_list)
@@ -638,14 +655,13 @@ def flimage_type_name(imagetype):
     Parameters
     ----------
         imagetype : int
-            type of a supported image. Values (from xfdata.py)
-            FL_IMAGE_MONO (b&w. 1bit bitmaps. 0=white 1=black), FL_IMAGE_GRAY
-            (gray-scale image, 8 bit), FL_IMAGE_CI (generic colormmaped index
-            image), FL_IMAGE_RGB (24 bit RGB-A image, 8bit each),
-            FL_IMAGE_PACKED (24 bit RGB-A packed into an int), FL_IMAGE_GRAY16
-            (gray-scale image, 9 to 16 bit), FL_IMAGE_RGB16 (36bits color
-            image), FL_IMAGE_FLEX (all formats). FL_IMAGE_NONE should not be
-            used here.
+            type of a supported image. Values (from xfdata.py) FL_IMAGE_MONO
+            (b&w. 1bit bitmaps. 0=white 1=black), FL_IMAGE_GRAY (gray-scale
+            image, 8 bit), FL_IMAGE_CI (generic colormmaped index image),
+            FL_IMAGE_RGB (24 bit RGB-A image, 8bit each), FL_IMAGE_PACKED (24
+            bit RGB-A packed into an int), FL_IMAGE_GRAY16 (gray-scale image,
+            9 to 16 bit), FL_IMAGE_RGB16 (36bits color image), FL_IMAGE_FLEX
+            (all formats). FL_IMAGE_NONE should not be used here.
 
     Returns
     -------
@@ -658,15 +674,16 @@ def flimage_type_name(imagetype):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_type_name = library.cfuncproto(
         library.load_so_libflimage(), "flimage_type_name",
         xfdata.STRING, [cty.c_int],
         """const char * flimage_type_name(int type)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.checkfatal_allowed_value_in_list(imagetype, \
             xfdata.FLIMAGETYPE_list)
     i_imagetype = library.convert_to_intc(imagetype)
@@ -692,23 +709,23 @@ def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
         length : int
             length of text
         style : int
-            label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
             label size. Values (from xfdata.py)
             FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
@@ -742,8 +759,9 @@ def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_add_text = library.cfuncproto(
@@ -754,7 +772,7 @@ def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
         """int flimage_add_text(FL_IMAGE * im, const char * str, int len,
            int style, int size, unsigned int tcol, unsigned int bcol,
            int tran, double tx, double ty, int rot)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     s_text = library.convert_to_stringc(text)
     i_length = library.convert_to_intc(length)
@@ -768,11 +786,10 @@ def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
     f_txtypos = library.convert_to_doublec(txtypos)
     i_rot = library.convert_to_intc(rot)
     library.keep_elem_refs(ptr_flimage, text, length, style, size, txtcolr, \
-                bgcolr, nobk, txtxpos, txtypos, rot, s_text, i_length, \
-                i_style, i_size, ui_txtcolr, ui_bgcolr, i_nobk, f_txtxpos, \
-                f_txtypos, i_rot)
+            bgcolr, nobk, txtxpos, txtypos, rot, s_text, i_length, i_style, \
+            i_size, ui_txtcolr, ui_bgcolr, i_nobk, f_txtxpos, f_txtypos, i_rot)
     retval = _flimage_add_text(ptr_flimage, s_text, i_length, i_style, i_size,
-                ui_txtcolr, ui_bgcolr, i_nobk, f_txtxpos, f_txtypos, i_rot)
+            ui_txtcolr, ui_bgcolr, i_nobk, f_txtxpos, f_txtypos, i_rot)
     return retval
 
 
@@ -785,9 +802,11 @@ def flimage_add_text_struct(ptr_flimage, ptr_flimagetext):
     Parameters
     ----------
         ptr_flimage : pointer to xfdata.FL_IMAGE
-            image
+            image class instance
         ptr_flimagetext : pointer to xfdata.FLIMAGE_TEXT
-            flimagetext class instance
+            flimagetext class instance. You can use
+            xfstruct.make_ptr_flimagetext(), passing a dict whose keys are
+            corresponding to xfdata.FLIMAGE_TEXT attributes.
 
     Returns
     -------
@@ -800,16 +819,18 @@ def flimage_add_text_struct(ptr_flimage, ptr_flimagetext):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_add_text_struct = library.cfuncproto(
         library.load_so_libflimage(), "flimage_add_text_struct",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE),
         cty.POINTER(xfdata.FLIMAGE_TEXT)],
-        """int flimage_add_text_struct(FL_IMAGE * p1, const char * p2)""")
-    #library.check_if_initialized()
+        """int flimage_add_text_struct(FL_IMAGE * p1,
+           const FLIMAGE_TEXT * p2)""")
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.verify_otherclassptr_type(ptr_flimagetext, \
             cty.POINTER(xfdata.FLIMAGE_TEXT))
@@ -834,22 +855,23 @@ def flimage_delete_all_text(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_delete_all_text = library.cfuncproto(
         library.load_so_libflimage(), "flimage_delete_all_text",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_delete_all_text(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.keep_elem_refs(ptr_flimage)
     _flimage_delete_all_text(ptr_flimage)
 
 
-def flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height, lnstyle,
-                       fill, rot, colr, bcolr):
-    """flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height,
+def flimage_add_marker(ptr_flimage, mkrname, xpos, ypos, width, height, \
+            lnstyle, fill, rot, colr, bcolr):
+    """flimage_add_marker(ptr_flimage, mkrname, xpos, ypos, width, height,
     lnstyle, fill, rot, colr, bcolr) -> nummarkers
 
     Adds simple markers (e.g. arrows, circles, etc) to an image, passing
@@ -859,7 +881,7 @@ def flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height, lnstyle,
     ----------
         ptr_flimage : pointer to xfdata.FL_IMAGE
             image
-        name : str
+        mkrname : str
             name of the marker to be added
         xpos : float
             horizontal position of the center of the marker in physical
@@ -881,7 +903,7 @@ def flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height, lnstyle,
             drawn, with the even numbered segments drawn in the background
             color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
             FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
-            [----]), FL_LONGDASH (Long dashed line [--------]).
+            [----]), FL_LONGDASH (Long dashed line [_ _ _]).
         fill : int
             flag if the marker should be filled or not. Values 1 (filled)
             or 0 (not filled)
@@ -903,8 +925,9 @@ def flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height, lnstyle,
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_add_marker = library.cfuncproto(
@@ -915,9 +938,9 @@ def flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height, lnstyle,
         """int flimage_add_marker(FL_IMAGE * p1, const char * p2,
            double p3, double p4, double p5, double p6, int p7,
            int p8, int p9, FL_COLOR p10, FL_COLOR p11)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    s_name = library.convert_to_stringc(name)
+    s_mkrname = library.convert_to_stringc(mkrname)
     f_xpos = library.convert_to_doublec(xpos)
     f_ypos = library.convert_to_doublec(ypos)
     f_width = library.convert_to_doublec(width)
@@ -928,11 +951,11 @@ def flimage_add_marker(ptr_flimage, name, xpos, ypos, width, height, lnstyle,
     i_rot = library.convert_to_intc(rot)
     ul_colr = library.convert_to_FL_COLOR(colr)
     ul_bcolr = library.convert_to_FL_COLOR(bcolr)
-    library.keep_elem_refs(ptr_flimage, name, xpos, ypos, width, height, \
+    library.keep_elem_refs(ptr_flimage, mkrname, xpos, ypos, width, height, \
             lnstyle, fill, rot, colr, bcolr, s_name, f_xpos, f_ypos, \
             f_width, f_height, i_lnstyle, i_fill, i_rot, ul_colr, ul_bcolr)
-    retval = _flimage_add_marker(ptr_flimage, s_name, f_xpos, f_ypos, f_width,
-            f_height, i_lnstyle, i_fill, i_rot, ul_colr, ul_bcolr)
+    retval = _flimage_add_marker(ptr_flimage, s_mkrname, f_xpos, f_ypos, \
+            f_width, f_height, i_lnstyle, i_fill, i_rot, ul_colr, ul_bcolr)
     return retval
 
 
@@ -947,7 +970,9 @@ def flimage_add_marker_struct(ptr_flimage, ptr_flimagemarker):
         ptr_flimage : pointer to xfdata.FL_IMAGE
             image
         ptr_flimagemarker : pointer to xfdata.FLIMAGE_MARKER
-            flimagemarker class instance
+            flimagemarker class instance. You can use
+            xfstruct.make_ptr_flimagemarker(), passing a dict whose keys are
+            corresponding to xfdata.FLIMAGE_MARKER attributes.
 
     Returns
     -------
@@ -960,8 +985,9 @@ def flimage_add_marker_struct(ptr_flimage, ptr_flimagemarker):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_add_marker_struct = library.cfuncproto(
@@ -969,7 +995,7 @@ def flimage_add_marker_struct(ptr_flimage, ptr_flimagemarker):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER( \
         xfdata.FLIMAGE_MARKER)],
         """int flimage_add_marker_struct(FL_IMAGE * p1, const char * p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.verify_otherclassptr_type(ptr_flimagemarker, \
             cty.POINTER(xfdata.FL_IMAGE))
@@ -988,7 +1014,7 @@ def flimage_define_marker(mkrname, pyfn_FlimageMarkerDraw, psdraw):
         mkrname : str
             name of the marker
         pyfn_FlimageMarkerDraw : python function to draw marker, no return
-            name referring to function(ptr_flimageMarker)
+            name referring to function(ptr_flimagemarker)
         psdraw : str
             string that draws a marker in a square with the corner coordinates
             (-1, -1), (-1, 1), (1, 1) and (1, -1) in PostScript. e.g. the
@@ -1006,8 +1032,9 @@ def flimage_define_marker(mkrname, pyfn_FlimageMarkerDraw, psdraw):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     cfunc_none_flimagemarker = cty.CFUNCTYPE(None, cty.POINTER( \
@@ -1018,10 +1045,10 @@ def flimage_define_marker(mkrname, pyfn_FlimageMarkerDraw, psdraw):
         xfdata.STRING],
         """int flimage_define_marker(const char *, void ( * )
            (FLIMAGE_MARKER *), const char *)""")
+    library.check_if_flimageinitialized()
     s_mkrname = library.convert_to_stringc(mkrname)
     library.verify_function_type(pyfn_FlimageMarkerDraw)
-    cfn_FlimageMarkerDraw = cfunc_none_flimagemarker( \
-            pyfn_FlimageMarkerDraw)
+    cfn_FlimageMarkerDraw = cfunc_none_flimagemarker(pyfn_FlimageMarkerDraw)
     s_psdraw = library.convert_to_stringc(psdraw)
     library.keep_elem_refs(mkrname, psdraw, s_mkrname, s_psdraw)
     library.keep_cfunc_refs(cfn_FlimageMarkerDraw, pyfn_FlimageMarkerDraw)
@@ -1046,15 +1073,16 @@ def flimage_delete_all_markers(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_delete_all_markers = library.cfuncproto(
         library.load_so_libflimage(), "flimage_delete_all_markers",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_delete_all_markers(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_delete_all_markers(ptr_flimage)
@@ -1094,15 +1122,16 @@ def flimage_render_annotation(ptr_flimage, win):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_render_annotation = library.cfuncproto(
         library.load_so_libflimage(), "flimage_render_annotation",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
         """int flimage_render_annotation(FL_IMAGE * p1, FL_WINDOW p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(ptr_flimage, win, ul_win)
@@ -1128,15 +1157,16 @@ def flimage_error(ptr_flimage, text):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_error = library.cfuncproto(
         library.load_so_libflimage(), "flimage_error",
         None, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING],
         """void flimage_error(FL_IMAGE * p1, const char * p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     s_text = library.convert_to_Window(text)
     library.keep_elem_refs(ptr_flimage, text, s_text)
@@ -1156,15 +1186,16 @@ def flimage_enable_pnm():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_pnm = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_pnm",
         None, [],
         """void flimage_enable_pnm()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_pnm()
 
 
@@ -1189,15 +1220,16 @@ def flimage_set_fits_bits(numbits):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_set_fits_bits = library.cfuncproto(
         library.load_so_libflimage(), "flimage_set_fits_bits",
         cty.c_int, [cty.c_int],
         """int flimage_set_fits_bits(int p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_numbits = library.convert_to_intc(numbits)
     library.keep_elem_refs(numbits, i_numbits)
     retval = _flimage_set_fits_bits(i_numbits)
@@ -1223,15 +1255,16 @@ def flimage_jpeg_output_options(ptr_flimagejpegoption):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_jpeg_output_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_jpeg_output_options",
         None, [cty.POINTER(xfdata.FLIMAGE_JPEG_OPTION)],
         """void flimage_jpeg_output_options(FLIMAGE_JPEG_OPTION * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_otherclassptr_type(ptr_flimagejpegoption, \
             cty.POINTER(xfdata.FLIMAGE_JPEG_OPTION))
     library.keep_elem_refs(ptr_flimagejpegoption)
@@ -1246,8 +1279,8 @@ def flimage_pnm_output_options(rawformat):
     Parameters
     ----------
         rawformat : int
-            flag of supported variants. Values 1 (binary raw format,
-            default) or 0 (ASCII format). If the output image is of type
+            flag of supported variants. Values 1 (binary raw format, default)
+            or 0 (ASCII format). If the output image is of type
             xfdata.FL_IMAGE_GRAY16, it is always ASCII format
 
     Examples
@@ -1256,15 +1289,16 @@ def flimage_pnm_output_options(rawformat):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_pnm_output_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_pnm_output_options",
         None, [cty.c_int],
         """void flimage_pnm_output_options(int p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_rawformat = library.convert_to_intc(rawformat)
     library.keep_elem_refs(rawformat, i_rawformat)
     _flimage_pnm_output_options(i_rawformat)
@@ -1287,15 +1321,16 @@ def flimage_gif_output_options(interlace):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_gif_output_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_gif_output_options",
         None, [cty.c_int],
         """void flimage_gif_output_options(int p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_interlace = library.convert_to_intc(interlace)
     library.keep_elem_refs(interlace, i_interlace)
     _flimage_gif_output_options(i_interlace)
@@ -1317,15 +1352,16 @@ def flimage_ps_options():
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_ps_options = library.cfuncproto(
         library.load_so_libflimage(), "flimage_ps_options",
         cty.POINTER(xfdata.FLPS_CONTROL), [],
         """FLPS_CONTROL * flimage_ps_options()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     retval = _flimage_ps_options()
     return retval
 
@@ -1351,15 +1387,16 @@ def flimage_get_number_of_formats():
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_get_number_of_formats = library.cfuncproto(
         library.load_so_libflimage(), "flimage_get_number_of_formats",
         cty.c_int, [],
         """int flimage_get_number_of_formats()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     retval = _flimage_get_number_of_formats()
     return retval
 
@@ -1386,15 +1423,16 @@ def flimage_get_format_info(imgfmtnum):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_get_format_info = library.cfuncproto(
         library.load_so_libflimage(), "flimage_get_format_info",
         cty.POINTER(xfdata.FLIMAGE_FORMAT_INFO), [cty.c_int],
         """const FLIMAGE_FORMAT_INFO * flimage_get_format_info(int p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_imgfmtnum = library.convert_to_intc(imgfmtnum)
     library.keep_elem_refs(imgfmtnum, i_imgfmtnum)
     retval = _flimage_get_format_info(i_imgfmtnum)
@@ -1428,15 +1466,16 @@ def fl_get_matrix(numrows, numcols, elemsize):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_get_matrix = library.cfuncproto(
         library.load_so_libflimage(), "fl_get_matrix",
         cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint],
         """void * fl_get_matrix(int p1, int p2, unsigned int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_numrows = library.convert_to_intc(numrows)
     i_numcols = library.convert_to_intc(numcols)
     ui_elemsize = library.convert_to_uintc(elemsize)
@@ -1474,8 +1513,9 @@ def fl_make_matrix(numrows, numcols, elemsize, mem):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_make_matrix = library.cfuncproto(
@@ -1483,7 +1523,7 @@ def fl_make_matrix(numrows, numcols, elemsize, mem):
         cty.c_void_p, [cty.c_int, cty.c_int, cty.c_uint, cty.c_void_p],
         """void * fl_make_matrix(int p1, int p2, unsigned int p3,
            void * p4)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_numrows = library.convert_to_intc(numrows)
     i_numcols = library.convert_to_intc(numcols)
     ui_elemsize = library.convert_to_uintc(elemsize)
@@ -1511,15 +1551,16 @@ def fl_free_matrix(matrix):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_free_matrix = library.cfuncproto(
         library.load_so_libflimage(), "fl_free_matrix",
         None, [cty.c_void_p],
         """void fl_free_matrix(void * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     ptr_matrix = cty.cast(matrix, cty.c_void_p)
     library.keep_elem_refs(matrix, ptr_matrix)
     _fl_free_matrix(ptr_matrix)
@@ -1560,8 +1601,9 @@ def fl_lookup_RGBcolor(colrname):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_lookup_RGBcolor = library.cfuncproto(
@@ -1570,7 +1612,7 @@ def fl_lookup_RGBcolor(colrname):
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
         """int fl_lookup_RGBcolor(const char * p1, int * p2,
            int * p3, int * p4)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     scolrname = library.convert_to_stringc(colrname)
     i_red, ptr_red = library.make_intc_and_pointer()
     i_green, ptr_green = library.make_intc_and_pointer()
@@ -1654,8 +1696,9 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     #FLIMAGE_Identify = cty.CFUNCTYPE(cty.c_int, cty.POINTER(xfdata.FILE))
@@ -1674,7 +1717,7 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
            const char * p3, int p4, FLIMAGE_Identify p5,
            FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
            FLIMAGE_Write_Image p8)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     s_formalname = library.convert_to_stringc(formalname)
     s_shortname = library.convert_to_stringc(shortname)
     s_extension = library.convert_to_stringc(extension)
@@ -1719,15 +1762,16 @@ def flimage_set_annotation_support(imgnum, yesno):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_set_annotation_support = library.cfuncproto(
         library.load_so_libflimage(), "flimage_set_annotation_support",
         None, [cty.c_int, cty.c_int],
         """void flimage_set_annotation_support(int p1, int p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_imgnum = library.convert_to_intc(imgnum)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(imgnum, yesno, i_imgnum, i_yesno)
@@ -1755,15 +1799,16 @@ def flimage_getcolormap(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_getcolormap = library.cfuncproto(
         library.load_so_libflimage(), "flimage_getcolormap",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_getcolormap(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_getcolormap(ptr_flimage)
@@ -1787,15 +1832,16 @@ def fl_select_mediancut_quantizer():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_select_mediancut_quantizer = library.cfuncproto(
         library.load_so_libflimage(), "fl_select_mediancut_quantizer",
         None, [],
         """void fl_select_mediancut_quantizer()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _fl_select_mediancut_quantizer()
 
 
@@ -1830,8 +1876,9 @@ def flimage_convolve(ptr_flimage, kernel, krows, kcols):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK (how to create kernel)
+        Status: NA-UTest + NoDoc + NoDemo = Maybe (how to create kernel)
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_convolve = library.cfuncproto(
@@ -1840,7 +1887,7 @@ def flimage_convolve(ptr_flimage, kernel, krows, kcols):
         cty.POINTER(cty.POINTER(cty.c_int)), cty.c_int, cty.c_int],
         """int flimage_convolve(FL_IMAGE * p1, int * * p2, int p3,
            int p4)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_krows = library.convert_to_intc(krows)
     i_kcols = library.convert_to_intc(kcols)
@@ -1878,8 +1925,9 @@ def flimage_convolvea(ptr_flimage, kernel, krows, kcols):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK (how to create kernel)
+        Status: NA-UTest + NoDoc + NoDemo = Maybe (how to create kernel)
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_convolvea = library.cfuncproto(
@@ -1887,7 +1935,7 @@ def flimage_convolvea(ptr_flimage, kernel, krows, kcols):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.POINTER(cty.c_int),
         cty.c_int, cty.c_int],
         """int flimage_convolvea(FL_IMAGE * p1, int * p2, int p3, int p4)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ptr_kernel = cty.cast(kernel, cty.POINTER(cty.c_int))   # to be verified
     i_krows = library.convert_to_intc(krows)
@@ -1934,15 +1982,16 @@ def flimage_tint(ptr_flimage, packed, opacity):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_tint = library.cfuncproto(
         library.load_so_libflimage(), "flimage_tint",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_double],
         """int flimage_tint(FL_IMAGE * p1, unsigned int p2, double p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ui_packed = library.convert_to_uintc(packed)
     f_opacity = library.convert_to_floatc(opacity)
@@ -1988,15 +2037,16 @@ def flimage_rotate(ptr_flimage, angle, subpixel):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_rotate = library.cfuncproto(
         library.load_so_libflimage(), "flimage_rotate",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_rotate(FL_IMAGE * p1, int p2, int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.checkfatal_allowed_value_in_list(subpixel, \
             xfdata.FLIMAGESUBPIXROT_list)
@@ -2035,15 +2085,16 @@ def flimage_flip(ptr_flimage, flipaxis):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_flip = library.cfuncproto(
         library.load_so_libflimage(), "flimage_flip",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
         """int flimage_flip(FL_IMAGE * p1, int p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     if isinstance(flipaxis, str):
         # workaround to let a character as int argument
@@ -2091,8 +2142,9 @@ def flimage_scale(ptr_flimage, newwidth, newheight, option):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_scale = library.cfuncproto(
@@ -2100,7 +2152,7 @@ def flimage_scale(ptr_flimage, newwidth, newheight, option):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int,
         cty.c_int],
         """int flimage_scale(FL_IMAGE * p1, int p2, int p3, int p4)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_newwidth = library.convert_to_intc(newwidth)
     i_newheight = library.convert_to_intc(newheight)
@@ -2151,8 +2203,9 @@ def flimage_warp(ptr_flimage, matrix, newwidth, newheight, subpixel):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_warp = library.cfuncproto(
@@ -2161,7 +2214,7 @@ def flimage_warp(ptr_flimage, matrix, newwidth, newheight, subpixel):
         cty.c_int, cty.c_int, cty.c_int],
         """int flimage_warp(FL_IMAGE * p1, float p2[][2], int p3, int p4,
            int p5)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ptr_matrix = cty.cast(matrix, cty.c_void_p)         # to be verified
     i_newwidth = library.convert_to_intc(newwidth)
@@ -2201,15 +2254,16 @@ def flimage_autocrop(ptr_flimage, bgcolr):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_autocrop = library.cfuncproto(
         library.load_so_libflimage(), "flimage_autocrop",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
         """int flimage_autocrop(FL_IMAGE * p1, unsigned int p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ui_bgcolr = library.convert_to_uintc(bgcolr)
     library.keep_elem_refs(ptr_flimage, bgcolr, ui_bgcolr)
@@ -2256,8 +2310,9 @@ def flimage_get_autocrop(ptr_flimage, bgcolr):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_get_autocrop = library.cfuncproto(
@@ -2267,7 +2322,7 @@ def flimage_get_autocrop(ptr_flimage, bgcolr):
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
         """int flimage_get_autocrop(FL_IMAGE * p1, unsigned int p2,
            int * p3, int * p4, int * p5, int * p6)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ui_bgcolr = library.convert_to_uintc(bgcolr)
     i_xloff, ptr_xloff = library.make_intc_and_pointer()
@@ -2318,8 +2373,9 @@ def flimage_crop(ptr_flimage, xloff, ytoff, xroff, yboff):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_crop = library.cfuncproto(
@@ -2328,7 +2384,7 @@ def flimage_crop(ptr_flimage, xloff, ytoff, xroff, yboff):
         cty.c_int, cty.c_int],
         """int flimage_crop(FL_IMAGE * p1, int p2, int p3,
            int p4, int p5)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_xloff = library.convert_to_intc(xloff)
     i_ytoff = library.convert_to_intc(ytoff)
@@ -2365,8 +2421,9 @@ def flimage_replace_pixel(ptr_flimage, targetcolr, newcolr):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_replace_pixel = library.cfuncproto(
@@ -2374,7 +2431,7 @@ def flimage_replace_pixel(ptr_flimage, targetcolr, newcolr):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint, cty.c_uint],
         """int flimage_replace_pixel(FL_IMAGE * p1, unsigned int p2,
            unsigned int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ui_targetcolr = library.convert_to_uintc(targetcolr)
     ui_newcolr = library.convert_to_uintc(newcolr)
@@ -2414,8 +2471,9 @@ def flimage_transform_pixels(ptr_flimage, red, green, blue):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_transform_pixels = library.cfuncproto(
@@ -2424,7 +2482,7 @@ def flimage_transform_pixels(ptr_flimage, red, green, blue):
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
         """int flimage_transform_pixels(FL_IMAGE * p1, int * p2,
            int * p3, int * p4)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ptr_red = cty.cast(red, cty.POINTER(cty.c_int))        # to be verified
     ptr_green = cty.cast(green, cty.POINTER(cty.c_int))    # to be verified
@@ -2463,15 +2521,16 @@ def flimage_windowlevel(ptr_flimage, winlvl, width):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_windowlevel = library.cfuncproto(
         library.load_so_libflimage(), "flimage_windowlevel",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int, cty.c_int],
         """int flimage_windowlevel(FL_IMAGE * p1, int p2, int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_winlvl = library.convert_to_intc(winlvl)
     i_width = library.convert_to_intc(width)
@@ -2503,15 +2562,16 @@ def flimage_enhance(ptr_flimage, delta):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enhance = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enhance",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_int],
         """int flimage_enhance(FL_IMAGE * p1, int p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_delta = library.convert_to_intc(delta)     # unused
     library.keep_elem_refs(ptr_flimage, delta, i_delta)
@@ -2543,15 +2603,16 @@ def flimage_from_pixmap(ptr_flimage, pixmap):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_from_pixmap = library.cfuncproto(
         library.load_so_libflimage(), "flimage_from_pixmap",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), xfdata.Pixmap],
         """int flimage_from_pixmap(FL_IMAGE * p1, Pixmap p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ul_pixmap = library.convert_to_Pixmap(pixmap)
     library.keep_elem_refs(ptr_flimage, pixmap, ul_pixmap)
@@ -2583,15 +2644,16 @@ def flimage_to_pixmap(ptr_flimage, win):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_to_pixmap = library.cfuncproto(
         library.load_so_libflimage(), "flimage_to_pixmap",
         xfdata.Pixmap, [cty.POINTER(xfdata.FL_IMAGE), xfdata.FL_WINDOW],
         """Pixmap flimage_to_pixmap(FL_IMAGE * p1, FL_WINDOW p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(ptr_flimage, win, ul_win)
@@ -2622,15 +2684,16 @@ def flimage_dup(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_dup = library.cfuncproto(
         library.load_so_libflimage(), "flimage_dup",
         cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE)],
         """FL_IMAGE * flimage_dup(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_dup(ptr_flimage)
@@ -2677,8 +2740,9 @@ def fl_get_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_get_submatrix = library.cfuncproto(
@@ -2687,7 +2751,7 @@ def fl_get_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
         cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
         """void * fl_get_submatrix(void * p1, int p2, int p3, int p4,
            int p5, int p6, int p7, unsigned int p8)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     ptr_inmatrix = cty.cast(inmatrix, cty.c_void_p)
     i_numrows = library.convert_to_intc(numrows)
     i_numcols = library.convert_to_intc(numcols)
@@ -2745,8 +2809,9 @@ def fl_j2pass_quantize_packed(packed, width, height, maxcolr, ci, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_j2pass_quantize_packed = library.cfuncproto(
@@ -2759,7 +2824,7 @@ def fl_j2pass_quantize_packed(packed, width, height, maxcolr, ci, \
         """int fl_j2pass_quantize_packed(unsigned int * * p1, int p2,
            int p3, int p4, short unsigned int * * p5, int * p6,
            int * p7, int * p8, int * p9, FL_IMAGE * p10)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     # packed to be handled
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_intc(height)
@@ -2824,8 +2889,9 @@ def fl_j2pass_quantize_rgb(red, green, blue, width, height, maxcolr, ci, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_j2pass_quantize_rgb = library.cfuncproto(
@@ -2841,7 +2907,7 @@ def fl_j2pass_quantize_rgb(red, green, blue, width, height, maxcolr, ci, \
            unsigned char * * p2, unsigned char * * p3, int p4, int p5,
            int p6, short unsigned int * * p7, int * p8, int * p9,
            int * p10, int * p11, FL_IMAGE * p12)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     # red to be handled
     # green to be handled
     # blue to be handled
@@ -2901,8 +2967,9 @@ def fl_make_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_make_submatrix = library.cfuncproto(
@@ -2911,7 +2978,7 @@ def fl_make_submatrix(inmatrix, numrows, numcols, startrow, startcol, \
         cty.c_int, cty.c_int, cty.c_int, cty.c_uint],
         """void * fl_make_submatrix(void * p1, int p2, int p3, int p4,
            int p5, int p6, int p7, unsigned int p8)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     # inmatrix has to be handled
     i_numrows = library.convert_to_intc(numrows)
     i_numcols = library.convert_to_intc(numcols)
@@ -2956,8 +3023,9 @@ def fl_pack_bits(inval, numindxs):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK (how to pass inval)
+        Status: NA-UTest + Doc + NoDemo = Maybe (how to pass inval)
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_pack_bits = library.cfuncproto(
@@ -2965,7 +3033,7 @@ def fl_pack_bits(inval, numindxs):
         None, [cty.POINTER(cty.c_ubyte), cty.POINTER(cty.c_ushort), cty.c_int],
         """void fl_pack_bits(unsigned char * p1, short unsigned int * p2,
            int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     ub_outval, ptr_outval = library.make_ubytec_and_pointer()
     ui_inval = library.convert_to_uintc(inval)  # to be verified
     ptr_inval = cty.cast(ui_inval, cty.POINTER(cty.c_uint))  # to be verified
@@ -3004,8 +3072,9 @@ def fl_unpack_bits(inval, numindxs):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_unpack_bits = library.cfuncproto(
@@ -3014,7 +3083,7 @@ def fl_unpack_bits(inval, numindxs):
         cty.c_int],
         """void fl_unpack_bits(short unsigned int * p1,
            unsigned char * p2, int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     us_outval, ptr_outval = library.make_ushortc_and_pointer()
     ub_inval = library.convert_to_ubyte(inval)
     ptr_inval = cty.cast(ub_inval, cty.POINTER(cty.c_ubyte))
@@ -3046,15 +3115,16 @@ def fl_value_to_bits(val):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _fl_value_to_bits = library.cfuncproto(
         library.load_so_libflimage(), "fl_value_to_bits",
         cty.c_uint, [cty.c_uint],
         """unsigned int fl_value_to_bits(unsigned int p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     ui_val = library.convert_to_uintc(val)
     library.keep_elem_refs(val, ui_val)
     retval = _fl_value_to_bits(ui_val)
@@ -3081,8 +3151,9 @@ def flimage_add_comments(ptr_flimage, text, length):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_add_comments = library.cfuncproto(
@@ -3090,7 +3161,7 @@ def flimage_add_comments(ptr_flimage, text, length):
         None, [cty.POINTER(xfdata.FL_IMAGE), xfdata.STRING, cty.c_int],
         """void flimage_add_comments(FL_IMAGE * p1, const char * p2,
            int p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     s_text = library.convert_to_stringc(text)
     i_length = library.convert_to_intc(length)
@@ -3132,8 +3203,9 @@ def flimage_color_to_pixel(ptr_flimage, red, green, blue):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_color_to_pixel = library.cfuncproto(
@@ -3142,7 +3214,7 @@ def flimage_color_to_pixel(ptr_flimage, red, green, blue):
         cty.c_int, cty.POINTER(cty.c_int)],
         """long unsigned int flimage_color_to_pixel(FL_IMAGE * p1,
                int p2, int p3, int p4, int * p5)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_red = library.convert_to_intc(red)
     i_green = library.convert_to_intc(green)
@@ -3180,8 +3252,9 @@ def flimage_combine(ptr_flimage1, ptr_flimage2, alpha):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_combine = library.cfuncproto(
@@ -3190,7 +3263,7 @@ def flimage_combine(ptr_flimage1, ptr_flimage2, alpha):
         cty.POINTER(xfdata.FL_IMAGE), cty.c_double],
         """FL_IMAGE * flimage_combine(FL_IMAGE * p1, FL_IMAGE * p2,
            double p3)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage1)
     library.verify_flflimageptr_type(ptr_flimage2)
     f_alpha = library.convert_to_doublec(alpha)
@@ -3215,15 +3288,16 @@ def flimage_display_markers(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_display_markers = library.cfuncproto(
         library.load_so_libflimage(), "flimage_display_markers",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_display_markers(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_display_markers(ptr_flimage)
@@ -3252,8 +3326,9 @@ def flimage_dup_(ptr_flimage, copypix):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_dup_ = library.cfuncproto(
@@ -3261,7 +3336,7 @@ def flimage_dup_(ptr_flimage, copypix):
         cty.POINTER(xfdata.FL_IMAGE), [cty.POINTER(xfdata.FL_IMAGE),
         cty.c_int],
         """FL_IMAGE * flimage_dup_(FL_IMAGE * p1, int p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     i_copypix = library.convert_to_intc(copypix)
     library.keep_elem_refs(ptr_flimage, copypix, i_copypix)
@@ -3280,15 +3355,16 @@ def flimage_enable_bmp():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_bmp = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_bmp",
         None, [],
         """void flimage_enable_bmp()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_bmp()
 
 
@@ -3303,14 +3379,16 @@ def flimage_enable_fits():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_fits = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_fits",
         None, [],
         """void flimage_enable_fits()""")
+    library.check_if_flimageinitialized()
     _flimage_enable_fits()
 
 
@@ -3326,15 +3404,16 @@ def flimage_enable_genesis():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_genesis = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_genesis",
         None, [],
         """void flimage_enable_genesis()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_genesis()
 
 
@@ -3350,15 +3429,16 @@ def flimage_enable_gif():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_gif = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_gif",
         None, [],
         """void flimage_enable_gif()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_gif()
 
 
@@ -3373,23 +3453,23 @@ def flimage_enable_gzip():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_gzip = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_gzip",
         None, [],
         """void flimage_enable_gzip()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_gzip()
 
 
 def flimage_enable_jpeg():
     """flimage_enable_jpeg()
 
-    Enables use of JPEG/JFIF (Joint Photographic Experts Group) image
-    format.
+    Enables use of JPEG/JFIF (Joint Photographic Experts Group) image format.
 
     Examples
     --------
@@ -3397,15 +3477,16 @@ def flimage_enable_jpeg():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_jpeg = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_jpeg",
         None, [],
         """void flimage_enable_jpeg()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_jpeg()
 
 
@@ -3421,15 +3502,16 @@ def flimage_enable_png():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_png = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_png",
         None, [],
         """void flimage_enable_png()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_png()
 
 
@@ -3445,15 +3527,16 @@ def flimage_enable_ps():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_ps = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_ps",
         None, [],
         """void flimage_enable_ps()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_ps()
 
 
@@ -3469,23 +3552,23 @@ def flimage_enable_sgi():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_sgi = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_sgi",
         None, [],
         """void flimage_enable_sgi()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_sgi()
 
 
 def flimage_enable_tiff():
     """flimage_enable_tiff()
 
-    Enables use of TIFF (Tagged Image file, with no compression) image
-    format.
+    Enables use of TIFF (Tagged Image file, with no compression) image format.
 
     Examples
     --------
@@ -3493,15 +3576,16 @@ def flimage_enable_tiff():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_tiff = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_tiff",
         None, [],
         """void flimage_enable_tiff()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_tiff()
 
 
@@ -3516,15 +3600,16 @@ def flimage_enable_xbm():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_xbm = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_xbm",
         None, [],
         """void flimage_enable_xbm()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_xbm()
 
 
@@ -3539,15 +3624,16 @@ def flimage_enable_xpm():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_xpm = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_xpm",
         None, [],
         """void flimage_enable_xpm()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_xpm()
 
 
@@ -3562,15 +3648,16 @@ def flimage_enable_xwd():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + Demo = OK
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_enable_xwd = library.cfuncproto(
         library.load_so_libflimage(), "flimage_enable_xwd",
         None, [],
         """void flimage_enable_xwd()""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     _flimage_enable_xwd()
 
 
@@ -3590,15 +3677,16 @@ def flimage_free_ci(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_free_ci = library.cfuncproto(
         library.load_so_libflimage(), "flimage_free_ci",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_ci(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_free_ci(ptr_flimage)
@@ -3620,15 +3708,16 @@ def flimage_free_gray(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_free_gray = library.cfuncproto(
         library.load_so_libflimage(), "flimage_free_gray",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_gray(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_free_gray(ptr_flimage)
@@ -3650,15 +3739,16 @@ def flimage_free_linearlut(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_free_linearlut = library.cfuncproto(
         library.load_so_libflimage(), "flimage_free_linearlut",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_linearlut(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_free_linearlut(ptr_flimage)
@@ -3680,15 +3770,16 @@ def flimage_free_rgb(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_free_rgb = library.cfuncproto(
         library.load_so_libflimage(), "flimage_free_rgb",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_free_rgb(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_free_rgb(ptr_flimage)
@@ -3710,15 +3801,16 @@ def flimage_freemem(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_freemem = library.cfuncproto(
         library.load_so_libflimage(), "flimage_freemem",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_freemem(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_freemem(ptr_flimage)
@@ -3747,8 +3839,9 @@ def flimage_get_closest_color_from_map(ptr_flimage, colr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_get_closest_color_from_map = library.cfuncproto(
@@ -3756,7 +3849,7 @@ def flimage_get_closest_color_from_map(ptr_flimage, colr):
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE), cty.c_uint],
         """int flimage_get_closest_color_from_map(FL_IMAGE * p1,
            unsigned int p2)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ui_colr = library.convert_to_uintc(colr)
     library.keep_elem_refs(ptr_flimage, colr, ui_colr)
@@ -3785,15 +3878,16 @@ def flimage_get_linearlut(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_get_linearlut = library.cfuncproto(
         library.load_so_libflimage(), "flimage_get_linearlut",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_get_linearlut(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_get_linearlut(ptr_flimage)
@@ -3817,15 +3911,16 @@ def flimage_invalidate_pixels(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_invalidate_pixels = library.cfuncproto(
         library.load_so_libflimage(), "flimage_invalidate_pixels",
         None, [cty.POINTER(xfdata.FL_IMAGE)],
         """void flimage_invalidate_pixels(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     _flimage_invalidate_pixels(ptr_flimage)
@@ -3834,7 +3929,7 @@ def flimage_invalidate_pixels(ptr_flimage):
 def flimage_open(fname):
     """flimage_open(fname) -> ptr_flimage
 
-    Opens an image file. Use flimage_read() to read it.
+    Opens an image file. You can then use flimage_read() to read it.
 
     Parameters
     ----------
@@ -3852,15 +3947,16 @@ def flimage_open(fname):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_open = library.cfuncproto(
         library.load_so_libflimage(), "flimage_open",
         cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
         """FL_IMAGE * flimage_open(const char * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _flimage_open(s_fname)
@@ -3868,7 +3964,7 @@ def flimage_open(fname):
 
 
 def flimage_read_annotation(ptr_flimage):
-    """flimage_read_annotation(ptr_flimage) -> resutl
+    """flimage_read_annotation(ptr_flimage) -> result
 
     Reads annotation in the image?
 
@@ -3888,15 +3984,16 @@ def flimage_read_annotation(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_read_annotation = library.cfuncproto(
         library.load_so_libflimage(), "flimage_read_annotation",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_read_annotation(FL_IMAGE * p1)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_read_annotation(ptr_flimage)
@@ -3906,7 +4003,7 @@ def flimage_read_annotation(ptr_flimage):
 def flimage_replace_image(ptr_flimage, width, height, red, green, blue):
     """flimage_replace_image(ptr_flimage, width, height, red, green, blue)
 
-    Replaces an image?
+    Replaces an image, in place?
 
     Parameters
     ----------
@@ -3929,8 +4026,9 @@ def flimage_replace_image(ptr_flimage, width, height, red, green, blue):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_replace_image = library.cfuncproto(
@@ -3939,7 +4037,7 @@ def flimage_replace_image(ptr_flimage, width, height, red, green, blue):
         cty.c_void_p, cty.c_void_p, cty.c_void_p],
         """void flimage_replace_image(FL_IMAGE * p1, int p2, int p3,
            void * p4, void * p5, void * p6)""")
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_intc(height)
     ptr_red = cty.cast(red, cty.c_void_p)
@@ -3954,7 +4052,7 @@ def flimage_replace_image(ptr_flimage, width, height, red, green, blue):
 def flimage_swapbuffer(ptr_flimage):
     """flimage_swapbuffer(ptr_flimage) -> result
 
-    Swaps buffer of an image?
+    Swaps buffer of an image, in place?
 
     Parameters
     ----------
@@ -3972,15 +4070,16 @@ def flimage_swapbuffer(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_swapbuffer = library.cfuncproto(
         library.load_so_libflimage(), "flimage_swapbuffer",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_swapbuffer(FL_IMAGE * p1) """)
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_swapbuffer(ptr_flimage)
@@ -4013,8 +4112,9 @@ def flimage_to_ximage(ptr_flimage, win, ptr_xwindowattributes):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_to_ximage = library.cfuncproto(
@@ -4023,7 +4123,7 @@ def flimage_to_ximage(ptr_flimage, win, ptr_xwindowattributes):
         cty.POINTER(xfdata.XWindowAttributes)],
         """int flimage_to_ximage(FL_IMAGE * p1, FL_WINDOW p2,
            XWindowAttributes * p3) """)
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     ul_win = library.convert_to_Window(win)
     library.verify_otherclassptr_type(ptr_xwindowattributes, \
@@ -4054,15 +4154,16 @@ def flimage_write_annotation(ptr_flimage):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
         It does not need to call flxbasic.fl_initialize() before
+        It does need flimage_setup() to be called before
 
     """
     _flimage_write_annotation = library.cfuncproto(
         library.load_so_libflimage(), "flimage_write_annotation",
         cty.c_int, [cty.POINTER(xfdata.FL_IMAGE)],
         """int flimage_write_annotation(FL_IMAGE * p1) """)
-    #library.check_if_initialized()
+    library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     library.keep_elem_refs(ptr_flimage)
     retval = _flimage_write_annotation(ptr_flimage)

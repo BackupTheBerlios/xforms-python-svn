@@ -70,8 +70,8 @@ class BorderWidth(object):
             xfl.fl_set_border_width(pbw)
 
         txt = "%2d Pixel" % pbw
-        ppupretn = xfl.fl_get_select_item_by_label(self.pbwselect, txt)
-        xfl.fl_set_select_item(self.pbwselect, ppupretn)
+        ppupentr = xfl.fl_get_select_item_by_label(self.pbwselect, txt)
+        xfl.fl_set_select_item(self.pbwselect, ppupentr)
 
         # show the form
         xfl.fl_show_form(self.pbwform, xfl.FL_PLACE_CENTER, \
@@ -81,8 +81,9 @@ class BorderWidth(object):
             pass                # empty
 
 
+    # callbacks for form bwform
+
     def done_callback(self, pobj, data):
-        # callbacks for form bwform
         xfl.fl_finish()
         sys.exit(0)
 

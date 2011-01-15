@@ -40,21 +40,25 @@ from xformslib import xfdata
 ######################
 
 
-# fl_create_spinner function placeholder (internal)
+# fl_create_spinner() function placeholder (internal)
 
 
 def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
     """fl_add_spinner(spinnertype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a spinner flobject.
+    Adds a spinner flobject. It is a combination of a (numerical) input field
+    with two (touch) buttons that allow to increment or decrement the value in
+    the (editable) input field. I.e. the user can change the spinners value by
+    either editing the value of the input field or by using the up/down buttons
+    shown beside the input field.
 
     Parameters
     ----------
         spinnertype : int
-            type of spinner to be added. Values (from xfdata.py)
-            FL_INT_SPINNER (spinner with integer values), FL_FLOAT_SPINNER
-            (spinner with float values)
+            type of spinner to be added. Values (from xfdata.py) FL_INT_SPINNER
+            (spinner with integer values), FL_FLOAT_SPINNER (spinner with float
+            values)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -73,11 +77,12 @@ def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> *todo*
+        >>> pspnobj = fl_add_spinner(xfdata.FL_INT_SPINNER, 175, 75, 140, 150,
+                "My spinner")
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_spinner = library.cfuncproto(
@@ -86,7 +91,7 @@ def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_spinner(int type, FL_Coord x, FL_Coord y,
         FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(spinnertype, \
             xfdata.SPINNERTYPE_list)
     i_spinnertype = library.convert_to_intc(spinnertype)
@@ -119,18 +124,18 @@ def fl_get_spinner_value(ptr_flobject):
 
     Examples
     --------
-        >>> val = fl_get_spinner_value(spnobj)
+        >>> val = fl_get_spinner_value(pspnobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_value = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_value",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_spinner_value(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_spinner_value(ptr_flobject)
@@ -160,7 +165,7 @@ def fl_set_spinner_value(ptr_flobject, spvalue):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_spinner_value = library.cfuncproto(
@@ -189,11 +194,11 @@ def fl_set_spinner_bounds(ptr_flobject, minbound, maxbound):
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_spinner_bounds(pspnobj, 1.0, 10.0)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_spinner_bounds = library.cfuncproto(
@@ -201,7 +206,7 @@ def fl_set_spinner_bounds(ptr_flobject, minbound, maxbound):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],
         """void fl_set_spinner_bounds(FL_OBJECT * obj, double min,
            double max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
@@ -223,13 +228,17 @@ def fl_get_spinner_bounds(ptr_flobject):
     Returns
     -------
         minbound : float
-            minimum value bound
+            minimum value bound. It can be set up to xfdata.INT_MIN for
+            xfdata.FL_INT_SPINNER, or up to negative of xfdata.DBL_MAX for
+            xfdata.FL_FLOAT_SPINNER. By default it is -10000
         maxbound : float
-            maximum value bound
+            maximum value bound. It can be set up to xfdata.INT_MAX for
+            xfdata.FL_INT_SPINNER, or up to xfdata.DBL_MAX for
+            xfdata.FL_FLOAT_SPINNER. By default it is 10000
 
     Examples
     --------
-        >>> *todo*
+        >>> minb, maxb = fl_get_spinner_bounds(pspnobj)
 
     API_diversion
     ----------
@@ -238,7 +247,7 @@ def fl_get_spinner_bounds(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_bounds = library.cfuncproto(
@@ -247,7 +256,7 @@ def fl_get_spinner_bounds(ptr_flobject):
         cty.POINTER(cty.c_double)], \
         """void fl_get_spinner_bounds(FL_OBJECT * obj, double * min,
            double * max)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_minbound, ptr_minbound = library.make_doublec_and_pointer()
     f_maxbound, ptr_maxbound = library.make_doublec_and_pointer()
@@ -271,18 +280,18 @@ def fl_set_spinner_step(ptr_flobject, step):
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_spinner_step(pspnobj, 0.5)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_spinner_step = library.cfuncproto(
         library.load_so_libforms(), "fl_set_spinner_step",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double],
         """void fl_set_spinner_step(FL_OBJECT * obj, double step)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_step = library.convert_to_doublec(step)
     library.keep_elem_refs(ptr_flobject, step, f_step)
@@ -310,14 +319,14 @@ def fl_get_spinner_step(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_step = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_step",
         cty.c_double, [cty.POINTER(xfdata.FL_OBJECT)],
         """double fl_get_spinner_step(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_spinner_step(ptr_flobject)
@@ -327,29 +336,31 @@ def fl_get_spinner_step(ptr_flobject):
 def fl_set_spinner_precision(ptr_flobject, precis):
     """fl_set_spinner_precision(ptr_flobject, precis)
 
-    Defines the precision number of values in a spinner flobject.
+    Defines the precision number of values in a spinner flobject. It has no
+    effect on xfdata.FL_INT_SPINNER flobjects.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             spinner flobject
         precis : int
-            precision value to be set after the dot
+            precision value to be set after the decimal point. By default it
+            is set to 6 digits.
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_spinner_precision(pspnobj, 2)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_spinner_precision = library.cfuncproto(
         library.load_so_libforms(), "fl_set_spinner_precision",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_spinner_precision(FL_OBJECT * obj, int prec)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_precis = library.convert_to_intc(precis)
     library.keep_elem_refs(ptr_flobject, precis, i_precis)
@@ -369,8 +380,8 @@ def fl_get_spinner_precision(ptr_flobject):
     Returns
     -------
         precis : int
-            precision number after the dot, or 0
-            (if it is integer)
+            precision number after the dot, or 0 (if it is of type
+            xfdata.FL_INT_SPINNER)
 
     Examples
     --------
@@ -378,14 +389,14 @@ def fl_get_spinner_precision(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_precision = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_precision",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_spinner_precision(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_spinner_precision(ptr_flobject)
@@ -395,7 +406,7 @@ def fl_get_spinner_precision(ptr_flobject):
 def fl_get_spinner_input(ptr_flobject):
     """fl_get_spinner_input(ptr_flobject) -> ptr_flobject
 
-    Finds out the input sub-flobject of the spinner flobject.
+    Finds out the input element of the spinner flobject.
 
     Parameters
     ----------
@@ -405,7 +416,7 @@ def fl_get_spinner_input(ptr_flobject):
     Returns
     -------
         ptr_flobject : pointer to xfdata.FL_OBJECT
-            input sub-flobject of spinner
+            input element of spinner flobject
 
     Examples
     --------
@@ -413,14 +424,14 @@ def fl_get_spinner_input(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_input = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_input",
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_input(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_spinner_input(ptr_flobject)
@@ -430,7 +441,7 @@ def fl_get_spinner_input(ptr_flobject):
 def fl_get_spinner_up_button(ptr_flobject):
     """fl_get_spinner_up_button(ptr_flobject) -> ptr_flobject
 
-    Finds out up button sub-flobject of a spinner flobject.
+    Finds out up button element of a spinner flobject.
 
     Parameters
     ----------
@@ -440,7 +451,7 @@ def fl_get_spinner_up_button(ptr_flobject):
     Returns
     -------
         ptr_flobject : pointer to xfdata.FL_OBJECT
-            up button sub-flobject of spinner
+            up button element of spinner flobject
 
     Examples
     --------
@@ -448,14 +459,14 @@ def fl_get_spinner_up_button(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_up_button = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_up_button",
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_up_button(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_spinner_up_button(ptr_flobject)
@@ -465,7 +476,7 @@ def fl_get_spinner_up_button(ptr_flobject):
 def fl_get_spinner_down_button(ptr_flobject):
     """fl_get_spinner_down_button(ptr_flobject) -> ptr_flobject
 
-    Finds out down button sub-flobject of a spinner flobject.
+    Finds out down button element of a spinner flobject.
 
     Parameters
     ----------
@@ -475,7 +486,7 @@ def fl_get_spinner_down_button(ptr_flobject):
     Returns
     -------
         ptr_flobject : pointer to xfdata.FL_OBJECT
-            down button sub-flobject of spinner
+            down button element of spinner flobject
 
     Examples
     --------
@@ -483,14 +494,14 @@ def fl_get_spinner_down_button(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_spinner_down_button = library.cfuncproto(
         library.load_so_libforms(), "fl_get_spinner_down_button",
         cty.POINTER(xfdata.FL_OBJECT), [cty.POINTER(xfdata.FL_OBJECT)],
         """FL_OBJECT * fl_get_spinner_down_button(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_spinner_down_button(ptr_flobject)

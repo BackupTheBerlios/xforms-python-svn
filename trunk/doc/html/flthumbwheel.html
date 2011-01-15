@@ -30,7 +30,11 @@
 <td width="100%"><dl><dt><a name="-fl_add_thumbwheel"><strong>fl_add_thumbwheel</strong></a>(wheeltype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_thumbwheel">fl_add_thumbwheel</a>(wheeltype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
+Adds&nbsp;a&nbsp;thumbwheel&nbsp;flobject.&nbsp;It&nbsp;is&nbsp;a&nbsp;valuator&nbsp;that&nbsp;can&nbsp;be&nbsp;useful&nbsp;for<br>
+letting&nbsp;the&nbsp;user&nbsp;indicate&nbsp;a&nbsp;value&nbsp;between&nbsp;some&nbsp;fixed&nbsp;bounds.&nbsp;Both<br>
+horizontal&nbsp;and&nbsp;vertical&nbsp;thumbwheels&nbsp;exist.&nbsp;They&nbsp;have&nbsp;a&nbsp;minimum,&nbsp;a&nbsp;maximum<br>
+and&nbsp;a&nbsp;current&nbsp;value&nbsp;(all&nbsp;floating&nbsp;point&nbsp;values).&nbsp;The&nbsp;user&nbsp;can&nbsp;change&nbsp;the<br>
+current&nbsp;value&nbsp;by&nbsp;rolling&nbsp;the&nbsp;wheel.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -56,12 +60,12 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;tmwobj&nbsp;=&nbsp;<a href="#-fl_add_thumbwheel">fl_add_thumbwheel</a>(xfdata.FL_HOR_THUMBWHEEL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ptmwobj&nbsp;=&nbsp;<a href="#-fl_add_thumbwheel">fl_add_thumbwheel</a>(xfdata.FL_HOR_THUMBWHEEL,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;140,&nbsp;134,&nbsp;250,&nbsp;30,&nbsp;"MyThumbwheel")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_thumbwheel_bounds"><strong>fl_get_thumbwheel_bounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_thumbwheel_bounds">fl_get_thumbwheel_bounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
@@ -89,7 +93,7 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_thumbwheel_step"><strong>fl_get_thumbwheel_step</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_thumbwheel_step">fl_get_thumbwheel_step</a>(ptr_flobject)&nbsp;-&gt;&nbsp;step<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;step&nbsp;for&nbsp;thumbwheel&nbsp;flobject&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to.<br>
@@ -106,11 +110,11 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;rndstep&nbsp;=&nbsp;<a href="#-fl_get_thumbwheel_step">fl_get_thumbwheel_step</a>(pthwobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_thumbwheel_value"><strong>fl_get_thumbwheel_value</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_thumbwheel_value">fl_get_thumbwheel_value</a>(ptr_flobject)&nbsp;-&gt;&nbsp;thwvalue<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;current&nbsp;value&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
@@ -127,11 +131,11 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;curval&nbsp;=&nbsp;<a href="#-fl_get_thumbwheel_value">fl_get_thumbwheel_value</a>(pthwobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_thumbwheel_bounds"><strong>fl_set_thumbwheel_bounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_thumbwheel_bounds">fl_set_thumbwheel_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
@@ -151,10 +155,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_thumbwheel_crossover"><strong>fl_set_thumbwheel_crossover</strong></a>(ptr_flobject, flag)</dt><dd><tt><a href="#-fl_set_thumbwheel_crossover">fl_set_thumbwheel_crossover</a>(ptr_flobject,&nbsp;flag)&nbsp;-&gt;&nbsp;oldcrossover<br>
 &nbsp;<br>
-Defines&nbsp;crossover&nbsp;for&nbsp;&nbsp;thumbwheel&nbsp;flobject.<br>
+Defines&nbsp;crossover&nbsp;for&nbsp;thumbwheel&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -174,7 +178,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_thumbwheel_step"><strong>fl_set_thumbwheel_step</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_thumbwheel_step">fl_set_thumbwheel_step</a>(ptr_flobject,&nbsp;step)&nbsp;-&gt;&nbsp;oldstep<br>
 &nbsp;<br>
 Defines&nbsp;step&nbsp;for&nbsp;thumbwheel&nbsp;flobject&nbsp;value&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to.<br>
@@ -197,7 +201,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_thumbwheel_value"><strong>fl_set_thumbwheel_value</strong></a>(ptr_flobject, thwvalue)</dt><dd><tt><a href="#-fl_set_thumbwheel_value">fl_set_thumbwheel_value</a>(ptr_flobject,&nbsp;thwvalue)&nbsp;-&gt;&nbsp;oldthwvalue<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;new&nbsp;value&nbsp;of&nbsp;a&nbsp;thumbwheel&nbsp;flobject.<br>
@@ -216,10 +220,10 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldval&nbsp;=&nbsp;<a href="#-fl_set_thumbwheel_value">fl_set_thumbwheel_value</a>(pthwobj,&nbsp;5.0)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

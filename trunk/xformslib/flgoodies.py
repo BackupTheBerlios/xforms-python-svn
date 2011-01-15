@@ -50,29 +50,29 @@ def fl_set_goodies_font(style, size):
     Parameters
     ----------
         style : int
-            goodies style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            goodies style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
-            goodies size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            goodies size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
@@ -80,14 +80,14 @@ def fl_set_goodies_font(style, size):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_goodies_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_goodies_font",
         None, [cty.c_int, cty.c_int],
         """void fl_set_goodies_font(int style, int size)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
@@ -100,8 +100,8 @@ def fl_set_goodies_font(style, size):
 def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
     """fl_show_message(msgtxt1, msgtxt2, msgtxt3)
 
-    Shows a simple form with three lines of text and a button labeled
-    OK on it. The mouse pointer is on the button.
+    Shows a simple form with three lines of text and a button labeled OK on
+    it. The mouse pointer is on the button.
 
     Parameters
     ----------
@@ -119,7 +119,7 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_message = library.cfuncproto(
@@ -127,7 +127,7 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
         None, [xfdata.STRING, xfdata.STRING, xfdata.STRING],
         """void fl_show_message(const char * p1, const char * p2,
            const char * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msgtxt1 = library.convert_to_stringc(msgtxt1)
     s_msgtxt2 = library.convert_to_stringc(msgtxt2)
     s_msgtxt3 = library.convert_to_stringc(msgtxt3)
@@ -139,12 +139,12 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
 def fl_show_messages(msgtxt):
     """fl_show_messages(msgtxt)
 
-    Shows a message. You can use it with a single line or when you
-    know the message in advance. To get multi-line messages use embedded
-    newlines. It blocks execution and does not return immediately (but idle
-    callback and asynchronous IO continue being run and checked). Execution
-    continues when the OK button is pressed or <Return> is hit or when the
-    message form is removed from the screen by fl_hide_message().
+    Shows a message. You can use it with a single line or when you know the
+    message in advance. To get multi-line messages use embedded newlines. It
+    blocks execution and does not return immediately (but idle callback and
+    asynchronous IO continue being run and checked). Execution continues when
+    the OK button is pressed or <Return> is hit or when the message form is
+    removed from the screen by fl_hide_message().
 
     Parameters
     ----------
@@ -157,14 +157,14 @@ def fl_show_messages(msgtxt):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_messages = library.cfuncproto(
         library.load_so_libforms(), "fl_show_messages",
         None, [xfdata.STRING],
         """void fl_show_messages(const char * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msgtxt = library.convert_to_stringc(msgtxt)
     library.keep_elem_refs(msgtxt, s_msgtxt)
     _fl_show_messages(s_msgtxt)
@@ -194,14 +194,14 @@ def fl_show_msg(fmttxt):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_show_msg = library.cfuncproto(
         library.load_so_libforms(), "fl_show_msg",
         None, [xfdata.STRING],
         """void fl_show_msg(const char * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_fmttxt = library.convert_to_stringc(fmttxt)
     library.keep_elem_refs(fmttxt, s_fmttxt)
     _fl_show_msg(s_fmttxt)
@@ -210,7 +210,7 @@ def fl_show_msg(fmttxt):
 def fl_hide_message():
     """fl_hide_message()
 
-    Hides a text message already shown.
+    Hides an already shown text message.
 
     Examples
     --------
@@ -218,14 +218,14 @@ def fl_hide_message():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_hide_message = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_message",
         None, [],
         """void fl_hide_message()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_message()
 
 
@@ -236,23 +236,23 @@ fl_hide_messages = fl_hide_message
 def fl_show_question(questmsg, defbtn):
     """fl_show_question(questmsg, defbtn) -> pushedbtn
 
-    Shows a message (with possible embedded newlines in it) with a Yes
-    and a No button. It returns whether the user pushed the Yes button. The
-    user can also press the <Y> key to mean Yes and the <N> key to mean No.
+    Shows a message (with possible embedded newlines in it) with a Yes and a
+    No button. It returns whether the user pushed the Yes button. The user
+    can also press the <Y> key to mean Yes and the <N> key to mean No.
 
     Parameters
     ----------
         questmsg : str
             text of question message to show
         defbtn : int
-            which button the mouse pointer should be on. Values 1 (for Yes)
-            or 0 (for No) and any other value causes the form to be shown so
-            the mouse pointer is at the center of the form.
+            which button the mouse pointer should be on. Values 1 (for Yes) or
+            0 (for No) and any other value causes the form to be shown so the
+            mouse pointer is at the center of the form.
 
     Returns
     -------
         pushedbtn : int
-            1 (if Yes button pushed) or 0 otherwise
+            1 (if Yes button pushed), or 0 otherwise
 
     Examples
     --------
@@ -260,14 +260,14 @@ def fl_show_question(questmsg, defbtn):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_question = library.cfuncproto(
         library.load_so_libforms(), "fl_show_question",
         cty.c_int, [xfdata.STRING, cty.c_int],
         """int fl_show_question(const char * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_questmsg = library.convert_to_stringc(questmsg)
     i_defbtn = library.convert_to_intc(defbtn)
     library.keep_elem_refs(questmsg, defbtn, s_questmsg, i_defbtn)
@@ -278,7 +278,7 @@ def fl_show_question(questmsg, defbtn):
 def fl_hide_question():
     """fl_hide_question()
 
-    Hides a question message already shown.
+    Hides an already shown question message.
 
     Examples
     --------
@@ -286,22 +286,22 @@ def fl_hide_question():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_hide_question = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_question",
         None, [],
         """void fl_hide_question()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_question()
 
 
 def fl_show_alert(title, msgtxt1, msgtxt2, centered):
     """fl_show_alert(title, msgtxt1, msgtxt2, centered)
 
-    Shows an alert message, with an alert icon (!) is added and the
-    first string is shown bold-faced.
+    Shows an alert message, with an added alert icon (!). The first string
+    is shown bold-faced.
 
     Parameters
     ----------
@@ -312,8 +312,8 @@ def fl_show_alert(title, msgtxt1, msgtxt2, centered):
         msgtxt2 : str
             other message text
         centered : int
-            if alert has to be displayed centered on the screen or not.
-            Values 1 (if centered) or 0 (not centered)
+            if alert has to be displayed centered on the screen or not. Values
+            1 (if centered) or 0 (not centered)
 
     Examples
     --------
@@ -321,7 +321,7 @@ def fl_show_alert(title, msgtxt1, msgtxt2, centered):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_alert = library.cfuncproto(
@@ -329,7 +329,7 @@ def fl_show_alert(title, msgtxt1, msgtxt2, centered):
         None, [xfdata.STRING, xfdata.STRING, xfdata.STRING, cty.c_int],
         """void fl_show_alert(const char * p1, const char * p2,
            const char * p3, int p4)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_title = library.convert_to_stringc(title)
     s_msgtxt1 = library.convert_to_stringc(msgtxt1)
     s_msgtxt2 = library.convert_to_stringc(msgtxt2)
@@ -362,14 +362,14 @@ def fl_show_alert2(centered, fmttxt):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_show_alert2 = library.cfuncproto(
         library.load_so_libforms(), "fl_show_alert2",
         None, [cty.c_int, xfdata.STRING],
         """void fl_show_alert2(int c, const char * fmt)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_centered = library.convert_to_intc(centered)
     s_fmttxt = library.convert_to_stringc(fmttxt)
     library.keep_elem_refs(centered, fmttxt, i_centered, s_fmttxt)
@@ -387,22 +387,22 @@ def fl_hide_alert():
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_hide_alert = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_alert",
         None, [],
         """void fl_hide_alert()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_alert()
 
 
 def fl_show_input(msgtxt, defstr):
     """fl_show_input(msgtxt, defstr) -> text
 
-    Finds out some text from user, showing a default text. It has OK
-    and Cancel buttons.
+    Finds out some text from user, showing a default text. It has an OK and
+    a Cancel buttons.
 
     Parameters
     ----------
@@ -422,14 +422,14 @@ def fl_show_input(msgtxt, defstr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_input = library.cfuncproto(
         library.load_so_libforms(), "fl_show_input",
         xfdata.STRING, [xfdata.STRING, xfdata.STRING],
         """const char * fl_show_input(const char * p1, const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msgtxt = library.convert_to_stringc(msgtxt)
     s_defstr = library.convert_to_stringc(defstr)
     library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
@@ -448,14 +448,14 @@ def fl_hide_input():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_hide_input = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_input",
         None, [],
         """void fl_hide_input()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_input()
 
 
@@ -483,7 +483,7 @@ def fl_show_simple_input(msgtxt, defstr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_show_simple_input = library.cfuncproto(
@@ -491,7 +491,7 @@ def fl_show_simple_input(msgtxt, defstr):
         xfdata.STRING, [xfdata.STRING, xfdata.STRING],
         """const char * fl_show_simple_input(const char * p1,
            const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msgtxt = library.convert_to_stringc(msgtxt)
     s_defstr = library.convert_to_stringc(defstr)
     library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
@@ -502,14 +502,13 @@ def fl_show_simple_input(msgtxt, defstr):
 def fl_show_colormap(oldcolr):
     """fl_show_colormap(oldcolr) -> colr
 
-    Shows a colormap color selector from which the user can select a
-    color. The user can decide not to change this color by pressing the
-    Cancel button in the form. In a number of applications the user has
-    to select a color from the colormap. For this a goody has been created.
-    It shows the first 64 entries of the colormap. The user can scroll
-    through the colormap to see more entries. Once the user presses the
-    mouse one of the entries the corresponding index is returned and the
-    colormap is removed from the screen.
+    Shows a colormap color selector from which the user can select a color. The
+    user can decide not to change this color by pressing the Cancel button in
+    the form. In a number of applications the user has to select a color from
+    the colormap. For this a goody has been created. It shows the first 64
+    entries of the colormap. The user can scroll through the colormap to see
+    more entries. Once the user presses the mouse one of the entries the
+    corresponding index is returned and the colormap is removed from screen.
 
     Parameters
     ----------
@@ -518,8 +517,9 @@ def fl_show_colormap(oldcolr):
 
     Returns
     -------
-        colridx : int
-            XForms colormap index as selected color, or default one
+        colr : int
+            XForms colormap index as selected color, or default one (if cancel
+            pressed)
 
     Examples
     --------
@@ -527,14 +527,14 @@ def fl_show_colormap(oldcolr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_colormap = library.cfuncproto(
         library.load_so_libforms(), "fl_show_colormap",
         cty.c_int, [cty.c_int],
         """int fl_show_colormap(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_oldcolr = library.convert_to_intc(oldcolr)
     library.keep_elem_refs(oldcolr, i_oldcolr)
     retval = _fl_show_colormap(i_oldcolr)
@@ -547,9 +547,9 @@ def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
     """fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho)
     -> btnnum
 
-    Shows a message, as a single string with possible embedded newlines,
-    with one, two or three buttons. The user can also press the <1>, <2> or
-    <3> key to indicate the first, second, or third button.
+    Shows a message, as a single string with possible embedded newlines, with
+    one, two or three buttons. The user can also press the <1>, <2> or <3> key
+    to indicate the first, second or third button.
 
     Parameters
     ----------
@@ -578,7 +578,7 @@ def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_choices = library.cfuncproto(
@@ -587,7 +587,7 @@ def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
         xfdata.STRING, cty.c_int],
         """int fl_show_choices(const char * p1, int p2,
            const char * p3, const char * p4, const char * p5, int p6)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msgtxt = library.convert_to_stringc(msgtxt)
     i_numbtns = library.convert_to_intc(numbtns)
     s_btn1txt = library.convert_to_stringc(btn1txt)
@@ -603,13 +603,13 @@ def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
 
 
 def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
-                   btn3txt, defcho):
+        btn3txt, defcho):
     """fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
     btn3txt, defcho) -> btnnum
 
-    Shows a message, up to three lines, with one, two or three buttons.
-    The user can also press the <1>, <2> or <3> key to indicate the first,
-    second, or third button.
+    Shows a message, up to three lines, with one, two or three buttons. The
+    user can also press the <1>, <2> or <3> key to indicate the first, second
+    or third button.
 
     Parameters
     ----------
@@ -642,7 +642,7 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_choice = library.cfuncproto(
@@ -652,7 +652,7 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
         """int fl_show_choice(const char * p1, const char * p2,
            const char * p3, int p4, const char * p5, const char * p6,
            const char * p7, int p8)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msg1txt = library.convert_to_stringc(msg1txt)
     s_msg2txt = library.convert_to_stringc(msg2txt)
     s_msg3txt = library.convert_to_stringc(msg3txt)
@@ -680,29 +680,29 @@ def fl_hide_choice():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_hide_choice = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_choice",
         None, [],
         """void fl_hide_choice()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_choice()
 
 
-def fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3):
-    """fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3)
+def fl_set_choices_shortcut(sctext1, sctext2, sctext3):
+    """fl_set_choices_shortcut(sctext1, sctext2, sctext3)
 
     Defines more mnemonic hotkeys as shortcut text for choices.
 
     Parameters
     ----------
-        shortcuttxt1 : str
+        sctext1 : str
             shortcut to bind to first button
-        shortcuttxt2 : str
+        sctext2 : str
             shortcut to bind to second button
-        shortcuttxt3 : str
+        sctext3 : str
             shortcut to bind to third button
 
     Examples
@@ -711,7 +711,7 @@ def fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_choices_shortcut = library.cfuncproto(
@@ -719,13 +719,13 @@ def fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3):
         None, [xfdata.STRING, xfdata.STRING, xfdata.STRING],
         """void fl_set_choices_shortcut(const char * p1, const char * p2,
            const char * p3)""")
-    library.check_if_initialized()
-    s_shortcuttxt1 = library.convert_to_stringc(shortcuttxt1)
-    s_shortcuttxt2 = library.convert_to_stringc(shortcuttxt2)
-    s_shortcuttxt3 = library.convert_to_stringc(shortcuttxt3)
-    library.keep_elem_refs(shortcuttxt1, shortcuttxt2, shortcuttxt3, \
-            s_shortcuttxt1, s_shortcuttxt2, s_shortcuttxt3)
-    _fl_set_choices_shortcut(s_shortcuttxt1, s_shortcuttxt2, s_shortcuttxt3)
+    library.check_if_flinitialized()
+    s_sctext1 = library.convert_to_stringc(sctext1)
+    s_sctext2 = library.convert_to_stringc(sctext2)
+    s_sctext3 = library.convert_to_stringc(sctext3)
+    library.keep_elem_refs(sctext1, sctext2, sctext3, s_sctext1, s_sctext2, \
+            s_sctext3)
+    _fl_set_choices_shortcut(s_sctext1, s_sctext2, s_sctext3)
 
 
 fl_set_choice_shortcut = fl_set_choices_shortcut
@@ -754,7 +754,7 @@ def fl_show_oneliner(text, xpos, ypos):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_oneliner = library.cfuncproto(
@@ -762,7 +762,7 @@ def fl_show_oneliner(text, xpos, ypos):
         None, [xfdata.STRING, xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_show_oneliner(const char * p1, FL_Coord p2,
            FL_Coord p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_text = library.convert_to_stringc(text)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -781,14 +781,14 @@ def fl_hide_oneliner():
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NN-UTest + Doc + Demo = OK
 
     """
     _fl_hide_oneliner = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_oneliner",
         None, [],
         """void fl_hide_oneliner()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_oneliner()
 
 
@@ -800,29 +800,29 @@ def fl_set_oneliner_font(style, size):
     Parameters
     ----------
         style : int
-            label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
@@ -830,14 +830,14 @@ def fl_set_oneliner_font(style, size):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_oneliner_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_oneliner_font",
         None, [cty.c_int, cty.c_int],
         """void fl_set_oneliner_font(int p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
@@ -848,8 +848,8 @@ def fl_set_oneliner_font(style, size):
 def fl_set_oneliner_color(fgcolr, bgcolr):
     """fl_set_oneliner_color(fgcolr, bgcolr)
 
-    Defines color to use with oneliner message. By default, the background
-    of the message is yellow and the text black.
+    Defines color to use with oneliner message. By default, the background of
+    the message is yellow and the text black.
 
     Parameters
     ----------
@@ -864,14 +864,14 @@ def fl_set_oneliner_color(fgcolr, bgcolr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_oneliner_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_oneliner_color",
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_oneliner_color(FL_COLOR p1, FL_COLOR p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
     #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
@@ -888,29 +888,29 @@ def fl_set_tooltip_font(style, size):
     Parameters
     ----------
         style : int
-            label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
+            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text),
             FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
             shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
             form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
             modifier mask). Bitwise OR with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font),FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
@@ -919,14 +919,14 @@ def fl_set_tooltip_font(style, size):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tooltip_font = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_font",
         None, [cty.c_int, cty.c_int],
         """void fl_set_tooltip_font(int p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
@@ -952,14 +952,14 @@ def fl_set_tooltip_color(fgcolr, bgcolr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tooltip_color = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_color",
         None, [xfdata.FL_COLOR, xfdata.FL_COLOR],
         """void fl_set_tooltip_color(FL_COLOR p1, FL_COLOR p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(fgcolr, xfdata.COLOR_list)
     ul_fgcolr = library.convert_to_FL_COLOR(fgcolr)
     #library.checknonfatal_allowed_value_in_list(bgcolr, xfdata.COLOR_list)
@@ -976,18 +976,18 @@ def fl_set_tooltip_boxtype(boxtype):
     Parameters
     ----------
         boxtype : int
-            type of the box to be added. Values (from xfdata.py)
-            FL_NO_BOX (No box at all, it is transparent, just a label),
-            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
-            that goes down into the screen), FL_BORDER_BOX (A flat box with a
-            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
-            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
-            flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded box
-            without a border, normally invisible unless given a different color
-            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            type of the box to be added. Values (from xfdata.py) FL_NO_BOX
+            (No box at all, it is transparent, just a label), FL_UP_BOX (A
+            box that comes out of the screen), FL_DOWN_BOX (A box that goes
+            down into the screen), FL_BORDER_BOX (A flat box with a border),
+            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat box
+            with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
+            (A flat box without a border, normally invisible unless given a
+            different color than the surroundings), FL_RFLAT_BOX (A rounded
+            box without a border, normally invisible unless given a different
+            color than the surroundings), FL_RSHADOW_BOX (A rounded box with
+            a shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
             FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
             FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
             FL_OVAL3D_UPBOX (An oval box coming out of the screen),
@@ -1001,14 +1001,14 @@ def fl_set_tooltip_boxtype(boxtype):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tooltip_boxtype = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_boxtype",
         None, [cty.c_int],
         """void fl_set_tooltip_boxtype(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
     i_boxtype = library.convert_to_intc(boxtype)
     library.keep_elem_refs(boxtype, i_boxtype)
@@ -1023,18 +1023,18 @@ def fl_set_tooltip_lalign(align):
     Parameters
     ----------
         align : int
-            alignment of tooltip. Values (from xfdata.py)
-            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the
-            bottom of the box, outside it), FL_ALIGN_LEFT (To the left of the
-            box, outside it), FL_ALIGN_RIGHT (To the right of the box, outside
-            it), FL_ALIGN_LEFT_TOP (To the left and top of the box, outside
-            it), FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of tooltip. Values (from xfdata.py) FL_ALIGN_CENTER (In
+            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
+            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
+            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
+            FL_ALIGN_RIGHT (To the right of the box, outside it),
+            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
+            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+            outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
+            is allowed.
 
     Examples
     --------
@@ -1042,14 +1042,14 @@ def fl_set_tooltip_lalign(align):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tooltip_lalign = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tooltip_lalign",
         None, [cty.c_int],
         """void fl_set_tooltip_lalign(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     i_align = library.convert_to_intc(align)
     library.keep_elem_refs(align, i_align)
@@ -1081,14 +1081,14 @@ def fl_exe_command(cmdtxt, block):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_exe_command = library.cfuncproto(
         library.load_so_libforms(), "fl_exe_command",
         cty.c_long, [xfdata.STRING, cty.c_int],
         """long int fl_exe_command(const char * p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_cmdtxt = library.convert_to_stringc(cmdtxt)
     i_block = library.convert_to_intc(block)
     library.keep_elem_refs(cmdtxt, block, s_cmdtxt, i_block)
@@ -1121,14 +1121,14 @@ def fl_end_command(pid):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_end_command = library.cfuncproto(
         library.load_so_libforms(), "fl_end_command",
         cty.c_int, [cty.c_long],
         """int fl_end_command(long int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     l_pid = library.convert_to_longc(pid)
     library.keep_elem_refs(pid, l_pid)
     retval = _fl_end_command(l_pid)
@@ -1151,9 +1151,9 @@ def fl_check_command(pid):
     Returns
     -------
         status : int
-            0 if the child process is finished, or 1 if the child process
-            still exists (running or stopped), or -1 if an error has
-            occurred inside the function
+            0 (if the child process is finished), or 1 (if the child process
+            still exists, running or stopped), or -1 (if an error has
+            occurred inside the function)
 
     Examples
     --------
@@ -1161,14 +1161,14 @@ def fl_check_command(pid):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_check_command = library.cfuncproto(
         library.load_so_libforms(), "fl_check_command",
         cty.c_int, [cty.c_long],
         """int fl_check_command(long int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     l_pid = library.convert_to_longc(pid)
     library.keep_elem_refs(pid, l_pid)
     retval = _fl_check_command(l_pid)
@@ -1179,7 +1179,7 @@ def fl_popen(cmdtxt, opntype):
     """fl_popen(cmdtxt, opntype) -> ptr_file
 
     Executes the command in a child process, and logs the stderr messages
-    into the command log. If otype is "w", stdout will also be logged into
+    into the command log. If opntype is "w", stdout will also be logged into
     the command browser.
 
     Parameters
@@ -1187,7 +1187,7 @@ def fl_popen(cmdtxt, opntype):
         cmdtxt : str
             existing filename to execute
         opntype : str
-            type of opening (e.g. w, r ..)
+            type of opening. Values 'w' (write mode) or 'r' (read mode)
 
     Returns
     -------
@@ -1200,14 +1200,14 @@ def fl_popen(cmdtxt, opntype):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_popen = library.cfuncproto(
         library.load_so_libforms(), "fl_popen",
         cty.POINTER(xfdata.FILE), [xfdata.STRING, xfdata.STRING],
         """FILE * fl_popen(const char * p1, const char * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_cmdtxt = library.convert_to_stringc(cmdtxt)
     s_opntype = library.convert_to_stringc(opntype)
     library.keep_elem_refs(cmdtxt, opntype, s_cmdtxt, s_opntype)
@@ -1237,14 +1237,14 @@ def fl_pclose(ptr_file):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_pclose = library.cfuncproto(
         library.load_so_libforms(), "fl_pclose",
         cty.c_int, [cty.POINTER(xfdata.FILE)],
         """int fl_pclose(FILE * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_otherclassptr_type(ptr_file, cty.POINTER(xfdata.FILE))
     library.keep_elem_refs(ptr_file)
     retval = _fl_pclose(ptr_file)
@@ -1268,7 +1268,7 @@ def fl_end_all_command():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_end_all_command = library.cfuncproto(
@@ -1296,14 +1296,14 @@ def fl_show_command_log(border):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_show_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_show_command_log",
         None, [cty.c_int],
         """void fl_show_command_log(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(border, \
             xfdata.DECORATION_list)
     i_border = library.convert_to_intc(border)
@@ -1322,21 +1322,21 @@ def fl_hide_command_log():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_hide_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_command_log",
         None, [],
         """void fl_hide_command_log()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_command_log()
 
 
 def fl_clear_command_log():
     """fl_clear_command_log()
 
-    Clears the browser and the logging output displayed within it.
+    Clears the command browser and the logging output displayed within it.
 
     Examples
     --------
@@ -1344,14 +1344,14 @@ def fl_clear_command_log():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_clear_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_clear_command_log",
         None, [],
         """void fl_clear_command_log()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_clear_command_log()
 
 
@@ -1367,18 +1367,18 @@ def fl_addto_command_log(txtstr):
 
     Examples
     --------
-        >>> fl_addto_command_log("Another line to add to CmdLog")
+        >>> fl_addto_command_log("Another line to add to command log")
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_addto_command_log = library.cfuncproto(
         library.load_so_libforms(), "fl_addto_command_log",
         None, [xfdata.STRING],
         """void fl_addto_command_log(const char * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_txtstr = library.convert_to_stringc(txtstr)
     library.keep_elem_refs(txtstr, s_txtstr)
     _fl_addto_command_log(s_txtstr)
@@ -1402,14 +1402,14 @@ def fl_set_command_log_position(xpos, ypos):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_command_log_position = library.cfuncproto(
         library.load_so_libforms(), "fl_set_command_log_position",
         None, [cty.c_int, cty.c_int],
         """void fl_set_command_log_position(int p1, int p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_xpos = library.convert_to_intc(xpos)
     i_ypos = library.convert_to_intc(ypos)
     library.keep_elem_refs(xpos, ypos, i_xpos, i_ypos)
@@ -1436,14 +1436,14 @@ def fl_get_command_log_fdstruct():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_command_log_fdstruct = library.cfuncproto(
         library.load_so_libforms(), "fl_get_command_log_fdstruct",
         cty.POINTER(xfdata.FD_CMDLOG), [],
         """FD_CMDLOG * fl_get_command_log_fdstruct()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_command_log_fdstruct()
     return retval
 
@@ -1472,14 +1472,14 @@ def fl_use_fselector(fselnum):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_use_fselector = library.cfuncproto(
         library.load_so_libforms(), "fl_use_fselector",
         cty.c_int, [cty.c_int],
         """int fl_use_fselector(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_fselnum = library.convert_to_intc(fselnum)
     library.keep_elem_refs(fselnum, i_fselnum)
     retval = _fl_use_fselector(i_fselnum)
@@ -1499,9 +1499,8 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
         dirname : str
             directory name
         pattern : str
-            any kind of regular expression, e.g. "[a-f]*c" which would
-            list all files starting with a letter between a and f and
-            ending with c.
+            any kind of regular expression, e.g. "[a-f]*c" which would list all
+            files starting with a letter between a and f and ending with c.
         deftxt : str
             default file name
 
@@ -1517,7 +1516,7 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_show_fselector = library.cfuncproto(
@@ -1526,13 +1525,13 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
         xfdata.STRING],
         """const char * fl_show_fselector(const char * p1,
            const char * p2, const char * p3, const char * p4)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_msgtxt = library.convert_to_stringc(msgtxt)
     s_dirname = library.convert_to_stringc(dirname)
     s_pattern = library.convert_to_stringc(pattern)
     s_deftxt = library.convert_to_stringc(deftxt)
     library.keep_elem_refs(msgtxt, dirname, pattern, deftxt, s_msgtxt,
-        s_dirname, s_pattern, s_deftxt)
+            s_dirname, s_pattern, s_deftxt)
     retval = _fl_show_fselector(s_msgtxt, s_dirname, s_pattern, s_deftxt)
     return retval
 
@@ -1548,11 +1547,11 @@ def fl_set_fselector_fontsize(size):
     Parameters
     ----------
         size : int
-            label size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Examples
     --------
@@ -1560,14 +1559,14 @@ def fl_set_fselector_fontsize(size):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_fselector_fontsize = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_fontsize",
         None, [cty.c_int],
         """void fl_set_fselector_fontsize(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_size = library.convert_to_intc(size)
     library.keep_elem_refs(size, i_size)
     _fl_set_fselector_fontsize(i_size)
@@ -1581,23 +1580,23 @@ def fl_set_fselector_fontstyle(style):
     Parameters
     ----------
         style : int
-            label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
 
     Examples
     --------
@@ -1605,14 +1604,14 @@ def fl_set_fselector_fontstyle(style):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_fselector_fontstyle = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_fontstyle",
         None, [cty.c_int],
         """void fl_set_fselector_fontstyle(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     library.keep_elem_refs(style, i_style)
@@ -1622,17 +1621,17 @@ def fl_set_fselector_fontstyle(style):
 def fl_set_fselector_placement(place):
     """fl_set_fselector_placement(place)
 
-    Defines the placement of the file selector. By default it is centered
-    on the screen (FL_PLACE_CENTER|FL_FREE_SIZE).
+    Defines the placement of the file selector. By default it is centered on
+    the screen (from xfdata.py, FL_PLACE_CENTER|FL_FREE_SIZE).
 
     Parameters
     ----------
         place : int
             where to place it. Values (from xfdata.py) FL_PLACE_FREE,
-            FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION,
-            FL_PLACE_SIZE, FL_PLACE_GEOMETRY, FL_PLACE_ASPECT,
-            FL_PLACE_FULLSCREEN, FL_PLACE_HOTSPOT, FL_PLACE_ICONIC,
-            FL_FREE_SIZE, FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE,
+            FL_PLACE_MOUSE, FL_PLACE_CENTER, FL_PLACE_POSITION, FL_PLACE_SIZE,
+            FL_PLACE_GEOMETRY, FL_PLACE_ASPECT, FL_PLACE_FULLSCREEN,
+            FL_PLACE_HOTSPOT, FL_PLACE_ICONIC, FL_FREE_SIZE,
+            FL_PLACE_FREE_CENTER, FL_PLACE_CENTERFREE,
             FL_PLACE_MOUSE|FL_FREE_SIZE, FL_PLACE_FULLSCREEN|FL_FREE_SIZE,
             FL_PLACE_HOTSPOT|FL_FREE_SIZE
 
@@ -1642,14 +1641,14 @@ def fl_set_fselector_placement(place):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_fselector_placement = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_placement",
         None, [cty.c_int],
         """void fl_set_fselector_placement(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(place, xfdata.PLACE_list)
     i_place = library.convert_to_intc(place)
     library.keep_elem_refs(place, i_place)
@@ -1660,13 +1659,13 @@ def fl_set_fselector_border(border):
     """fl_set_fselector_border(border)
 
     Changes the border of file selector. By default it is displayed with
-    transient property set (FL_NOBORDER is ignored).
+    transient property set.
 
     Parameters
     ----------
         border : int
             window manager decoration. Values (from xfdata.py) FL_FULLBORDER,
-            FL_TRANSIENT, FL_NOBORDER
+            or FL_TRANSIENT. FL_NOBORDER is ignored.
 
     Examples
     --------
@@ -1674,14 +1673,14 @@ def fl_set_fselector_border(border):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_fselector_border = library.cfuncproto(
         library.load_so_libforms(), "fl_set_fselector_border",
         None, [cty.c_int],
         """void fl_set_fselector_border(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(border, xfdata.DECORATION_list)
     i_border = library.convert_to_intc(border)
     library.keep_elem_refs(border, i_border)
@@ -1696,8 +1695,7 @@ def fl_set_fselector_transient(yesno):
     Parameters
     ----------
         yesno : int
-            flag if transient or not. Values 1 (transient) or 0
-            (not transient)
+            flag if transient or not. Values 1 (transient) or 0 (full border)
 
     Examples
     --------
@@ -1705,7 +1703,7 @@ def fl_set_fselector_transient(yesno):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     if yesno:
@@ -1719,8 +1717,8 @@ def fl_set_fselector_callback(pyfn_FSCB, userdata):
     """fl_set_fselector_callback(pyfn_FSCB, userdata)
 
     Defines a callback routine so that whenever the user double clicks on a
-    filename, instead of returning the filename, this routine is invoked
-    with the filename as the argument. The behavior of the file selector is
+    filename, instead of returning the filename, this routine is invoked with
+    the filename as the argument. The behavior of the file selector is
     slightly different when a callback is present. Without the callback, a
     file selector is always modal. Please note that when a file selector has
     a callback installed the field for manually entering a file name is not
@@ -1729,11 +1727,12 @@ def fl_set_fselector_callback(pyfn_FSCB, userdata):
     Parameters
     ----------
         pyfn_FSCB : python function callback, returning (unused) value
-            name referring to function([str]text, [pointer to void]pvdata)
+            name referring to function([str]fname, [pointer to void]pvdata)
             -> [int]num
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type.
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -1744,7 +1743,7 @@ def fl_set_fselector_callback(pyfn_FSCB, userdata):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     #FL_FSCB = cty.CFUNCTYPE(cty.c_int, xfdata.STRING, cty.c_void_p)
@@ -1752,7 +1751,7 @@ def fl_set_fselector_callback(pyfn_FSCB, userdata):
         library.load_so_libforms(), "fl_set_fselector_callback",
         None, [xfdata.FL_FSCB, cty.c_void_p],
         """void fl_set_fselector_callback(FL_FSCB p1, void * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_function_type(pyfn_FSCB)
     cfn_FSCB = xfdata.FL_FSCB(pyfn_FSCB)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
@@ -1780,14 +1779,14 @@ def fl_get_filename():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_filename = library.cfuncproto(
         library.load_so_libforms(), "fl_get_filename",
         xfdata.STRING, [],
         """const char * fl_get_filename()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_filename()
     return retval
 
@@ -1808,7 +1807,7 @@ def fl_get_directory():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_directory = library.cfuncproto(
@@ -1835,14 +1834,14 @@ def fl_get_pattern():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_pattern = library.cfuncproto(
         library.load_so_libforms(), "fl_get_pattern",
         xfdata.STRING, [],
         """const char * fl_get_pattern()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_pattern()
     return retval
 
@@ -1864,18 +1863,18 @@ def fl_set_directory(dirname):
 
     Examples
     --------
-        >>> sth = fl_set_directory("/home/userdir/blabla")
+        >>> sth = fl_set_directory("/home/userdir/myotherdir")
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_directory = library.cfuncproto(
         library.load_so_libforms(), "fl_set_directory",
         cty.c_int, [xfdata.STRING],
         """int fl_set_directory(const char * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_dirname = library.convert_to_stringc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_set_directory(s_dirname)
@@ -1894,18 +1893,18 @@ def fl_set_pattern(pattern):
 
     Examples
     --------
-        >>> fl_set_pattern("\*.txt")
+        >>> fl_set_pattern("*.txt")
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_pattern = library.cfuncproto(
         library.load_so_libforms(), "fl_set_pattern",
         None, [xfdata.STRING],
         """void fl_set_pattern(const char * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_pattern = library.convert_to_stringc(pattern)
     library.keep_elem_refs(pattern, s_pattern)
     _fl_set_pattern(s_pattern)
@@ -1923,14 +1922,14 @@ def fl_refresh_fselector():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_refresh_fselector = library.cfuncproto(
         library.load_so_libforms(), "fl_refresh_fselector",
         None, [],
         """void fl_refresh_fselector()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_refresh_fselector()
 
 
@@ -1944,21 +1943,23 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, userdata):
     ----------
         label : str
             text of label
-        pyfn_fselappbtn : python function callback, no return
+        pyfn_fselappbtn : python function, no return
             name referring to function([pointer to void]pvdata)
+            Function to handle application specific button callback
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type.
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Examples
     --------
-        >>> def fsbtn_cb(cvoidp):
+        >>> def fsbtn_cb(pvdata):
         >>> ... <something>
         >>> fl_add_fselector_appbutton("SomeButton", fsbtn_cb, None)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     cfunc_none_voidp = cty.CFUNCTYPE(None, cty.c_void_p)
@@ -1967,7 +1968,7 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, userdata):
         None, [xfdata.STRING, cfunc_none_voidp, cty.c_void_p],
         """void fl_add_fselector_appbutton(const char * p1,
            const char * p2, void * p3)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_label = library.convert_to_stringc(label)
     library.verify_function_type(pyfn_fselappbtn)
     cfn_fselappbtn = cfunc_none_voidp(pyfn_fselappbtn)
@@ -1993,14 +1994,14 @@ def fl_remove_fselector_appbutton(label):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_remove_fselector_appbutton = library.cfuncproto(
         library.load_so_libforms(), "fl_remove_fselector_appbutton",
         None, [xfdata.STRING],
         """void fl_remove_fselector_appbutton(const char * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_label = library.convert_to_stringc(label)
     library.keep_elem_refs(label, s_label)
     _fl_remove_fselector_appbutton(s_label)
@@ -2014,8 +2015,7 @@ def fl_disable_fselector_cache(yesno):
     Parameters
     ----------
         yesno : int
-            flag to enable/disable caching. Values 0 (to enable)
-            or 1 (to disable)
+            flag to enable/disable caching. Values 0 (enabled) or 1 (disabled)
 
     Examples
     --------
@@ -2023,14 +2023,14 @@ def fl_disable_fselector_cache(yesno):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_disable_fselector_cache = library.cfuncproto(
         library.load_so_libforms(), "fl_disable_fselector_cache",
         None, [cty.c_int],
         """void fl_disable_fselector_cache(int p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(yesno, i_yesno)
     _fl_disable_fselector_cache(i_yesno)
@@ -2039,8 +2039,8 @@ def fl_disable_fselector_cache(yesno):
 def fl_invalidate_fselector_cache():
     """fl_invalidate_fselector_cache()
 
-    Forces an update of file selector caching programmatically. It forces
-    it only once, and on the directory that is to be browsed.
+    Forces an update of file selector caching programmatically. It forces it
+    only once, and on the directory that is to be browsed.
 
     Examples
     --------
@@ -2048,14 +2048,14 @@ def fl_invalidate_fselector_cache():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_invalidate_fselector_cache = library.cfuncproto(
         library.load_so_libforms(), "fl_invalidate_fselector_cache",
         None, [],
         """void fl_invalidate_fselector_cache()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_invalidate_fselector_cache()
 
 
@@ -2075,14 +2075,14 @@ def fl_get_fselector_form():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_fselector_form = library.cfuncproto(
         library.load_so_libforms(), "fl_get_fselector_form",
         cty.POINTER(xfdata.FL_FORM), [],
         """FL_FORM * fl_get_fselector_form()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_fselector_form()
     return retval
 
@@ -2104,14 +2104,14 @@ def fl_get_fselector_fdstruct():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_fselector_fdstruct = library.cfuncproto(
         library.load_so_libforms(), "fl_get_fselector_fdstruct",
         cty.POINTER(xfdata.FD_FSELECTOR), [],
         """FD_FSELECTOR * fl_get_fselector_fdstruct()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_fselector_fdstruct()
     return retval
 
@@ -2127,39 +2127,37 @@ def fl_hide_fselector():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NN-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_hide_fselector = library.cfuncproto(
         library.load_so_libforms(), "fl_hide_fselector",
         None, [],
         """void fl_hide_fselector()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_hide_fselector()
 
 
 def fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
-                                     bdevmrkr):
+        bdevmrkr):
     """fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
     bdevmrkr)
 
-    Changes the prefix by which the listing of files in a directory special
-    files are marked with in browser. By default D is used for directories,
-    b for special block files, c for special character file, p for pipes,
-    s for sockets.
+    Changes the prefix used to mark special files in the directories and files
+    listing browser.
 
     Parameters
     ----------
         dirmrkr : int or char
-            marker for directories
+            marker for directories. By default 'D' is used.
         fifomrkr : int or char
-            marker for pipes and FIFOs
+            marker for pipes and FIFOs. By default 'p' is used.
         sockmrkr : int or char
-            marker for sockets
+            marker for sockets. By default 's' is used.
         cdevmrkr : int or char
-            marker for character device files
+            marker for character device files. By default 'c' is used.
         bdevmrkr : int or char
-            marker for block device files
+            marker for block device files. By default 'b' is used.
 
     Examples
     --------
@@ -2167,7 +2165,7 @@ def fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_fselector_filetype_marker = library.cfuncproto(
@@ -2175,7 +2173,7 @@ def fl_set_fselector_filetype_marker(dirmrkr, fifomrkr, sockmrkr, cdevmrkr,
         None, [cty.c_int, cty.c_int, cty.c_int, cty.c_int, cty.c_int],
         """void fl_set_fselector_filetype_marker(int p1, int p2, int p3,
            int p4, int p5)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     if isinstance(dirmrkr, str):
         # workaround to let a character as int argument
         odirmrkr = ord(dirmrkr)
@@ -2228,7 +2226,7 @@ def fl_set_fselector_title(title):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     flbasic.fl_set_form_title(fl_get_fselector_form(), title)
@@ -2237,7 +2235,7 @@ def fl_set_fselector_title(title):
 def fl_goodies_atclose(ptr_flform, userdata):
     """fl_goodies_atclose(ptr_flform, userdata) -> unused
 
-    *todo*
+    Passes specific userdata to goodie when it is closed?
 
     Parameters
     ----------
@@ -2245,7 +2243,8 @@ def fl_goodies_atclose(ptr_flform, userdata):
             form
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type.
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -2258,14 +2257,14 @@ def fl_goodies_atclose(ptr_flform, userdata):
 
     Notes
     -----
-        Status: Tested + NoDoc + NoDemo = OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_goodies_atclose = library.cfuncproto(
         library.load_so_libforms(), "fl_goodies_atclose",
         cty.c_int, [cty.POINTER(xfdata.FL_FORM), cty.c_void_p],
         """int fl_goodies_atclose(FL_FORM * p1, void * p2)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_elem_refs(ptr_flform, userdata, ptr_vdata)

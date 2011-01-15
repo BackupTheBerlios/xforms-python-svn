@@ -64,16 +64,14 @@ fl_state = (xfdata.FL_State * 6)()  # fl_state is an array of 6 FL_State
 ###########################
 
 def FL_is_gray(visual):
-    if (visual == xfdata.GrayScale) or \
-           (visual == xfdata.StaticGray):
+    if (visual == xfdata.GrayScale) or (visual == xfdata.StaticGray):
         return True
     else:
         return False
 
 
 def FL_is_rgb(visual):
-    if (visual == xfdata.TrueColor) or \
-           (visual == xfdata.DirectColor):
+    if (visual == xfdata.TrueColor) or (visual == xfdata.DirectColor):
         return True
     else:
         return False
@@ -97,8 +95,8 @@ def fl_get_gc():
 def fl_mode_capable(mode, warn):
     """fl_mode_capable(mode, warn) -> yesno
 
-    Tells if the system is capable of displaying in the specified visual
-    class, or not.
+    Tells if the system is capable of displaying in the specified visual class,
+    or not.
 
     Parameters
     ----------
@@ -106,9 +104,8 @@ def fl_mode_capable(mode, warn):
             visual mode. Values (from xfdata module) GrayScale, StaticGray,
             PseudoColor, StaticColor, DirectColor, TrueColor, DefaultVisual
         warn : int
-            if set a warning is printed out in case the capability asked
-            for is not available. Values 0 (do not print warning) or 1
-            (print warning)
+            if set a warning is printed out in case the capability asked for is
+            not available. Values 0 (do not print warning) or 1 (print warning)
 
     Returns
     -------
@@ -121,14 +118,14 @@ def fl_mode_capable(mode, warn):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_mode_capable = library.cfuncproto(
         library.load_so_libforms(), "fl_mode_capable",\
         cty.c_int, [cty.c_int, cty.c_int],\
         """int fl_mode_capable(int mode, int warn)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(mode, xfdata.VISUALMODE_list)
     i_mode = library.convert_to_intc(mode)
     i_warn = library.convert_to_intc(warn)
@@ -138,9 +135,6 @@ def fl_mode_capable(mode, warn):
 
 
 def fl_default_win():
-    print "fl_state", fl_state
-    print ".fl_state[fl_get_vclass()]", fl_state[fl_get_vclass()]
-    print "fl_state[fl_get_vclass()].trailblazer", fl_state[fl_get_vclass()].trailblazer
     return fl_state[fl_get_vclass()].trailblazer
     #return fl_state[fl_vmode().value].trailblazer
     #return fl_state[fl_vmode].trailblazer
@@ -164,8 +158,8 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
     Parameters
     ----------
         fill : int
-            flag if the rectangle has to be filled or just the outline
-            is needed. Values 0 (the outline only) or 1 (filled).
+            flag if the rectangle has to be filled or just the outline is
+            needed. Values 0 (the outline only) or 1 (filled).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -183,7 +177,7 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_rectangle = library.cfuncproto(
@@ -192,7 +186,7 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_COLOR], \
         """void fl_rectangle(int fill, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -229,7 +223,7 @@ def fl_rectbound(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_rectbound = library.cfuncproto(
@@ -238,7 +232,7 @@ def fl_rectbound(xpos, ypos, width, height, colr):
         xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_rectbound(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -274,7 +268,7 @@ def fl_rectf(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_rectangle(1, xpos, ypos, width, height, colr)
@@ -304,7 +298,7 @@ def fl_rect(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_rectangle(0, xpos, ypos, width, height, colr)
@@ -339,7 +333,7 @@ def fl_roundrectangle(fill, xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_roundrectangle = library.cfuncproto(
@@ -348,7 +342,7 @@ def fl_roundrectangle(fill, xpos, ypos, width, height, colr):
         xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_roundrectangle(int fill, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -385,7 +379,7 @@ def fl_roundrectf(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_roundrectangle(1, xpos, ypos, width, height, colr)
@@ -415,7 +409,7 @@ def fl_roundrect(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_roundrectangle(0, xpos, ypos, width, height, colr)
@@ -434,7 +428,9 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
             if polygon has to be filled or just an outline is needed.
             Values 1 (if filled) or 0 (an outline only)
         ptr_flpoint : pointer to xfdata.FL_POINT
-            an array of point class instances
+            an array of point class instances. You can prepare it passing a
+            dict or a list of dicts (whose key are corresponding to
+            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -442,15 +438,13 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> pointmap = (FL_POINT * 4)()
-        >>> pointmap[0].x = 12 ; pointmap[0].y = 32
-        >>> pointmap[1].x = 24 ; pointmap[1].y = 100
-        >>> pointmap[2].x = 87 ; pointmap[2].y = 132
-        >>> fl_polygon(1, pointmap, 3, xfdata.FL_PALEGREEN)
+        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
+        >>> fl_polygon(1, ppointmap, 3, xfdata.FL_PALEGREEN)
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_polygon = library.cfuncproto(
@@ -458,7 +452,7 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
         None, [cty.c_int, cty.POINTER(xfdata.FL_POINT), cty.c_int,
         xfdata.FL_COLOR],
         """void fl_polygon(int fill, FL_POINT * xp, int n, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     library.verify_otherclassptr_type(ptr_flpoint, \
@@ -478,7 +472,9 @@ def fl_polyf(ptr_flpoint, numpoints, colr):
     Parameters
     ----------
         ptr_flpoint : pointer to xfdata.FL_POINT
-            an array of point class instances
+            an array of point class instances. You can prepare it passing a
+            dict or a list of dicts (whose key are corresponding to
+            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -486,15 +482,13 @@ def fl_polyf(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> pointmap = (FL_POINT * 4)()
-        >>> pointmap[0].x = 12 ; pointmap[0].y = 32
-        >>> pointmap[1].x = 24 ; pointmap[1].y = 100
-        >>> pointmap[2].x = 87 ; pointmap[2].y = 132
-        >>> fl_polyf(pointmap, 3, xfdata.FL_PALEGREEN)
+        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
+        >>> fl_polyf(ppointmap, 3, xfdata.FL_PALEGREEN)
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_polygon(1, ptr_flpoint, numpoints, colr)
@@ -508,7 +502,9 @@ def fl_polyl(ptr_flpoint, numpoints, colr):
     Parameters
     ----------
         ptr_flpoint : pointer to xfdata.FL_POINT
-            an array of point class instances
+            an array of point class instances. You can prepare it passing a
+            dict or a list of dicts (whose key are corresponding to
+            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -516,15 +512,13 @@ def fl_polyl(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> pointmap = (FL_POINT * 4)()
-        >>> pointmap[0].x = 12 ; pointmap[0].y = 32
-        >>> pointmap[1].x = 24 ; pointmap[1].y = 100
-        >>> pointmap[2].x = 87 ; pointmap[2].y = 132
-        >>> fl_polyl(pointmap, 3, xfdata.FL_ORCHID)
+        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' = 32},
+        >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
+        >>> fl_polyl(ppointmap, 3, xfdata.FL_ORCHID)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_polygon(0, ptr_flpoint, numpoints, colr)
@@ -538,7 +532,9 @@ def fl_polybound(ptr_flpoint, numpoints, colr):
     Parameters
     ----------
         ptr_flpoint : pointer to xfdata.FL_POINT
-            an array of point class instances
+            an array of point class instances. You can prepare it passing a
+            dict or a list of dicts (whose key are corresponding to
+            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -546,15 +542,13 @@ def fl_polybound(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> pointmap = (FL_POINT * 4)()
-        >>> pointmap[0].x = 12 ; pointmap[0].y = 32
-        >>> pointmap[1].x = 24 ; pointmap[1].y = 100
-        >>> pointmap[2].x = 87 ; pointmap[0].y = 132
-        >>> fl_polybound(pointmap, 3, xfdata.FL_DARKGOLD)
+        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
+        >>> fl_polybound(ppointmap, 3, xfdata.FL_DARKGOLD)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_polygon(1, ptr_flpoint, numpoints, colr)
@@ -569,7 +563,9 @@ def fl_lines(ptr_flpoint, numpoints, colr):
     Parameters
     ----------
         ptr_flpoint : pointer to xfdata.FL_POINT
-            an array of point class instances
+            an array of point class instances. You can prepare it passing a
+            dict or a list of dicts (whose key are corresponding to
+            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -577,22 +573,20 @@ def fl_lines(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> pointmap = (FL_POINT * 4)()
-        >>> pointmap[0].x = 23 ; pointmap[0].y = 12
-        >>> pointmap[1].x = 56 ; pointmap[1].y = 34
-        >>> pointmap[2].x = 102 ; pointmap[2].y = 250
-        >>> fl_lines(pointmap, 3, xfdata.FL_DODGERBLUE)
+        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
+        >>> fl_lines(ppointmap, 3, xfdata.FL_DODGERBLUE)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_lines = library.cfuncproto(
         library.load_so_libforms(), "fl_lines", \
         None, [cty.POINTER(xfdata.FL_POINT), cty.c_int, xfdata.FL_COLOR], \
         """void fl_lines(FL_POINT * xp, int n, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ptr_flpoint = cty.cast(ptr_flpoint, cty.POINTER(xfdata.FL_POINT))
     i_numpoints = library.convert_to_intc(numpoints)
@@ -626,7 +620,7 @@ def fl_line(startxpos, startypos, endxpos, endypos, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_line = library.cfuncproto(
@@ -635,7 +629,7 @@ def fl_line(startxpos, startypos, endxpos, endypos, colr):
         xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_line(FL_Coord xi, FL_Coord yi, FL_Coord xf,
            FL_Coord yf, FL_COLOR c)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_startxpos = library.convert_to_intc(startxpos)
     i_startypos = library.convert_to_intc(startypos)
@@ -670,14 +664,14 @@ def fl_point(xpos, ypos, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_point = library.cfuncproto(
         library.load_so_libforms(), "fl_point",\
         None, [xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_COLOR],\
         """void fl_point(FL_Coord x, FL_Coord y, FL_COLOR c)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -694,7 +688,9 @@ def fl_points(ptr_flpoint, numpoints, colr):
     Parameters
     ----------
         ptr_flpoint : pointer to xfdata.FL_POINT
-            an array of point class instances
+            an array of point class instances. You can prepare it passing a
+            dict or a list of dicts (whose key are corresponding to
+            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -702,22 +698,20 @@ def fl_points(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> pointmap = (FL_POINT * 3)()
-        >>> pointmap[0].x = 23 ; pointmap[0].y = 12
-        >>> pointmap[1].x = 56 ; pointmap[1].y = 34
-        >>> pointmap[2].x = 102 ; pointmap[2].y = 250
-        >>> fl_points(pointmap, 3, xfdata.FL_AZURE)
+        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
+        >>> fl_points(ppointmap, 3, xfdata.FL_AZURE)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_points = library.cfuncproto(
         library.load_so_libforms(), "fl_points",\
         None, [cty.POINTER(xfdata.FL_POINT), cty.c_int, xfdata.FL_COLOR],
         """void fl_points(FL_POINT * p, int np, FL_COLOR c)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ptr_flpoint = cty.cast(ptr_flpoint, cty.POINTER(xfdata.FL_POINT))
     i_numpoints = library.convert_to_intc(numpoints)
@@ -731,21 +725,20 @@ def fl_dashedlinestyle(dash, numdash):
     """fl_dashedlinestyle(dash, numdash)
 
     Changes the dash pattern for xfdata.FL_USERDASH and
-    xfdata.FL USERDOUBLEDASH. Each element of the array dash is the
-    length of a segment of the pattern in pixels. Dashed lines are drawn
-    as alternating segments, each with the length of an element in dash.
-    Thus the overall length of the dash pattern, in pixels, is the sum
-    of all elements of dash. When the pattern is used up but the line to
-    draw is longer it used from the start again. You have to call this
-    one whenever xfdata.FL_USERDASH is used to set the dash pattern,
-    otherwise whatever the last pattern was, it will be used. After the
-    sequence, the pattern repeats.
+    xfdata.FL USERDOUBLEDASH. Each element of the array dash is the length of
+    a segment of the pattern in pixels. Dashed lines are drawn as alternating
+    segments, each with the length of an element in dash. Thus the overall
+    length of the dash pattern, in pixels, is the sum of all elements of dash.
+    When the pattern is used up but the line to draw is longer it used from
+    the start again. You have to call this one whenever xfdata.FL_USERDASH is
+    used to set the dash pattern, otherwise whatever the last pattern was, it
+    will be used. After the sequence, the pattern repeats.
 
     Parameters
     ----------
         dash : str
-            text sequence of dashes to use. If it is empty (""), use
-            default dash pattern
+            text sequence of dashes to use. If it is empty (""), use default
+            dash pattern
         numdash : int
             length of dashes list. If it is 0, use the default dash pattern
 
@@ -755,14 +748,14 @@ def fl_dashedlinestyle(dash, numdash):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_dashedlinestyle = library.cfuncproto(
         library.load_so_libforms(), "fl_dashedlinestyle", \
         None, [xfdata.STRING, cty.c_int], \
         """void fl_dashedlinestyle(const char * dash, int ndash)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #if not dash:                # it is None
     #    #library.verify_tuplelist_type(dash)
     #    s_dash = cty.cast(dash, cty.c_void_p)
@@ -776,22 +769,20 @@ def fl_dashedlinestyle(dash, numdash):
 def fl_update_display(block):
     """fl_update_display(block)
 
-    Flushes properly the output buffer. It resolves the problem of the
-    form being only partially redrawn, due to the two way buffering
-    mechanism of Xlib, if fl_show_form() is followed by something that
-    blocks (e.g., waiting for a device other than X devices to come online).
-    For typical programs that use fl_do_forms() or fl_check_forms() after
-    fl_show_form(), flushing is not necessary as the output buffer is
-    flushed automatically. Excessive calls to fl_update_display() degrade
-    performance.
+    Flushes properly the output buffer. It resolves the problem of the form
+    being only partially redrawn, due to the two way buffering mechanism of
+    Xlib, if fl_show_form() is followed by something that blocks (e.g., waiting
+    for a device other than X devices to come online). For typical programs
+    that use fl_do_forms() or fl_check_forms() after fl_show_form(), flushing
+    is not necessary as the output buffer is flushed automatically. Excessive
+    calls to fl_update_display() degrade performance.
 
     Parameters
     ----------
         block : int
-            mode of X buffer flushing. Values 0 (it is flushed so the
-            drawing requests are on their way to the server) or 1 (it
-            is flushed and waits until all the events are received and
-            processed by the server)
+            mode of X buffer flushing. Values 0 (it is flushed so the drawing
+            requests are on their way to the server) or 1 (it is flushed and
+            waits until all the events are received and processed by server)
 
     Examples
     --------
@@ -799,7 +790,7 @@ def fl_update_display(block):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         Postcondition: to be used after fl_show_form()
 
     """
@@ -807,7 +798,7 @@ def fl_update_display(block):
         library.load_so_libforms(), "fl_update_display",\
         None, [cty.c_int],\
         """void fl_update_display(int block)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_block = library.convert_to_intc(block)
     library.keep_elem_refs(block, i_block)
     _fl_update_display(i_block)
@@ -816,8 +807,8 @@ def fl_update_display(block):
 def fl_diagline(xpos, ypos, width, height, colr):
     """fl_diagline(xpos, ypos, width, height, colr)
 
-    Draws a line along the diagonal of a box (to draw a horizontal line
-    set height to 1, not to 0).
+    Draws a line along the diagonal of a box. To draw a horizontal line set
+    height to 1, not to 0.
 
     Parameters
     ----------
@@ -838,7 +829,7 @@ def fl_diagline(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_line(xpos, ypos, (xpos + width - 1), (ypos + height - 1), colr)
@@ -854,8 +845,7 @@ def fl_linewidth(lnwidth):
     Parameters
     ----------
         lnwidth : int
-            width of line in coord units. If it is 0, reset to the
-            server's default
+            width of line in coord units. If it is 0, reset to server default.
 
     Examples
     --------
@@ -863,14 +853,14 @@ def fl_linewidth(lnwidth):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_linewidth = library.cfuncproto(
         library.load_so_libforms(), "fl_linewidth", \
         None, [cty.c_int], \
         """void fl_linewidth(int n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_lnwidth = library.convert_to_intc(lnwidth)
     library.keep_elem_refs(lnwidth, i_lnwidth)
     _fl_linewidth(i_lnwidth)
@@ -904,14 +894,14 @@ def fl_linestyle(lnstyle):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_linestyle = library.cfuncproto(
         library.load_so_libforms(), "fl_linestyle",\
         None, [cty.c_int],\
         """void fl_linestyle(int n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(lnstyle, xfdata.LINESTYLE_list)
     i_lnstyle = library.convert_to_intc(lnstyle)
     library.keep_elem_refs(lnstyle, i_lnstyle)
@@ -924,19 +914,19 @@ fl_set_linestyle = fl_linestyle
 def fl_drawmode(dmode):
     """fl_drawmode(dmode)
 
-    Changes the drawing mode so the destination pixel values play a
-    role in the final pixel value. By default, all lines are drawn so
-    they overwrite the destination pixel values.
+    Changes the drawing mode so the destination pixel values play a role in
+    the final pixel value. By default, all lines are drawn so they overwrite
+    the destination pixel values.
 
     Parameters
     ----------
       dmode : int
-        requested mode setting. Values (from xfdata.py)
-        FL_XOR (Bitwise XOR, exclusive-or, of the pixel value to be drawn with
-        the pixel value already on the screen. Useful for rubber-banding),
-        FL_COPY (Default overwrite mode, final pixel value is the same as
-        source), FL_AND (Bitwise AND of the pixel value to be drawn with the
-        pixel value already on the screen).
+        requested mode setting. Values (from xfdata.py) FL_XOR (Bitwise XOR,
+        exclusive-or, of the pixel value to be drawn with the pixel value
+        already on the screen. Useful for rubber-banding), FL_COPY (Default
+        overwrite mode, final pixel value is the same as source), FL_AND
+        (Bitwise AND of the pixel value to be drawn with the pixel value
+        already on the screen).
 
     Examples
     --------
@@ -944,14 +934,14 @@ def fl_drawmode(dmode):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_drawmode = library.cfuncproto(
         library.load_so_libforms(), "fl_drawmode",\
         None, [cty.c_int],\
         """void fl_drawmode(int request)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(dmode, xfdata.DRAWMODE_list)
     i_dmode = library.convert_to_intc(dmode)
     library.keep_elem_refs(dmode, i_dmode)
@@ -974,14 +964,14 @@ def fl_get_linewidth():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_linewidth = library.cfuncproto(
         library.load_so_libforms(), "fl_get_linewidth", \
         cty.c_int, [], \
         """int fl_get_linewidth()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_linewidth()
     return retval
 
@@ -1002,14 +992,14 @@ def fl_get_linestyle():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_linestyle = library.cfuncproto(
         library.load_so_libforms(), "fl_get_linestyle", \
         cty.c_int, [], \
         """int fl_get_linestyle()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_linestyle()
     return retval
 
@@ -1023,12 +1013,11 @@ def fl_get_drawmode():
     -------
         dmode : int
             drawing mode.
-            Values (from xfdata.py)
-            FL_XOR (Bitwise XOR, exclusive-or, of the pixel value to be drawn
-            with the pixel value already on the screen. Useful for
-            rubber-banding), FL_COPY (Default overwrite mode, final pixel
-            value is the same as source), FL_AND (Bitwise AND of the pixel
-            value to be drawn with the pixel value already on the screen).
+            Values (from xfdata.py) FL_XOR (Bitwise XOR, exclusive-or, of the
+            pixel value to be drawn with the pixel value already on the screen.
+            Useful for rubber-banding), FL_COPY (Default overwrite mode, final
+            pixel value is the same as source), FL_AND (Bitwise AND of the
+            pixel value to be drawn with the pixel value already on the screen)
 
     Examples
     --------
@@ -1036,14 +1025,14 @@ def fl_get_drawmode():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_drawmode = library.cfuncproto(
         library.load_so_libforms(), "fl_get_drawmode",\
         cty.c_int, [],\
         """int fl_get_drawmode()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_drawmode()
     return retval
 
@@ -1056,14 +1045,14 @@ fl_set_drawmode = fl_drawmode
 def fl_oval(fill, xpos, ypos, width, height, colr):
     """fl_oval(fill, xpos, ypos, width, height, colr)
 
-    Draws an ellipse, either filled or open. Use width equal to height
-    to get a circle.
+    Draws an ellipse, either filled or open. Use width equal to height to get
+    a circle.
 
     Parameters
     ----------
         fill : int
-            flag if filled or open ellipse. Values 1 (if filled ellipse)
-            or 0 (if open)
+            flag if filled or open ellipse. Values 1 (if filled ellipse) or 0
+            (if open)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1081,7 +1070,7 @@ def fl_oval(fill, xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_oval = library.cfuncproto(
@@ -1090,7 +1079,7 @@ def fl_oval(fill, xpos, ypos, width, height, colr):
         xfdata.FL_Coord, xfdata.FL_COLOR], \
         """void fl_oval(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -1106,8 +1095,8 @@ def fl_oval(fill, xpos, ypos, width, height, colr):
 def fl_ovalbound(xpos, ypos, width, height, colr):
     """fl_ovalbound(xpos, ypos, width, height, colr)
 
-    Draws a filled ellipse with a black outline. Use width equal to height
-    to get a circle.
+    Draws a filled ellipse with a black outline. Use width equal to height to
+    get a circle.
 
     Parameters
     ----------
@@ -1128,7 +1117,7 @@ def fl_ovalbound(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_ovalbound = library.cfuncproto(
@@ -1137,7 +1126,7 @@ def fl_ovalbound(xpos, ypos, width, height, colr):
         xfdata.FL_Coord, xfdata.FL_COLOR],
         """void fl_ovalbound(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
@@ -1170,10 +1159,10 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
             starting angle, measured in tenth of a degree and with 0 at 3
             o'clock position
         dtheta : int
-            the direction and the extent of the arc. If positive the arc
-            is drawn in counter-clockwise direction from the starting point,
-            otherwise in clockwise direction. If it is larger than 3600 it
-            is truncated to 3600.
+            the direction and the extent of the arc. If positive the arc is
+            drawn in counter-clockwise direction from the starting point,
+            otherwise in clockwise direction. If it is larger than 3600 it is
+            truncated to 3600.
         colr : long_pos
             XForms colormap index as color
 
@@ -1184,7 +1173,7 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_ovalarc = library.cfuncproto(
@@ -1194,7 +1183,7 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
         xfdata.FL_COLOR],
         """void fl_ovalarc(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, int t0, int dt, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -1204,9 +1193,9 @@ def fl_ovalarc(fill, xpos, ypos, width, height, stheta, dtheta, colr):
     i_stheta = library.convert_to_intc(stheta)
     i_dtheta = library.convert_to_intc(dtheta)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(fill, xpos, ypos, width, height, stheta, \
-            dtheta, colr, i_fill, i_xpos, i_ypos, i_width, i_height, \
-            i_stheta, i_dtheta, ul_colr)
+    library.keep_elem_refs(fill, xpos, ypos, width, height, stheta, dtheta, \
+            colr, i_fill, i_xpos, i_ypos, i_width, i_height, i_stheta, \
+            i_dtheta, ul_colr)
     _fl_ovalarc(i_fill, i_xpos, i_ypos, i_width, i_height, i_stheta, \
             i_dtheta, ul_colr)
 
@@ -1235,7 +1224,7 @@ def fl_ovalf(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_oval(1, xpos, ypos, width, height, colr)
@@ -1265,7 +1254,7 @@ def fl_ovall(xpos, ypos, width, height, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_oval(0, xpos, ypos, width, height, colr)
@@ -1296,7 +1285,7 @@ def fl_circf(xpos, ypos, radius, colr):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_oval(1, (xpos - radius), (ypos - radius), 2 * radius, 2 * radius, colr)
@@ -1324,7 +1313,7 @@ def fl_circ(xpos, ypos, radius, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_oval(0, (xpos - radius), (ypos - radius), 2 * radius, 2 * radius, colr)
@@ -1340,8 +1329,7 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
     Parameters
     ----------
         fill : int
-            if the arc is filled or open. Values 1 (if filled)
-            or 0 (if open)
+            if the arc is filled or open. Values 1 (if filled) or 0 (if open)
         xpos : int
             horizontal position of the bounding box
         ypos : int
@@ -1351,13 +1339,13 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
         height : int
             vertical axe of the ellipse
         stheta : int
-            starting angle of the arc in units of tenths of a degree
-            (where 0 stands for a direction of 3 o'clock, i.e. the
-            right-most point of a circle)
+            starting angle of the arc in units of tenths of a degree (where 0
+            stands for a direction of 3 o'clock, i.e. the right-most point of
+            a circle)
         etheta : int
-            ending angle of the arc in units of tenths of a degree (where
-            0 stands for a direction of 3 o'clock, i.e. the right-most
-            point of a circle)
+            ending angle of the arc in units of tenths of a degree (where 0
+            stands for a direction of 3 o'clock, i.e. the right-most point of
+            a circle)
         colr : long_pos
             XForms colormap index as color
 
@@ -1367,7 +1355,7 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_pieslice = library.cfuncproto(
@@ -1377,7 +1365,7 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
         xfdata.FL_COLOR],
         """void fl_pieslice(int fill, FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h, int a1, int a2, FL_COLOR col)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     i_fill = library.convert_to_intc(fill)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -1387,9 +1375,9 @@ def fl_pieslice(fill, xpos, ypos, width, height, stheta, etheta, colr):
     i_stheta = library.convert_to_intc(stheta)
     i_etheta = library.convert_to_intc(etheta)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(fill, xpos, ypos, width, height, stheta, \
-            etheta, colr, i_fill, i_xpos, i_ypos, i_width, i_height, \
-            i_stheta, i_etheta, ul_colr)
+    library.keep_elem_refs(fill, xpos, ypos, width, height, stheta, etheta, \
+            colr, i_fill, i_xpos, i_ypos, i_width, i_height, i_stheta, \
+            i_etheta, ul_colr)
     _fl_pieslice(i_fill, i_xpos, i_ypos, i_width, i_height, i_stheta, \
             i_etheta, ul_colr)
 
@@ -1398,8 +1386,8 @@ def fl_arcf(xpos, ypos, radius, stheta, etheta, colr):
     """fl_arcf(xpos, ypos, radius, stheta, etheta, colr)
 
     Draws a filled circular arc. If the difference between theta end and
-    theta start is larger than 3600 (360 degrees), drawing is truncated
-    to 360 degrees.
+    theta start is larger than 3600 (360 degrees), drawing is truncated to
+    360 degrees.
 
     Parameters
     ----------
@@ -1410,13 +1398,13 @@ def fl_arcf(xpos, ypos, radius, stheta, etheta, colr):
         radius : int
             radius of the arc
         stheta : int
-            starting angle of the arc in units of tenths of a degree
-            (where 0 stands for a direction of 3 o'clock, i.e. the
-            right-most point of a circle)
+            starting angle of the arc in units of tenths of a degree (where 0
+            stands for a direction of 3 o'clock, i.e. the right-most point of
+            a circle)
         etheta : int
-            ending angle of the arc in units of tenths of a degree
-            (where 0 stands for a direction of 3 o'clock, i.e. the
-            right-most point of a circle)
+            ending angle of the arc in units of tenths of a degree (where 0
+            stands for a direction of 3 o'clock, i.e. the right-most point of
+            a circle)
         colr : long_pos
             XForms colormap index as color
 
@@ -1426,7 +1414,7 @@ def fl_arcf(xpos, ypos, radius, stheta, etheta, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_pieslice(1, (xpos - radius), (ypos - radius), (2 * radius), \
@@ -1437,8 +1425,8 @@ def fl_arc(xpos, ypos, radius, stheta, etheta, colr):
     """fl_arc(xpos, ypos, radius, stheta, etheta, colr)
 
     Draws an open circular arc. If the difference between theta end and
-    theta start is larger than 3600 (360 degrees), drawing is truncated
-    to 360 degrees.
+    theta start is larger than 3600 (360 degrees), drawing is truncated to
+    360 degrees.
 
     Parameters
     ----------
@@ -1449,13 +1437,13 @@ def fl_arc(xpos, ypos, radius, stheta, etheta, colr):
         radius : int
             radius of the arc
         stheta : int
-            starting angle of the arc in units of tenths of a degree
-            (where 0 stands for a direction of 3 o'clock, i.e. the
-            right-most point of a circle)
+            starting angle of the arc in units of tenths of a degree (where 0
+            stands for a direction of 3 o'clock, i.e. the right-most point of
+            a circle)
         etheta : int
-            ending angle of the arc in units of tenths of a degree
-            (where 0 stands for a direction of 3 o'clock, i.e. the
-            right-most point of a circle)
+            ending angle of the arc in units of tenths of a degree (where 0
+            stands for a direction of 3 o'clock, i.e. the right-most point of
+            a circle)
         colr : long_pos
             XForms colormap index as color
 
@@ -1465,7 +1453,7 @@ def fl_arc(xpos, ypos, radius, stheta, etheta, colr):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     fl_pieslice(0, (xpos - radius), (ypos - radius), (2 * radius), \
@@ -1482,24 +1470,23 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     Parameters
     ----------
         boxtype : int
-            type of frame box. Values (from xfdata.py)
-            FL_NO_BOX (No box at all, it is transparent, just a label),
-            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
-            that goes down into the screen), FL_BORDER_BOX (A flat box with a
-            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
-            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
-            flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded box
+            type of frame box. Values (from xfdata.py) FL_NO_BOX (No box at
+            all, it is transparent, just a label), FL_UP_BOX (A box that comes
+            out of the screen), FL_DOWN_BOX (A box that goes down into the
+            screen), FL_BORDER_BOX (A flat box with a border), FL_SHADOW_BOX
+            (A flat box with a shadow), FL_FRAME_BOX (A flat box with an
+            engraved frame), FL_ROUNDED_BOX (A rounded box), FL_EMBOSSED_BOX
+            (A flat box with an embossed frame), FL_FLAT_BOX (A flat box
             without a border, normally invisible unless given a different color
-            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
-            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
-            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
-            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
-            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
-            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
-            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            than the surroundings), FL_RFLAT_BOX (A rounded box without a
+            border, normally invisible unless given a different color than the
+            surroundings), FL_RSHADOW_BOX (A rounded box with a shadow),
+            FL_OVAL_BOX (A box shaped like an ellipse), FL_ROUNDED3D_UPBOX (A
+            rounded box coming out of the screen), FL_ROUNDED3D_DOWNBOX (A
+            rounded box going into the screen), FL_OVAL3D_UPBOX (An oval box
+            coming out of the screen), FL_OVAL3D_DOWNBOX (An oval box going
+            into the screen), FL_OVAL3D_FRAMEBOX (An oval box with an engraved
+            frame), FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1520,7 +1507,7 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_drw_frame = library.cfuncproto(
@@ -1529,7 +1516,7 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_COLOR, cty.c_int],
         """void fl_drw_frame(int style, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR c, int bw)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
     i_boxtype = library.convert_to_intc(boxtype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -1554,18 +1541,18 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     Parameters
     ----------
         boxtype : int
-            type of checkbox to draw. Values (from xfdata.py)
-            FL_NO_BOX (No box at all, it is transparent, just a label),
-            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
-            that goes down into the screen), FL_BORDER_BOX (A flat box with a
-            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
-            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
-            flat box without a border, normally invisible unless given a
+            type of checkbox to draw. Values (from xfdata.py) FL_NO_BOX (No box
+            at all, it is transparent, just a label), FL_UP_BOX (A box that
+            comes out of the screen), FL_DOWN_BOX (A box that goes down into
+            the screen), FL_BORDER_BOX (A flat box with a border),
+            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat box
+            with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
+            (A flat box without a border, normally invisible unless given a
             different color than the surroundings), FL_RFLAT_BOX (A rounded box
             without a border, normally invisible unless given a different color
             than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
+            shadow), FL_OVAL_BOX (A box shaped like an ellipse),
             FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
             FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
             FL_OVAL3D_UPBOX (An oval box coming out of the screen),
@@ -1587,12 +1574,12 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
 
     Examples
     --------
-        >>> fl_drw_checkbox(xfdata.FL_ROUNDED3D_UPBOX, 470, 560, 170,
-                280, xfdata.FL_LEMONCHIFFON, -2)
+        >>> fl_drw_checkbox(xfdata.FL_ROUNDED3D_UPBOX, 470, 560, 170, 280,
+                xfdata.FL_LEMONCHIFFON, -2)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_drw_checkbox = library.cfuncproto(
@@ -1601,7 +1588,7 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_COLOR, cty.c_int],
         """void fl_drw_checkbox(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col, int bw)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(boxtype, xfdata.BOXTYPE_list)
     i_boxtype = library.convert_to_intc(boxtype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -1623,35 +1610,35 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
 def fl_get_fontstruct(style, size):
     """fl_get_fontstruct(style, size) -> ptr_xfontstruct
 
-    Finds out the X font structure for a particular size and style as used
-    in XForms library.
+    Finds out the X font structure for a particular size and style as used in
+    XForms.
 
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            font style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
+            normal text), FL_BOLD_STYLE (Helvetica boldface text),
+            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
+            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
+            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
+            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
+            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
+            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
+            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
+            boldface and italic text), FL_MISC_STYLE (Charter normal text),
+            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
+            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
+            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
+            with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            font size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
+            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
+            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
+            other numeric odd or even value
 
     Returns
     -------
@@ -1665,14 +1652,14 @@ def fl_get_fontstruct(style, size):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_fontstruct = library.cfuncproto(
         library.load_so_libforms(), "fl_get_fontstruct",\
         cty.POINTER(xfdata.XFontStruct), [cty.c_int, cty.c_int],\
         """XFontStruct * fl_get_fontstruct(int style, int size)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
@@ -1688,8 +1675,8 @@ fl_get_fntstruct = fl_get_font_struct
 def fl_get_mouse():
     """fl_get_mouse() -> win, xpos, ypos, keymask
 
-    Finds out the current mouse position relative to the root window, and
-    the current state of the modifier keys and pointer buttons.
+    Finds out the current mouse position relative to the root window, and the
+    current state of the modifier keys and pointer buttons.
 
     Returns
     -------
@@ -1700,9 +1687,9 @@ def fl_get_mouse():
         ypos : int
             vertical position of mouse
         keymask : int_pos
-            bitwise inclusive OR of one or more of the button or
-            modifier key bitmasks to match the current state of
-            the mouse buttons and the modifier keys.
+            bitwise inclusive OR of one or more of the button or modifier key
+            bitmasks to match the current state of the mouse buttons and the
+            modifier keys.
 
     Examples
     --------
@@ -1710,12 +1697,11 @@ def fl_get_mouse():
 
     API_diversion
     -------------
-        API changed from XForms, upstream is
-        fl_get_mouse(xpos, ypos, keymask)
+        API changed from XForms, upstream is fl_get_mouse(xpos, ypos, keymask)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_mouse = library.cfuncproto(
@@ -1724,12 +1710,12 @@ def fl_get_mouse():
         cty.POINTER(xfdata.FL_Coord), cty.POINTER(cty.c_uint)],\
         """Window fl_get_mouse(FL_Coord * x, FL_Coord * y,
           unsigned int * keymask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
     i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
     ui_keymask, ptr_keymask = library.make_uintc_and_pointer()
-    library.keep_elem_refs(i_xpos, i_ypos, ui_keymask, ptr_xpos, \
-            ptr_ypos, ptr_keymask)
+    library.keep_elem_refs(i_xpos, i_ypos, ui_keymask, ptr_xpos, ptr_ypos, \
+            ptr_keymask)
     retval = _fl_get_mouse(ptr_xpos, ptr_ypos, ptr_keymask)
     return retval, i_xpos.value, i_ypos.value, ui_keymask.value
 
@@ -1737,9 +1723,9 @@ def fl_get_mouse():
 def fl_set_mouse(xpos, ypos):
     """fl_set_mouse(xpos, ypos)
 
-    Moves the mouse to a specific location relative to the root window.
-    Use this function sparingly, it can be extremely annoying for the
-    user if the mouse position is changed by a program.
+    Moves the mouse to a specific location relative to the root window. Use
+    this function sparingly, it can be extremely annoying for the user if the
+    mouse position is changed by a program.
 
     Parameters
     ----------
@@ -1754,14 +1740,14 @@ def fl_set_mouse(xpos, ypos):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_mouse = library.cfuncproto(
         library.load_so_libforms(), "fl_set_mouse",\
         None, [xfdata.FL_Coord, xfdata.FL_Coord],\
         """void fl_set_mouse(FL_Coord mx, FL_Coord my)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     library.keep_elem_refs(xpos, ypos, i_xpos, i_ypos)
@@ -1771,8 +1757,8 @@ def fl_set_mouse(xpos, ypos):
 def fl_get_win_mouse(win):
     """fl_get_win_mouse(win) -> win, xpos, ypos, keymask
 
-    Finds out the position of the mouse relative to a certain window,
-    and the current state of the modifier keys and pointer buttons.
+    Finds out the position of the mouse relative to a certain window, and the
+    current state of the modifier keys and pointer buttons.
 
     Parameters
     ----------
@@ -1788,9 +1774,9 @@ def fl_get_win_mouse(win):
         ypos : int
             vertical position of mouse
         keymask : int_pos
-            bitwise inclusive OR of one or more of the button or
-            modifier key bitmasks to match the current state of
-            the mouse buttons and the modifier keys.
+            bitwise inclusive OR of one or more of the button or modifier key
+            bitmasks to match the current state of the mouse buttons and the
+            modifier keys.
 
     Examples
     --------
@@ -1803,7 +1789,7 @@ def fl_get_win_mouse(win):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_win_mouse = library.cfuncproto(
@@ -1812,7 +1798,7 @@ def fl_get_win_mouse(win):
         cty.POINTER(xfdata.FL_Coord), cty.POINTER(cty.c_uint)],\
         """Window fl_get_win_mouse(Window win, FL_Coord * x, FL_Coord * y,
         unsigned int * keymask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
     i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
@@ -1826,8 +1812,8 @@ def fl_get_win_mouse(win):
 def fl_get_form_mouse(ptr_flform):
     """fl_get_form_mouse(ptr_flform) -> win, xpos, ypos, keymask
 
-    Finds out the position of the mouse relative to a certain form, and
-    the current state of the modifier keys and pointer buttons.
+    Finds out the position of the mouse relative to a certain form, and the
+    current state of the modifier keys and pointer buttons.
 
     Parameters
     ----------
@@ -1843,9 +1829,9 @@ def fl_get_form_mouse(ptr_flform):
         ypos : int
             vertical position of mouse
         keymask : int_pos
-            bitwise inclusive OR of one or more of the button or
-            modifier key bitmasks to match the current state of
-            the mouse buttons and the modifier keys.
+            bitwise inclusive OR of one or more of the button or modifier key
+            bitmasks to match the current state of the mouse buttons and the
+            modifier keys.
 
     Examples
     --------
@@ -1858,7 +1844,7 @@ def fl_get_form_mouse(ptr_flform):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_form_mouse = library.cfuncproto(
@@ -1868,7 +1854,7 @@ def fl_get_form_mouse(ptr_flform):
         cty.POINTER(cty.c_uint)],\
         """Window fl_get_form_mouse(FL_FORM * fm, FL_Coord * x,
            FL_Coord * y, unsigned int * keymask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
     i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
@@ -1899,14 +1885,14 @@ def fl_win_to_form(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_win_to_form = library.cfuncproto(
         library.load_so_libforms(), "fl_win_to_form",
         cty.POINTER(xfdata.FL_FORM), [xfdata.Window],\
         """FL_FORM * fl_win_to_form(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     retval = _fl_win_to_form(ul_win)
@@ -1933,14 +1919,14 @@ def fl_set_form_icon(ptr_flform, icon, mask):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_form_icon = library.cfuncproto(
         library.load_so_libforms(), "fl_set_form_icon",\
         None, [cty.POINTER(xfdata.FL_FORM), xfdata.Pixmap, xfdata.Pixmap],\
         """void fl_set_form_icon(FL_FORM * form, Pixmap p, Pixmap m)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     ul_icon = library.convert_to_Pixmap(icon)
     ul_mask = library.convert_to_Pixmap(mask)
@@ -1952,8 +1938,8 @@ def fl_get_decoration_sizes(ptr_flform):
     """fl_get_decoration_sizes(ptr_flform)
     -> result, topsz, rightsz, bottomsz, leftsz
 
-    Finds out the sizes of the "decorations" the window manager puts around
-    a form's window.
+    Finds out the sizes of the "decorations" the window manager puts around a
+    form's window.
 
     Parameters
     ----------
@@ -1963,8 +1949,8 @@ def fl_get_decoration_sizes(ptr_flform):
     Returns
     -------
         result : int
-            0 (on success) or -1 (if the form is not visible or
-            it is a form embedded into another form)
+            0 (on success), or -1 (if the form is not visible or it is a form
+            embedded into another form)
         topsz : int
             top size
         rightsz : int
@@ -1985,7 +1971,7 @@ def fl_get_decoration_sizes(ptr_flform):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_decoration_sizes = library.cfuncproto(
@@ -1995,7 +1981,7 @@ def fl_get_decoration_sizes(ptr_flform):
         cty.POINTER(cty.c_int)],\
         """int fl_get_decoration_sizes(FL_FORM * form, int * top,
            int * right, int * bottom, int * left)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     i_topsz, ptr_topsz = library.make_intc_and_pointer()
     i_rightsz, ptr_rightsz = library.make_intc_and_pointer()
@@ -2025,14 +2011,14 @@ def fl_raise_form(ptr_flform):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_raise_form = library.cfuncproto(
         library.load_so_libforms(), "fl_raise_form",\
         None, [cty.POINTER(xfdata.FL_FORM)],\
         """void fl_raise_form(FL_FORM * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     library.keep_elem_refs(ptr_flform)
     _fl_raise_form(ptr_flform)
@@ -2054,89 +2040,87 @@ def fl_lower_form(ptr_flform):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_lower_form = library.cfuncproto(
         library.load_so_libforms(), "fl_lower_form",\
         None, [cty.POINTER(xfdata.FL_FORM)],\
         """void fl_lower_form(FL_FORM * p1)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     library.keep_elem_refs(ptr_flform)
     _fl_lower_form(ptr_flform)
 
 
-# TODO: verify how to handle GC class
-def fl_set_foreground(gc, colr):
-    """fl_set_foreground(gc, colr)
+def fl_set_foreground(gctx, colr):
+    """fl_set_foreground(gctx, colr)
 
-    Defines foreground color in Graphics Contexts (GCs) other than the
-    XForms library's default (gc[0]).
+    Defines foreground color in Graphics Contexts (GCs) other than the XForms
+    default (gc[0]).
 
     Parameters
     ----------
-        gc : pointer to xfdata.GC
-            Graphics context structure *todo*
+        gctx : xfdata.GC
+            Graphics context class instance. You can use fl_gc()?
         colr : long_pos
             XForms colormap index as color to be set as foreground
 
     Examples
     --------
-        >>> gc = xfdata.fl_state[fl_get_vclass()].gc[0] ????
-        >>> fl_set_foreground(gc, xfdata.FL_LAWNGREEN)
+        >>> graco = fl_gc()
+        >>> fl_set_foreground(graco, xfdata.FL_LAWNGREEN)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK (NULL pointer access)
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_foreground = library.cfuncproto(
         library.load_so_libforms(), "fl_set_foreground",\
         None, [xfdata.GC, xfdata.FL_COLOR],\
-        """void fl_set_foreground(GC gc, FL_COLOR col)""")
-    library.check_if_initialized()
-    library.verify_otherclassptr_type(gc, xfdata.GC)
+        """void fl_set_foreground(GC  gctx, FL_COLOR col)""")
+    library.check_if_flinitialized()
+    library.verify_otherclassptr_type(gctx, xfdata.GC)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(gc, colr, ul_colr)
-    _fl_set_foreground(gc, ul_colr)
+    library.keep_elem_refs(gctx, colr, ul_colr)
+    _fl_set_foreground(gctx, ul_colr)
 
 
-# TODO: verify how to handle GC class
-def fl_set_background(gc, colr):
-    """fl_set_background(gc, colr)
+def fl_set_background(gctx, colr):
+    """fl_set_background(gctx, colr)
 
-    Defines background color in Graphics contexts (GCs) other than
-    the XForms library's default (gc[0]).
+    Defines background color in Graphics contexts (GCs) other than the XForms
+    default (gc[0]).
 
     Parameters
     ----------
-        gc : pointer to xfdata.GC
-            Graphics context structure *todo*
+        gctx : xfdata.GC
+            Graphics context class instance. You can use fl_gc()?
         colr : long_pos
             XForms colormap index as color to be set as background
 
     Examples
     --------
-        >>> gc = xfdata.fl_state[fl_get_vclass()].gc[0] ????
-        >>> fl_set_foreground(gc, xfdata.FL_HONEYDEW)
+        >>> graco = fl_gc()
+        >>> fl_set_foreground(graco, xfdata.FL_HONEYDEW)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK (NULL pointer access)
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_background = library.cfuncproto(
         library.load_so_libforms(), "fl_set_background",\
         None, [xfdata.GC, xfdata.FL_COLOR],\
-        """void fl_set_background(GC gc, FL_COLOR col)""")
-    library.check_if_initialized()
-    library.verify_otherclassptr_type(gc, xfdata.GC)
+        """void fl_set_background(GC  gctx, FL_COLOR col)""")
+    library.check_if_flinitialized()
+    library.verify_otherclassptr_type(gctx, xfdata.GC)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    library.keep_elem_refs(gc, colr, ul_colr)
-    _fl_set_background(gc, ul_colr)
+    library.keep_elem_refs(gctx, colr, ul_colr)
+    _fl_set_background(gctx, ul_colr)
 
 
 # General windowing support
@@ -2162,14 +2146,14 @@ def fl_wincreate(title):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_wincreate = library.cfuncproto(
         library.load_so_libforms(), "fl_wincreate",\
         xfdata.Window, [xfdata.STRING],\
         """Window fl_wincreate(const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(title, s_title)
     retval = _fl_wincreate(s_title)
@@ -2179,7 +2163,7 @@ def fl_wincreate(title):
 def fl_winshow(win):
     """fl_winshow(win) -> win
 
-    Shows the window (created with fl_wincreate).
+    Shows the window created with fl_wincreate().
 
     Parameters
     ----------
@@ -2197,14 +2181,14 @@ def fl_winshow(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winshow = library.cfuncproto(
         library.load_so_libforms(), "fl_winshow",\
         xfdata.Window, [xfdata.Window],\
         """Window fl_winshow(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     retval = _fl_winshow(ul_win)
@@ -2232,14 +2216,14 @@ def fl_winopen(title):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_winopen = library.cfuncproto(
         library.load_so_libforms(), "fl_winopen", \
         xfdata.Window, [xfdata.STRING], \
         """Window fl_winopen(const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(title, s_title)
     retval = _fl_winopen(s_title)
@@ -2262,14 +2246,14 @@ def fl_winhide(win):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winhide = library.cfuncproto(
         library.load_so_libforms(), "fl_winhide", \
         None, [xfdata.Window], \
         """void fl_winhide(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     _fl_winhide(ul_win)
@@ -2291,14 +2275,14 @@ def fl_winclose(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winclose = library.cfuncproto(
         library.load_so_libforms(), "fl_winclose", \
         None, [xfdata.Window], \
         """void fl_winclose(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     _fl_winclose(win, ul_win)
@@ -2307,8 +2291,8 @@ def fl_winclose(win):
 def fl_winset(win):
     """fl_winset(win)
 
-    Defines the "current window", defined as the window the flobject that
-    uses the drawing routine belongs to.
+    Defines the "current window", defined as the window the flobject that uses
+    the drawing routine belongs to.
 
     Parameters
     ----------
@@ -2321,14 +2305,14 @@ def fl_winset(win):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_winset = library.cfuncproto(
         library.load_so_libforms(), "fl_winset", \
         None, [xfdata.Window], \
         """void fl_winset(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     _fl_winset(ul_win)
@@ -2337,8 +2321,8 @@ def fl_winset(win):
 def fl_winreparent(win, winnewparent):
     """fl_winreparent(win, winnewparent) -> result
 
-    Makes a toplevel window a subwindow of another (new parent) window;
-    both the window and the parent window must be valid ones.
+    Makes a toplevel window a subwindow of another (new parent) window; both
+    the window and the parent window must be valid ones.
 
     Parameters
     ----------
@@ -2350,7 +2334,7 @@ def fl_winreparent(win, winnewparent):
     Returns
     -------
         result : int
-            num.?, or -1 (on failure)
+            None, or -1 (on failure)
 
     Examples
     --------
@@ -2358,14 +2342,14 @@ def fl_winreparent(win, winnewparent):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winreparent = library.cfuncproto(
         library.load_so_libforms(), "fl_winreparent", \
         cty.c_int, [xfdata.Window, xfdata.Window], \
         """int fl_winreparent(Window win, Window new_parent)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     ul_winnewparent = library.convert_to_Window(winnewparent)
     library.keep_elem_refs(win, winnewparent, ul_win, ul_winnewparent)
@@ -2376,8 +2360,8 @@ def fl_winreparent(win, winnewparent):
 def fl_winfocus(win):
     """fl_winfocus(win)
 
-    Keyboard input is directed to the specified window, overriding
-    the keyboard focus assignment.
+    Keyboard input is directed to the specified window, overriding the
+    keyboard focus assignment.
 
     Parameters
     ----------
@@ -2390,14 +2374,14 @@ def fl_winfocus(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winfocus = library.cfuncproto(
         library.load_so_libforms(), "fl_winfocus", \
         None, [xfdata.Window], \
         """void fl_winfocus(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     _fl_winfocus(ul_win)
@@ -2406,10 +2390,10 @@ def fl_winfocus(win):
 def fl_winget():
     """fl_winget() -> win
 
-    Queries the current window. One caveat about fl_winget() is that it
-    can return None if called outside of a flobject's event handler,
-    depending on where the mouse is. Thus, the return value of this
-    function should be checked when called outside of a flobject handler.
+    Queries the current window. One caveat about fl_winget() is that it can
+    return None if called outside of a flobject's event handler, depending on
+    where the mouse is. Thus, the return value of this function should be
+    checked when called outside of a flobject handler.
 
     Returns
     -------
@@ -2422,14 +2406,14 @@ def fl_winget():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winget = library.cfuncproto(
         library.load_so_libforms(), "fl_winget", \
         xfdata.Window, [], \
         """Window fl_winget()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_winget()
     return retval
 
@@ -2447,7 +2431,7 @@ def fl_iconify(win):
     Returns
     -------
         result : int
-            non-zero?
+            non-zero, or 0 (on failure)
 
     Examples
     --------
@@ -2455,14 +2439,14 @@ def fl_iconify(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_iconify = library.cfuncproto(
         library.load_so_libforms(), "fl_iconify", \
         cty.c_int, [xfdata.Window], \
         """int fl_iconify(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     retval = _fl_iconify(ul_win)
@@ -2489,14 +2473,14 @@ def fl_winresize(win, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winresize = library.cfuncproto(
         library.load_so_libforms(), "fl_winresize", \
         None, [xfdata.Window, xfdata.FL_Coord, xfdata.FL_Coord], \
         """void fl_winresize(Window win, FL_Coord neww, FL_Coord newh)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_intc(height)
@@ -2524,14 +2508,14 @@ def fl_winmove(win, xpos, ypos):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winmove = library.cfuncproto(
         library.load_so_libforms(), "fl_winmove", \
         None, [xfdata.Window, xfdata.FL_Coord, xfdata.FL_Coord], \
         """void fl_winmove(Window win, FL_Coord dx, FL_Coord dy)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_xpos = library.convert_to_intc(xpos)
     i_ypos = library.convert_to_intc(ypos)
@@ -2563,7 +2547,7 @@ def fl_winreshape(win, xpos, ypos, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winreshape = library.cfuncproto(
@@ -2572,7 +2556,7 @@ def fl_winreshape(win, xpos, ypos, width, height):
         xfdata.FL_Coord, xfdata.FL_Coord], \
         """void fl_winreshape(Window win, FL_Coord dx, FL_Coord dy,
            FL_Coord w, FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_xpos = library.convert_to_intc(xpos)
     i_ypos = library.convert_to_intc(ypos)
@@ -2603,14 +2587,14 @@ def fl_winicon(win, icon, mask):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winicon = library.cfuncproto(
         library.load_so_libforms(), "fl_winicon", \
         None, [xfdata.Window, xfdata.Pixmap, xfdata.Pixmap], \
         """void fl_winicon(Window win, Pixmap p, Pixmap m)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     ul_icon = library.convert_to_Pixmap(icon)
     ul_mask = library.convert_to_Pixmap(mask)
@@ -2636,14 +2620,14 @@ def fl_winbackground(win, pixelval):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_winbackground = library.cfuncproto(
         library.load_so_libforms(), "fl_winbackground", \
         None, [xfdata.Window, cty.c_ulong], \
         """void fl_winbackground(Window win, unsigned long bk)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     ul_pixelval = library.convert_to_FL_COLOR(pixelval)
     library.keep_elem_refs(win, pixelval, ul_win, ul_pixelval)
@@ -2656,9 +2640,9 @@ fl_win_background = fl_winbackground
 def fl_winstepsize(win, xunit, yunit):
     """fl_winstepsize(win, xunit, yunit)
 
-    Defines the steps by which the size of a window can be changed. Changes
-    to the window size will be multiples of specified units after this
-    call. Note that this only applies to interactive resizing.
+    Defines the steps by which the size of a window can be changed. Changes to
+    the window size will be multiples of specified units after this call. Note
+    that this only applies to interactive resizing.
 
     Parameters
     ----------
@@ -2675,14 +2659,14 @@ def fl_winstepsize(win, xunit, yunit):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winstepsize = library.cfuncproto(
         library.load_so_libforms(), "fl_winstepsize", \
         None, [xfdata.Window, xfdata.FL_Coord, xfdata.FL_Coord], \
         """void fl_winstepsize(Window win, FL_Coord dx, FL_Coord dy)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_xunit = library.convert_to_intc(xunit)
     i_yunit = library.convert_to_intc(yunit)
@@ -2698,8 +2682,8 @@ fl_set_winstepunit = fl_winstepunit
 def fl_winisvalid(win):
     """fl_winisvalid(win) -> result
 
-    Checks if a window id is valid or not. Note that excessive use
-    of this function may negatively impact performance.
+    Checks if a window id is valid or not. Note that excessive use of this
+    function may negatively impact performance.
 
     Parameters
     ----------
@@ -2709,7 +2693,7 @@ def fl_winisvalid(win):
     Returns
     -------
         result : int
-            True on success (not 0)
+            not 0 (on success)
 
     Examples
     --------
@@ -2718,14 +2702,14 @@ def fl_winisvalid(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winisvalid = library.cfuncproto(
         library.load_so_libforms(), "fl_winisvalid", \
         cty.c_int, [xfdata.Window], \
         """int fl_winisvalid(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     retval = _fl_winisvalid(ul_win)
@@ -2751,14 +2735,14 @@ def fl_wintitle(win, title):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_wintitle = library.cfuncproto(
         library.load_so_libforms(), "fl_wintitle", \
         None, [xfdata.Window, xfdata.STRING], \
         """void fl_wintitle(Window win, const char * title)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(win, title, ul_win, s_title)
@@ -2783,14 +2767,14 @@ def fl_winicontitle(win, title):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winicontitle = library.cfuncproto(
         library.load_so_libforms(), "fl_winicontitle", \
         None, [xfdata.Window, xfdata.STRING], \
         """void fl_winicontitle(Window win, const char * title)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     s_title = library.convert_to_stringc(title)
     library.keep_elem_refs(win, title, ul_win, s_title)
@@ -2815,14 +2799,14 @@ def fl_winposition(xpos, ypos):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winposition = library.cfuncproto(
         library.load_so_libforms(), "fl_winposition",
         None, [xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_winposition(FL_Coord x, FL_Coord y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     library.keep_elem_refs(xpos, ypos, i_xpos, i_ypos)
@@ -2836,7 +2820,7 @@ def fl_winminsize(win, width, height):
     """fl_winminsize(win, width, height)
 
     Defines a constraint for a resizable window whose size will be within a
-    range not less than minumum (to be used before calling fl_winopen).
+    range not less than minimum. To be used before calling fl_winopen().
 
     Parameters
     ----------
@@ -2853,14 +2837,14 @@ def fl_winminsize(win, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winminsize = library.cfuncproto(
         library.load_so_libforms(), "fl_winminsize",
         None, [xfdata.Window, xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_winminsize(Window win, FL_Coord w, FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
@@ -2871,8 +2855,8 @@ def fl_winminsize(win, width, height):
 def fl_winmaxsize(win, width, height):
     """fl_winmaxsize(win, width, height)
 
-    Defines a constraint for a resizable window whose size will be
-    within a range not bigger than maximum, before calling fl_winopen().
+    Defines a constraint for a resizable window whose size will be within a
+    range not bigger than maximum. To be used before calling fl_winopen().
 
     Parameters
     ----------
@@ -2889,14 +2873,14 @@ def fl_winmaxsize(win, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winmaxsize = library.cfuncproto(
         library.load_so_libforms(), "fl_winmaxsize",
         None, [xfdata.Window, xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_winmaxsize(Window win, FL_Coord w, FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
@@ -2904,8 +2888,8 @@ def fl_winmaxsize(win, width, height):
     _fl_winmaxsize(ul_win, i_width, i_height)
 
 
-def fl_winaspect(win, xpos, ypos):
-    """fl_winaspect(win, xpos, ypos)
+def fl_winaspect(win, xratio, yratio):
+    """fl_winaspect(win, xratio, yratio)
 
     Defines the aspect ratio of the window for later interactive resizing.
 
@@ -2913,10 +2897,10 @@ def fl_winaspect(win, xpos, ypos):
     ----------
         win : long_pos
             window id to be set
-        xpos : int
-            horizontal aspect ratio in coord units
-        ypos : int
-            vertical aspect ratio in coord units
+        xratio : int
+            horizontal aspect ratio
+        yratio : int
+            vertical aspect ratio
 
     Examples
     --------
@@ -2924,26 +2908,26 @@ def fl_winaspect(win, xpos, ypos):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_winaspect = library.cfuncproto(
         library.load_so_libforms(), "fl_winaspect",
         None, [xfdata.Window, xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_winaspect(Window win, FL_Coord x, FL_Coord y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
-    i_xpos = library.convert_to_FL_Coord(xpos)
-    i_ypos = library.convert_to_FL_Coord(ypos)
-    library.keep_elem_refs(win, xpos, ypos, ul_win, i_xpos, i_ypos)
-    _fl_winaspect(ul_win, i_xpos, i_ypos)
+    i_xratio = library.convert_to_FL_Coord(xratio)
+    i_yratio = library.convert_to_FL_Coord(yratio)
+    library.keep_elem_refs(win, xratio, yratio, ul_win, i_xratio, i_yratio)
+    _fl_winaspect(ul_win, i_xratio, i_yratio)
 
 
 def fl_reset_winconstraints(win):
     """fl_reset_winconstraints(win)
 
-    Changes constraints (size and aspect ratio) to default ones on
-    an active window.
+    Changes constraints (size and aspect ratio) to default ones on an active
+    window.
 
     Parameters
     ----------
@@ -2956,14 +2940,14 @@ def fl_reset_winconstraints(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_reset_winconstraints = library.cfuncproto(
         library.load_so_libforms(), "fl_reset_winconstraints",
         None, [xfdata.Window],
         """void fl_reset_winconstraints(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win)
     _fl_reset_winconstraints(ul_win)
@@ -2972,8 +2956,8 @@ def fl_reset_winconstraints(win):
 def fl_winsize(width, height):
     """fl_winsize(width, height)
 
-    Defines the preferred window size, before calling fl_winopen(),
-    and makes the window non-resizeable.
+    Defines the preferred window size and makes the window non-resizeable. To
+    be used before calling fl_winopen().
 
     Parameters
     ----------
@@ -2988,14 +2972,14 @@ def fl_winsize(width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_winsize = library.cfuncproto(
         library.load_so_libforms(), "fl_winsize",
         None, [xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_winsize(FL_Coord w, FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
     library.keep_elem_refs(width, height, i_width, i_height)
@@ -3008,7 +2992,7 @@ fl_pref_winsize = fl_winsize
 def fl_initial_winsize(width, height):
     """fl_initial_winsize(width, height)
 
-    Defines the preferred window size, before calling fl_winopen().
+    Defines the preferred window size. To be used before calling fl_winopen().
 
     Parameters
     ----------
@@ -3023,14 +3007,14 @@ def fl_initial_winsize(width, height):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_initial_winsize = library.cfuncproto(
         library.load_so_libforms(), "fl_initial_winsize",
         None, [xfdata.FL_Coord, xfdata.FL_Coord],
         """void fl_initial_winsize(FL_Coord w, FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
     library.keep_elem_refs(width, height, i_width, i_height)
@@ -3046,9 +3030,9 @@ def fl_initial_winstate(state):
     Parameters
     ----------
         state : int
-            window state to be set. Values (from xfdata.py)
-            NormalState (most applications want to start this way), IconicState
-            (application wants to start as an icon).
+            window state to be set. Values (from xfdata.py) NormalState (most
+            applications want to start this way), IconicState (application
+            wants to start as an icon).
 
     Examples
     --------
@@ -3056,14 +3040,14 @@ def fl_initial_winstate(state):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_initial_winstate = library.cfuncproto(
         library.load_so_libforms(), "fl_initial_winstate",
         None, [cty.c_int],
         """void fl_initial_winstate(int state)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(state, xfdata.WINSTATE_list)
     i_state = library.convert_to_intc(state)
     library.keep_elem_refs(state, i_state)
@@ -3096,14 +3080,14 @@ def fl_create_colormap(ptr_xvisualinfo, numfilledcolrs):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_create_colormap = library.cfuncproto(
         library.load_so_libforms(), "fl_create_colormap",
         xfdata.Colormap, [cty.POINTER(xfdata.XVisualInfo), cty.c_int],
         """Colormap fl_create_colormap(XVisualInfo * xv, int nfill)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_numfilledcolrs = library.convert_to_intc(numfilledcolrs)
     library.keep_elem_refs(ptr_xvisualinfo, numfilledcolrs, \
             i_numfilledcolrs)
@@ -3114,8 +3098,8 @@ def fl_create_colormap(ptr_xvisualinfo, numfilledcolrs):
 def fl_wingeometry(xpos, ypos, width, height):
     """fl_wingeometry(xpos, ypos, width, height)
 
-    Defines the initial geometry (position and size) of the window
-    to be opened; the window will not be resizable.
+    Defines the initial geometry (position and size) of the window to be
+    opened; the window will not be resizable.
 
     Parameters
     ----------
@@ -3134,7 +3118,7 @@ def fl_wingeometry(xpos, ypos, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_wingeometry = library.cfuncproto(
@@ -3143,7 +3127,7 @@ def fl_wingeometry(xpos, ypos, width, height):
         xfdata.FL_Coord],
         """void fl_wingeometry(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
@@ -3159,8 +3143,8 @@ fl_pref_wingeometry = fl_wingeometry
 def fl_initial_wingeometry(xpos, ypos, width, height):
     """fl_initial_wingeometry(xpos, ypos, width, height)
 
-    Defines the initial geometry (position and size) of the window
-    to be opened.
+    Defines the initial geometry (position and size) of the window to be
+    opened.
 
     Parameters
     ----------
@@ -3179,7 +3163,7 @@ def fl_initial_wingeometry(xpos, ypos, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_initial_wingeometry = library.cfuncproto(
@@ -3188,7 +3172,7 @@ def fl_initial_wingeometry(xpos, ypos, width, height):
         xfdata.FL_Coord],
         """void fl_initial_wingeometry(FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
@@ -3201,8 +3185,7 @@ def fl_initial_wingeometry(xpos, ypos, width, height):
 def fl_noborder():
     """fl_noborder()
 
-    Suppresses the window manager's decoration (before creating
-    the window).
+    Suppresses the window manager's decoration (before creating the window).
 
     Examples
     --------
@@ -3210,14 +3193,14 @@ def fl_noborder():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_noborder = library.cfuncproto(
         library.load_so_libforms(), "fl_noborder",
         None, [],
         """void fl_noborder()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_noborder()
 
 
@@ -3232,14 +3215,14 @@ def fl_transient():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_transient = library.cfuncproto(
         library.load_so_libforms(), "fl_transient",
         None, [], \
         """void fl_transient()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_transient()
 
 
@@ -3271,7 +3254,7 @@ def fl_get_winsize(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_winsize = library.cfuncproto(
@@ -3279,12 +3262,12 @@ def fl_get_winsize(win):
         None, [xfdata.Window, cty.POINTER(xfdata.FL_Coord),
         cty.POINTER(xfdata.FL_Coord)],
         """void fl_get_winsize(Window win, FL_Coord * w, FL_Coord * h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_width, ptr_width = library.make_intc_and_pointer()
     i_height, ptr_height = library.make_intc_and_pointer()
-    library.keep_elem_refs(win, ul_win, i_width, i_height, \
-            ptr_width, ptr_height)
+    library.keep_elem_refs(win, ul_win, i_width, i_height, ptr_width, \
+            ptr_height)
     _fl_get_winsize(ul_win, ptr_width, ptr_height)
     return i_width.value, i_height.value
 
@@ -3317,7 +3300,7 @@ def fl_get_winorigin(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_winorigin = library.cfuncproto(
@@ -3325,7 +3308,7 @@ def fl_get_winorigin(win):
         None, [xfdata.Window, cty.POINTER(xfdata.FL_Coord),
         cty.POINTER(xfdata.FL_Coord)],
         """void fl_get_winorigin(Window win, FL_Coord * x, FL_Coord * y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
     i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
@@ -3366,7 +3349,7 @@ def fl_get_wingeometry(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_wingeometry = library.cfuncproto(
@@ -3376,7 +3359,7 @@ def fl_get_wingeometry(win):
         cty.POINTER(xfdata.FL_Coord)],
         """void fl_get_wingeometry(Window win, FL_Coord * x,
            FL_Coord * y, FL_Coord * w, FL_Coord * h)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     i_xpos, ptr_xpos = library.make_FL_Coord_and_pointer()
     i_ypos, ptr_ypos = library.make_FL_Coord_and_pointer()
@@ -3388,26 +3371,26 @@ def fl_get_wingeometry(win):
     return i_xpos.value, i_ypos.value, i_width.value, i_height.value
 
 
-# fl_get_win_size placeholder (backwards)
-# fl_get_win_origin (backwards)
-# fl_get_win_geometry (backwards)
-# fl_initial_winposition (backwards)
+# fl_get_win_size() function placeholder (backwards)
+# fl_get_win_origin() function placeholder (backwards)
+# fl_get_win_geometry() function placeholder (backwards)
+# fl_initial_winposition() function placeholder (backwards)
 
 
 def fl_get_display():
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     return xfdata.fl_display
 
 
 def FL_FormDisplay(ptr_flform):
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
     return xfdata.fl_display
 
 
 # undocumented data, maybe dismissed? --LK
 def FL_ObjectDisplay(ptr_flobject):
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     return xfdata.fl_display
 
@@ -3445,10 +3428,10 @@ def FL_ObjWin(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     if FL_IS_CANVAS(ptr_flobject):
         return flcanvas.fl_get_canvas_id(ptr_flobject)
@@ -3459,8 +3442,8 @@ def FL_ObjWin(ptr_flobject):
 def fl_get_real_object_window(ptr_flobject):
     """fl_get_real_object_window(ptr_flobject) -> win
 
-    Finds out the real window id a flobject belongs to (to be used
-    for cursor or pointer routines).
+    Finds out the real window id a flobject belongs to (to be used for cursor
+    or pointer routines).
 
     Parameters
     ----------
@@ -3478,14 +3461,14 @@ def fl_get_real_object_window(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_real_object_window = library.cfuncproto(
         library.load_so_libforms(), "fl_get_real_object_window",
         xfdata.Window, [cty.POINTER(xfdata.FL_OBJECT)],
         """Window fl_get_real_object_window(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_real_object_window(ptr_flobject)
@@ -3527,14 +3510,14 @@ def fl_XNextEvent(ptr_xevent):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_XNextEvent = library.cfuncproto(
         library.load_so_libforms(), "fl_XNextEvent",
         cty.c_int, [cty.POINTER(xfdata.XEvent)],
         """int fl_XNextEvent(XEvent * xev)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_otherclassptr_type(ptr_xevent, \
             cty.POINTER(xfdata.XEvent))
     library.keep_elem_refs(ptr_xevent)
@@ -3545,8 +3528,8 @@ def fl_XNextEvent(ptr_xevent):
 def fl_XPeekEvent(ptr_xevent):
     """fl_XPeekEvent(ptr_xevent) -> result, ptr_xevent
 
-    X11 XPeekEvent equivalent function. Blocks if there is
-    no event until a new one has arrived.
+    X11 XPeekEvent equivalent function. Blocks if there is no event until a
+    new one has arrived.
 
     Parameters
     ----------
@@ -3566,14 +3549,14 @@ def fl_XPeekEvent(ptr_xevent):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_XPeekEvent = library.cfuncproto(
         library.load_so_libforms(), "fl_XPeekEvent",
         cty.c_int, [cty.POINTER(xfdata.XEvent)],
         """int fl_XPeekEvent(XEvent * xev)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_otherclassptr_type(ptr_xevent, \
             cty.POINTER(xfdata.XEvent))
     library.keep_elem_refs(ptr_xevent)
@@ -3584,8 +3567,8 @@ def fl_XPeekEvent(ptr_xevent):
 def fl_XEventsQueued(mode):
     """fl_XEventsQueued(mode) -> yesno
 
-    X11 XEventsQueued equivalent function, finds out if there are any
-    events in the event queue.
+    X11 XEventsQueued equivalent function, finds out if there are any events
+    in the event queue.
 
     Parameters
     ----------
@@ -3603,14 +3586,14 @@ def fl_XEventsQueued(mode):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_XEventsQueued = library.cfuncproto(
         library.load_so_libforms(), "fl_XEventsQueued",
         cty.c_int, [cty.c_int],
         """int fl_XEventsQueued(int mode)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_mode = library.convert_to_intc(mode)
     library.keep_elem_refs(mode, i_mode)
     retval = _fl_XEventsQueued(i_mode)
@@ -3620,8 +3603,8 @@ def fl_XEventsQueued(mode):
 def fl_XPutBackEvent(ptr_xevent):
     """fl_XPutBackEvent(ptr_xevent)
 
-    X11 XPutBackEvent equivalent function, allows to push back an
-    event onto the queue.
+    X11 XPutBackEvent equivalent function, allows to push back an event onto
+    the queue.
 
     Parameters
     ----------
@@ -3634,14 +3617,14 @@ def fl_XPutBackEvent(ptr_xevent):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_XPutBackEvent = library.cfuncproto(
         library.load_so_libforms(), "fl_XPutBackEvent",
         None, [cty.POINTER(xfdata.XEvent)],
         """void fl_XPutBackEvent(XEvent * xev)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_otherclassptr_type(ptr_xevent, \
             cty.POINTER(xfdata.XEvent))
     library.keep_elem_refs(ptr_xevent)
@@ -3663,18 +3646,18 @@ def fl_last_event():
 
     Examples
     --------
-        >>> pxev = flk_last_event()
+        >>> pxev = fl_last_event()
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_last_event = library.cfuncproto(
         library.load_so_libforms(), "fl_last_event",
         cty.POINTER(xfdata.XEvent), [],
         """const char * fl_last_event()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_last_event()
     return retval
 
@@ -3683,11 +3666,11 @@ def fl_set_event_callback(pyfn_AppEventCb, userdata):
     """fl_set_event_callback(pyfn_AppEventCb, userdata) -> AppEventCb
 
     Defines up an event callback routine. Whenever an event happens, the
-    callback function is invoked with the event as the first argument.
-    This assumes the application program solicits the events and further,
-    the callback routine should be prepared to handle all X Events for
-    all non-form windows. This routine will be called whenever an X Event
-    is pending for the application's own window.
+    callback function is invoked with the event as the first argument. This
+    assumes the application program solicits the events and further, the
+    callback routine should be prepared to handle all X events for all
+    non-form windows. This routine will be called whenever an X Event is
+    pending for the application's own window.
 
     Parameters
     ----------
@@ -3695,10 +3678,11 @@ def fl_set_event_callback(pyfn_AppEventCb, userdata):
             name referring to function(ptr_xevent, [pointer to void]pvdata)
             -> [int]num.
             The callback function normally should return 0, unless the
-            event is not for one of the applcation-managed windows.
+            event is not for one of the application-managed windows.
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type.
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -3714,17 +3698,17 @@ def fl_set_event_callback(pyfn_AppEventCb, userdata):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
-    #                               cty.c_void_p)
+    #       cty.c_void_p)
     _fl_set_event_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_set_event_callback",
         xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, cty.c_void_p],
         """FL_APPEVENT_CB fl_set_event_callback(FL_APPEVENT_CB callback,
            void * user_data)""")        # cty.c_void_p]
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
@@ -3738,14 +3722,14 @@ def fl_set_idle_callback(pyfn_AppEventCb, userdata):
     """fl_set_idle_callback(pyfn_AppEventCb, userdata) -> AppEventCb
 
     Registers an idle callback. Interaction with it  can used for periodic
-    tasks, e.g. rotating an image, checking the status of some external
-    device or application state etc. An idle callback is an application
-    function that is registered with the system and is called whenever there
-    are no events pending for forms (or application windows). If called with
-    a function as callback who does nothing, it removes idle callback.
-    The time interval between invocations of the idle callback can vary
-    considerably depending on interface activity and other factors. A
-    range between 50 and 300 msec should be expected.
+    tasks, e.g. rotating an image, checking the status of some external device
+    or application state etc. An idle callback is an application function that
+    is registered with the system and is called whenever there are no events
+    pending for forms (or application windows). If called with a function as
+    callback who does nothing, it removes idle callback. The time interval
+    between invocations of the idle callback can vary considerably depending
+    on interface activity and other factors. A range between 50 and 300 msec
+    should be expected.
 
     Parameters
     ----------
@@ -3754,7 +3738,8 @@ def fl_set_idle_callback(pyfn_AppEventCb, userdata):
             -> [int]num.
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -3774,7 +3759,7 @@ def fl_set_idle_callback(pyfn_AppEventCb, userdata):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
@@ -3784,7 +3769,7 @@ def fl_set_idle_callback(pyfn_AppEventCb, userdata):
         xfdata.FL_APPEVENT_CB, [xfdata.FL_APPEVENT_CB, cty.c_void_p],
         """FL_APPEVENT_CB fl_set_idle_callback(FL_APPEVENT_CB callback,
            void * user_data)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_function_type(pyfn_AppEventCb)
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
@@ -3827,14 +3812,14 @@ def fl_addto_selected_xevent(win, evtmask):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_addto_selected_xevent = library.cfuncproto(
         library.load_so_libforms(), "fl_addto_selected_xevent",
         cty.c_long, [xfdata.Window, cty.c_long],
         """long int fl_addto_selected_xevent(Window win, long int mask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.checkfatal_allowed_value_in_list(evtmask, \
             xfdata.INPUTEVENTMASK_list)
@@ -3847,8 +3832,8 @@ def fl_addto_selected_xevent(win, evtmask):
 def fl_remove_selected_xevent(win, evtmask):
     """fl_remove_selected_xevent(win, evtmask) -> evtmask
 
-    Removes solicited event masks on the fly without altering other
-    masks already selected.
+    Removes solicited event masks on the fly without altering other masks
+    already selected.
 
     Parameters
     ----------
@@ -3877,14 +3862,14 @@ def fl_remove_selected_xevent(win, evtmask):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_remove_selected_xevent = library.cfuncproto(
         library.load_so_libforms(), "fl_remove_selected_xevent",
         cty.c_long, [xfdata.Window, cty.c_long],
         """long int fl_remove_selected_xevent(Window win, long int mask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.checkfatal_allowed_value_in_list(evtmask, \
             xfdata.INPUTEVENTMASK_list)
@@ -3900,16 +3885,15 @@ fl_add_selected_xevent = fl_addto_selected_xevent
 def fl_set_idle_delta(msec):
     """fl_set_idle_delta(msec)
 
-    Changes what the library considers to be "idle". Be aware that under
-    some conditions ad idle callback can be called sooner than the minimum
-    interval; if the timing of the idle callback is of concerned, timeouts
-    should be used.
+    Changes what the library considers to be "idle". Be aware that under some
+    conditions an idle callback can be called sooner than the minimum interval;
+    if the timing of idle callback is of concerned, timeouts should be used.
 
     Parameters
     ----------
         msec : long
-            minimum time interval of inactivity in milliseconds, after
-            which the main loop is considered to be in idle state
+            minimum time interval of inactivity in milliseconds, after which
+            the main loop is considered to be in idle state
 
     Examples
     --------
@@ -3917,14 +3901,14 @@ def fl_set_idle_delta(msec):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_idle_delta = library.cfuncproto(
         library.load_so_libforms(), "fl_set_idle_delta",
         None, [cty.c_long],
         """void fl_set_idle_delta(long int delta)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     l_msec = library.convert_to_longc(msec)
     library.keep_elem_refs(msec, l_msec)
     _fl_set_idle_delta(l_msec)
@@ -3935,11 +3919,10 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
     -> AppEventCb
 
     Adds an event handler for a window. Manipulates the event callback
-    functions for the window specified, which will be called when an
-    event of specified type is pending for the window. It does not
-    solicit any event for the caller, i.e. the XForms library assumes
-    the caller opens the window and solicits all events before calling
-    these routines.
+    functions for the window specified, which will be called when an event of
+    specified type is pending for the window. It does not solicit any event for
+    the caller, i.e. XForms assumes the caller opens the window and solicits
+    all events before calling these routines.
 
     Parameters
     ----------
@@ -3960,7 +3943,8 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
             -> [int]num.
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
-            care of type check and re-cast from ptr_void to chosen type
+            care of type check and re-cast from ptr_void to chosen type using
+            appropriate xfstruct.convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -3976,7 +3960,7 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_APPEVENT_CB = cty.CFUNCTYPE(cty.c_int, cty.POINTER(XEvent),
@@ -3987,7 +3971,7 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
         xfdata.FL_APPEVENT_CB, cty.c_void_p],
         """FL_APPEVENT_CB fl_add_event_callback(Window win, int ev,
            FL_APPEVENT_CB wincb, void * user_data)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.checkfatal_allowed_value_in_list(evtnum, xfdata.XEVENTNAME_list)
     i_evtnum = library.convert_to_intc(evtnum)
@@ -3995,8 +3979,7 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
     cfn_AppEventCb = xfdata.FL_APPEVENT_CB(pyfn_AppEventCb)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
     library.keep_cfunc_refs(cfn_AppEventCb, pyfn_AppEventCb)
-    library.keep_elem_refs(win, evtnum, userdata, ul_win, i_evtnum, \
-            ptr_vdata)
+    library.keep_elem_refs(win, evtnum, userdata, ul_win, i_evtnum, ptr_vdata)
     retval = _fl_add_event_callback(ul_win, i_evtnum, cfn_AppEventCb, \
             ptr_vdata)
     return retval
@@ -4030,14 +4013,14 @@ def fl_remove_event_callback(win, evtnum):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_remove_event_callback = library.cfuncproto(
         library.load_so_libforms(), "fl_remove_event_callback",
         None, [xfdata.Window, cty.c_int],
         """void fl_remove_event_callback(Window win, int ev)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.checkfatal_allowed_value_in_list(evtnum, xfdata.XEVENTNAME_list)
     i_evtnum = library.convert_to_intc(evtnum)
@@ -4048,11 +4031,11 @@ def fl_remove_event_callback(win, evtnum):
 def fl_activate_event_callbacks(win):
     """fl_activate_event_callbacks(win)
 
-    Handles event solicitation. Activates the default mapping of events
-    to event masks built-in in the XForms Library, and causes the system
-    to solicit the events for you. Note, however, the mapping of events
-    to masks are not unique and depending on applications, the default
-    mapping may or may not be the one you want.
+    Handles event solicitation. Activates the default mapping of events to
+    event masks built-in in XForms, and causes the system to solicit the
+    events for you. Note, however, the mapping of events to masks are not
+    unique and depending on applications, the default mapping may or may not
+    be the one you want.
 
     Parameters
     ----------
@@ -4065,14 +4048,14 @@ def fl_activate_event_callbacks(win):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_activate_event_callbacks = library.cfuncproto(
         library.load_so_libforms(), "fl_activate_event_callbacks",
         None, [xfdata.Window],
         """void fl_activate_event_callbacks(Window win)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
     library.keep_elem_refs(win, ul_win)
     _fl_activate_event_callbacks(ul_win)
@@ -4102,16 +4085,16 @@ def fl_print_xevent_name(wheretxt, ptr_xevent):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_print_xevent_name = library.cfuncproto(
         library.load_so_libforms(), "fl_print_xevent_name",
-        cty.POINTER(xfdata.XEvent), [xfdata.STRING,
+        cty.POINTER(xfdata.XEvent), [xfdata.STRING, \
         cty.POINTER(xfdata.XEvent)],
         """XEvent * fl_print_xevent_name(const char * where,
            const Xevent * xev)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_wheretxt = library.convert_to_stringc(wheretxt)
     library.keep_elem_refs(wheretxt, ptr_xevent, s_wheretxt)
     retval = _fl_print_xevent_name(s_wheretxt, ptr_xevent)
@@ -4121,8 +4104,8 @@ def fl_print_xevent_name(wheretxt, ptr_xevent):
 def fl_XFlush():
     """fl_XFlush()
 
-    Flushes the X output buffer. Convenience replacement for X11
-    XFlush() function.
+    Flushes the X output buffer. Convenience replacement for X11 XFlush()
+    function.
 
     Examples
     --------
@@ -4130,7 +4113,7 @@ def fl_XFlush():
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NN-UTest + Doc + Demo = OK
 
     """
     _fl_XFlush = library.cfuncproto(
@@ -4154,8 +4137,8 @@ def controlkey_down(mask):
 
 def button_down(mask):
     if (mask & xfdata.Button1Mask) or (mask & xfdata.Button2Mask) or \
-     (mask & xfdata.Button3Mask) or (mask & xfdata.Button4Mask) or \
-     (mask & xfdata.Button5Mask):
+            (mask & xfdata.Button3Mask) or (mask & xfdata.Button4Mask) or \
+            (mask & xfdata.Button5Mask):
         return True
     else:
         return False
@@ -4166,10 +4149,9 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
     """fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts)
     -> ptr_display
 
-    Initializes XForms library. It should always be called before any
-    other calls to the XForms Library, except fl_set_defaults() and a few
-    other functions that alter some of the defaults of the library.
-    Command line arguments are supported.
+    Initializes XForms. It should always be called before any other calls to
+    the XForms, except fl_set_defaults() and a few other functions that alter
+    some of the defaults of the library. Command line arguments are supported.
 
     Parameters
     ----------
@@ -4179,11 +4161,11 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
             arguments passed to command line
         appname : str
             application class name
-        ptr_appoptions : instance of xfdata.FL_CMD_OPT
-            possible options passed as a flcmdopt class instance. You can use
-            make_ptr_flcmdopt function, passing a dict with keys corresponding
-            to xfdata.FL_CMD_OPT attributes. If it is None, user application
-            has no options
+        ptr_appoptions : pointer to xfdata.FL_CMD_OPT
+            possible options passed as a flcmdopt class instance. You can
+            prepare it passing a dict (with keys corresponding to
+            xfdata.FL_CMD_OPT attributes) to xfstruct.make_ptr_flcmdopt()
+            function. If it is None, user application has no options
         numappopts : int
             number of options passed in appoptions. If it is 0, user
             application has no options
@@ -4200,7 +4182,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
 
     Notes
     -----
-        Status: HalfTested + Doc + Demo = HALF OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_initialize = library.cfuncproto(
@@ -4212,12 +4194,10 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
             const char * appclass, FL_CMD_OPT * appopt, int nappopt)""")
     # ok if installed XForms shared library is compatible with this one
     library.verify_version_compatibility()
-    library.set_initialized()
+    library.set_flinitialized()
     #numargs = 1
     i_numargs = library.convert_to_intc(numargs)
     ptr_numargs = cty.pointer(i_numargs)
-    #argslist = " "          # discard any script arguments
-    #argslist1 = " ".join(argslist)
     ptr_argslist = library.convert_to_ptr_stringc(argslist)
     s_appname = library.convert_to_stringc(appname)
     if not ptr_appoptions:      # if it is None
@@ -4226,9 +4206,8 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
         library.verify_otherclassptr_type(ptr_appoptions, \
                 cty.POINTER(xfdata.FL_CMD_OPT))
     i_numappopts = library.convert_to_intc(numappopts)
-    library.keep_elem_refs(numargs, ptr_numargs, argslist, \
-            ptr_argslist, appname, s_appname, ptr_appoptions, numappopts, \
-            i_numappopts)
+    library.keep_elem_refs(numargs, ptr_numargs, argslist, ptr_argslist, \
+            appname, s_appname, ptr_appoptions, numappopts, i_numappopts)
     retval = _fl_initialize(ptr_numargs, ptr_argslist, s_appname, \
             ptr_appoptions, i_numappopts)
     return retval
@@ -4237,9 +4216,9 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
 def fl_finish():
     """fl_finish()
 
-    It is a final cleanup routine, restores all X server defaults, shuts
-    down the connection and frees dynamically allocated memory. To be used
-    as the last function.
+    It is a final cleanup routine, restores all X server defaults, shuts down
+    the connection and frees dynamically allocated memory. To be used as the
+    last function.
 
     Examples
     --------
@@ -4247,14 +4226,14 @@ def fl_finish():
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NN-UTest + Doc + Demo = OK
 
     """
     _fl_finish = library.cfuncproto(
         library.load_so_libforms(), "fl_finish",
         None, [],
         """void fl_finish()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     _fl_finish()
 
 
@@ -4280,24 +4259,25 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
             FL_NONE (type for variables not to be used, or not available),
             FL_SHORT (type for short variable), FL_BOOL (type for boolean
             variable, int), FL_INT (type for int variable), FL_LONG (type for
-            long variable), FL_FLOAT (type for float variable), FL_STRING
-            (type for char[]/string variable)
+            long variable), FL_FLOAT (type for float variable), FL_STRING (type
+            for c_char_p/string variable)
         defval : str
             default value for resource data
         size : int
-            number of bytes, used only if dtype is FL_STRING
+            number of bytes+1, used only if dtype is xfdata.FL_STRING
 
     Returns
     -------
         restext : str
-            text representation of the resource value,
-            or None (on failure)
+            text representation of the resource value, or None (on failure)
         varvalue : any type
-            variable value
+            variable value. You will need to use the appropriate
+            xfstruct.convert_ptrvoid_to_*() function to retrieve correct value
 
     Examples
     --------
-        >>> *todo*
+        >>> text, myvalue = fl_get_resource("myresource", "", xfl.FL_STRING,
+                "normal", 7)
 
     API_diversion
     -------------
@@ -4306,28 +4286,49 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_resource = library.cfuncproto(
         library.load_so_libforms(), "fl_get_resource",
-        xfdata.STRING, [xfdata.STRING, xfdata.STRING,
-        xfdata.FL_RTYPE, xfdata.STRING, cty.c_void_p, cty.c_int],
+        xfdata.STRING, [xfdata.STRING, xfdata.STRING, xfdata.FL_RTYPE, \
+        xfdata.STRING, cty.c_void_p, cty.c_int],
         """const char * fl_get_resource(const char * rname,
-           const char * cname, FL_RTYPE dtype, const char * defval,
-           void * val, int size)""")
+        const char * cname, FL_RTYPE dtype, const char * defval, void * val,
+        int size)""")
     library.checkfatal_allowed_value_in_list(dtype, xfdata.RTYPE_list)
     s_resname = library.convert_to_stringc(resname)
     s_resclass = library.convert_to_stringc(resclass)
     i_dtype = library.convert_to_intc(dtype)
     s_defval = library.convert_to_stringc(defval)
-    ptr_varvalue = cty.c_void_p()  # it is of any type who will hold the value
+    # handling any type who will hold the value
+    if dtype == xfdata.FL_INT or dtype == xfdata.FL_BOOL:
+        varvalue, ptr_varvalue = library.make_intc_and_pointer()
+    elif dtype == xfdata.FL_FLOAT:
+        varvalue, ptr_varvalue = library.make_floatc_and_pointer()
+    elif dtype == xfdata.FL_STRING:
+        varvalue, ptr_varvalue = library.make_stringc_and_pointer()
+    else:       # if xfdata.FL_NONE
+        varvalue, ptr_varvalue = cty.c_void_p(), cty.c_void_p()
+    ptr_varvalue2 = cty.cast(ptr_varvalue, cty.c_void_p)
     i_size = library.convert_to_intc(size)
-    library.keep_elem_refs(resname, resclass, dtype, defval, size, \
-            s_resname, s_resclass, i_dtype, s_defval, ptr_varvalue, i_size)
+    library.keep_elem_refs(resname, resclass, dtype, defval, size, s_resname, \
+            s_resclass, i_dtype, s_defval, varvalue, ptr_varvalue, \
+            ptr_varvalue2, i_size)
     retval = _fl_get_resource(s_resname, s_resclass, i_dtype, s_defval, \
-            ptr_varvalue, i_size)
-    return retval, ptr_varvalue.contents.value
+            ptr_varvalue2, i_size)
+    if dtype == xfdata.FL_INT or dtype == xfdata.FL_BOOL:
+        ptr_varvalue3 = cty.cast(ptr_varvalue2, cty.POINTER(cty.c_int))
+        varvalue3 = ptr_varvalue3.contents.value
+    elif dtype == xfdata.FL_FLOAT:
+        ptr_varvalue3 = cty.cast(ptr_varvalue2, cty.POINTER(cty.c_float))
+        varvalue3 = ptr_varvalue3.contents.value
+    elif dtype == xfdata.FL_STRING:
+        ptr_varvalue3 = cty.cast(ptr_varvalue2, cty.c_char_p)
+        varvalue3 = ptr_varvalue3.value
+    else:       # if xfdata.FL_NONE
+        ptr_varvalue3 = varvalue3 = ptr_varvalue2
+    return retval, varvalue3
 
 
 def fl_set_resource(resnamecls, txtval):
@@ -4340,18 +4341,18 @@ def fl_set_resource(resnamecls, txtval):
     Parameters
     ----------
         resnamecls : str
-            a fully qualified resource name (minus the application name)
-            or a resource class
+            a fully qualified resource name (minus the application name) or
+            a resource class
         txtval : str
             new text value for resource
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_resource("myresource", "anyval")
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_resource = library.cfuncproto(
@@ -4372,12 +4373,11 @@ def fl_get_app_resources(ptr_flresource, numresources):
     Parameters
     ----------
         ptr_flresource : pointer to xfdata.FL_RESOURCE
-            an array of resource class instances. You can use
-            xfstruct.make_ptr_flresource() passing a dict or a list of dicts
-            with keys corresponding to xfdata.FL_RESOURCE attributes
+            an array of resource class instances. You can pass a dict or a
+            list of dicts (whose keys corresponding to xfdata.FL_RESOURCE
+            attributes) to xfstruct.make_ptr_flresource() function
         numresources : int
-            number of resources (starting from 1) passed with
-            ptr_flresource array
+            number of resources (starting from 1) passed with ptr_flresource
 
     Examples
     --------
@@ -4385,14 +4385,14 @@ def fl_get_app_resources(ptr_flresource, numresources):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_app_resources = library.cfuncproto(
         library.load_so_libforms(), "fl_get_app_resources",
         None, [cty.POINTER(xfdata.FL_RESOURCE), cty.c_int],
         """void fl_get_app_resources(FL_RESOURCE * appresource, int n)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_otherclassptr_type(ptr_flresource, \
             cty.POINTER(xfdata.FL_RESOURCE))
     i_numresources = library.convert_to_intc(numresources)
@@ -4400,19 +4400,19 @@ def fl_get_app_resources(ptr_flresource, numresources):
     _fl_get_app_resources(ptr_flresource, i_numresources)
 
 
-def fl_set_graphics_mode(mode, doublebuf):
-    """fl_set_graphics_mode(mode, doublebuf)
+def fl_set_graphics_mode(vmode, doublebuf):
+    """fl_set_graphics_mode(vmode, doublebuf)
 
     Defines graphics mode and doublebuffer state.
 
     Parameters
     ----------
-        mode : int
+        vmode : int
             visual mode. Values (from xfdata module) GrayScale, StaticGray,
             PseudoColor, StaticColor, DirectColor or TrueColor
         doublebuf : int
-            flag to enable/disable doublebuffer. Value 0 (to disable)
-            or 1 (to enable) *todo* to be verified!
+            flag to enable/disable doublebuffer. Value 0 (to disable) or 1 (to
+            enable)
 
     Examples
     --------
@@ -4420,32 +4420,32 @@ def fl_set_graphics_mode(mode, doublebuf):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_graphics_mode = library.cfuncproto(
         library.load_so_libforms(), "fl_set_graphics_mode",
         None, [cty.c_int, cty.c_int],
         """void fl_set_graphics_mode(int mode, int doublebuf)""")
-    library.check_if_initialized()
-    i_mode = library.convert_to_intc(mode)
+    library.check_if_flinitialized()
+    i_vmode = library.convert_to_intc(vmode)
     i_doublebuf = library.convert_to_intc(doublebuf)
-    library.keep_elem_refs(mode, doublebuf, i_mode, i_doublebuf)
-    _fl_set_graphics_mode(i_mode, i_doublebuf)
+    library.keep_elem_refs(vmode, doublebuf, i_vmode, i_doublebuf)
+    _fl_set_graphics_mode(i_vmode, i_doublebuf)
 
 
 def fl_set_visualID(vmode):
     """fl_set_visualID(vmode)
 
-    Defines visual mode and depth. By default, X Server's visual and
-    depth values are used.
+    Defines visual mode and depth. By default, X Server's visual and depth
+    values are used.
 
     Parameters
     ----------
         vmode : long
             visual mode. Values (from xfdata.py) StaticGray, GrayScale,
-            StaticColor, PseudoColor, TrueColor, DirectColor,
-            DefaultVisual, GreyScale, StaticGrey.
+            StaticColor, PseudoColor, TrueColor, DirectColor, DefaultVisual,
+            GreyScale, StaticGrey
 
     Examples
     --------
@@ -4453,7 +4453,7 @@ def fl_set_visualID(vmode):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
         Precondition: to be called before fl_initialize()
 
     """
@@ -4461,43 +4461,43 @@ def fl_set_visualID(vmode):
         library.load_so_libforms(), "fl_set_visualID",
         None, [cty.c_long],
         """void fl_set_visualID(long int id)""")
-    library.checkfatal_allowed_value_in_list(vmode, \
-            xfdata.VISUALMODE_list)
+    library.checkfatal_allowed_value_in_list(vmode, xfdata.VISUALMODE_list)
     l_vmode = library.convert_to_longc(vmode)
     library.keep_elem_refs(vmode, l_vmode)
     _fl_set_visualID(l_vmode)
 
 
 def fl_keysym_pressed(keysym):
-    """fl_keysym_pressed(keysym) -> num
+    """fl_keysym_pressed(keysym) -> result
 
-    Finds out if a keyboard symbol has been pressed *todo*
+    Finds out if a keyboard symbol has been pressed, or not.
 
     Parameters
     ----------
         keysym : long_pos
-            Symbol of key to evaluate. Values (from xfdata.py) e.g.
-            XK_Home, XK_Left, XK_BackSpace, etc...
+            Symbol of key to evaluate. Values (from xfdata.py) e.g. XK_Home,
+            XK_Left, XK_BackSpace, etc...
 
     Returns
     -------
-        num. : int
-            num., or 0 (on failure)
+        result : int
+            1 (if pressed), or 0 (if not pressed or on failure)
 
     Examples
     --------
-        >>> *todo*
+        >>> if fl_keysym_pressed(xfdata.XK_End):
+        >>> ... <something>
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_keysym_pressed = library.cfuncproto(
         library.load_so_libforms(), "fl_keysym_pressed",
         cty.c_int, [xfdata.KeySym],
         """int fl_keysym_pressed(KeySym k)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     ul_keysym = library.convert_to_ulongc(keysym)
     library.keep_elem_refs(keysym, ul_keysym)
     retval = _fl_keysym_pressed(ul_keysym)
@@ -4517,10 +4517,10 @@ def fl_set_defaults(pdmask, ptr_fliopt):
     Parameters
     ----------
         pdmask : long_pos
-            Mask of program defaults. Values (from xfdata.py)
-            FL_PDDepth (Preferred visual depth, "depth"), FL_PDClass (*todo*),
-            FL_PDDouble (Simulates double buffering, "doubleBuffer"), FL_PDSync
-            (*todo*), FL_PDPrivateMap (Selects private colormap if appropriate,
+            Mask of program defaults. Values (from xfdata.py) FL_PDDepth
+            (Preferred visual depth, "depth"), FL_PDClass (*todo*), FL_PDDouble
+            (Simulates double buffering, "doubleBuffer"), FL_PDSync (*todo*),
+            FL_PDPrivateMap (Selects private colormap if appropriate,
             "privateColormap"), FL_PDScrollbarType (Scrollbar type to use for
             browser and input, "scrollbarType"), FL_PDPupFontSize (Font size
             for pop-ups, "PupFontSize"), FL_PDButtonFontSize (Default button
@@ -4547,9 +4547,9 @@ def fl_set_defaults(pdmask, ptr_fliopt):
             font size), FL_PDInputLabelSize or FL_PDInputFontSize (Input label
             and text font size, "menuFontSize").
         ptr_fliopt : pointer to xfdata.FL_IOPT array
-            program defaults class instance. You can use xfstruct.make_ptr_fliopt
-            function passing a dict with keys corresponding to xfdata.FL_IOPT's
-            attributes.
+            program defaults class instance. You can use pass a dict or a list
+            of dicts (whose keys correspond to xfdata.FL_IOPT's attributes) to
+            xfstruct.make_ptr_fliopt() function.
 
     Examples
     --------
@@ -4557,8 +4557,8 @@ def fl_set_defaults(pdmask, ptr_fliopt):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
-        Precondition: yo be called before fl_initialize()
+        Status: NA-UTest + Doc + NoDemo = Maybe
+        Precondition: to be called before fl_initialize()
 
     """
     _fl_set_defaults = library.cfuncproto(
@@ -4576,19 +4576,17 @@ def fl_set_tabstop(tabtext):
     """fl_set_tabstop(tabtext)
 
     Adjusts the distance by setting the tab stops. For proportional font,
-    substituting tabs with spaces is not always appropriate because this
-    most likely will fail to align text properly. Instead, a tab is
-    treated as an absolute measure of distance, in pixels, and a tab
-    stop will always end at multiples of this distance. The default is
-    "aaaaaaaa" (i.e. eight 'a's).
+    substituting tabs with spaces is not always appropriate because this most
+    likely will fail to align text properly. Instead, a tab is treated as an
+    absolute measure of distance, in pixels, and a tab stop will always end at
+    multiples of this distance. The default is "aaaaaaaa" (i.e. eight 'a's).
 
     Parameters
     ----------
         tabtext : str
-            text string whose width in pixel is to be used as the tab
-            length. The font used to calculate the width is the same
-            font that is used to render the string in which the tab
-            is embedded.
+            text string whose width in pixel is to be used as the tab length.
+            The font used to calculate the width is the same font that is used
+            to render the string in which the tab is embedded.
 
     Examples
     --------
@@ -4596,14 +4594,14 @@ def fl_set_tabstop(tabtext):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_tabstop = library.cfuncproto(
         library.load_so_libforms(), "fl_set_tabstop",
         None, [xfdata.STRING],
         """void fl_set_tabstop(const char * s)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     s_tabtext = library.convert_to_stringc(tabtext)
     library.keep_elem_refs(tabtext, s_tabtext)
     _fl_set_tabstop(s_tabtext)
@@ -4616,12 +4614,12 @@ def fl_get_defaults():
 
     Returns
     -------
-        ptr_fliopt : instance of xfdata.FL_IOPT
+        ptr_fliopt : pointer to xfdata.FL_IOPT
             program defaults class instance
 
     Examples
     --------
-        >>> defprgres = fl_get_defaults()
+        >>> pdefprgres = fl_get_defaults()
 
     API_diversion
     -------------
@@ -4629,14 +4627,14 @@ def fl_get_defaults():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_defaults = library.cfuncproto(
         library.load_so_libforms(), "fl_get_defaults",
         None, [cty.POINTER(xfdata.FL_IOPT)],
         """void fl_get_defaults(FL_IOPT * cntl)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     iopt = xfdata.FL_IOPT()
     ptr_fliopt = cty.pointer(iopt)
     library.keep_elem_refs(iopt, ptr_fliopt)
@@ -4652,7 +4650,7 @@ def fl_get_visual_depth():
     Returns
     -------
         depth : int
-            visual depth for current mode
+            visual depth for current mode (e.g. 1, 4, 8, 16, 24?, 32 ..)
 
     Examples
     --------
@@ -4660,32 +4658,32 @@ def fl_get_visual_depth():
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_visual_depth = library.cfuncproto(
         library.load_so_libforms(), "fl_get_visual_depth",
         cty.c_int, [],
         """int fl_get_visual_depth()""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     retval = _fl_get_visual_depth()
     return retval
 
 
-def fl_vclass_name(mode):
-    """fl_vclass_name(mode) -> name
+def fl_vclass_name(vmode):
+    """fl_vclass_name(vmode) -> vname
 
     Finds out name corresponding to a visual mode.
 
     Parameters
     ----------
-        mode : int
+        vmode : int
             visual mode
 
     Returns
     -------
-        name : str
-            vclass name
+        vname : str
+            name corresponding to visual mode
 
     Examples
     --------
@@ -4693,34 +4691,34 @@ def fl_vclass_name(mode):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_vclass_name = library.cfuncproto(
         library.load_so_libforms(), "fl_vclass_name",
         xfdata.STRING, [cty.c_int],
         """const char * fl_vclass_name(int n)""")
-    library.check_if_initialized()
-    i_mode = library.convert_to_intc(mode)
-    library.keep_elem_refs(mode, i_mode)
-    retval = _fl_vclass_name(i_mode)
+    library.check_if_flinitialized()
+    i_vmode = library.convert_to_intc(vmode)
+    library.keep_elem_refs(vmode, i_vmode)
+    retval = _fl_vclass_name(i_vmode)
     return retval
 
 
-def fl_vclass_val(name):
-    """fl_vclass_val(name) -> vclass
+def fl_vclass_val(vname):
+    """fl_vclass_val(vname) -> vmode
 
     Finds out value of visual mode.
 
     Parameters
     ----------
-        name : str
+        vname : str
             name of visual mode
 
     Returns
     -------
-        vclass : int
-            *todo*
+        vmode : int
+            visual mode corresponding to name
 
     Examples
     --------
@@ -4728,17 +4726,17 @@ def fl_vclass_val(name):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_vclass_val = library.cfuncproto(
         library.load_so_libforms(), "fl_vclass_val",
         cty.c_int, [xfdata.STRING],
         """int fl_vclass_val(const char * v)""")
-    library.check_if_initialized()
-    s_name = library.convert_to_stringc(name)
-    library.keep_elem_refs(name, s_name)
-    retval = _fl_vclass_val(s_name)
+    library.check_if_flinitialized()
+    s_vname = library.convert_to_stringc(vname)
+    library.keep_elem_refs(vname, s_vname)
+    retval = _fl_vclass_val(s_vname)
     return retval
 
 
@@ -4750,8 +4748,8 @@ def fl_set_ul_property(proportional, thickness):
     Parameters
     ----------
         proportional : int
-            if width is proportional or not. Values 0 (if fixed)
-            or 1 (if proportional)
+            if width is proportional or not. Values 0 (if fixed) or 1 (if
+            proportional)
         thickness : int
             thickness of underline.
 
@@ -4761,7 +4759,7 @@ def fl_set_ul_property(proportional, thickness):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_ul_property = library.cfuncproto(
@@ -4778,11 +4776,10 @@ def fl_set_ul_property(proportional, thickness):
 def fl_set_clipping(xpos, ypos, width, height):
     """fl_set_clipping(xpos, ypos, width, height)
 
-    Defines a clipping region in the XForms Library's default GC (gc[0]).
+    Defines a clipping region in the XForms default graphics context (gc[0]).
     This defines the area (delimited by arguments passed) drawing is to
-    restrict to and are relative to the window/form that will be drawn
-    to. In this way you can prevent drawing over other flobject and
-    outside the box.
+    restrict to and are relative to the window/form that will be drawn to. In
+    this way you can prevent drawing over other flobject and outside the box.
 
     Parameters
     ----------
@@ -4801,7 +4798,7 @@ def fl_set_clipping(xpos, ypos, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_clipping = library.cfuncproto(
@@ -4819,21 +4816,18 @@ def fl_set_clipping(xpos, ypos, width, height):
     _fl_set_clipping(i_xpos, i_ypos, i_width, i_height)
 
 
-# commented as it gives a NULL pointer access. Maybe GCs other than
-# default are not viable in python??
-def fl_set_gc_clipping(gc, xpos, ypos, width, height):
-    """fl_set_gc_clipping(gc, xpos, ypos, width, height)
+def fl_set_gc_clipping(gctx, xpos, ypos, width, height):
+    """fl_set_gc_clipping(gctx, xpos, ypos, width, height)
 
-    Defines a clipping region in the specified graphics context (GC).
-    This defines the area (delimited by arguments passed) drawing is to
-    restrict to and are relative to the window/form that will be drawn
-    to. In this way you can prevent drawing over other flobject and
-    outside the box.
+    Defines a clipping region in the specified graphics context. This defines
+    the area (delimited by arguments passed) drawing is to restrict to and are
+    relative to the window/form that will be drawn to. In this way you can
+    prevent drawing over other flobject and outside the box.
 
     Parameters
     ----------
-       gc : xfdata.GC class instance
-            Graphics Context number
+       gctx : xfdata.GC
+            Graphics Context class instance. You can use fl_gc()?
        xpos : int
             horizontal position (upper-left corner)
        ypos : int
@@ -4845,68 +4839,71 @@ def fl_set_gc_clipping(gc, xpos, ypos, width, height):
 
     Examples
     --------
-       >>> *todo*
+        >>> graco = xfl.fl_gc()
+        >>> fl_set_gc_clipping(graco, 250, 200, 100, 80)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_gc_clipping = library.cfuncproto(
         library.load_so_libforms(), "fl_set_gc_clipping",
         None, [xfdata.GC, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord,
         xfdata.FL_Coord],
-        """void fl_set_gc_clipping(GC gc, FL_Coord x, FL_Coord y,
+        """void fl_set_gc_clipping(GC  gctx, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h)""")
-    # TODO: must be initialized?
-    # GC to be handled
+    library.check_if_flinitialized()
+    library.verify_otherclassptr_type(gctx, xfdata.GC)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    library.keep_elem_refs(gc, xpos, ypos, width, height, i_xpos, i_ypos, \
+    library.keep_elem_refs(gctx, xpos, ypos, width, height, i_xpos, i_ypos, \
             i_width, i_height)
-    _fl_set_gc_clipping(gc, i_xpos, i_ypos, i_width, i_height)
+    _fl_set_gc_clipping(gctx, i_xpos, i_ypos, i_width, i_height)
 
 
-# commented as it gives a NULL pointer access. Maybe GCs other than
-# default are not viable in python??
-def fl_unset_gc_clipping(gc):
-    """ fl_unset_gc_clipping(gc)
+def fl_unset_gc_clipping(gctx):
+    """ fl_unset_gc_clipping(gctx)
 
     Removes clipping region in the specified graphics context (GC).
 
     Parameters
     ----------
-       gc : xfdata.GC class instance
-            Graphics Context number
+       gctx : xfdata.GC
+            Graphics Context class instance. You can use fl_gc()?
+
+    Examples
+    --------
+        >>> graco = xfl.fl_gc()
+        >>> fl_unset_gc_clipping(graco)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_unset_gc_clipping = library.cfuncproto(
         library.load_so_libforms(), "fl_unset_gc_clipping",
         None, [xfdata.GC],
         """void fl_unset_gc_clipping(GC gc)""")
-    # TODO: must be initialized?
-    # GC to be handled
-    library.keep_elem_refs(gc)
-    _fl_unset_gc_clipping(gc)
+    library.check_if_flinitialized()
+    library.verify_otherclassptr_type(gctx, xfdata.GC)
+    library.keep_elem_refs(gctx)
+    _fl_unset_gc_clipping(gctx)
 
 
 def fl_set_clippings(ptr_rect, numrects):
     """fl_set_clippings(ptr_rect, numrects)
 
-    Changes the clip-mask in the specified GC to the specified list
-    of rectangles and sets the clip origin. The output is clipped
-    to remain contained within the rectangles. The clip-origin is
-    interpreted relative to the origin of whatever destination
-    drawable is specified in a graphics request. The rectangle
-    coordinates are interpreted relative to the clip-origin. The
-    rectangles should be nonintersecting, or the graphics results
-    will be undefined.
+    Changes the clip-mask in the specified GC to the specified list of
+    rectangles and sets the clip origin. The output is clipped to remain
+    contained within the rectangles. The clip-origin is interpreted relative
+    to the origin of whatever destination drawable is specified in a graphics
+    request. The rectangle coordinates are interpreted relative to the
+    clip-origin. The rectangles should be nonintersecting, or the graphics
+    results will be undefined.
 
     Parameters
     ----------
@@ -4921,14 +4918,15 @@ def fl_set_clippings(ptr_rect, numrects):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_clippings = library.cfuncproto(
         library.load_so_libforms(), "fl_set_clippings",
         None, [cty.POINTER(xfdata.FL_RECT), cty.c_int],
         """void fl_set_clippings(FL_RECT * xrect, int n)""")
-    # TODO: must be initialized?
+    library.check_if_flinitialized()
+    library.verify_otherclassptr_type(ptr_rect, cty.POINTER(xfdata.FL_RECT))
     i_numrects = library.convert_to_intc(numrects)
     library.keep_elem_refs(ptr_rect, numrects, i_numrects)
     _fl_set_clippings(ptr_rect, i_numrects)
@@ -4937,8 +4935,7 @@ def fl_set_clippings(ptr_rect, numrects):
 def fl_unset_clipping():
     """fl_unset_clipping()
 
-    Stops clipping and removes clipping area defined with
-    fl_set_clipping()
+    Stops clipping and removes clipping area defined with fl_set_clipping().
 
     Examples
     --------
@@ -4946,25 +4943,25 @@ def fl_unset_clipping():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_unset_clipping = library.cfuncproto(
         library.load_so_libforms(), "fl_unset_clipping",
         None, [],
         """void fl_unset_clipping()""")
-    # TODO: must be initialized?
+    library.check_if_flinitialized()
     _fl_unset_clipping()
 
 
 def fl_set_text_clipping(xpos, ypos, width, height):
     """fl_set_text_clipping(xpos, ypos, width, height)
 
-    Defines a clipping region for text in the XForms Library's default
-    GC (gc[0]). This defines the area (delimited by arguments passed)
-    drawing is to restrict to and are relative to the window/form that
-    will be drawn to. In this way you can prevent drawing over other
-    flobject and outside the box.
+    Defines a clipping region for text in the XForms default graphics context
+    (gc[0]). This defines the area (delimited by arguments passed) drawing is
+    to restrict to and are relative to the window/form that will be drawn to.
+    In this way you can prevent drawing over other flobjects and outside the
+    box.
 
     Parameters
     ----------
@@ -4983,7 +4980,7 @@ def fl_set_text_clipping(xpos, ypos, width, height):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_text_clipping = library.cfuncproto(
@@ -4992,7 +4989,7 @@ def fl_set_text_clipping(xpos, ypos, width, height):
         xfdata.FL_Coord],
         """void fl_set_text_clipping(FL_Coord x, FL_Coord y, FL_Coord w,
            FL_Coord h)""")
-    # TODO: must be initialized?
+    library.check_if_flinitialized()
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
@@ -5006,7 +5003,7 @@ def fl_unset_text_clipping():
     """fl_unset_text_clipping()
 
     Stops clipping for text and removes clipping area defined with
-    fl_set_text_clipping()
+    fl_set_text_clipping().
 
     Examples
     --------
@@ -5014,14 +5011,14 @@ def fl_unset_text_clipping():
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_unset_text_clipping = library.cfuncproto(
         library.load_so_libforms(), "fl_unset_text_clipping",
         None, [],
         """void fl_unset_text_clipping()""")
-    # TODO: must be initialized?
+    library.check_if_flinitialized()
     _fl_unset_text_clipping()
 
 
@@ -5039,43 +5036,191 @@ def FL_PCCLAMP(a):
 # If PCBITS is not 8, we need to apply the RGBmask
 
 def FL_GETR(packed):
+    """FL_GETR(packed) -> red
+
+    Retrieve red value from a packed color value.
+
+    Parameters
+    ----------
+        packed : int?
+            packed value of color
+
+    Returns
+    -------
+        red : int?
+            value for red
+
+    """
     return (packed >> xfdata.FL_RSHIFT) & xfdata.FL_RMASK
 
 
 def FL_GETG(packed):
+    """FL_GETG(packed) -> green
+
+    Retrieve green value from a packed color value.
+
+    Parameters
+    ----------
+        packed : int?
+            packed value of color
+
+    Returns
+    -------
+        green : int?
+            value for green
+
+    """
     return (packed >> xfdata.FL_GSHIFT) & xfdata.FL_PCMAX
 
 
 def FL_GETB(packed):
+    """FL_GETB(packed) -> blue
+
+    Retrieve blue value from a packed color value.
+
+    Parameters
+    ----------
+        packed : int?
+            packed value of color
+
+    Returns
+    -------
+        blue : int?
+            value for blue
+
+    """
     return (packed >> xfdata.FL_BSHIFT) & xfdata.FL_PCMAX
 
 
 def FL_GETA(packed):
+    """FL_GETA(packed) -> alpha
+
+    Retrieve alpha level from a packed color value.
+
+    Parameters
+    ----------
+        packed : int?
+            packed value of color
+
+    Returns
+    -------
+        alpha : int?
+            alpha level
+
+    """
     return (packed >> xfdata.FL_ASHIFT) & xfdata.FL_PCMAX
 
 
-def FL_PACK3(r, g, b):
-    return (r << xfdata.FL_RSHIFT) | (g << xfdata.FL_GSHIFT) | \
-        (b << xfdata.FL_BSHIFT)
+def FL_PACK3(red, green, blue):
+    """FL_PACK4(red, green, blue) - > packed
+
+    Packs red, green and blue values into a packed color value.
+
+    Parameters
+    ----------
+        red : int?
+            value for red
+        green : int?
+            value for green
+        blue : int?
+            value for blue
+
+    Returns
+    -------
+        packed : int?
+            packed value of color
+
+    """
+    return (red << xfdata.FL_RSHIFT) | (green << xfdata.FL_GSHIFT) | \
+            (blue << xfdata.FL_BSHIFT)
 
 FL_PACK = FL_PACK3
 
 
-def FL_PACK4(r, g, b, a):
-    return (FL_PACK3(r, g, b) | (a << xfdata.FL_ASHIFT))
+def FL_PACK4(red, green, blue, alphalvl):
+    """FL_PACK4(red, green, blue, alpha) - > packed
+
+    Packs red, green, blue and alpha? values into a packed color value.
+
+    Parameters
+    ----------
+        red : int?
+            value for red
+        green : int?
+            value for green
+        blue : int?
+            value for blue
+        alphalvl : int?
+            alpha level
+
+    Returns
+    -------
+        packed : int?
+            packed value of color
+
+    """
+    return (FL_PACK3(red, green, blue) | (alphalvl << xfdata.FL_ASHIFT))
 
 
 def FL_UNPACK(packed):
-    r = FL_GETR(packed)
-    g = FL_GETG(packed)
-    b = FL_GETB(packed)
-    return r, g, b
+    """FL_UNPACK(packed) -> red, green, blue
+
+    Unpacks a packed color value into red, green and blue values.
+
+    Parameters
+    ----------
+        packed : int?
+            packed value of color
+
+    Returns
+    -------
+        red : int?
+            value for red
+        green : int?
+            value for green
+        blue : int?
+            value for blue
+
+    API_diversion
+    -------------
+        API changed from upstream, XForms is FL_UNPACK4(p, r, g, b)
+
+    """
+    red = FL_GETR(packed)
+    green = FL_GETG(packed)
+    blue = FL_GETB(packed)
+    return red, green, blue
 
 FL_UNPACK3 = FL_UNPACK
 
 
-def FL_UNPACK4(p, r, g, b, a):
-    r, g, b = FL_UNPACK3(p, r, g, b)
-    a = FL_GETA(p)
-    return r, g, b, a
+def FL_UNPACK4(packed):
+    """FL_UNPACK4(packed) -> red, green, blue, alphalvl
+
+    Unpacks a packed color value into red, green, blue and alpha values.
+
+    Parameters
+    ----------
+        packed : int?
+            packed value of color
+
+    Returns
+    -------
+        red : int?
+            value for red
+        green : int?
+            value for green
+        blue : int?
+            value for blue
+        alphalvl : int?
+            alpha level
+
+    API_diversion
+    -------------
+        API changed from upstream, XForms is FL_UNPACK4(p, r, g, b, a)
+
+    """
+    red, green, blue = FL_UNPACK3(packed)
+    alphalvl = FL_GETA(packed)
+    return red, green, blue, alphalvl
 

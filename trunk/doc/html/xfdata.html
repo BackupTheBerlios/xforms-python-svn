@@ -88,7 +88,6 @@
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#FL_State">FL_State</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#FL_pixmap_">FL_pixmap_</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#FL_pixmap_">FL_pixmap_</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#GLXContext">GLXContext</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#Screen">Screen</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#ScreenFormat">ScreenFormat</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#Visual">Visual</a>
@@ -187,6 +186,7 @@
 <dt><font face="helvetica, arial">LP_FL_OBJECT_
 </font></dt><dt><font face="helvetica, arial">LP_XrmOptionDescRec
 </font></dt><dt><font face="helvetica, arial">LP__XGC
+</font></dt><dt><font face="helvetica, arial">LP___GLXcontextRec
 </font></dt><dt><font face="helvetica, arial">LP_flimage_setup_
 </font></dt></dl>
 </dd>
@@ -932,7 +932,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;processing&nbsp;routines.&nbsp;It&nbsp;is&nbsp;meant&nbsp;to&nbsp;give&nbsp;the&nbsp;user&nbsp;some&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;feedback&nbsp;about&nbsp;what&nbsp;is&nbsp;happening.&nbsp;For&nbsp;lengthy&nbsp;tasks,&nbsp;this<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;is&nbsp;called&nbsp;repeatedly&nbsp;and&nbsp;periodically&nbsp;to&nbsp;indicate&nbsp;what<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percentage&nbsp;of&nbsp;the&nbsp;task&nbsp;is&nbsp;completed&nbsp;and&nbsp;to&nbsp;give&nbsp;the&nbsp;application&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percentage&nbsp;of&nbsp;the&nbsp;task&nbsp;is&nbsp;completed&nbsp;and&nbsp;to&nbsp;give&nbsp;the&nbsp;application<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;a&nbsp;chance&nbsp;to&nbsp;check&nbsp;and&nbsp;process&nbsp;GUI&nbsp;activities&nbsp;(for&nbsp;example,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;via&nbsp;fl_check_forms()).&nbsp;The&nbsp;1st&nbsp;parameter&nbsp;to&nbsp;the&nbsp;function&nbsp;is&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;(pointer&nbsp;to&nbsp;<a href="#FL_IMAGE">FL_IMAGE</a>)&nbsp;currently&nbsp;being&nbsp;worked&nbsp;on&nbsp;and&nbsp;the<br>
@@ -947,7 +947,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage.contents.total,&nbsp;multiplied&nbsp;by&nbsp;100.&nbsp;At&nbsp;the&nbsp;begin&nbsp;of&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;ptr_flimage.contents.completed&nbsp;is&nbsp;set&nbsp;to&nbsp;a&nbsp;value&nbsp;less&nbsp;or&nbsp;equal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;and&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;task,&nbsp;ptr_flimage.contents.completed&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;to&nbsp;ptr_flimage.contents.total.&nbsp;A&nbsp;special&nbsp;value&nbsp;of&nbsp;-1&nbsp;for&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;to&nbsp;ptr_flimage.contents.total.&nbsp;A&nbsp;special&nbsp;value&nbsp;of&nbsp;-1&nbsp;for<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage.contents.completed&nbsp;may&nbsp;be&nbsp;used&nbsp;to&nbsp;indicate&nbsp;a&nbsp;task&nbsp;of<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unknown&nbsp;length.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;error_message&nbsp;:&nbsp;function,&nbsp;no&nbsp;return<br>
@@ -2739,10 +2739,10 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green_lut&nbsp;:&nbsp;pointer&nbsp;to&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;lookup&nbsp;tables&nbsp;for&nbsp;a&nbsp;color&nbsp;index&nbsp;image.&nbsp;Each&nbsp;of&nbsp;the&nbsp;table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;blue_lut&nbsp;:&nbsp;pointer&nbsp;to&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;lookup&nbsp;tables&nbsp;for&nbsp;a&nbsp;color&nbsp;index&nbsp;image.&nbsp;Each&nbsp;of&nbsp;the&nbsp;table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;alpha_lut&nbsp;:&nbsp;pointer&nbsp;to&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;lookup&nbsp;tables.&nbsp;Although&nbsp;alpha&nbsp;lut&nbsp;is&nbsp;always&nbsp;allocated&nbsp;for<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;color&nbsp;index&nbsp;image,&nbsp;it&nbsp;is&nbsp;currently&nbsp;not&nbsp;used&nbsp;by&nbsp;XForms.<br>
@@ -3832,10 +3832,10 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;which&nbsp;automatically&nbsp;get&nbsp;adjusted&nbsp;when&nbsp;the&nbsp;above&nbsp;function&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used.&nbsp;Values&nbsp;are:&nbsp;FL_RETURN_NONE&nbsp;(flobject&nbsp;gets&nbsp;never&nbsp;returned&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;callback&nbsp;invoked),&nbsp;FL_RETURN_CHANGED&nbsp;(returns&nbsp;flobject&nbsp;or<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;callback&nbsp;when&nbsp;state&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;changed),&nbsp;FL_RETURN_END&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;callback&nbsp;when&nbsp;state&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;changed),&nbsp;FL_RETURN_END<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;at&nbsp;end&nbsp;of&nbsp;interaction,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normally&nbsp;when&nbsp;the&nbsp;mouse&nbsp;key&nbsp;is&nbsp;released&nbsp;or,&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;input<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobjects,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;has&nbsp;lost&nbsp;focus),&nbsp;FL_RETURN_END_CHANGED&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobjects,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;has&nbsp;lost&nbsp;focus),&nbsp;FL_RETURN_END_CHANGED<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;only&nbsp;when&nbsp;interaction&nbsp;has<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ended&nbsp;and&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;flobject&nbsp;has&nbsp;changed),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_SELECTION&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;if&nbsp;e.g.<br>
@@ -4382,10 +4382,10 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;which&nbsp;automatically&nbsp;get&nbsp;adjusted&nbsp;when&nbsp;the&nbsp;above&nbsp;function&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used.&nbsp;Values&nbsp;are:&nbsp;FL_RETURN_NONE&nbsp;(flobject&nbsp;gets&nbsp;never&nbsp;returned&nbsp;or<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;its&nbsp;callback&nbsp;invoked),&nbsp;FL_RETURN_CHANGED&nbsp;(returns&nbsp;flobject&nbsp;or<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;callback&nbsp;when&nbsp;state&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;changed),&nbsp;FL_RETURN_END&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;callback&nbsp;when&nbsp;state&nbsp;of&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;changed),&nbsp;FL_RETURN_END<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;at&nbsp;end&nbsp;of&nbsp;interaction,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normally&nbsp;when&nbsp;the&nbsp;mouse&nbsp;key&nbsp;is&nbsp;released&nbsp;or,&nbsp;in&nbsp;the&nbsp;case&nbsp;of&nbsp;input<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobjects,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;has&nbsp;lost&nbsp;focus),&nbsp;FL_RETURN_END_CHANGED&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flobjects,&nbsp;the&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;has&nbsp;lost&nbsp;focus),&nbsp;FL_RETURN_END_CHANGED<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;only&nbsp;when&nbsp;interaction&nbsp;has<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ended&nbsp;and&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;flobject&nbsp;has&nbsp;changed),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RETURN_SELECTION&nbsp;(returns&nbsp;flobject&nbsp;or&nbsp;invokes&nbsp;callback&nbsp;if&nbsp;e.g.<br>
@@ -5977,7 +5977,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="FL_RESOURCE">class <strong>FL_RESOURCE</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>XForms&nbsp;Library&nbsp;built-in&nbsp;resource.<br>
+<td colspan=2><tt>XForms&nbsp;built-in&nbsp;resource.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -5986,13 +5986,13 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;res_class&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;type,&nbsp;e.g.&nbsp;FL_INT,&nbsp;FL_FLOAT,&nbsp;FL_BOOL,&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;type,&nbsp;e.g.&nbsp;FL_INT,&nbsp;FL_FLOAT,&nbsp;FL_BOOL,&nbsp;FL_STRING,&nbsp;etc..<br>
 &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;for&nbsp;the&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;for&nbsp;the&nbsp;variable&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defval&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;setting&nbsp;in&nbsp;string&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nbytes&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;used&nbsp;only&nbsp;if&nbsp;var&nbsp;has&nbsp;'str'&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;in&nbsp;bytes+1&nbsp;used&nbsp;only&nbsp;if&nbsp;var&nbsp;has&nbsp;'str'&nbsp;type<br>
 &nbsp;<br>
 List&nbsp;of&nbsp;resources<br>
 -----------------<br>
@@ -6639,7 +6639,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><strong>FL_resource</strong> = <a name="FL_resource">class FL_RESOURCE</a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>XForms&nbsp;Library&nbsp;built-in&nbsp;resource.<br>
+<td colspan=2><tt>XForms&nbsp;built-in&nbsp;resource.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -6648,13 +6648,13 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;res_class&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resource&nbsp;class<br>
 &nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;type,&nbsp;e.g.&nbsp;FL_INT,&nbsp;FL_FLOAT,&nbsp;FL_BOOL,&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;type,&nbsp;e.g.&nbsp;FL_INT,&nbsp;FL_FLOAT,&nbsp;FL_BOOL,&nbsp;FL_STRING,&nbsp;etc..<br>
 &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;for&nbsp;the&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;for&nbsp;the&nbsp;variable&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defval&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;setting&nbsp;in&nbsp;string&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nbytes&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;used&nbsp;only&nbsp;if&nbsp;var&nbsp;has&nbsp;'str'&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;in&nbsp;bytes+1&nbsp;used&nbsp;only&nbsp;if&nbsp;var&nbsp;has&nbsp;'str'&nbsp;type<br>
 &nbsp;<br>
 List&nbsp;of&nbsp;resources<br>
 -----------------<br>
@@ -6814,14 +6814,12 @@ Methods inherited from _ctypes._CData:<br>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="GLXContext">class <strong>GLXContext</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><strong>GLXContext</strong> = <a name="GLXContext">class LP___GLXcontextRec</a>(<a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>)</font></td></tr>
     
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>#&nbsp;my&nbsp;add&nbsp;--LK<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
-<dd><a href="xfdata.html#GLXContext">GLXContext</a></dd>
-<dd><a href="_ctypes.html#Structure">_ctypes.Structure</a></dd>
+<dd>LP___GLXcontextRec</dd>
+<dd><a href="_ctypes.html#_Pointer">_ctypes._Pointer</a></dd>
 <dd>_ctypes._CData</dd>
 <dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
 </dl>
@@ -6834,22 +6832,39 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="_ctypes.html#Structure">_ctypes.Structure</a>:<br>
-<dl><dt><a name="GLXContext-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
+<dl><dt><a name="LP___GLXcontextRec-__delitem__"><strong>__delitem__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__delitem__">__delitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;del&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="LP___GLXcontextRec-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
+
+<dl><dt><a name="LP___GLXcontextRec-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
+&nbsp;<br>
+Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
+
+<dl><dt><a name="LP___GLXcontextRec-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+
+<dl><dt><a name="LP___GLXcontextRec-__nonzero__"><strong>__nonzero__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__nonzero__">__nonzero__</a>()&nbsp;&lt;==&gt;&nbsp;x&nbsp;!=&nbsp;0</tt></dd></dl>
+
+<dl><dt><a name="LP___GLXcontextRec-__setitem__"><strong>__setitem__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__setitem__">__setitem__</a>(i,&nbsp;y)&nbsp;&lt;==&gt;&nbsp;x[i]=y</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="_ctypes.html#Structure">_ctypes.Structure</a>:<br>
-<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.StructType object&gt;<dd><tt>T.<a href="#GLXContext-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+Data descriptors inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
+<dl><dt><strong>contents</strong></dt>
+<dd><tt>the&nbsp;object&nbsp;this&nbsp;pointer&nbsp;points&nbsp;to&nbsp;(read-write)</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="_ctypes.html#_Pointer">_ctypes._Pointer</a>:<br>
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of _ctypes.PointerType object&gt;<dd><tt>T.<a href="#GLXContext-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
 Methods inherited from _ctypes._CData:<br>
-<dl><dt><a name="GLXContext-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
+<dl><dt><a name="LP___GLXcontextRec-__ctypes_from_outparam__"><strong>__ctypes_from_outparam__</strong></a>(...)</dt></dl>
 
-<dl><dt><a name="GLXContext-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+<dl><dt><a name="LP___GLXcontextRec-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#GLXContext-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
 
-<dl><dt><a name="GLXContext-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
+<dl><dt><a name="LP___GLXcontextRec-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
-<dl><dt><a name="GLXContext-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+<dl><dt><a name="LP___GLXcontextRec-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
 
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -7126,7 +7141,7 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="Visual">class <strong>Visual</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#Visual">Visual</a>&nbsp;class.&nbsp;It&nbsp;contains&nbsp;information&nbsp;about&nbsp;colormapping&nbsp;possible.<br>
+<td colspan=2><tt><a href="#Visual">Visual</a>&nbsp;class.&nbsp;It&nbsp;contains&nbsp;information&nbsp;about&nbsp;possible&nbsp;colormapping.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -8424,9 +8439,9 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window&nbsp;id&nbsp;of&nbsp;window&nbsp;created<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;horizontal&nbsp;location&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;horizontal&nbsp;location<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;vertical&nbsp;location&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;vertical&nbsp;location<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
@@ -9143,7 +9158,13 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XExposeEvent">class <strong>XExposeEvent</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>X11&nbsp;<a href="#XExposeEvent">XExposeEvent</a>&nbsp;class<br>
+<td colspan=2><tt>X11&nbsp;<a href="#XExposeEvent">XExposeEvent</a>&nbsp;class.&nbsp;The&nbsp;expose&nbsp;event&nbsp;is&nbsp;one&nbsp;of&nbsp;the&nbsp;most&nbsp;basic&nbsp;events<br>
+an&nbsp;application&nbsp;may&nbsp;receive.&nbsp;It&nbsp;will&nbsp;be&nbsp;sent&nbsp;in&nbsp;one&nbsp;of&nbsp;several&nbsp;cases:<br>
+-&nbsp;A&nbsp;window&nbsp;that&nbsp;covered&nbsp;part&nbsp;of&nbsp;our&nbsp;window&nbsp;has&nbsp;moved&nbsp;away,&nbsp;exposing&nbsp;part<br>
+(or&nbsp;all)&nbsp;of&nbsp;our&nbsp;window;<br>
+-&nbsp;Our&nbsp;window&nbsp;was&nbsp;raised&nbsp;above&nbsp;other&nbsp;windows;<br>
+-&nbsp;Our&nbsp;window&nbsp;mapped&nbsp;for&nbsp;the&nbsp;first&nbsp;time;<br>
+-&nbsp;Our&nbsp;window&nbsp;was&nbsp;de-iconified.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -9156,17 +9177,22 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#Display">Display</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Display">Display</a>&nbsp;the&nbsp;event&nbsp;was&nbsp;read&nbsp;from<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;:&nbsp;long_pos<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Window&nbsp;of&nbsp;the&nbsp;event<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;id&nbsp;of&nbsp;the&nbsp;window&nbsp;this&nbsp;expose&nbsp;event&nbsp;was&nbsp;sent&nbsp;for<br>
 &nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(in&nbsp;pixels)&nbsp;from&nbsp;the&nbsp;top-left&nbsp;of&nbsp;the&nbsp;window,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;window's&nbsp;region&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;redrawn<br>
 &nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;(in&nbsp;pixels)&nbsp;from&nbsp;the&nbsp;top-left&nbsp;of&nbsp;the&nbsp;window,&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;window's&nbsp;region&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;redrawn<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;(in&nbsp;pixels)&nbsp;of&nbsp;the&nbsp;window's&nbsp;region&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;redraw<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;(in&nbsp;pixels)&nbsp;of&nbsp;the&nbsp;window's&nbsp;region&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;redraw<br>
 &nbsp;&nbsp;&nbsp;&nbsp;count&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;non-zero,&nbsp;at&nbsp;least&nbsp;this&nbsp;many&nbsp;more?<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;other&nbsp;expose&nbsp;events&nbsp;waiting&nbsp;in&nbsp;the&nbsp;server's&nbsp;events&nbsp;queue.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;may&nbsp;be&nbsp;useful&nbsp;if&nbsp;we&nbsp;got&nbsp;several&nbsp;expose&nbsp;events&nbsp;in&nbsp;a&nbsp;row,&nbsp;we<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;usually&nbsp;avoid&nbsp;redrawing&nbsp;the&nbsp;window&nbsp;until&nbsp;we&nbsp;get&nbsp;the&nbsp;last&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;them&nbsp;(i.e.&nbsp;until&nbsp;count&nbsp;is&nbsp;0)<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="xfdata.html#XExposeEvent">XExposeEvent</a></dd>
@@ -12647,8 +12673,8 @@ Methods inherited from _ctypes._CData:<br>
 <font color="#000000" face="helvetica, arial"><a name="XSetWindowAttributes">class <strong>XSetWindowAttributes</strong></a>(<a href="_ctypes.html#Structure">_ctypes.Structure</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt><a href="#XSetWindowAttributes">XSetWindowAttributes</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;setting<br>
-window&nbsp;attributes.<br>
+<td colspan=2><tt><a href="#XSetWindowAttributes">XSetWindowAttributes</a>&nbsp;class.&nbsp;Data&nbsp;structure&nbsp;for&nbsp;setting&nbsp;window<br>
+attributes.<br>
 &nbsp;<br>
 Attributes<br>
 ----------<br>
@@ -13446,7 +13472,7 @@ browser.<br>
 Whenever&nbsp;a&nbsp;line&nbsp;starts&nbsp;with&nbsp;the&nbsp;symbol&nbsp;'@'&nbsp;the&nbsp;next&nbsp;letter&nbsp;indicates<br>
 the&nbsp;special&nbsp;characteristics&nbsp;associated&nbsp;with&nbsp;this&nbsp;line.&nbsp;The&nbsp;following<br>
 possibilities&nbsp;exist&nbsp;at&nbsp;the&nbsp;moment:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;Fixed&nbsp;width&nbsp;font.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;Fixed&nbsp;width&nbsp;font.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;Normal&nbsp;(Helvetica)&nbsp;font.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;&nbsp;&nbsp;&nbsp;Times-Roman&nbsp;like&nbsp;font.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;b&nbsp;&nbsp;&nbsp;&nbsp;Boldface&nbsp;modifier.<br>
@@ -13461,9 +13487,9 @@ possibilities&nbsp;exist&nbsp;at&nbsp;the&nbsp;moment:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;&nbsp;Right&nbsp;aligned.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;Draw&nbsp;underlined&nbsp;text.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;An&nbsp;engraved&nbsp;separator.&nbsp;Text&nbsp;following&nbsp;'-'&nbsp;is&nbsp;ignored.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;next&nbsp;number&nbsp;indicates&nbsp;the&nbsp;color&nbsp;index&nbsp;for&nbsp;this&nbsp;line.&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;Non-selectable&nbsp;line&nbsp;(in&nbsp;selectable&nbsp;browsers).&nbsp;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;@@&nbsp;&nbsp;&nbsp;&nbsp;Regular&nbsp;'@'&nbsp;character.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;next&nbsp;number&nbsp;indicates&nbsp;the&nbsp;color&nbsp;index&nbsp;for&nbsp;this&nbsp;line.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;Non-selectable&nbsp;line&nbsp;(in&nbsp;selectable&nbsp;browsers).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@@&nbsp;&nbsp;&nbsp;&nbsp;Regular&nbsp;'@'&nbsp;character.<br>
 The&nbsp;modifiers&nbsp;(bold&nbsp;and&nbsp;itatic)&nbsp;work&nbsp;by&nbsp;adding&nbsp;FL_BOLD_STYLE&nbsp;and<br>
 FL_ITALIC_STYLE&nbsp;to&nbsp;the&nbsp;current&nbsp;active&nbsp;font&nbsp;index&nbsp;to&nbsp;look&nbsp;up&nbsp;the&nbsp;font&nbsp;in<br>
 the&nbsp;font&nbsp;table;&nbsp;you&nbsp;can&nbsp;modify&nbsp;the&nbsp;table&nbsp;using&nbsp;flbasic.fl_set_font_name()<br>
@@ -14331,80 +14357,79 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;GLX_USE_GL<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ignored.&nbsp;Only&nbsp;visuals&nbsp;that&nbsp;can&nbsp;be&nbsp;rendered&nbsp;with&nbsp;GLX&nbsp;are<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;considered.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_BUFFER_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;integer&nbsp;that&nbsp;indicates<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;desired&nbsp;color&nbsp;index&nbsp;buffer&nbsp;size.&nbsp;The&nbsp;smallest&nbsp;index<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer&nbsp;of&nbsp;at&nbsp;least&nbsp;the&nbsp;specified&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ignored&nbsp;if&nbsp;GLX_RGBA&nbsp;is&nbsp;asserted.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_LEVEL<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;an&nbsp;integer&nbsp;buffer-level&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;specification&nbsp;is&nbsp;honored&nbsp;exactly.&nbsp;Buffer&nbsp;level&nbsp;zero<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponds&nbsp;to&nbsp;the&nbsp;main&nbsp;frame&nbsp;buffer&nbsp;of&nbsp;the&nbsp;display.&nbsp;Buffer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;level&nbsp;one&nbsp;is&nbsp;the&nbsp;first&nbsp;overlay&nbsp;frame&nbsp;buffer,&nbsp;level&nbsp;two&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;overlay&nbsp;frame&nbsp;buffer,&nbsp;and&nbsp;so&nbsp;on.&nbsp;Negative&nbsp;buffer<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;levels&nbsp;correspond&nbsp;to&nbsp;underlay&nbsp;frame&nbsp;buffers.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_BUFFER_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;integer&nbsp;that&nbsp;indicates&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;color&nbsp;index&nbsp;buffer&nbsp;size.&nbsp;The&nbsp;smallest&nbsp;index&nbsp;buffer&nbsp;of&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;the&nbsp;specified&nbsp;size&nbsp;is&nbsp;preferred.&nbsp;Ignored&nbsp;if&nbsp;GLX_RGBA&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;asserted.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_LEVEL,&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;an&nbsp;integer&nbsp;buffer-level&nbsp;specification.&nbsp;This<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specification&nbsp;is&nbsp;honored&nbsp;exactly.&nbsp;Buffer&nbsp;level&nbsp;zero&nbsp;corresponds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;main&nbsp;frame&nbsp;buffer&nbsp;of&nbsp;the&nbsp;display.&nbsp;Buffer&nbsp;level&nbsp;one&nbsp;is&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first&nbsp;overlay&nbsp;frame&nbsp;buffer,&nbsp;level&nbsp;two&nbsp;the&nbsp;second&nbsp;overlay&nbsp;frame<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer,&nbsp;and&nbsp;so&nbsp;on.&nbsp;Negative&nbsp;buffer&nbsp;levels&nbsp;correspond&nbsp;to&nbsp;underlay<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame&nbsp;buffers.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;GLX_RGBA<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;present,&nbsp;only&nbsp;TrueColor&nbsp;and&nbsp;DirectColor&nbsp;visuals&nbsp;are<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;considered.&nbsp;Otherwise,&nbsp;only&nbsp;PseudoColor&nbsp;and&nbsp;StaticColor<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visuals&nbsp;are&nbsp;considered.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;present,&nbsp;only&nbsp;TrueColor&nbsp;and&nbsp;DirectColor&nbsp;visuals&nbsp;are&nbsp;considered.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Otherwise,&nbsp;only&nbsp;PseudoColor&nbsp;and&nbsp;StaticColor&nbsp;visuals&nbsp;are&nbsp;considered.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;GLX_DOUBLEBUFFER<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;present,&nbsp;only&nbsp;double-buffered&nbsp;visuals&nbsp;are&nbsp;considered.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Otherwise,&nbsp;only&nbsp;single-buffered&nbsp;visuals&nbsp;are&nbsp;considered.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;GLX_STEREO<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;present,&nbsp;only&nbsp;stereo&nbsp;visuals&nbsp;are&nbsp;considered.&nbsp;Otherwise,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only&nbsp;monoscopic&nbsp;visuals&nbsp;are&nbsp;considered.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_AUX_BUFFERS<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;integer&nbsp;that&nbsp;indicates&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;present,&nbsp;only&nbsp;stereo&nbsp;visuals&nbsp;are&nbsp;considered.&nbsp;Otherwise,&nbsp;only<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;monoscopic&nbsp;visuals&nbsp;are&nbsp;considered.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_AUX_BUFFERS,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;integer&nbsp;that&nbsp;indicates&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;number&nbsp;of&nbsp;auxiliary&nbsp;buffers.&nbsp;Visuals&nbsp;with&nbsp;the&nbsp;smallest<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;auxiliary&nbsp;buffers&nbsp;that&nbsp;meets&nbsp;or&nbsp;exceeds&nbsp;the&nbsp;specified<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;are&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;red&nbsp;buffer&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;available&nbsp;red&nbsp;buffer&nbsp;of&nbsp;at<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_GREEN_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;green&nbsp;buffer&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;red&nbsp;buffer&nbsp;is&nbsp;preferred.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;available&nbsp;red&nbsp;buffer&nbsp;of&nbsp;at&nbsp;least&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_GREEN_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;green&nbsp;buffer&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;available&nbsp;green&nbsp;buffer&nbsp;of&nbsp;at<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_BLUE_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;blue&nbsp;buffer&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_BLUE_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;blue&nbsp;buffer&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;available&nbsp;blue&nbsp;buffer&nbsp;of&nbsp;at<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_ALPHA_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;alpha&nbsp;buffer&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_ALPHA_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;the&nbsp;smallest&nbsp;available&nbsp;alpha&nbsp;buffer&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;available&nbsp;alpha&nbsp;buffer&nbsp;of&nbsp;at<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_DEPTH_SIZE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_DEPTH_SIZE,&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;depth&nbsp;buffer&nbsp;are<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;available&nbsp;depth&nbsp;buffer&nbsp;of&nbsp;at<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_STENCIL_SIZE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_STENCIL_SIZE,&nbsp;int_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;integer&nbsp;that&nbsp;indicates&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desired&nbsp;number&nbsp;of&nbsp;stencil&nbsp;bitplanes.&nbsp;The&nbsp;smallest&nbsp;stencil&nbsp;buffer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;at&nbsp;least&nbsp;the&nbsp;specified&nbsp;size&nbsp;is&nbsp;preferred.&nbsp;If&nbsp;the&nbsp;desired<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;stencil&nbsp;buffer&nbsp;are&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_RED_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;red&nbsp;accumulation&nbsp;buffer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_RED_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;red&nbsp;accumulation&nbsp;buffer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;possible&nbsp;red&nbsp;accumulation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer&nbsp;of&nbsp;at&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_GREEN_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;green&nbsp;accumulation&nbsp;buffer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;green&nbsp;accumulation&nbsp;buffer<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;possible&nbsp;green&nbsp;accumulation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer&nbsp;of&nbsp;at&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_BLUE_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_BLUE_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;blue&nbsp;accumulation&nbsp;buffer&nbsp;are<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;possible&nbsp;blue&nbsp;accumulation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer&nbsp;of&nbsp;at&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_ALPHA_SIZE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;nonnegative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_ALPHA_SIZE,&nbsp;int_pos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Must&nbsp;be&nbsp;followed&nbsp;by&nbsp;a&nbsp;non-negative&nbsp;minimum&nbsp;size&nbsp;specification.&nbsp;If<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this&nbsp;value&nbsp;is&nbsp;zero,&nbsp;visuals&nbsp;with&nbsp;no&nbsp;alpha&nbsp;accumulation&nbsp;buffer&nbsp;are<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preferred.&nbsp;Otherwise,&nbsp;the&nbsp;largest&nbsp;possible&nbsp;alpha&nbsp;accumulation<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer&nbsp;of&nbsp;at&nbsp;least&nbsp;the&nbsp;minimum&nbsp;size&nbsp;is&nbsp;preferred.<br>&nbsp;</tt></td></tr>
@@ -14916,10 +14941,10 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green_lut&nbsp;:&nbsp;pointer&nbsp;to&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;green&nbsp;lookup&nbsp;tables&nbsp;for&nbsp;a&nbsp;color&nbsp;index&nbsp;image.&nbsp;Each&nbsp;of&nbsp;the&nbsp;table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;blue_lut&nbsp;:&nbsp;pointer&nbsp;to&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blue&nbsp;lookup&nbsp;tables&nbsp;for&nbsp;a&nbsp;color&nbsp;index&nbsp;image.&nbsp;Each&nbsp;of&nbsp;the&nbsp;table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;1D&nbsp;array&nbsp;of&nbsp;length&nbsp;image-&gt;map&nbsp;len.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;alpha_lut&nbsp;:&nbsp;pointer&nbsp;to&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha&nbsp;lookup&nbsp;tables.&nbsp;Although&nbsp;alpha&nbsp;lut&nbsp;is&nbsp;always&nbsp;allocated&nbsp;for<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;color&nbsp;index&nbsp;image,&nbsp;it&nbsp;is&nbsp;currently&nbsp;not&nbsp;used&nbsp;by&nbsp;XForms.<br>
@@ -15762,7 +15787,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;processing&nbsp;routines.&nbsp;It&nbsp;is&nbsp;meant&nbsp;to&nbsp;give&nbsp;the&nbsp;user&nbsp;some&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;feedback&nbsp;about&nbsp;what&nbsp;is&nbsp;happening.&nbsp;For&nbsp;lengthy&nbsp;tasks,&nbsp;this<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;is&nbsp;called&nbsp;repeatedly&nbsp;and&nbsp;periodically&nbsp;to&nbsp;indicate&nbsp;what<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percentage&nbsp;of&nbsp;the&nbsp;task&nbsp;is&nbsp;completed&nbsp;and&nbsp;to&nbsp;give&nbsp;the&nbsp;application&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;percentage&nbsp;of&nbsp;the&nbsp;task&nbsp;is&nbsp;completed&nbsp;and&nbsp;to&nbsp;give&nbsp;the&nbsp;application<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;a&nbsp;chance&nbsp;to&nbsp;check&nbsp;and&nbsp;process&nbsp;GUI&nbsp;activities&nbsp;(for&nbsp;example,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;via&nbsp;fl_check_forms()).&nbsp;The&nbsp;1st&nbsp;parameter&nbsp;to&nbsp;the&nbsp;function&nbsp;is&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;(pointer&nbsp;to&nbsp;<a href="#FL_IMAGE">FL_IMAGE</a>)&nbsp;currently&nbsp;being&nbsp;worked&nbsp;on&nbsp;and&nbsp;the<br>
@@ -15777,7 +15802,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage.contents.total,&nbsp;multiplied&nbsp;by&nbsp;100.&nbsp;At&nbsp;the&nbsp;begin&nbsp;of&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;task&nbsp;ptr_flimage.contents.completed&nbsp;is&nbsp;set&nbsp;to&nbsp;a&nbsp;value&nbsp;less&nbsp;or&nbsp;equal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;and&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;task,&nbsp;ptr_flimage.contents.completed&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;to&nbsp;ptr_flimage.contents.total.&nbsp;A&nbsp;special&nbsp;value&nbsp;of&nbsp;-1&nbsp;for&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;to&nbsp;ptr_flimage.contents.total.&nbsp;A&nbsp;special&nbsp;value&nbsp;of&nbsp;-1&nbsp;for<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flimage.contents.completed&nbsp;may&nbsp;be&nbsp;used&nbsp;to&nbsp;indicate&nbsp;a&nbsp;task&nbsp;of<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unknown&nbsp;length.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;error_message&nbsp;:&nbsp;function,&nbsp;no&nbsp;return<br>
@@ -16123,6 +16148,7 @@ Methods inherited from _ctypes._CData:<br>
 <strong>ControlMask</strong> = 4<br>
 <strong>CreateNotify</strong> = 16<br>
 <strong>DATEFMT_list</strong> = [0, 1]<br>
+<strong>DBL_MAX</strong> = 1.7976931348623147e+308<br>
 <strong>DECORATION_list</strong> = [1, 2, 3]<br>
 <strong>DIALROTN_list</strong> = [0, 1]<br>
 <strong>DIALTYPE_list</strong> = [0, 1, 2]<br>
@@ -17345,4 +17371,4 @@ Methods inherited from _ctypes._CData:<br>
 <strong>special_sequences_for_entry_text_t</strong> = '     %t (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
 <strong>special_sequences_for_entry_text_u</strong> = '     %u (with additional separate argument as da...xforms-python it does not fully work as expected.'<br>
 <strong>special_sequences_for_entry_text_x</strong> = '     %x (with additional separate argument as a ...is passed to all callback routines for the entry.'</td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

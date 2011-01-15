@@ -13,18 +13,23 @@ specific instead of C's, some functions have a different API, different
 purpose and number of parameters, etc..). This is a really good guide.
 
 
-Every fl* function has a status representing its current development state:
-
-a) status of testing:
-    1) Tested: it is fully tested and working
-    2) HalfTested : there is at least one occurence of good functioning
-    3) Untested: not tested or not working
+Every fl* function has a status entry in docstring representing its current
+development state:
+a) status of unit-testing coverage:
+    1) UnitTest: it is fully covered by 1 working and 2+ failing unit-tests
+    2) Half-UTest : there is at least one occurence of failing tests
+    3) NA-UTest: not covered by unit-tests, yes
+    4) NN-Utest: unit-test is pointless here (no args, no return value)
 b) status of documentation:
-    1) Doc: fully documented (function usage, parameters, and usable values)
+    1) Doc: fully documented (function usage, parameters and usable values)
     2) NoDoc: not fully documented
 c) presence of demo/example:
-    1) Demo: there is at least one example (ported from upstream or minimal)
-    2) NoDemo: no demos/examples are available/ported
+    1) Demo: there is at least one example (ported from upstream or original)
+    2) NoDemo: no demos/examples are available or ported
 d) Usable state:
-    1) OK: it is usable (if Tested and Demo-ed, or Tested and Documented)
-    2) NOT OK: its usage is not verified or it fails under some conditions
+    1) OK: it is almost surely well usable (only if Demo-ed and Documented, or
+    Tested and Documented)
+    2) Maybe: there are no demos and no unit-tests, only documentation; its
+    usage is not verified or it may fail under some circumstances
+    3) KO: doc is not complete, unit-test and demos do not exist; it is known
+    to be incomplete or not handled well; it is likely supposed to fail on run.

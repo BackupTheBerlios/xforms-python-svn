@@ -640,7 +640,7 @@ def make_ptr_flresource(dictflresource):
                 ptr_clsvar[numb], pyclsdefval[numb], s_clsdefval[numb], \
                 pyclsnbytes[numb], i_clsnbytes[numb])
 
-        #structflresource[-1].res_name = ""  
+        #structflresource[-1].res_name = ""
         # this ends array, preventing SegFault?
 
         ptr_flresource = cty.pointer(structflresource[0])
@@ -737,6 +737,624 @@ def make_ptr_flpoint(dictflpoint):
         raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
                 " a python dict or a list of dicts" % \
                 (dictflpoint, type(dictflpoint)))
+
+
+def make_ptr_flrect(dictflrect):
+    """make_ptr_flrect(dictflrect) -> ptr_flrect
+
+    Taking a python dict (for one dict item) or a list of dicts (for more than
+    one dict item) with keys corresponding to xfdata.FL_RECT attributes
+    prepares and returns a C-compatible pointer to xfdata.FL_RECT. Keys are:
+    'x', 'y', 'width' and 'height'."""
+
+    # one dict
+    if isinstance(dictflrect, dict):
+
+        pyclsx = sh_clsx = pyclsy = sh_clsy = pyclswidth = ush_clswidth = 0
+        pyclsheight = ush_clsheight = 0
+        if not 'x' in dictflrect:      # no x passed
+            raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                    "contents is %s) should have a 'x' key" % \
+                    dictflrect)
+        else:
+            pyclsx = dictflrect['x']
+            sh_clsx = library.convert_to_shortc(pyclsx)
+
+        if not 'y' in dictflrect:      # no y passed
+            raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                    "contents is %s) should have a 'y' key" % \
+                    dictflrect)
+        else:
+            pyclsy = dictflrect['y']
+            sh_clsy = library.convert_to_shortc(pyclsy)
+
+        if not 'width' in dictflrect:      # no width passed
+            raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                    "contents is %s) should have a 'width' key" % \
+                    dictflrect)
+        else:
+            pyclswidth = dictflrect['width']
+            ush_clswidth = library.convert_to_ushortc(pyclswidth)
+
+        if not 'height' in dictflrect:      # no height passed
+            raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                    "contents is %s) should have a 'height' key" % \
+                    dictflrect)
+        else:
+            pyclsheight = dictflrect['height']
+            ush_clsheight = library.convert_to_ushortc(pyclsheight)
+
+        structflrect = (xfdata.FL_RECT * 2)()      # * 2)()
+        structflrect[0].x = sh_clsx
+        structflrect[0].y = sh_clsy
+        structflrect[0].width = ush_clswidth
+        structflrect[0].height = ush_clsheight
+        structflrect[-1].x = 0  # ends array, preventing SegFault
+        structflrect[-1].y = 0  # ends array, preventing SegFault
+        structflrect[-1].width = 0  # ends array, preventing SegFault
+        structflrect[-1].width = 0  # ends array, preventing SegFault
+
+        ptr_flrect = cty.pointer(structflrect[0])
+        library.keep_elem_refs(dictflrect, structflrect, ptr_flrect, pyclsx, \
+                sh_clsx, pyclsy, sh_clsy, pyclswidth, ush_clswidth, \
+                pyclsheight, ush_clsheight)
+        return ptr_flrect
+
+    # more dicts
+    elif isinstance(dictflrect, list):
+
+        dictlength = len(dictflrect)
+        structflrect = (xfdata.FL_RECT * (dictlength+1))()  # +1
+        pyclsx = sh_clsx = [0] * dictlength
+        pyclsy = sh_clsy = [0] * dictlength
+        pyclswidth = ush_clswidth = [0] * dictlength
+        pyclsheight = ush_clsheight = [0] * dictlength
+
+        for numb in range(0, dictlength):
+
+            if not 'x' in dictflrect[numb]:  # no x passed
+                raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                        "contents is %s) should have a 'x' key" % \
+                        dictflrect[numb])
+            else:
+                pyclsx[numb] = dictflrect[numb]['x']
+                sh_clsx[numb] = library.convert_to_shortc(pyclsx[numb])
+            if not 'y' in dictflrect[numb]:  # no y passed
+                raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                        "contents is %s) should have a 'y' key" % \
+                        dictflrect[numb])
+            else:
+                pyclsy[numb] = dictflrect[numb]['y']
+                sh_clsy[numb] = library.convert_to_shortc(pyclsy[numb])
+            if not 'width' in dictflrect:      # no width passed
+                raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                        "contents is %s) should have a 'width' key" % \
+                        dictflrect[numb])
+            else:
+                pyclswidth[numb] = dictflrect['width']
+                ush_clswidth[numb] = library.convert_to_ushortc( \
+                        pyclswidth[numb])
+            if not 'height' in dictflrect:      # no height passed
+                raise library.XFormsTypeError("make_ptr_flrect dict (whose "
+                        "contents is %s) should have a 'height' key" % \
+                        dictflrect[numb])
+            else:
+                pyclsheight[numb] = dictflrect['height']
+                ush_clsheight[numb] = library.convert_to_ushortc( \
+                        pyclsheight[numb])
+
+            structflrect[numb].x = sh_clsx[numb]
+            structflrect[numb].y = sh_clsy[numb]
+            structflrect[numb].width = ush_clswidth[numb]
+            structflrect[numb].height = ush_clsheight[numb]
+
+            library.keep_elem_refs(dictflrect[numb], structflrect[numb], \
+                pyclsx[numb], sh_clsx[numb], pyclsy[numb], sh_clsy[numb], \
+                pyclswidth[numb], pyclsheight[numb])
+
+        structflrect[-1].x = 0  # ends array, preventing SegFault
+        structflrect[-1].y = 0  # ends array, preventing SegFault
+        structflrect[-1].width = 0  # ends array, preventing SegFault
+        structflrect[-1].height = 0  # ends array, preventing SegFault
+        ptr_flrect = cty.pointer(structflrect[0])
+        library.keep_elem_refs(dictflrect, ptr_flrect, structflrect)
+        return ptr_flrect
+
+    else:
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " a python dict or a list of dicts" % \
+                (dictflrect, type(dictflrect)))
+
+
+def make_ptr_flimagetext(dictflimagetext):
+    """make_ptr_flimagetext(dictflimagetext) -> ptr_flimagetext
+
+    Taking a python dict with keys corresponding to xfdata.FLIMAGE_TEXT
+    attributes prepares and returns a C-compatible pointer to
+    xfdata.FLIMAGE_TEXT. Keys are: 'str', 'len', 'x', 'y', 'color', 'bcolor',
+    'nobk', 'size', 'style', 'angle' and 'align'. """
+
+    # one dict only
+    if isinstance(dictflimagetext, dict):
+
+        pyclsstr = s_clsstr = ""
+        pyclslen = i_clslen = pyclsx = i_clsx = pyclsy = i_clsy = 0
+        pyclscolor = ui_clscolor = pyclsbcolor = ui_clsbcolor = 0
+        pyclsnobk = i_clsnobk = pyclssize = i_clssize = pyclsstyle = 0
+        i_clsstyle = pyclsangle = i_clsangle = pyclsalign = i_clsalign = 0
+
+        if not 'str' in dictflimagetext:      # no str passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'str' key" % \
+                    dictflimagetext)
+        else:
+            pyclsstr = dictflimagetext['str']
+            s_clsstr = library.convert_to_stringc(pyclsstr)
+
+        if not 'len' in dictflimagetext:      # no len passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'len' key" % \
+                    dictflimagetext)
+        else:
+            pyclslen = dictflimagetext['len']
+            i_clslen = library.convert_to_intc(pyclslen)
+
+        if not 'x' in dictflimagetext:      # no x passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'x' key" % \
+                    dictflimagetext)
+        else:
+            pyclsx = dictflimagetext['x']
+            i_clsx = library.convert_to_intc(pyclsx)
+
+        if not 'y' in dictflimagetext:      # no y passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'y' key" % \
+                    dictflimagetext)
+        else:
+            pyclsy = dictflimagetext['y']
+            i_clsy = library.convert_to_intc(pyclsy)
+
+        if not 'color' in dictflimagetext:      # no color passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'color' key" % \
+                    dictflimagetext)
+        else:
+            pyclscolor = dictflimagetext['color']
+            ui_clscolor = library.convert_to_uintc(pyclscolor)
+
+        if not 'bcolor' in dictflimagetext:      # no bcolor passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'bcolor' key" % \
+                    dictflimagetext)
+        else:
+            pyclscolor = dictflimagetext['bcolor']
+            ui_clsbcolor = library.convert_to_uintc(pyclsbcolor)
+
+        if not 'bcolor' in dictflimagetext:      # no bcolor passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'bcolor' key" % \
+                    dictflimagetext)
+        else:
+            pyclscolor = dictflimagetext['bcolor']
+            ui_clsbcolor = library.convert_to_uintc(pyclsbcolor)
+
+        if not 'nobk' in dictflimagetext:      # no nobk passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'nobk' key" % \
+                    dictflimagetext)
+        else:
+            pyclsnobk = dictflimagetext['nobk']
+            i_clsnobk = library.convert_to_intc(pyclsnobk)
+
+        if not 'size' in dictflimagetext:      # no size passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'size' key" % \
+                    dictflimagetext)
+        else:
+            pyclssize = dictflimagetext['size']
+            i_clssize = library.convert_to_intc(pyclssize)
+
+        if not 'style' in dictflimagetext:      # no style passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'style' key" % \
+                    dictflimagetext)
+        else:
+            pyclsstyle = dictflimagetext['style']
+            i_clsstyle = library.convert_to_intc(pyclsstyle)
+
+        if not 'angle' in dictflimagetext:      # no angle passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'angle' key" % \
+                    dictflimagetext)
+        else:
+            pyclsangle = dictflimagetext['angle']
+            i_clsangle = library.convert_to_intc(pyclsangle)
+
+        if not 'align' in dictflimagetext:      # no align passed
+            raise library.XFormsTypeError("make_ptr_flimagetext dict (whose "
+                    "contents is %s) should have a 'align' key" % \
+                    dictflimagetext)
+        else:
+            pyclsalign = dictflimagetext['align']
+            i_clsalign = library.convert_to_intc(pyclsalign)
+
+        structflimagetext = (xfdata.FLIMAGE_TEXT)()
+        structflimagetext.str = s_clsstr
+        structflimagetext.len = i_clslen
+        structflimagetext.x = i_clsx
+        structflimagetext.y = i_clsy
+        structflimagetext.color = ui_clscolor
+        structflimagetext.bcolor = ui_clsbcolor
+        structflimagetext.nobk = i_clsnobk
+        structflimagetext.size = i_clssize
+        structflimagetext.style = i_clsstyle
+        structflimagetext.angle = i_clsangle
+        structflimagetext.align = i_clsalign
+
+        ptr_flimagetext = cty.pointer(structflimagetext)
+        library.keep_elem_refs(dictflimagetext, structflimagetext, \
+                ptr_flimagetext, pyclsstr, s_clsstr, pyclslen, i_clslen, \
+                pyclsx, i_clsx, pyclsy, i_clsy, pyclscolor, ui_clscolor, \
+                pyclsbcolor, ui_clsbcolor, pyclsnobk, i_clsnobk, pyclssize, \
+                i_clssize, pyclsstyle, i_clsstyle, pyclsangle, i_clsangle, \
+                pyclsalign, i_clsalign)
+        return ptr_flimagetext
+
+    else:
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " a python dict" % \
+                (dictflimagetext, type(dictflimagetext)))
+
+
+def make_ptr_flimagemarker(dictflimagemarker):
+    """make_ptr_flimagetext(dictflimagemarker) -> ptr_flimagemarker
+
+    Taking a python dict with keys corresponding to xfdata.FLIMAGE_MARKER
+    attributes prepares and returns a C-compatible pointer to
+    xfdata.FLIMAGE_MARKER. Keys are: 'name', 'w', 'h', 'x', 'y', 'color',
+    'bcolor', 'angle', 'fill', 'thickness', 'style'. Other keys ('display',
+    'gc', 'win', 'psdraw') are filled by XForms. """
+
+    # one dict only
+    if isinstance(dictflimagemarker, dict):
+
+        pyclsname = s_clsname = ""
+        pyclsw = i_clsw = pyclsh = i_clsh = pyclsx = i_clsx = 0
+        pyclsy = i_clsy = pyclscolor = ui_clscolor = pyclsbcolor = 0
+        ui_clsbcolor = pyclsangle = i_clsangle = pyclsfill = i_clsfill = 0
+        pyclsthickness = i_clsthickness = pyclsstyle = i_clsstyle = 0
+
+        if not 'name' in dictflimagemarker:      # no name passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'name' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsname = dictflimagemarker['name']
+            s_clsname = library.convert_to_stringc(pyclsname)
+
+        if not 'w' in dictflimagemarker:      # no w passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'w' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsw = dictflimagemarker['w']
+            i_clsw = library.convert_to_intc(pyclsw)
+
+        if not 'h' in dictflimagemarker:      # no h passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'h' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsh = dictflimagemarker['h']
+            i_clsh = library.convert_to_intc(pyclsh)
+
+        if not 'x' in dictflimagemarker:      # no x passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'x' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsx = dictflimagemarker['x']
+            i_clsx = library.convert_to_intc(pyclsx)
+
+        if not 'y' in dictflimagemarker:      # no y passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'y' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsy = dictflimagemarker['y']
+            i_clsy = library.convert_to_intc(pyclsy)
+
+        if not 'color' in dictflimagemarker:      # no color passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'color' key" % \
+                    dictflimagemarker)
+        else:
+            pyclscolor = dictflimagemarker['color']
+            ui_clscolor = library.convert_to_uintc(pyclscolor)
+
+        if not 'bcolor' in dictflimagemarker:      # no bcolor passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'bcolor' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsbcolor = dictflimagemarker['bcolor']
+            ui_clsbcolor = library.convert_to_uintc(pyclsbcolor)
+
+        if not 'angle' in dictflimagemarker:      # no angle passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'angle' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsangle = dictflimagemarker['angle']
+            i_clsangle = library.convert_to_intc(pyclsangle)
+
+        if not 'fill' in dictflimagemarker:      # no fill passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'fill' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsfill = dictflimagemarker['fill']
+            i_clsfill = library.convert_to_intc(pyclsfill)
+
+        if not 'thickness' in dictflimagemarker:      # no thickness passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'thickness' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsthickness = dictflimagemarker['thickness']
+            i_clsthickness = library.convert_to_intc(pyclsthickness)
+
+        if not 'style' in dictflimagemarker:      # no style passed
+            raise library.XFormsTypeError("make_ptr_flimagemarker dict (whose"
+                    " contents is %s) should have a 'style' key" % \
+                    dictflimagemarker)
+        else:
+            pyclsstyle = dictflimagemarker['style']
+            i_clsstyle = library.convert_to_intc(pyclsstyle)
+
+        structflimagemarker = (xfdata.FLIMAGE_TEXT)()
+        structflimagemarker.name = s_clsname
+        structflimagemarker.w = i_clsw
+        structflimagemarker.h = i_clsh
+        structflimagemarker.x = i_clsx
+        structflimagemarker.y = i_clsy
+        structflimagemarker.color = ui_clscolor
+        structflimagemarker.bcolor = ui_clsbcolor
+        structflimagemarker.angle = i_clsangle
+        structflimagemarker.fill = i_clsfill
+        structflimagemarker.thickness = i_clsthickness
+        structflimagemarker.style = i_clsstyle
+        # 'display', 'gc', 'win', 'psdraw' NOT to be filled by user.
+
+        ptr_flimagemarker = cty.pointer(structflimagemarker)
+        library.keep_elem_refs(dictflimagemarker, structflimagemarker, \
+                ptr_flimagemarker, pyclsname, s_clsname, pyclsw, i_clsw, \
+                pyclsh, i_clsh, pyclsx, i_clsx, pyclsy, i_clsy, pyclscolor, \
+                ui_clscolor, pyclsbcolor, ui_clsbcolor, pyclsangle, \
+                i_clsangle, pyclsfill, i_clsfill, pyclsthickness, \
+                i_clsthickness, pyclsstyle, i_clsstyle)
+        return ptr_flimagemarker
+
+    else:
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " a python dict" % \
+                (dictflimagemarker, type(dictflimagemarker)))
+
+
+def make_ptr_fleditkeymap(dictfleditkeymap):
+    """make_ptr_fleditkeymap(dictfleditkeymap) -> ptr_fleditkeymap
+
+    Taking a python dict with keys corresponding to xfdata.FL_EditKeymap
+    attributes prepares and returns a C-compatible pointer to
+    xfdata.FL_EditKeymap. Keys are: 'del_prev_char', 'del_next_char',
+    'del_prev_word', 'del_next_word', 'moveto_prev_line', 'moveto_next_line',
+    'moveto_prev_char', 'moveto_next_char', 'moveto_prev_word',
+    'moveto_next_word', 'moveto_prev_page', 'moveto_next_page', 'moveto_bol',
+    'moveto_eol', 'moveto_bof', 'moveto_eof', 'transpose', 'paste',
+    'backspace', 'del_to_bol', 'del_to_eol', 'clear_field', 'del_to_eos'.
+    You are not required to manually pass all keys' values; remaining keys
+    are filled with 0, so default keymap will be used."""
+
+    # one dict only
+    if isinstance(dictfleditkeymap, dict):
+
+        pydelprevchar = l_delprevchar = pydelnextchar = l_delnextchar = 0
+        pydelprevword = l_delprevword = pydelnextword = l_pydelnextword = 0
+        pymovetoprevline = l_movetoprevline = pymovetonextline = 0
+        l_movetonextline = pymovetoprevchar = l_movetoprevchar = 0
+        pymovetonextchar = l_movetonextchar = pymovetoprevword = 0
+        l_movetoprevword = pymovetonextword = l_movetonextword = 0
+        pymovetoprevpage = l_movetoprevpage = pymovetonextpage = 0
+        l_movetonextpage = pymovetobol = l_movetobol = pymovetoeol = 0
+        l_movetoeol = pymovetobof = l_movetobof = pymovetoeof = l_movetoeof = 0
+        pytranspose = l_transpose = pypaste = l_paste = pybackspace = 0
+        l_backspace = pydeltobol = l_deltobol = pydeltoeol = l_deltoeol = 0
+        pyclearfield = l_clearfield = pydeltoeos = l_deltoeos = 0
+
+        if not 'del_prev_char' in dictfleditkeymap:
+            pydelprevchar = 0
+        else:
+            pydelprevchar = dictfleditkeymap['del_prev_char']
+        l_delprevchar = library.convert_to_longc(pydelprevchar)
+
+        if not 'del_next_char' in dictfleditkeymap:
+            pydelnextchar = 0
+        else:
+            pydelnextchar = dictfleditkeymap['del_next_char']
+        l_delnextchar = library.convert_to_longc(pydelnextchar)
+
+        if not 'del_prev_word' in dictfleditkeymap:
+            pydelprevword = 0
+        else:
+            pydelprevword = dictfleditkeymap['del_prev_word']
+        l_delprevword = library.convert_to_longc(pydelprevword)
+
+        if not 'del_next_word' in dictfleditkeymap:
+            pydelnextword = 0
+        else:
+            pydelnextword = dictfleditkeymap['del_next_word']
+        l_delnextword = library.convert_to_longc(pydelnextword)
+
+        if not 'moveto_prev_line' in dictfleditkeymap:
+            pymovetoprevline = 0
+        else:
+            pymovetoprevline = dictfleditkeymap['moveto_prev_line']
+        l_movetoprevline = library.convert_to_longc(pymovetoprevline)
+
+        if not 'moveto_next_line' in dictfleditkeymap:
+            pymovetonextline = 0
+        else:
+            pymovetonextline = dictfleditkeymap['moveto_next_line']
+        l_movetonextline = library.convert_to_longc(pymovetonextline)
+
+        if not 'moveto_prev_char' in dictfleditkeymap:
+            pymovetoprevchar = 0
+        else:
+            pymovetoprevchar = dictfleditkeymap['moveto_prev_char']
+        l_movetoprevchar = library.convert_to_longc(pymovetoprevchar)
+
+        if not 'moveto_next_char' in dictfleditkeymap:
+            pymovetonextchar = 0
+        else:
+            pymovetonextchar = dictfleditkeymap['moveto_next_char']
+        l_movetonextchar = library.convert_to_longc(pymovetonextchar)
+
+        if not 'moveto_prev_word' in dictfleditkeymap:
+            pymovetoprevword = 0
+        else:
+            pymovetoprevword = dictfleditkeymap['moveto_prev_word']
+        l_movetoprevword = library.convert_to_longc(pymovetoprevword)
+
+        if not 'moveto_next_word' in dictfleditkeymap:
+            pymovetonextword = 0
+        else:
+            pymovetonextword = dictfleditkeymap['moveto_next_word']
+        l_movetonextword = library.convert_to_longc(pymovetonextword)
+
+        if not 'moveto_prev_page' in dictfleditkeymap:
+            pymovetoprevpage = 0
+        else:
+            pymovetoprevpage = dictfleditkeymap['moveto_prev_page']
+        l_movetoprevpage = library.convert_to_longc(pymovetoprevpage)
+
+        if not 'moveto_next_page' in dictfleditkeymap:
+            pymovetonextpage = 0
+        else:
+            pymovetonextpage = dictfleditkeymap['moveto_next_page']
+        l_movetonextpage = library.convert_to_longc(pymovetonextpage)
+
+        if not 'moveto_bol' in dictfleditkeymap:
+            pymovetobol = 0
+        else:
+            pymovetobol = dictfleditkeymap['moveto_bol']
+        l_movetobol = library.convert_to_longc(pymovetobol)
+
+        if not 'moveto_eol' in dictfleditkeymap:
+            pymovetoeol = 0
+        else:
+            pymovetoeol = dictfleditkeymap['moveto_eol']
+        l_movetoeol = library.convert_to_longc(pymovetoeol)
+
+        if not 'moveto_bof' in dictfleditkeymap:
+            pymovetobof = 0
+        else:
+            pymovetobof = dictfleditkeymap['moveto_bof']
+        l_movetobof = library.convert_to_longc(pymovetobof)
+
+        if not 'moveto_eof' in dictfleditkeymap:
+            pymovetoeof = 0
+        else:
+            pymovetoeof = dictfleditkeymap['moveto_eof']
+        l_movetoeof = library.convert_to_longc(pymovetoeof)
+
+        if not 'transpose' in dictfleditkeymap:
+            pytranspose = 0
+        else:
+            pytranspose = dictfleditkeymap['transpose']
+        l_transpose = library.convert_to_longc(pytranspose)
+
+        if not 'paste' in dictfleditkeymap:
+            pypaste = 0
+        else:
+            pypaste = dictfleditkeymap['paste']
+        l_paste = library.convert_to_longc(pypaste)
+
+        if not 'backspace' in dictfleditkeymap:
+            pybackspace = 0
+        else:
+            pybackspace = dictfleditkeymap['backspace']
+        l_backspace = library.convert_to_longc(pybackspace)
+
+        if not 'del_to_bol' in dictfleditkeymap:
+            pydeltobol = 0
+        else:
+            pydeltobol = dictfleditkeymap['del_to_bol']
+        l_deltobol = library.convert_to_longc(pydeltobol)
+
+        if not 'del_to_eol' in dictfleditkeymap:
+            pydeltoeol = 0
+        else:
+            pydeltoeol = dictfleditkeymap['del_to_eol']
+        l_deltoeol = library.convert_to_longc(pydeltoeol)
+
+        if not 'clear_field' in dictfleditkeymap:
+            pyclearfield  = 0
+        else:
+            pyclearfield  = dictfleditkeymap['clear_field']
+        l_clearfield  = library.convert_to_longc(pyclearfield )
+
+        if not 'del_to_eos' in dictfleditkeymap:
+            pydeltoeos = 0
+        else:
+            pydeltoeos = dictfleditkeymap['del_to_eos']
+        l_deltoeos = library.convert_to_longc(pydeltoeos)
+
+        structfleditkeymap = (xfdata.FL_EditKeymap)()
+        structfleditkeymap.del_prev_char = l_delprevchar
+        structfleditkeymap.del_next_char = l_delnextchar
+        structfleditkeymap.del_prev_word = l_delprevword
+        structfleditkeymap.del_next_word = l_delnextword
+        structfleditkeymap.moveto_prev_line = l_movetoprevline
+        structfleditkeymap.moveto_next_line = l_movetonextline
+        structfleditkeymap.moveto_prev_char = l_movetoprevchar
+        structfleditkeymap.moveto_next_char = l_movetonextchar
+        structfleditkeymap.moveto_prev_word = l_movetoprevword
+        structfleditkeymap.moveto_next_word = l_movetonextword
+        structfleditkeymap.moveto_prev_page = l_movetoprevpage
+        structfleditkeymap.moveto_next_page = l_movetonextpage
+        structfleditkeymap.moveto_bol = l_movetobol
+        structfleditkeymap.moveto_eol = l_movetoeol
+        structfleditkeymap.moveto_bof = l_movetobof
+        structfleditkeymap.moveto_eof = l_movetoeof
+        structfleditkeymap.transpose = l_transpose
+        structfleditkeymap.paste = l_paste
+        structfleditkeymap.backspace = l_backspace
+        structfleditkeymap.del_to_bol = l_deltobol
+        structfleditkeymap.del_to_eol = l_deltoeol
+        structfleditkeymap.clear_field = l_clearfield
+        structfleditkeymap.del_to_eos = l_deltoeos
+
+        ptr_fleditkeymap = cty.pointer(structfleditkeymap)
+        library.keep_elem_refs(dictfleditkeymap, structfleditkeymap, \
+                ptr_fleditkeymap, pydelprevchar, l_delprevchar, pydelnextchar,
+                l_delnextchar, pydelprevword, l_delprevword, pydelnextword, \
+                l_pydelnextword, pymovetoprevline, l_movetoprevline, \
+                pymovetonextline, l_movetonextline, pymovetoprevchar, \
+                l_movetoprevchar, pymovetonextchar, pymovetoprevword, \
+                l_movetoprevword, pymovetonextword, l_movetonextword, \
+                pymovetoprevpage, l_movetoprevpage, pymovetonextpage, \
+                l_movetonextpage, pymovetobol, l_movetobol, pymovetoeol, \
+                l_movetoeol, pymovetobof, l_movetobof, pymovetoeof, \
+                l_movetoeof, pytranspose, l_transpose, pypaste, l_paste, \
+                pybackspace, l_backspace, pydeltobol, l_deltobol, pydeltoeol, \
+                l_deltoeol, pyclearfield, l_clearfield, pydeltoeos, l_deltoeos)
+        return ptr_fleditkeymap
+
+    else:
+        raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
+                " a python dict" % \
+                (dictfleditkeymap, type(dictfleditkeymap)))
 
 
 def make_flpopupcb(pyfn_popupcb):

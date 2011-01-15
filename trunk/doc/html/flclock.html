@@ -35,9 +35,9 @@ Adds&nbsp;a&nbsp;clock&nbsp;flobject.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;clocktype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clock&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ANALOG_CLOCK&nbsp;(An&nbsp;analog&nbsp;clock&nbsp;complete&nbsp;with&nbsp;the&nbsp;second&nbsp;hand),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DIGITAL_CLOCK&nbsp;(A&nbsp;digital&nbsp;clock)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;clock&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ANALOG_CLOCK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(An&nbsp;analog&nbsp;clock&nbsp;complete&nbsp;with&nbsp;the&nbsp;second&nbsp;hand),&nbsp;FL_DIGITAL_CLOCK<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;digital&nbsp;clock)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -56,16 +56,16 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;clkobj&nbsp;=&nbsp;<a href="#-fl_add_clock">fl_add_clock</a>(xfdata.FL_ANALOG_CLOCK,&nbsp;150,&nbsp;210,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pclkobj&nbsp;=&nbsp;<a href="#-fl_add_clock">fl_add_clock</a>(xfdata.FL_ANALOG_CLOCK,&nbsp;150,&nbsp;210,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;220,&nbsp;200,&nbsp;"My&nbsp;great&nbsp;clock")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_clock"><strong>fl_get_clock</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_clock">fl_get_clock</a>(ptr_flobject)&nbsp;-&gt;&nbsp;hrs,&nbsp;mins,&nbsp;secs<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;time&nbsp;values&nbsp;from&nbsp;a&nbsp;clock&nbsp;flobject,&nbsp;with&nbsp;hours&nbsp;in&nbsp;0-23,<br>
-minutes&nbsp;in&nbsp;0-59&nbsp;and&nbsp;seconds&nbsp;in&nbsp;0-59.<br>
+Finds&nbsp;out&nbsp;time&nbsp;values&nbsp;from&nbsp;a&nbsp;clock&nbsp;flobject,&nbsp;with&nbsp;hours&nbsp;in&nbsp;0-23,&nbsp;minutes<br>
+in&nbsp;0-59&nbsp;and&nbsp;seconds&nbsp;in&nbsp;0-59.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -83,7 +83,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;hou,&nbsp;mnu,&nbsp;sec&nbsp;=&nbsp;<a href="#-fl_get_clock">fl_get_clock</a>(clkobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;hou,&nbsp;mnu,&nbsp;sec&nbsp;=&nbsp;<a href="#-fl_get_clock">fl_get_clock</a>(pclkobj)<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
@@ -92,8 +92,8 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_clock_adjustment"><strong>fl_set_clock_adjustment</strong></a>(ptr_flobject, offset)</dt><dd><tt><a href="#-fl_set_clock_adjustment">fl_set_clock_adjustment</a>(ptr_flobject,&nbsp;offset)&nbsp;-&gt;&nbsp;adjust<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_set_clock_adjustment"><strong>fl_set_clock_adjustment</strong></a>(ptr_flobject, offset)</dt><dd><tt><a href="#-fl_set_clock_adjustment">fl_set_clock_adjustment</a>(ptr_flobject,&nbsp;offset)&nbsp;-&gt;&nbsp;oldadjust<br>
 &nbsp;<br>
 Adjusts&nbsp;the&nbsp;clock&nbsp;to&nbsp;display&nbsp;a&nbsp;time&nbsp;other&nbsp;than&nbsp;local&nbsp;time.<br>
 &nbsp;<br>
@@ -106,16 +106,16 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;adjust&nbsp;:&nbsp;long<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oldadjust&nbsp;:&nbsp;long<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;old&nbsp;adjustment&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldadj&nbsp;=&nbsp;<a href="#-fl_set_clock_adjustment">fl_set_clock_adjustment</a>(clkobj,&nbsp;3600)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;oldadj&nbsp;=&nbsp;<a href="#-fl_set_clock_adjustment">fl_set_clock_adjustment</a>(pclkobj,&nbsp;3600)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_clock_ampm"><strong>fl_set_clock_ampm</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_clock_ampm">fl_set_clock_ampm</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
 Switches&nbsp;the&nbsp;display&nbsp;to&nbsp;12hr&nbsp;system&nbsp;(am-pm).&nbsp;By&nbsp;default,&nbsp;the<br>
@@ -130,10 +130,10 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_clock_ampm">fl_set_clock_ampm</a>(clkobj,&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_clock_ampm">fl_set_clock_ampm</a>(pclkobj,&nbsp;1)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

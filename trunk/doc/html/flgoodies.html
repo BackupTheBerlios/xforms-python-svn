@@ -37,21 +37,23 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;label<br>
-&nbsp;&nbsp;&nbsp;&nbsp;pyfn_fselappbtn&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;no&nbsp;return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pyfn_fselappbtn&nbsp;:&nbsp;python&nbsp;function,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Function&nbsp;to&nbsp;handle&nbsp;application&nbsp;specific&nbsp;button&nbsp;callback<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsbtn_cb(cvoidp):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;fsbtn_cb(pvdata):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_add_fselector_appbutton">fl_add_fselector_appbutton</a>("SomeButton",&nbsp;fsbtn_cb,&nbsp;None)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_addto_command_log"><strong>fl_addto_command_log</strong></a>(txtstr)</dt><dd><tt><a href="#-fl_addto_command_log">fl_addto_command_log</a>(txtstr)<br>
 &nbsp;<br>
 Adds&nbsp;arbitrary&nbsp;text&nbsp;to&nbsp;the&nbsp;command&nbsp;browser.<br>
@@ -63,11 +65,11 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_command_log">fl_addto_command_log</a>("Another&nbsp;line&nbsp;to&nbsp;add&nbsp;to&nbsp;CmdLog")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_addto_command_log">fl_addto_command_log</a>("Another&nbsp;line&nbsp;to&nbsp;add&nbsp;to&nbsp;command&nbsp;log")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_check_command"><strong>fl_check_command</strong></a>(pid)</dt><dd><tt><a href="#-fl_check_command">fl_check_command</a>(pid)&nbsp;-&gt;&nbsp;status<br>
 &nbsp;<br>
 Polls&nbsp;the&nbsp;status&nbsp;of&nbsp;a&nbsp;child&nbsp;process.<br>
@@ -80,9 +82,9 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;status&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;if&nbsp;the&nbsp;child&nbsp;process&nbsp;is&nbsp;finished,&nbsp;or&nbsp;1&nbsp;if&nbsp;the&nbsp;child&nbsp;process<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;still&nbsp;exists&nbsp;(running&nbsp;or&nbsp;stopped),&nbsp;or&nbsp;-1&nbsp;if&nbsp;an&nbsp;error&nbsp;has<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;occurred&nbsp;inside&nbsp;the&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(if&nbsp;the&nbsp;child&nbsp;process&nbsp;is&nbsp;finished),&nbsp;or&nbsp;1&nbsp;(if&nbsp;the&nbsp;child&nbsp;process<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;still&nbsp;exists,&nbsp;running&nbsp;or&nbsp;stopped),&nbsp;or&nbsp;-1&nbsp;(if&nbsp;an&nbsp;error&nbsp;has<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;occurred&nbsp;inside&nbsp;the&nbsp;function)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -90,10 +92,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_clear_command_log"><strong>fl_clear_command_log</strong></a>()</dt><dd><tt><a href="#-fl_clear_command_log">fl_clear_command_log</a>()<br>
 &nbsp;<br>
-Clears&nbsp;the&nbsp;browser&nbsp;and&nbsp;the&nbsp;logging&nbsp;output&nbsp;displayed&nbsp;within&nbsp;it.<br>
+Clears&nbsp;the&nbsp;command&nbsp;browser&nbsp;and&nbsp;the&nbsp;logging&nbsp;output&nbsp;displayed&nbsp;within&nbsp;it.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -101,7 +103,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_close_command"><strong>fl_close_command</strong></a> = fl_end_command(pid)</dt><dd><tt><a href="#-fl_end_command">fl_end_command</a>(pid)&nbsp;-&gt;&nbsp;status<br>
 &nbsp;<br>
 Suspends&nbsp;the&nbsp;current&nbsp;process&nbsp;and&nbsp;waits&nbsp;until&nbsp;the&nbsp;child&nbsp;process&nbsp;is<br>
@@ -123,7 +125,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_disable_fselector_cache"><strong>fl_disable_fselector_cache</strong></a>(yesno)</dt><dd><tt><a href="#-fl_disable_fselector_cache">fl_disable_fselector_cache</a>(yesno)<br>
 &nbsp;<br>
 Disables&nbsp;or&nbsp;enables&nbsp;file&nbsp;selector&nbsp;caching.<br>
@@ -131,8 +133,7 @@ Disables&nbsp;or&nbsp;enables&nbsp;file&nbsp;selector&nbsp;caching.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;caching.&nbsp;Values&nbsp;0&nbsp;(to&nbsp;enable)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;1&nbsp;(to&nbsp;disable)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;enable/disable&nbsp;caching.&nbsp;Values&nbsp;0&nbsp;(enabled)&nbsp;or&nbsp;1&nbsp;(disabled)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -140,7 +141,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_end_all_command"><strong>fl_end_all_command</strong></a>()</dt><dd><tt><a href="#-fl_end_all_command">fl_end_all_command</a>()&nbsp;-&gt;&nbsp;status<br>
 &nbsp;<br>
 Waits&nbsp;for&nbsp;all&nbsp;the&nbsp;child&nbsp;processes&nbsp;initiated&nbsp;by&nbsp;<a href="#-fl_exe_command">fl_exe_command</a>()<br>
@@ -157,7 +158,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_end_command"><strong>fl_end_command</strong></a>(pid)</dt><dd><tt><a href="#-fl_end_command">fl_end_command</a>(pid)&nbsp;-&gt;&nbsp;status<br>
 &nbsp;<br>
 Suspends&nbsp;the&nbsp;current&nbsp;process&nbsp;and&nbsp;waits&nbsp;until&nbsp;the&nbsp;child&nbsp;process&nbsp;is<br>
@@ -179,7 +180,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_exe_command"><strong>fl_exe_command</strong></a>(cmdtxt, block)</dt><dd><tt><a href="#-fl_exe_command">fl_exe_command</a>(cmdtxt,&nbsp;block)&nbsp;-&gt;&nbsp;status<br>
 &nbsp;<br>
 Forks&nbsp;a&nbsp;new&nbsp;process&nbsp;that&nbsp;runs&nbsp;specified&nbsp;command.<br>
@@ -204,7 +205,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_command_log_fdstruct"><strong>fl_get_command_log_fdstruct</strong></a>()</dt><dd><tt><a href="#-fl_get_command_log_fdstruct">fl_get_command_log_fdstruct</a>()&nbsp;-&gt;&nbsp;ptr_cmdlog<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;GUI&nbsp;structure&nbsp;of&nbsp;the&nbsp;command&nbsp;browser.&nbsp;From&nbsp;the&nbsp;information<br>
@@ -224,7 +225,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_directory"><strong>fl_get_directory</strong></a>()</dt><dd><tt><a href="#-fl_get_directory">fl_get_directory</a>()&nbsp;-&gt;&nbsp;dirname<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;directory&nbsp;name&nbsp;after&nbsp;the&nbsp;user&nbsp;changed&nbsp;it.<br>
@@ -240,7 +241,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_filename"><strong>fl_get_filename</strong></a>()</dt><dd><tt><a href="#-fl_get_filename">fl_get_filename</a>()&nbsp;-&gt;&nbsp;fname<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;file&nbsp;name&nbsp;(without&nbsp;the&nbsp;path)&nbsp;after&nbsp;the&nbsp;user&nbsp;changed&nbsp;it.<br>
@@ -256,7 +257,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_fselector_fdstruct"><strong>fl_get_fselector_fdstruct</strong></a>()</dt><dd><tt><a href="#-fl_get_fselector_fdstruct">fl_get_fselector_fdstruct</a>()&nbsp;-&gt;&nbsp;ptr_fdselector<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;xfdata.FD_FSELECTOR&nbsp;class&nbsp;instance,&nbsp;allowing&nbsp;direct<br>
@@ -273,7 +274,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_fselector_form"><strong>fl_get_fselector_form</strong></a>()</dt><dd><tt><a href="#-fl_get_fselector_form">fl_get_fselector_form</a>()&nbsp;-&gt;&nbsp;ptr_flform<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;form&nbsp;of&nbsp;file&nbsp;selector.<br>
@@ -289,7 +290,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_pattern"><strong>fl_get_pattern</strong></a>()</dt><dd><tt><a href="#-fl_get_pattern">fl_get_pattern</a>()&nbsp;-&gt;&nbsp;pattern<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;pattern&nbsp;after&nbsp;the&nbsp;user&nbsp;changed&nbsp;it.<br>
@@ -305,10 +306,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_goodies_atclose"><strong>fl_goodies_atclose</strong></a>(ptr_flform, userdata)</dt><dd><tt><a href="#-fl_goodies_atclose">fl_goodies_atclose</a>(ptr_flform,&nbsp;userdata)&nbsp;-&gt;&nbsp;unused<br>
 &nbsp;<br>
-*todo*<br>
+Passes&nbsp;specific&nbsp;userdata&nbsp;to&nbsp;goodie&nbsp;when&nbsp;it&nbsp;is&nbsp;closed?<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -316,7 +317,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -329,7 +331,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_alert"><strong>fl_hide_alert</strong></a>()</dt><dd><tt><a href="#-fl_hide_alert">fl_hide_alert</a>()<br>
 &nbsp;<br>
 Hides&nbsp;a&nbsp;previously&nbsp;shown&nbsp;alert&nbsp;message.<br>
@@ -340,7 +342,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_hide_choice"><strong>fl_hide_choice</strong></a>()</dt><dd><tt><a href="#-fl_hide_choice">fl_hide_choice</a>()<br>
 &nbsp;<br>
 Hides&nbsp;the&nbsp;choice&nbsp;message.<br>
@@ -351,7 +353,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_command_log"><strong>fl_hide_command_log</strong></a>()</dt><dd><tt><a href="#-fl_hide_command_log">fl_hide_command_log</a>()<br>
 &nbsp;<br>
 Hides&nbsp;the&nbsp;log&nbsp;of&nbsp;the&nbsp;command&nbsp;output.<br>
@@ -362,7 +364,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_fselector"><strong>fl_hide_fselector</strong></a>()</dt><dd><tt><a href="#-fl_hide_fselector">fl_hide_fselector</a>()<br>
 &nbsp;<br>
 Hides&nbsp;a&nbsp;file&nbsp;selector.<br>
@@ -373,7 +375,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_input"><strong>fl_hide_input</strong></a>()</dt><dd><tt><a href="#-fl_hide_input">fl_hide_input</a>()<br>
 &nbsp;<br>
 Hides&nbsp;a&nbsp;previously&nbsp;shown&nbsp;input&nbsp;goodie.<br>
@@ -384,10 +386,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_message"><strong>fl_hide_message</strong></a>()</dt><dd><tt><a href="#-fl_hide_message">fl_hide_message</a>()<br>
 &nbsp;<br>
-Hides&nbsp;a&nbsp;text&nbsp;message&nbsp;already&nbsp;shown.<br>
+Hides&nbsp;an&nbsp;already&nbsp;shown&nbsp;text&nbsp;message.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -395,10 +397,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_messages"><strong>fl_hide_messages</strong></a> = fl_hide_message()</dt><dd><tt><a href="#-fl_hide_message">fl_hide_message</a>()<br>
 &nbsp;<br>
-Hides&nbsp;a&nbsp;text&nbsp;message&nbsp;already&nbsp;shown.<br>
+Hides&nbsp;an&nbsp;already&nbsp;shown&nbsp;text&nbsp;message.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -406,10 +408,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_msg"><strong>fl_hide_msg</strong></a> = fl_hide_message()</dt><dd><tt><a href="#-fl_hide_message">fl_hide_message</a>()<br>
 &nbsp;<br>
-Hides&nbsp;a&nbsp;text&nbsp;message&nbsp;already&nbsp;shown.<br>
+Hides&nbsp;an&nbsp;already&nbsp;shown&nbsp;text&nbsp;message.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -417,7 +419,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_hide_oneliner"><strong>fl_hide_oneliner</strong></a>()</dt><dd><tt><a href="#-fl_hide_oneliner">fl_hide_oneliner</a>()<br>
 &nbsp;<br>
 Hides&nbsp;the&nbsp;oneliner&nbsp;message&nbsp;previously&nbsp;shown.<br>
@@ -428,10 +430,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_hide_question"><strong>fl_hide_question</strong></a>()</dt><dd><tt><a href="#-fl_hide_question">fl_hide_question</a>()<br>
 &nbsp;<br>
-Hides&nbsp;a&nbsp;question&nbsp;message&nbsp;already&nbsp;shown.<br>
+Hides&nbsp;an&nbsp;already&nbsp;shown&nbsp;question&nbsp;message.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -439,11 +441,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_invalidate_fselector_cache"><strong>fl_invalidate_fselector_cache</strong></a>()</dt><dd><tt><a href="#-fl_invalidate_fselector_cache">fl_invalidate_fselector_cache</a>()<br>
 &nbsp;<br>
-Forces&nbsp;an&nbsp;update&nbsp;of&nbsp;file&nbsp;selector&nbsp;caching&nbsp;programmatically.&nbsp;It&nbsp;forces<br>
-it&nbsp;only&nbsp;once,&nbsp;and&nbsp;on&nbsp;the&nbsp;directory&nbsp;that&nbsp;is&nbsp;to&nbsp;be&nbsp;browsed.<br>
+Forces&nbsp;an&nbsp;update&nbsp;of&nbsp;file&nbsp;selector&nbsp;caching&nbsp;programmatically.&nbsp;It&nbsp;forces&nbsp;it<br>
+only&nbsp;once,&nbsp;and&nbsp;on&nbsp;the&nbsp;directory&nbsp;that&nbsp;is&nbsp;to&nbsp;be&nbsp;browsed.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -451,7 +453,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_open_command"><strong>fl_open_command</strong></a> = fl_exe_command(cmdtxt, block)</dt><dd><tt><a href="#-fl_exe_command">fl_exe_command</a>(cmdtxt,&nbsp;block)&nbsp;-&gt;&nbsp;status<br>
 &nbsp;<br>
 Forks&nbsp;a&nbsp;new&nbsp;process&nbsp;that&nbsp;runs&nbsp;specified&nbsp;command.<br>
@@ -476,7 +478,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_pclose"><strong>fl_pclose</strong></a>(ptr_file)</dt><dd><tt><a href="#-fl_pclose">fl_pclose</a>(ptr_file)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Cleans&nbsp;up&nbsp;the&nbsp;child&nbsp;process&nbsp;executed.<br>
@@ -498,11 +500,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_popen"><strong>fl_popen</strong></a>(cmdtxt, opntype)</dt><dd><tt><a href="#-fl_popen">fl_popen</a>(cmdtxt,&nbsp;opntype)&nbsp;-&gt;&nbsp;ptr_file<br>
 &nbsp;<br>
 Executes&nbsp;the&nbsp;command&nbsp;in&nbsp;a&nbsp;child&nbsp;process,&nbsp;and&nbsp;logs&nbsp;the&nbsp;stderr&nbsp;messages<br>
-into&nbsp;the&nbsp;command&nbsp;log.&nbsp;If&nbsp;otype&nbsp;is&nbsp;"w",&nbsp;stdout&nbsp;will&nbsp;also&nbsp;be&nbsp;logged&nbsp;into<br>
+into&nbsp;the&nbsp;command&nbsp;log.&nbsp;If&nbsp;opntype&nbsp;is&nbsp;"w",&nbsp;stdout&nbsp;will&nbsp;also&nbsp;be&nbsp;logged&nbsp;into<br>
 the&nbsp;command&nbsp;browser.<br>
 &nbsp;<br>
 Parameters<br>
@@ -510,7 +512,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cmdtxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;existing&nbsp;filename&nbsp;to&nbsp;execute<br>
 &nbsp;&nbsp;&nbsp;&nbsp;opntype&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;opening&nbsp;(e.g.&nbsp;w,&nbsp;r&nbsp;..)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;opening.&nbsp;Values&nbsp;'w'&nbsp;(write&nbsp;mode)&nbsp;or&nbsp;'r'&nbsp;(read&nbsp;mode)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -523,7 +525,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_refresh_fselector"><strong>fl_refresh_fselector</strong></a>()</dt><dd><tt><a href="#-fl_refresh_fselector">fl_refresh_fselector</a>()<br>
 &nbsp;<br>
 Refreshes&nbsp;the&nbsp;file&nbsp;selector,&nbsp;re-scanning&nbsp;the&nbsp;current&nbsp;directory&nbsp;and<br>
@@ -535,7 +537,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_remove_fselector_appbutton"><strong>fl_remove_fselector_appbutton</strong></a>(label)</dt><dd><tt><a href="#-fl_remove_fselector_appbutton">fl_remove_fselector_appbutton</a>(label)<br>
 &nbsp;<br>
 Removes&nbsp;an&nbsp;application&nbsp;specific&nbsp;button&nbsp;from&nbsp;file&nbsp;selector.<br>
@@ -551,18 +553,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_choice_shortcut"><strong>fl_set_choice_shortcut</strong></a> = fl_set_choices_shortcut(shortcuttxt1, shortcuttxt2, shortcuttxt3)</dt><dd><tt><a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>(shortcuttxt1,&nbsp;shortcuttxt2,&nbsp;shortcuttxt3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_set_choice_shortcut"><strong>fl_set_choice_shortcut</strong></a> = fl_set_choices_shortcut(sctext1, sctext2, sctext3)</dt><dd><tt><a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>(sctext1,&nbsp;sctext2,&nbsp;sctext3)<br>
 &nbsp;<br>
 Defines&nbsp;more&nbsp;mnemonic&nbsp;hotkeys&nbsp;as&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;choices.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;shortcuttxt1&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sctext1&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;first&nbsp;button<br>
-&nbsp;&nbsp;&nbsp;&nbsp;shortcuttxt2&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sctext2&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;second&nbsp;button<br>
-&nbsp;&nbsp;&nbsp;&nbsp;shortcuttxt3&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sctext3&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;third&nbsp;button<br>
 &nbsp;<br>
 Examples<br>
@@ -571,18 +573,18 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_set_choices_shortcut"><strong>fl_set_choices_shortcut</strong></a>(shortcuttxt1, shortcuttxt2, shortcuttxt3)</dt><dd><tt><a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>(shortcuttxt1,&nbsp;shortcuttxt2,&nbsp;shortcuttxt3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_set_choices_shortcut"><strong>fl_set_choices_shortcut</strong></a>(sctext1, sctext2, sctext3)</dt><dd><tt><a href="#-fl_set_choices_shortcut">fl_set_choices_shortcut</a>(sctext1,&nbsp;sctext2,&nbsp;sctext3)<br>
 &nbsp;<br>
 Defines&nbsp;more&nbsp;mnemonic&nbsp;hotkeys&nbsp;as&nbsp;shortcut&nbsp;text&nbsp;for&nbsp;choices.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;shortcuttxt1&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sctext1&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;first&nbsp;button<br>
-&nbsp;&nbsp;&nbsp;&nbsp;shortcuttxt2&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sctext2&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;second&nbsp;button<br>
-&nbsp;&nbsp;&nbsp;&nbsp;shortcuttxt3&nbsp;:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sctext3&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortcut&nbsp;to&nbsp;bind&nbsp;to&nbsp;third&nbsp;button<br>
 &nbsp;<br>
 Examples<br>
@@ -591,7 +593,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_command_log_position"><strong>fl_set_command_log_position</strong></a>(xpos, ypos)</dt><dd><tt><a href="#-fl_set_command_log_position">fl_set_command_log_position</a>(xpos,&nbsp;ypos)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;default&nbsp;placement&nbsp;of&nbsp;the&nbsp;command&nbsp;log.<br>
@@ -609,7 +611,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_directory"><strong>fl_set_directory</strong></a>(dirname)</dt><dd><tt><a href="#-fl_set_directory">fl_set_directory</a>(dirname)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Defines&nbsp;programmatically&nbsp;new&nbsp;value&nbsp;for&nbsp;the&nbsp;default&nbsp;directory.<br>
@@ -626,21 +628,21 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;sth&nbsp;=&nbsp;<a href="#-fl_set_directory">fl_set_directory</a>("/home/userdir/blabla")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;sth&nbsp;=&nbsp;<a href="#-fl_set_directory">fl_set_directory</a>("/home/userdir/myotherdir")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_border"><strong>fl_set_fselector_border</strong></a>(border)</dt><dd><tt><a href="#-fl_set_fselector_border">fl_set_fselector_border</a>(border)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;border&nbsp;of&nbsp;file&nbsp;selector.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;displayed&nbsp;with<br>
-transient&nbsp;property&nbsp;set&nbsp;(FL_NOBORDER&nbsp;is&nbsp;ignored).<br>
+transient&nbsp;property&nbsp;set.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;border&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;manager&nbsp;decoration.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_FULLBORDER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TRANSIENT,&nbsp;FL_NOBORDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;FL_TRANSIENT.&nbsp;FL_NOBORDER&nbsp;is&nbsp;ignored.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -648,12 +650,12 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_callback"><strong>fl_set_fselector_callback</strong></a>(pyfn_FSCB, userdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(pyfn_FSCB,&nbsp;userdata)<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;callback&nbsp;routine&nbsp;so&nbsp;that&nbsp;whenever&nbsp;the&nbsp;user&nbsp;double&nbsp;clicks&nbsp;on&nbsp;a<br>
-filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked<br>
-with&nbsp;the&nbsp;filename&nbsp;as&nbsp;the&nbsp;argument.&nbsp;The&nbsp;behavior&nbsp;of&nbsp;the&nbsp;file&nbsp;selector&nbsp;is<br>
+filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked&nbsp;with<br>
+the&nbsp;filename&nbsp;as&nbsp;the&nbsp;argument.&nbsp;The&nbsp;behavior&nbsp;of&nbsp;the&nbsp;file&nbsp;selector&nbsp;is<br>
 slightly&nbsp;different&nbsp;when&nbsp;a&nbsp;callback&nbsp;is&nbsp;present.&nbsp;Without&nbsp;the&nbsp;callback,&nbsp;a<br>
 file&nbsp;selector&nbsp;is&nbsp;always&nbsp;modal.&nbsp;Please&nbsp;note&nbsp;that&nbsp;when&nbsp;a&nbsp;file&nbsp;selector&nbsp;has<br>
 a&nbsp;callback&nbsp;installed&nbsp;the&nbsp;field&nbsp;for&nbsp;manually&nbsp;entering&nbsp;a&nbsp;file&nbsp;name&nbsp;is&nbsp;not<br>
@@ -662,11 +664,12 @@ shown.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FSCB&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;(unused)&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]text,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]fname,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -677,12 +680,12 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_cb"><strong>fl_set_fselector_cb</strong></a> = fl_set_fselector_callback(pyfn_FSCB, userdata)</dt><dd><tt><a href="#-fl_set_fselector_callback">fl_set_fselector_callback</a>(pyfn_FSCB,&nbsp;userdata)<br>
 &nbsp;<br>
 Defines&nbsp;a&nbsp;callback&nbsp;routine&nbsp;so&nbsp;that&nbsp;whenever&nbsp;the&nbsp;user&nbsp;double&nbsp;clicks&nbsp;on&nbsp;a<br>
-filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked<br>
-with&nbsp;the&nbsp;filename&nbsp;as&nbsp;the&nbsp;argument.&nbsp;The&nbsp;behavior&nbsp;of&nbsp;the&nbsp;file&nbsp;selector&nbsp;is<br>
+filename,&nbsp;instead&nbsp;of&nbsp;returning&nbsp;the&nbsp;filename,&nbsp;this&nbsp;routine&nbsp;is&nbsp;invoked&nbsp;with<br>
+the&nbsp;filename&nbsp;as&nbsp;the&nbsp;argument.&nbsp;The&nbsp;behavior&nbsp;of&nbsp;the&nbsp;file&nbsp;selector&nbsp;is<br>
 slightly&nbsp;different&nbsp;when&nbsp;a&nbsp;callback&nbsp;is&nbsp;present.&nbsp;Without&nbsp;the&nbsp;callback,&nbsp;a<br>
 file&nbsp;selector&nbsp;is&nbsp;always&nbsp;modal.&nbsp;Please&nbsp;note&nbsp;that&nbsp;when&nbsp;a&nbsp;file&nbsp;selector&nbsp;has<br>
 a&nbsp;callback&nbsp;installed&nbsp;the&nbsp;field&nbsp;for&nbsp;manually&nbsp;entering&nbsp;a&nbsp;file&nbsp;name&nbsp;is&nbsp;not<br>
@@ -691,11 +694,12 @@ shown.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_FSCB&nbsp;:&nbsp;python&nbsp;function&nbsp;callback,&nbsp;returning&nbsp;(unused)&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]text,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function([str]fname,&nbsp;[pointer&nbsp;to&nbsp;void]pvdata)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[int]num<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -706,27 +710,25 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_filetype_marker"><strong>fl_set_fselector_filetype_marker</strong></a>(dirmrkr, fifomrkr, sockmrkr, cdevmrkr, bdevmrkr)</dt><dd><tt><a href="#-fl_set_fselector_filetype_marker">fl_set_fselector_filetype_marker</a>(dirmrkr,&nbsp;fifomrkr,&nbsp;sockmrkr,&nbsp;cdevmrkr,<br>
 bdevmrkr)<br>
 &nbsp;<br>
-Changes&nbsp;the&nbsp;prefix&nbsp;by&nbsp;which&nbsp;the&nbsp;listing&nbsp;of&nbsp;files&nbsp;in&nbsp;a&nbsp;directory&nbsp;special<br>
-files&nbsp;are&nbsp;marked&nbsp;with&nbsp;in&nbsp;browser.&nbsp;By&nbsp;default&nbsp;D&nbsp;is&nbsp;used&nbsp;for&nbsp;directories,<br>
-b&nbsp;for&nbsp;special&nbsp;block&nbsp;files,&nbsp;c&nbsp;for&nbsp;special&nbsp;character&nbsp;file,&nbsp;p&nbsp;for&nbsp;pipes,<br>
-s&nbsp;for&nbsp;sockets.<br>
+Changes&nbsp;the&nbsp;prefix&nbsp;used&nbsp;to&nbsp;mark&nbsp;special&nbsp;files&nbsp;in&nbsp;the&nbsp;directories&nbsp;and&nbsp;files<br>
+listing&nbsp;browser.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dirmrkr&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;directories<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;directories.&nbsp;By&nbsp;default&nbsp;'D'&nbsp;is&nbsp;used.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fifomrkr&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;pipes&nbsp;and&nbsp;FIFOs<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;pipes&nbsp;and&nbsp;FIFOs.&nbsp;By&nbsp;default&nbsp;'p'&nbsp;is&nbsp;used.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sockmrkr&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;sockets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;sockets.&nbsp;By&nbsp;default&nbsp;'s'&nbsp;is&nbsp;used.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;cdevmrkr&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;character&nbsp;device&nbsp;files<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;character&nbsp;device&nbsp;files.&nbsp;By&nbsp;default&nbsp;'c'&nbsp;is&nbsp;used.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bdevmrkr&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;block&nbsp;device&nbsp;files<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;marker&nbsp;for&nbsp;block&nbsp;device&nbsp;files.&nbsp;By&nbsp;default&nbsp;'b'&nbsp;is&nbsp;used.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -734,7 +736,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_fontsize"><strong>fl_set_fselector_fontsize</strong></a>(size)</dt><dd><tt><a href="#-fl_set_fselector_fontsize">fl_set_fselector_fontsize</a>(size)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;font&nbsp;size&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
@@ -742,11 +744,11 @@ Changes&nbsp;the&nbsp;font&nbsp;size&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;font,&nbsp;default),&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10&nbsp;points&nbsp;font,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -754,7 +756,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_fontstyle"><strong>fl_set_fselector_fontstyle</strong></a>(style)</dt><dd><tt><a href="#-fl_set_fselector_fontstyle">fl_set_fselector_fontstyle</a>(style)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;font&nbsp;style&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
@@ -762,23 +764,23 @@ Changes&nbsp;the&nbsp;font&nbsp;style&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;text),&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLDITALIC_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE&nbsp;(Courier&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;and&nbsp;italic<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),&nbsp;FL_MISCBOLD_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE&nbsp;(Charter&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow,&nbsp;modifier&nbsp;mask),&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form,&nbsp;modifier&nbsp;mask),&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),&nbsp;FL_BOLDITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_FIXED_STYLE&nbsp;(Courier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;italic&nbsp;text),&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;italic&nbsp;text),&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a&nbsp;shadow,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the&nbsp;form,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -786,20 +788,20 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_placement"><strong>fl_set_fselector_placement</strong></a>(place)</dt><dd><tt><a href="#-fl_set_fselector_placement">fl_set_fselector_placement</a>(place)<br>
 &nbsp;<br>
-Defines&nbsp;the&nbsp;placement&nbsp;of&nbsp;the&nbsp;file&nbsp;selector.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;centered<br>
-on&nbsp;the&nbsp;screen&nbsp;(FL_PLACE_CENTER|FL_FREE_SIZE).<br>
+Defines&nbsp;the&nbsp;placement&nbsp;of&nbsp;the&nbsp;file&nbsp;selector.&nbsp;By&nbsp;default&nbsp;it&nbsp;is&nbsp;centered&nbsp;on<br>
+the&nbsp;screen&nbsp;(from&nbsp;xfdata.py,&nbsp;FL_PLACE_CENTER|FL_FREE_SIZE).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;place&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where&nbsp;to&nbsp;place&nbsp;it.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_PLACE_FREE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_MOUSE,&nbsp;FL_PLACE_CENTER,&nbsp;FL_PLACE_POSITION,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_SIZE,&nbsp;FL_PLACE_GEOMETRY,&nbsp;FL_PLACE_ASPECT,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_FULLSCREEN,&nbsp;FL_PLACE_HOTSPOT,&nbsp;FL_PLACE_ICONIC,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FREE_SIZE,&nbsp;FL_PLACE_FREE_CENTER,&nbsp;FL_PLACE_CENTERFREE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_MOUSE,&nbsp;FL_PLACE_CENTER,&nbsp;FL_PLACE_POSITION,&nbsp;FL_PLACE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_GEOMETRY,&nbsp;FL_PLACE_ASPECT,&nbsp;FL_PLACE_FULLSCREEN,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_HOTSPOT,&nbsp;FL_PLACE_ICONIC,&nbsp;FL_FREE_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_FREE_CENTER,&nbsp;FL_PLACE_CENTERFREE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_MOUSE|FL_FREE_SIZE,&nbsp;FL_PLACE_FULLSCREEN|FL_FREE_SIZE,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLACE_HOTSPOT|FL_FREE_SIZE<br>
 &nbsp;<br>
@@ -809,7 +811,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_title"><strong>fl_set_fselector_title</strong></a>(title)</dt><dd><tt><a href="#-fl_set_fselector_title">fl_set_fselector_title</a>(title)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;title&nbsp;of&nbsp;a&nbsp;file&nbsp;selector.<br>
@@ -825,7 +827,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_fselector_transient"><strong>fl_set_fselector_transient</strong></a>(yesno)</dt><dd><tt><a href="#-fl_set_fselector_transient">fl_set_fselector_transient</a>(yesno)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;property&nbsp;of&nbsp;file&nbsp;selector&nbsp;as&nbsp;transient&nbsp;or&nbsp;fullborder.<br>
@@ -833,8 +835,7 @@ Defines&nbsp;the&nbsp;property&nbsp;of&nbsp;file&nbsp;selector&nbsp;as&nbsp;tran
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;transient&nbsp;or&nbsp;not.&nbsp;Values&nbsp;1&nbsp;(transient)&nbsp;or&nbsp;0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(not&nbsp;transient)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;transient&nbsp;or&nbsp;not.&nbsp;Values&nbsp;1&nbsp;(transient)&nbsp;or&nbsp;0&nbsp;(full&nbsp;border)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -842,7 +843,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_goodies_font"><strong>fl_set_goodies_font</strong></a>(style, size)</dt><dd><tt><a href="#-fl_set_goodies_font">fl_set_goodies_font</a>(style,&nbsp;size)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;font&nbsp;used&nbsp;in&nbsp;all&nbsp;messages.<br>
@@ -850,29 +851,29 @@ Changes&nbsp;the&nbsp;font&nbsp;used&nbsp;in&nbsp;all&nbsp;messages.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goodies&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;text),&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLDITALIC_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE&nbsp;(Courier&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;and&nbsp;italic<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),&nbsp;FL_MISCBOLD_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE&nbsp;(Charter&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow,&nbsp;modifier&nbsp;mask),&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form,&nbsp;modifier&nbsp;mask),&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goodies&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),&nbsp;FL_BOLDITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_FIXED_STYLE&nbsp;(Courier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;italic&nbsp;text),&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;italic&nbsp;text),&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a&nbsp;shadow,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the&nbsp;form,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goodies&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;font,&nbsp;default),&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goodies&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10&nbsp;points&nbsp;font,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -880,11 +881,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_oneliner_color"><strong>fl_set_oneliner_color</strong></a>(fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_oneliner_color">fl_set_oneliner_color</a>(fgcolr,&nbsp;bgcolr)<br>
 &nbsp;<br>
-Defines&nbsp;color&nbsp;to&nbsp;use&nbsp;with&nbsp;oneliner&nbsp;message.&nbsp;By&nbsp;default,&nbsp;the&nbsp;background<br>
-of&nbsp;the&nbsp;message&nbsp;is&nbsp;yellow&nbsp;and&nbsp;the&nbsp;text&nbsp;black.<br>
+Defines&nbsp;color&nbsp;to&nbsp;use&nbsp;with&nbsp;oneliner&nbsp;message.&nbsp;By&nbsp;default,&nbsp;the&nbsp;background&nbsp;of<br>
+the&nbsp;message&nbsp;is&nbsp;yellow&nbsp;and&nbsp;the&nbsp;text&nbsp;black.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -899,7 +900,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_oneliner_font"><strong>fl_set_oneliner_font</strong></a>(style, size)</dt><dd><tt><a href="#-fl_set_oneliner_font">fl_set_oneliner_font</a>(style,&nbsp;size)<br>
 &nbsp;<br>
 Defines&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;to&nbsp;use&nbsp;in&nbsp;a&nbsp;oneliner&nbsp;message.<br>
@@ -907,29 +908,29 @@ Defines&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;to&nbsp;use&nbsp;in&nbsp;a&
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;text),&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLDITALIC_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE&nbsp;(Courier&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;and&nbsp;italic<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),&nbsp;FL_MISCBOLD_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE&nbsp;(Charter&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow,&nbsp;modifier&nbsp;mask),&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form,&nbsp;modifier&nbsp;mask),&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),&nbsp;FL_BOLDITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_FIXED_STYLE&nbsp;(Courier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;italic&nbsp;text),&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;italic&nbsp;text),&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a&nbsp;shadow,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the&nbsp;form,&nbsp;modifier&nbsp;mask),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;font,&nbsp;default),&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10&nbsp;points&nbsp;font,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -937,7 +938,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_pattern"><strong>fl_set_pattern</strong></a>(pattern)</dt><dd><tt><a href="#-fl_set_pattern">fl_set_pattern</a>(pattern)<br>
 &nbsp;<br>
 Defines&nbsp;programmatically&nbsp;a&nbsp;new&nbsp;value&nbsp;for&nbsp;the&nbsp;default&nbsp;pattern.<br>
@@ -949,11 +950,11 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_pattern">fl_set_pattern</a>("\*.txt")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_pattern">fl_set_pattern</a>("*.txt")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_tooltip_boxtype"><strong>fl_set_tooltip_boxtype</strong></a>(boxtype)</dt><dd><tt><a href="#-fl_set_tooltip_boxtype">fl_set_tooltip_boxtype</a>(boxtype)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;boxtype&nbsp;of&nbsp;the&nbsp;tooltip.<br>
@@ -961,18 +962,18 @@ Defines&nbsp;the&nbsp;boxtype&nbsp;of&nbsp;the&nbsp;tooltip.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;boxtype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;box&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NO_BOX&nbsp;(No&nbsp;box&nbsp;at&nbsp;all,&nbsp;it&nbsp;is&nbsp;transparent,&nbsp;just&nbsp;a&nbsp;label),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_UP_BOX&nbsp;(A&nbsp;box&nbsp;that&nbsp;comes&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),&nbsp;FL_DOWN_BOX&nbsp;(A&nbsp;box<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;goes&nbsp;down&nbsp;into&nbsp;the&nbsp;screen),&nbsp;FL_BORDER_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border),&nbsp;FL_SHADOW_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_FRAME_BOX&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flat&nbsp;box&nbsp;with&nbsp;an&nbsp;engraved&nbsp;frame),&nbsp;FL_ROUNDED_BOX&nbsp;(A&nbsp;rounded&nbsp;box),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;an&nbsp;embossed&nbsp;frame),&nbsp;FL_FLAT_BOX&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flat&nbsp;box&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;color&nbsp;than&nbsp;the&nbsp;surroundings),&nbsp;FL_RFLAT_BOX&nbsp;(A&nbsp;rounded&nbsp;box<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a&nbsp;different&nbsp;color<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;the&nbsp;surroundings),&nbsp;FL_RSHADOW_BOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;with&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow)),&nbsp;FL_OVAL_BOX&nbsp;(A&nbsp;box&nbsp;shaped&nbsp;like&nbsp;an&nbsp;ellipse),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;box&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_BOX<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(No&nbsp;box&nbsp;at&nbsp;all,&nbsp;it&nbsp;is&nbsp;transparent,&nbsp;just&nbsp;a&nbsp;label),&nbsp;FL_UP_BOX&nbsp;(A<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;that&nbsp;comes&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),&nbsp;FL_DOWN_BOX&nbsp;(A&nbsp;box&nbsp;that&nbsp;goes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;down&nbsp;into&nbsp;the&nbsp;screen),&nbsp;FL_BORDER_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a&nbsp;border),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_FRAME_BOX&nbsp;(A&nbsp;flat&nbsp;box<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;an&nbsp;engraved&nbsp;frame),&nbsp;FL_ROUNDED_BOX&nbsp;(A&nbsp;rounded&nbsp;box),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;an&nbsp;embossed&nbsp;frame),&nbsp;FL_FLAT_BOX<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;flat&nbsp;box&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;color&nbsp;than&nbsp;the&nbsp;surroundings),&nbsp;FL_RFLAT_BOX&nbsp;(A&nbsp;rounded<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a&nbsp;different<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color&nbsp;than&nbsp;the&nbsp;surroundings),&nbsp;FL_RSHADOW_BOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;shadow)),&nbsp;FL_OVAL_BOX&nbsp;(A&nbsp;box&nbsp;shaped&nbsp;like&nbsp;an&nbsp;ellipse),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_UPBOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;coming&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_DOWNBOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;going&nbsp;into&nbsp;the&nbsp;screen),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVAL3D_UPBOX&nbsp;(An&nbsp;oval&nbsp;box&nbsp;coming&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),<br>
@@ -986,7 +987,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_tooltip_color"><strong>fl_set_tooltip_color</strong></a>(fgcolr, bgcolr)</dt><dd><tt><a href="#-fl_set_tooltip_color">fl_set_tooltip_color</a>(fgcolr,&nbsp;bgcolr)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;foreground&nbsp;and&nbsp;the&nbsp;background&nbsp;colors&nbsp;of&nbsp;the&nbsp;tooltip.<br>
@@ -1004,7 +1005,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_tooltip_font"><strong>fl_set_tooltip_font</strong></a>(style, size)</dt><dd><tt><a href="#-fl_set_tooltip_font">fl_set_tooltip_font</a>(style,&nbsp;size)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;tooltip.<br>
@@ -1012,29 +1013,29 @@ Defines&nbsp;the&nbsp;font&nbsp;style&nbsp;and&nbsp;size&nbsp;of&nbsp;the&nbsp;t
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;style&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;text),&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BOLDITALIC_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXED_STYLE&nbsp;(Courier&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;italic&nbsp;text),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;and&nbsp;italic<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),&nbsp;FL_MISCBOLD_STYLE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE&nbsp;(Charter&nbsp;italic&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;style.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_STYLE&nbsp;(Helvetica<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal&nbsp;text),&nbsp;FL_BOLD_STYLE&nbsp;(Helvetica&nbsp;boldface&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ITALIC_STYLE&nbsp;(Helvetica&nbsp;italic&nbsp;text),&nbsp;FL_BOLDITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Helvetica&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_FIXED_STYLE&nbsp;(Courier<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;width,&nbsp;good&nbsp;for&nbsp;tables),&nbsp;FL_FIXEDBOLD_STYLE&nbsp;(Courier&nbsp;bold<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fixed&nbsp;text),&nbsp;FL_FIXEDITALIC_STYLE&nbsp;(Courier&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_FIXEDBOLDITALIC_STYLE&nbsp;(Courier&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;fixed&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TIMES_STYLE&nbsp;(Times-Roman&nbsp;like&nbsp;normal&nbsp;font),&nbsp;FL_TIMESBOLD_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Times-Roman&nbsp;like&nbsp;boldface&nbsp;text),&nbsp;FL_TIMESITALIC_STYLE&nbsp;(Times-Roman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;like&nbsp;italic&nbsp;text),&nbsp;FL_TIMESBOLDITALIC_STYLE&nbsp;(Times-Roman&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boldface&nbsp;and&nbsp;italic&nbsp;text),&nbsp;FL_MISC_STYLE&nbsp;(Charter&nbsp;normal&nbsp;text),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MISCBOLD_STYLE&nbsp;(Charter&nbsp;boldface&nbsp;text),&nbsp;FL_MISCITALIC_STYLE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Charter&nbsp;italic&nbsp;text),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SYMBOL_STYLE&nbsp;(Symbol&nbsp;text),&nbsp;FL_SHADOW_STYLE&nbsp;(Text&nbsp;casting&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow,&nbsp;modifier&nbsp;mask),&nbsp;FL_ENGRAVED_STYLE&nbsp;(Text&nbsp;engraved&nbsp;into&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form,&nbsp;modifier&nbsp;mask),&nbsp;FL_EMBOSSED_STYLE&nbsp;(Text&nbsp;standing&nbsp;out,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modifier&nbsp;mask).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;any&nbsp;of&nbsp;modifiers&nbsp;is&nbsp;allowed.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;points&nbsp;font,&nbsp;default),&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label&nbsp;size.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_TINY_SIZE&nbsp;(8&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SMALL_SIZE&nbsp;or&nbsp;FL_DEFAULT_SIZE&nbsp;(10&nbsp;points&nbsp;font,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_SIZE&nbsp;(12&nbsp;points&nbsp;font),&nbsp;FL_MEDIUM_SIZE&nbsp;(14&nbsp;points&nbsp;font),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LARGE_SIZE&nbsp;(18&nbsp;points&nbsp;font),FL_HUGE_SIZE&nbsp;(24&nbsp;points&nbsp;font),&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;numeric&nbsp;odd&nbsp;or&nbsp;even&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1043,7 +1044,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_tooltip_lalign"><strong>fl_set_tooltip_lalign</strong></a>(align)</dt><dd><tt><a href="#-fl_set_tooltip_lalign">fl_set_tooltip_lalign</a>(align)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;tooltip.<br>
@@ -1051,18 +1052,18 @@ Defines&nbsp;the&nbsp;alignment&nbsp;of&nbsp;the&nbsp;tooltip.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;align&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;tooltip.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_CENTER&nbsp;(In&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;box,&nbsp;inside&nbsp;it),&nbsp;FL_ALIGN_TOP<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(To&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_BOTTOM&nbsp;(To&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_LEFT&nbsp;(To&nbsp;the&nbsp;left&nbsp;of&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT&nbsp;(To&nbsp;the&nbsp;right&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_TOP&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_RIGHT_TOP&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_LEFT_BOTTOM&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_RIGHT_BOTTOM&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;bottom&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_INSIDE&nbsp;(places&nbsp;the&nbsp;text&nbsp;inside&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box),&nbsp;FL_ALIGN_VERT&nbsp;(not&nbsp;functional&nbsp;yet).&nbsp;Bitwise&nbsp;OR&nbsp;with<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_INSIDE&nbsp;is&nbsp;allowed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alignment&nbsp;of&nbsp;tooltip.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_ALIGN_CENTER&nbsp;(In<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;middle&nbsp;of&nbsp;the&nbsp;box,&nbsp;inside&nbsp;it),&nbsp;FL_ALIGN_TOP&nbsp;(To&nbsp;the&nbsp;top&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_BOTTOM&nbsp;(To&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_LEFT&nbsp;(To&nbsp;the&nbsp;left&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT&nbsp;(To&nbsp;the&nbsp;right&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_TOP&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_RIGHT_TOP&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;top&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside&nbsp;it),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_LEFT_BOTTOM&nbsp;(To&nbsp;the&nbsp;left&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,&nbsp;outside<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it),&nbsp;FL_ALIGN_RIGHT_BOTTOM&nbsp;(To&nbsp;the&nbsp;right&nbsp;and&nbsp;bottom&nbsp;of&nbsp;the&nbsp;box,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outside&nbsp;it),&nbsp;FL_ALIGN_INSIDE&nbsp;(places&nbsp;the&nbsp;text&nbsp;inside&nbsp;the&nbsp;box),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALIGN_VERT&nbsp;(not&nbsp;functional&nbsp;yet).&nbsp;Bitwise&nbsp;OR&nbsp;with&nbsp;FL_ALIGN_INSIDE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;allowed.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1070,11 +1071,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_show_alert"><strong>fl_show_alert</strong></a>(title, msgtxt1, msgtxt2, centered)</dt><dd><tt><a href="#-fl_show_alert">fl_show_alert</a>(title,&nbsp;msgtxt1,&nbsp;msgtxt2,&nbsp;centered)<br>
 &nbsp;<br>
-Shows&nbsp;an&nbsp;alert&nbsp;message,&nbsp;with&nbsp;an&nbsp;alert&nbsp;icon&nbsp;(!)&nbsp;is&nbsp;added&nbsp;and&nbsp;the<br>
-first&nbsp;string&nbsp;is&nbsp;shown&nbsp;bold-faced.<br>
+Shows&nbsp;an&nbsp;alert&nbsp;message,&nbsp;with&nbsp;an&nbsp;added&nbsp;alert&nbsp;icon&nbsp;(!).&nbsp;The&nbsp;first&nbsp;string<br>
+is&nbsp;shown&nbsp;bold-faced.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1085,8 +1086,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msgtxt2&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;message&nbsp;text<br>
 &nbsp;&nbsp;&nbsp;&nbsp;centered&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;alert&nbsp;has&nbsp;to&nbsp;be&nbsp;displayed&nbsp;centered&nbsp;on&nbsp;the&nbsp;screen&nbsp;or&nbsp;not.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Values&nbsp;1&nbsp;(if&nbsp;centered)&nbsp;or&nbsp;0&nbsp;(not&nbsp;centered)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;alert&nbsp;has&nbsp;to&nbsp;be&nbsp;displayed&nbsp;centered&nbsp;on&nbsp;the&nbsp;screen&nbsp;or&nbsp;not.&nbsp;Values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;centered)&nbsp;or&nbsp;0&nbsp;(not&nbsp;centered)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1094,7 +1095,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_alert2"><strong>fl_show_alert2</strong></a>(centered, fmttxt)</dt><dd><tt><a href="#-fl_show_alert2">fl_show_alert2</a>(centered,&nbsp;fmttxt)<br>
 &nbsp;<br>
 Shows&nbsp;a&nbsp;formatted&nbsp;alert&nbsp;message.&nbsp;The&nbsp;string&nbsp;resulting&nbsp;from&nbsp;expansion<br>
@@ -1117,13 +1118,13 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_show_choice"><strong>fl_show_choice</strong></a>(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt, btn3txt, defcho)</dt><dd><tt><a href="#-fl_show_choice">fl_show_choice</a>(msg1txt,&nbsp;msg2txt,&nbsp;msg3txt,&nbsp;numbtns,&nbsp;btn1txt,&nbsp;btn2txt,<br>
 btn3txt,&nbsp;defcho)&nbsp;-&gt;&nbsp;btnnum<br>
 &nbsp;<br>
-Shows&nbsp;a&nbsp;message,&nbsp;up&nbsp;to&nbsp;three&nbsp;lines,&nbsp;with&nbsp;one,&nbsp;two&nbsp;or&nbsp;three&nbsp;buttons.<br>
-The&nbsp;user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;1&gt;,&nbsp;&lt;2&gt;&nbsp;or&nbsp;&lt;3&gt;&nbsp;key&nbsp;to&nbsp;indicate&nbsp;the&nbsp;first,<br>
-second,&nbsp;or&nbsp;third&nbsp;button.<br>
+Shows&nbsp;a&nbsp;message,&nbsp;up&nbsp;to&nbsp;three&nbsp;lines,&nbsp;with&nbsp;one,&nbsp;two&nbsp;or&nbsp;three&nbsp;buttons.&nbsp;The<br>
+user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;1&gt;,&nbsp;&lt;2&gt;&nbsp;or&nbsp;&lt;3&gt;&nbsp;key&nbsp;to&nbsp;indicate&nbsp;the&nbsp;first,&nbsp;second<br>
+or&nbsp;third&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1156,13 +1157,13 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_choices"><strong>fl_show_choices</strong></a>(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho)</dt><dd><tt><a href="#-fl_show_choices">fl_show_choices</a>(msgtxt,&nbsp;numbtns,&nbsp;btn1txt,&nbsp;btn2txt,&nbsp;btn3txt,&nbsp;defcho)<br>
 -&gt;&nbsp;btnnum<br>
 &nbsp;<br>
-Shows&nbsp;a&nbsp;message,&nbsp;as&nbsp;a&nbsp;single&nbsp;string&nbsp;with&nbsp;possible&nbsp;embedded&nbsp;newlines,<br>
-with&nbsp;one,&nbsp;two&nbsp;or&nbsp;three&nbsp;buttons.&nbsp;The&nbsp;user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;1&gt;,&nbsp;&lt;2&gt;&nbsp;or<br>
-&lt;3&gt;&nbsp;key&nbsp;to&nbsp;indicate&nbsp;the&nbsp;first,&nbsp;second,&nbsp;or&nbsp;third&nbsp;button.<br>
+Shows&nbsp;a&nbsp;message,&nbsp;as&nbsp;a&nbsp;single&nbsp;string&nbsp;with&nbsp;possible&nbsp;embedded&nbsp;newlines,&nbsp;with<br>
+one,&nbsp;two&nbsp;or&nbsp;three&nbsp;buttons.&nbsp;The&nbsp;user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;1&gt;,&nbsp;&lt;2&gt;&nbsp;or&nbsp;&lt;3&gt;&nbsp;key<br>
+to&nbsp;indicate&nbsp;the&nbsp;first,&nbsp;second&nbsp;or&nbsp;third&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1191,17 +1192,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_colormap"><strong>fl_show_colormap</strong></a>(oldcolr)</dt><dd><tt><a href="#-fl_show_colormap">fl_show_colormap</a>(oldcolr)&nbsp;-&gt;&nbsp;colr<br>
 &nbsp;<br>
-Shows&nbsp;a&nbsp;colormap&nbsp;color&nbsp;selector&nbsp;from&nbsp;which&nbsp;the&nbsp;user&nbsp;can&nbsp;select&nbsp;a<br>
-color.&nbsp;The&nbsp;user&nbsp;can&nbsp;decide&nbsp;not&nbsp;to&nbsp;change&nbsp;this&nbsp;color&nbsp;by&nbsp;pressing&nbsp;the<br>
-Cancel&nbsp;button&nbsp;in&nbsp;the&nbsp;form.&nbsp;In&nbsp;a&nbsp;number&nbsp;of&nbsp;applications&nbsp;the&nbsp;user&nbsp;has<br>
-to&nbsp;select&nbsp;a&nbsp;color&nbsp;from&nbsp;the&nbsp;colormap.&nbsp;For&nbsp;this&nbsp;a&nbsp;goody&nbsp;has&nbsp;been&nbsp;created.<br>
-It&nbsp;shows&nbsp;the&nbsp;first&nbsp;64&nbsp;entries&nbsp;of&nbsp;the&nbsp;colormap.&nbsp;The&nbsp;user&nbsp;can&nbsp;scroll<br>
-through&nbsp;the&nbsp;colormap&nbsp;to&nbsp;see&nbsp;more&nbsp;entries.&nbsp;Once&nbsp;the&nbsp;user&nbsp;presses&nbsp;the<br>
-mouse&nbsp;one&nbsp;of&nbsp;the&nbsp;entries&nbsp;the&nbsp;corresponding&nbsp;index&nbsp;is&nbsp;returned&nbsp;and&nbsp;the<br>
-colormap&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen.<br>
+Shows&nbsp;a&nbsp;colormap&nbsp;color&nbsp;selector&nbsp;from&nbsp;which&nbsp;the&nbsp;user&nbsp;can&nbsp;select&nbsp;a&nbsp;color.&nbsp;The<br>
+user&nbsp;can&nbsp;decide&nbsp;not&nbsp;to&nbsp;change&nbsp;this&nbsp;color&nbsp;by&nbsp;pressing&nbsp;the&nbsp;Cancel&nbsp;button&nbsp;in<br>
+the&nbsp;form.&nbsp;In&nbsp;a&nbsp;number&nbsp;of&nbsp;applications&nbsp;the&nbsp;user&nbsp;has&nbsp;to&nbsp;select&nbsp;a&nbsp;color&nbsp;from<br>
+the&nbsp;colormap.&nbsp;For&nbsp;this&nbsp;a&nbsp;goody&nbsp;has&nbsp;been&nbsp;created.&nbsp;It&nbsp;shows&nbsp;the&nbsp;first&nbsp;64<br>
+entries&nbsp;of&nbsp;the&nbsp;colormap.&nbsp;The&nbsp;user&nbsp;can&nbsp;scroll&nbsp;through&nbsp;the&nbsp;colormap&nbsp;to&nbsp;see<br>
+more&nbsp;entries.&nbsp;Once&nbsp;the&nbsp;user&nbsp;presses&nbsp;the&nbsp;mouse&nbsp;one&nbsp;of&nbsp;the&nbsp;entries&nbsp;the<br>
+corresponding&nbsp;index&nbsp;is&nbsp;returned&nbsp;and&nbsp;the&nbsp;colormap&nbsp;is&nbsp;removed&nbsp;from&nbsp;screen.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1210,8 +1210,9 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;colridx&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;selected&nbsp;color,&nbsp;or&nbsp;default&nbsp;one<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XForms&nbsp;colormap&nbsp;index&nbsp;as&nbsp;selected&nbsp;color,&nbsp;or&nbsp;default&nbsp;one&nbsp;(if&nbsp;cancel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pressed)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1219,7 +1220,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_command_log"><strong>fl_show_command_log</strong></a>(border)</dt><dd><tt><a href="#-fl_show_command_log">fl_show_command_log</a>(border)<br>
 &nbsp;<br>
 Shows&nbsp;the&nbsp;log&nbsp;of&nbsp;the&nbsp;command&nbsp;output.<br>
@@ -1236,7 +1237,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_show_file_selector"><strong>fl_show_file_selector</strong></a> = fl_show_fselector(msgtxt, dirname, pattern, deftxt)</dt><dd><tt><a href="#-fl_show_fselector">fl_show_fselector</a>(msgtxt,&nbsp;dirname,&nbsp;pattern,&nbsp;deftxt)&nbsp;-&gt;&nbsp;text<br>
 &nbsp;<br>
 Show&nbsp;a&nbsp;file&nbsp;selector,&nbsp;providing&nbsp;an&nbsp;easy&nbsp;and&nbsp;interactive&nbsp;way&nbsp;to&nbsp;let<br>
@@ -1249,9 +1250,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;kind&nbsp;of&nbsp;regular&nbsp;expression,&nbsp;e.g.&nbsp;"[a-f]*c"&nbsp;which&nbsp;would<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;all&nbsp;files&nbsp;starting&nbsp;with&nbsp;a&nbsp;letter&nbsp;between&nbsp;a&nbsp;and&nbsp;f&nbsp;and<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;with&nbsp;c.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;kind&nbsp;of&nbsp;regular&nbsp;expression,&nbsp;e.g.&nbsp;"[a-f]*c"&nbsp;which&nbsp;would&nbsp;list&nbsp;all<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;files&nbsp;starting&nbsp;with&nbsp;a&nbsp;letter&nbsp;between&nbsp;a&nbsp;and&nbsp;f&nbsp;and&nbsp;ending&nbsp;with&nbsp;c.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;deftxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;file&nbsp;name<br>
 &nbsp;<br>
@@ -1267,7 +1267,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_fselector"><strong>fl_show_fselector</strong></a>(msgtxt, dirname, pattern, deftxt)</dt><dd><tt><a href="#-fl_show_fselector">fl_show_fselector</a>(msgtxt,&nbsp;dirname,&nbsp;pattern,&nbsp;deftxt)&nbsp;-&gt;&nbsp;text<br>
 &nbsp;<br>
 Show&nbsp;a&nbsp;file&nbsp;selector,&nbsp;providing&nbsp;an&nbsp;easy&nbsp;and&nbsp;interactive&nbsp;way&nbsp;to&nbsp;let<br>
@@ -1280,9 +1280,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;dirname&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;name<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;kind&nbsp;of&nbsp;regular&nbsp;expression,&nbsp;e.g.&nbsp;"[a-f]*c"&nbsp;which&nbsp;would<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;all&nbsp;files&nbsp;starting&nbsp;with&nbsp;a&nbsp;letter&nbsp;between&nbsp;a&nbsp;and&nbsp;f&nbsp;and<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ending&nbsp;with&nbsp;c.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any&nbsp;kind&nbsp;of&nbsp;regular&nbsp;expression,&nbsp;e.g.&nbsp;"[a-f]*c"&nbsp;which&nbsp;would&nbsp;list&nbsp;all<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;files&nbsp;starting&nbsp;with&nbsp;a&nbsp;letter&nbsp;between&nbsp;a&nbsp;and&nbsp;f&nbsp;and&nbsp;ending&nbsp;with&nbsp;c.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;deftxt&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;file&nbsp;name<br>
 &nbsp;<br>
@@ -1298,11 +1297,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_input"><strong>fl_show_input</strong></a>(msgtxt, defstr)</dt><dd><tt><a href="#-fl_show_input">fl_show_input</a>(msgtxt,&nbsp;defstr)&nbsp;-&gt;&nbsp;text<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;some&nbsp;text&nbsp;from&nbsp;user,&nbsp;showing&nbsp;a&nbsp;default&nbsp;text.&nbsp;It&nbsp;has&nbsp;OK<br>
-and&nbsp;Cancel&nbsp;buttons.<br>
+Finds&nbsp;out&nbsp;some&nbsp;text&nbsp;from&nbsp;user,&nbsp;showing&nbsp;a&nbsp;default&nbsp;text.&nbsp;It&nbsp;has&nbsp;an&nbsp;OK&nbsp;and<br>
+a&nbsp;Cancel&nbsp;buttons.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1322,11 +1321,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_message"><strong>fl_show_message</strong></a>(msgtxt1, msgtxt2, msgtxt3)</dt><dd><tt><a href="#-fl_show_message">fl_show_message</a>(msgtxt1,&nbsp;msgtxt2,&nbsp;msgtxt3)<br>
 &nbsp;<br>
-Shows&nbsp;a&nbsp;simple&nbsp;form&nbsp;with&nbsp;three&nbsp;lines&nbsp;of&nbsp;text&nbsp;and&nbsp;a&nbsp;button&nbsp;labeled<br>
-OK&nbsp;on&nbsp;it.&nbsp;The&nbsp;mouse&nbsp;pointer&nbsp;is&nbsp;on&nbsp;the&nbsp;button.<br>
+Shows&nbsp;a&nbsp;simple&nbsp;form&nbsp;with&nbsp;three&nbsp;lines&nbsp;of&nbsp;text&nbsp;and&nbsp;a&nbsp;button&nbsp;labeled&nbsp;OK&nbsp;on<br>
+it.&nbsp;The&nbsp;mouse&nbsp;pointer&nbsp;is&nbsp;on&nbsp;the&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1344,15 +1343,15 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_messages"><strong>fl_show_messages</strong></a>(msgtxt)</dt><dd><tt><a href="#-fl_show_messages">fl_show_messages</a>(msgtxt)<br>
 &nbsp;<br>
-Shows&nbsp;a&nbsp;message.&nbsp;You&nbsp;can&nbsp;use&nbsp;it&nbsp;with&nbsp;a&nbsp;single&nbsp;line&nbsp;or&nbsp;when&nbsp;you<br>
-know&nbsp;the&nbsp;message&nbsp;in&nbsp;advance.&nbsp;To&nbsp;get&nbsp;multi-line&nbsp;messages&nbsp;use&nbsp;embedded<br>
-newlines.&nbsp;It&nbsp;blocks&nbsp;execution&nbsp;and&nbsp;does&nbsp;not&nbsp;return&nbsp;immediately&nbsp;(but&nbsp;idle<br>
-callback&nbsp;and&nbsp;asynchronous&nbsp;IO&nbsp;continue&nbsp;being&nbsp;run&nbsp;and&nbsp;checked).&nbsp;Execution<br>
-continues&nbsp;when&nbsp;the&nbsp;OK&nbsp;button&nbsp;is&nbsp;pressed&nbsp;or&nbsp;&lt;Return&gt;&nbsp;is&nbsp;hit&nbsp;or&nbsp;when&nbsp;the<br>
-message&nbsp;form&nbsp;is&nbsp;removed&nbsp;from&nbsp;the&nbsp;screen&nbsp;by&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>().<br>
+Shows&nbsp;a&nbsp;message.&nbsp;You&nbsp;can&nbsp;use&nbsp;it&nbsp;with&nbsp;a&nbsp;single&nbsp;line&nbsp;or&nbsp;when&nbsp;you&nbsp;know&nbsp;the<br>
+message&nbsp;in&nbsp;advance.&nbsp;To&nbsp;get&nbsp;multi-line&nbsp;messages&nbsp;use&nbsp;embedded&nbsp;newlines.&nbsp;It<br>
+blocks&nbsp;execution&nbsp;and&nbsp;does&nbsp;not&nbsp;return&nbsp;immediately&nbsp;(but&nbsp;idle&nbsp;callback&nbsp;and<br>
+asynchronous&nbsp;IO&nbsp;continue&nbsp;being&nbsp;run&nbsp;and&nbsp;checked).&nbsp;Execution&nbsp;continues&nbsp;when<br>
+the&nbsp;OK&nbsp;button&nbsp;is&nbsp;pressed&nbsp;or&nbsp;&lt;Return&gt;&nbsp;is&nbsp;hit&nbsp;or&nbsp;when&nbsp;the&nbsp;message&nbsp;form&nbsp;is<br>
+removed&nbsp;from&nbsp;the&nbsp;screen&nbsp;by&nbsp;<a href="#-fl_hide_message">fl_hide_message</a>().<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -1365,7 +1364,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_msg"><strong>fl_show_msg</strong></a>(fmttxt)</dt><dd><tt><a href="#-fl_show_msg">fl_show_msg</a>(fmttxt)<br>
 &nbsp;<br>
 Shows&nbsp;a&nbsp;formatted&nbsp;text&nbsp;message.&nbsp;The&nbsp;string&nbsp;resulting&nbsp;from&nbsp;expansion<br>
@@ -1389,7 +1388,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_show_oneliner"><strong>fl_show_oneliner</strong></a>(text, xpos, ypos)</dt><dd><tt><a href="#-fl_show_oneliner">fl_show_oneliner</a>(text,&nbsp;xpos,&nbsp;ypos)<br>
 &nbsp;<br>
 Shows&nbsp;a&nbsp;one-line&nbsp;message&nbsp;that&nbsp;can&nbsp;only&nbsp;be&nbsp;removed&nbsp;programmatically.<br>
@@ -1410,26 +1409,26 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_question"><strong>fl_show_question</strong></a>(questmsg, defbtn)</dt><dd><tt><a href="#-fl_show_question">fl_show_question</a>(questmsg,&nbsp;defbtn)&nbsp;-&gt;&nbsp;pushedbtn<br>
 &nbsp;<br>
-Shows&nbsp;a&nbsp;message&nbsp;(with&nbsp;possible&nbsp;embedded&nbsp;newlines&nbsp;in&nbsp;it)&nbsp;with&nbsp;a&nbsp;Yes<br>
-and&nbsp;a&nbsp;No&nbsp;button.&nbsp;It&nbsp;returns&nbsp;whether&nbsp;the&nbsp;user&nbsp;pushed&nbsp;the&nbsp;Yes&nbsp;button.&nbsp;The<br>
-user&nbsp;can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;Y&gt;&nbsp;key&nbsp;to&nbsp;mean&nbsp;Yes&nbsp;and&nbsp;the&nbsp;&lt;N&gt;&nbsp;key&nbsp;to&nbsp;mean&nbsp;No.<br>
+Shows&nbsp;a&nbsp;message&nbsp;(with&nbsp;possible&nbsp;embedded&nbsp;newlines&nbsp;in&nbsp;it)&nbsp;with&nbsp;a&nbsp;Yes&nbsp;and&nbsp;a<br>
+No&nbsp;button.&nbsp;It&nbsp;returns&nbsp;whether&nbsp;the&nbsp;user&nbsp;pushed&nbsp;the&nbsp;Yes&nbsp;button.&nbsp;The&nbsp;user<br>
+can&nbsp;also&nbsp;press&nbsp;the&nbsp;&lt;Y&gt;&nbsp;key&nbsp;to&nbsp;mean&nbsp;Yes&nbsp;and&nbsp;the&nbsp;&lt;N&gt;&nbsp;key&nbsp;to&nbsp;mean&nbsp;No.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;questmsg&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;of&nbsp;question&nbsp;message&nbsp;to&nbsp;show<br>
 &nbsp;&nbsp;&nbsp;&nbsp;defbtn&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;button&nbsp;the&nbsp;mouse&nbsp;pointer&nbsp;should&nbsp;be&nbsp;on.&nbsp;Values&nbsp;1&nbsp;(for&nbsp;Yes)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;0&nbsp;(for&nbsp;No)&nbsp;and&nbsp;any&nbsp;other&nbsp;value&nbsp;causes&nbsp;the&nbsp;form&nbsp;to&nbsp;be&nbsp;shown&nbsp;so<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;mouse&nbsp;pointer&nbsp;is&nbsp;at&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;form.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;which&nbsp;button&nbsp;the&nbsp;mouse&nbsp;pointer&nbsp;should&nbsp;be&nbsp;on.&nbsp;Values&nbsp;1&nbsp;(for&nbsp;Yes)&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(for&nbsp;No)&nbsp;and&nbsp;any&nbsp;other&nbsp;value&nbsp;causes&nbsp;the&nbsp;form&nbsp;to&nbsp;be&nbsp;shown&nbsp;so&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mouse&nbsp;pointer&nbsp;is&nbsp;at&nbsp;the&nbsp;center&nbsp;of&nbsp;the&nbsp;form.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pushedbtn&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;Yes&nbsp;button&nbsp;pushed)&nbsp;or&nbsp;0&nbsp;otherwise<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;(if&nbsp;Yes&nbsp;button&nbsp;pushed),&nbsp;or&nbsp;0&nbsp;otherwise<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1437,7 +1436,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_show_simple_input"><strong>fl_show_simple_input</strong></a>(msgtxt, defstr)</dt><dd><tt><a href="#-fl_show_simple_input">fl_show_simple_input</a>(msgtxt,&nbsp;defstr)&nbsp;-&gt;&nbsp;text<br>
 &nbsp;<br>
 Asks&nbsp;the&nbsp;user&nbsp;for&nbsp;textual&nbsp;input.&nbsp;It&nbsp;has&nbsp;an&nbsp;OK&nbsp;button&nbsp;only.<br>
@@ -1461,7 +1460,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_use_fselector"><strong>fl_use_fselector</strong></a>(fselnum)</dt><dd><tt><a href="#-fl_use_fselector">fl_use_fselector</a>(fselnum)&nbsp;-&gt;&nbsp;oldfselnum<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;currently&nbsp;active&nbsp;file&nbsp;selector.<br>
@@ -1483,6 +1482,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

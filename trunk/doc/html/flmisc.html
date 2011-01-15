@@ -29,23 +29,25 @@
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-fl_add_box"><strong>fl_add_box</strong></a>(boxtype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_box">fl_add_box</a>(boxtype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;box&nbsp;flobject.<br>
+Adds&nbsp;a&nbsp;ractangular&nbsp;box&nbsp;area&nbsp;flobject.&nbsp;It&nbsp;is&nbsp;simply&nbsp;used&nbsp;to&nbsp;give&nbsp;the<br>
+dialogue&nbsp;form&nbsp;a&nbsp;nicer&nbsp;appearance.&nbsp;It&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;visually&nbsp;group&nbsp;other<br>
+objects&nbsp;together.&nbsp;The&nbsp;bottom&nbsp;of&nbsp;each&nbsp;form&nbsp;is&nbsp;a&nbsp;box.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;boxtype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;box&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NO_BOX&nbsp;(No&nbsp;box&nbsp;at&nbsp;all,&nbsp;it&nbsp;is&nbsp;transparent,&nbsp;just&nbsp;a&nbsp;label),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_UP_BOX&nbsp;(A&nbsp;box&nbsp;that&nbsp;comes&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),&nbsp;FL_DOWN_BOX&nbsp;(A&nbsp;box<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;goes&nbsp;down&nbsp;into&nbsp;the&nbsp;screen),&nbsp;FL_BORDER_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;border),&nbsp;FL_SHADOW_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_FRAME_BOX&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flat&nbsp;box&nbsp;with&nbsp;an&nbsp;engraved&nbsp;frame),&nbsp;FL_ROUNDED_BOX&nbsp;(A&nbsp;rounded&nbsp;box),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;an&nbsp;embossed&nbsp;frame),&nbsp;FL_FLAT_BOX&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flat&nbsp;box&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;box&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_BOX&nbsp;(No<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;box&nbsp;at&nbsp;all,&nbsp;it&nbsp;is&nbsp;transparent,&nbsp;just&nbsp;a&nbsp;label),&nbsp;FL_UP_BOX&nbsp;(A&nbsp;box<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;comes&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),&nbsp;FL_DOWN_BOX&nbsp;(A&nbsp;box&nbsp;that&nbsp;goes&nbsp;down<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;the&nbsp;screen),&nbsp;FL_BORDER_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a&nbsp;border),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_FRAME_BOX&nbsp;(A&nbsp;flat&nbsp;box<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;an&nbsp;engraved&nbsp;frame),&nbsp;FL_ROUNDED_BOX&nbsp;(A&nbsp;rounded&nbsp;box),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_BOX&nbsp;(A&nbsp;flat&nbsp;box&nbsp;with&nbsp;an&nbsp;embossed&nbsp;frame),&nbsp;FL_FLAT_BOX<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;flat&nbsp;box&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;different&nbsp;color&nbsp;than&nbsp;the&nbsp;surroundings),&nbsp;FL_RFLAT_BOX&nbsp;(A&nbsp;rounded&nbsp;box<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;without&nbsp;a&nbsp;border,&nbsp;normally&nbsp;invisible&nbsp;unless&nbsp;given&nbsp;a&nbsp;different&nbsp;color<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;than&nbsp;the&nbsp;surroundings),&nbsp;FL_RSHADOW_BOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;with&nbsp;a<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow)),&nbsp;FL_OVAL_BOX&nbsp;(A&nbsp;box&nbsp;shaped&nbsp;like&nbsp;an&nbsp;ellipse),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shadow),&nbsp;FL_OVAL_BOX&nbsp;(A&nbsp;box&nbsp;shaped&nbsp;like&nbsp;an&nbsp;ellipse),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_UPBOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;coming&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ROUNDED3D_DOWNBOX&nbsp;(A&nbsp;rounded&nbsp;box&nbsp;going&nbsp;into&nbsp;the&nbsp;screen),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVAL3D_UPBOX&nbsp;(An&nbsp;oval&nbsp;box&nbsp;coming&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),<br>
@@ -70,28 +72,36 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;boxobj&nbsp;=&nbsp;<a href="#-fl_add_box">fl_add_box</a>(xfdata.FL_UP_BOX,&nbsp;120,&nbsp;150,&nbsp;200,&nbsp;250,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pboxobj&nbsp;=&nbsp;<a href="#-fl_add_box">fl_add_box</a>(xfdata.FL_UP_BOX,&nbsp;120,&nbsp;150,&nbsp;200,&nbsp;250,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"MyBox")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_add_frame"><strong>fl_add_frame</strong></a>(frametype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_frame">fl_add_frame</a>(frametype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;frame&nbsp;flobject.<br>
+Adds&nbsp;a&nbsp;frame&nbsp;flobject.&nbsp;It&nbsp;is&nbsp;simply&nbsp;used&nbsp;to&nbsp;give&nbsp;the&nbsp;dialogue&nbsp;form&nbsp;a&nbsp;nicer<br>
+appearance.&nbsp;It&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;visually&nbsp;group&nbsp;other&nbsp;objects&nbsp;together.<br>
+Frames&nbsp;are&nbsp;almost&nbsp;the&nbsp;same&nbsp;as&nbsp;a&nbsp;box,&nbsp;except&nbsp;that&nbsp;the&nbsp;interior&nbsp;of&nbsp;the<br>
+bounding&nbsp;box&nbsp;is&nbsp;not&nbsp;filled.&nbsp;Use&nbsp;of&nbsp;frames&nbsp;can&nbsp;speed&nbsp;up&nbsp;drawing&nbsp;in&nbsp;certain<br>
+situations,&nbsp;e.g.&nbsp;to&nbsp;place&nbsp;a&nbsp;group&nbsp;of&nbsp;radio&nbsp;buttons&nbsp;within&nbsp;an<br>
+xfdata.FL_ENGRAVED_FRAME.&nbsp;If&nbsp;we&nbsp;were&nbsp;to&nbsp;use&nbsp;an&nbsp;xfdata.FL_FRAME_BOX&nbsp;to<br>
+group&nbsp;the&nbsp;buttons,&nbsp;visually&nbsp;they&nbsp;would&nbsp;look&nbsp;the&nbsp;same;&nbsp;however,&nbsp;the&nbsp;latter<br>
+is&nbsp;faster&nbsp;as&nbsp;we&nbsp;do&nbsp;not&nbsp;have&nbsp;to&nbsp;fill&nbsp;the&nbsp;interior&nbsp;of&nbsp;the&nbsp;bounding&nbsp;box&nbsp;and<br>
+can&nbsp;also&nbsp;reduce&nbsp;flicker.&nbsp;Frames&nbsp;are&nbsp;useful&nbsp;in&nbsp;decorating&nbsp;free&nbsp;objects&nbsp;and<br>
+canvases.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;frametype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;frame&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NO_FRAME&nbsp;(Nothing&nbsp;is&nbsp;drawn),&nbsp;FL_UP_FRAME&nbsp;(A&nbsp;frame&nbsp;appears<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coming&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),&nbsp;FL_DOWN_FRAME&nbsp;(A&nbsp;frame&nbsp;that&nbsp;goes&nbsp;down<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;the&nbsp;screen),&nbsp;FL_BORDER_FRAME&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;simple&nbsp;outline),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_FRAME&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_ENGRAVED_FRAME&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame&nbsp;appears&nbsp;to&nbsp;be&nbsp;engraved),&nbsp;FL_ROUNDED_FRAME&nbsp;(A&nbsp;rounded&nbsp;frame),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_FRAME&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;embossed),&nbsp;FL_OVAL_FRAME&nbsp;(An<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elliptic&nbsp;box).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;frame&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_FRAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Nothing&nbsp;is&nbsp;drawn),&nbsp;FL_UP_FRAME&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;coming&nbsp;out&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen),&nbsp;FL_DOWN_FRAME&nbsp;(A&nbsp;frame&nbsp;that&nbsp;goes&nbsp;down&nbsp;into&nbsp;the&nbsp;screen),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BORDER_FRAME&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;simple&nbsp;outline),&nbsp;FL_SHADOW_FRAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_ENGRAVED_FRAME&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engraved),&nbsp;FL_ROUNDED_FRAME&nbsp;(A&nbsp;rounded&nbsp;frame),&nbsp;FL_EMBOSSED_FRAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;embossed),&nbsp;FL_OVAL_FRAME&nbsp;(An&nbsp;elliptic&nbsp;box).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -115,7 +125,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_add_free"><strong>fl_add_free</strong></a>(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr)</dt><dd><tt><a href="#-fl_add_free">fl_add_free</a>(freetype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label,&nbsp;pyfn_HandlePtr)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
@@ -124,21 +134,21 @@ Adds&nbsp;a&nbsp;free&nbsp;object.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;freetype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;free&nbsp;to&nbsp;be&nbsp;added.&nbsp;Value&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_FREE&nbsp;(The&nbsp;flobject&nbsp;will&nbsp;receive&nbsp;the&nbsp;events&nbsp;FL_DRAW,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ENTER,&nbsp;FL_LEAVE,&nbsp;FL_MOTION,&nbsp;FL_PUSH,&nbsp;FL_RELEASE&nbsp;and&nbsp;FL_MOUSE),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INACTIVE_FREE&nbsp;or&nbsp;FL_SLEEPING_FREE&nbsp;(The&nbsp;flobject&nbsp;only&nbsp;receives<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DRAW&nbsp;events.&nbsp;This&nbsp;should&nbsp;be&nbsp;used&nbsp;for&nbsp;flobjects&nbsp;without<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interaction,&nbsp;e.g.&nbsp;a&nbsp;picture),&nbsp;FL_INPUT_FREE&nbsp;(Same&nbsp;as&nbsp;FL_NORMAL_FREE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;but&nbsp;the&nbsp;flobject&nbsp;also&nbsp;receives&nbsp;FL_FOCUS,&nbsp;FL_UNFOCUS&nbsp;and&nbsp;FL_KEYBOARD<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;events.&nbsp;The&nbsp;ptr_flobject.contents.wantkey&nbsp;is&nbsp;by&nbsp;default&nbsp;set&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_KEY_NORMAL,&nbsp;i.e.,&nbsp;the&nbsp;free&nbsp;flobject&nbsp;will&nbsp;receive&nbsp;all&nbsp;normal&nbsp;keys<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(0-255)&nbsp;except&nbsp;&lt;Tab&gt;&nbsp;and&nbsp;&lt;Return&gt;&nbsp;key.&nbsp;If&nbsp;you're&nbsp;interested&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Tab&gt;&nbsp;or&nbsp;&lt;Return&gt;&nbsp;key,&nbsp;you&nbsp;need&nbsp;to&nbsp;change&nbsp;obj-&gt;wantkey&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_KEY_TAB&nbsp;or&nbsp;FL_KEY_ALL),&nbsp;FL_CONTINUOUS_FREE&nbsp;(Same&nbsp;as<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_FREE&nbsp;but&nbsp;the&nbsp;flobject&nbsp;also&nbsp;receives&nbsp;FL_STEP&nbsp;events.&nbsp;This<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;used&nbsp;for&nbsp;flobjects&nbsp;that&nbsp;change&nbsp;themselves&nbsp;continuously),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_ALL_FREE&nbsp;(The&nbsp;flobject&nbsp;receives&nbsp;all&nbsp;types&nbsp;of&nbsp;events).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;free&nbsp;to&nbsp;be&nbsp;added.&nbsp;Value&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_FREE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(The&nbsp;flobject&nbsp;will&nbsp;receive&nbsp;the&nbsp;events&nbsp;FL_DRAW,&nbsp;FL_ENTER,&nbsp;FL_LEAVE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_MOTION,&nbsp;FL_PUSH,&nbsp;FL_RELEASE&nbsp;and&nbsp;FL_MOUSE),&nbsp;FL_INACTIVE_FREE&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SLEEPING_FREE&nbsp;(The&nbsp;flobject&nbsp;only&nbsp;receives&nbsp;FL_DRAW&nbsp;events.&nbsp;This<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;should&nbsp;be&nbsp;used&nbsp;for&nbsp;flobjects&nbsp;without&nbsp;interaction,&nbsp;e.g.&nbsp;a&nbsp;picture),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_FREE&nbsp;(Same&nbsp;as&nbsp;FL_NORMAL_FREE&nbsp;but&nbsp;the&nbsp;flobject&nbsp;also<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receives&nbsp;FL_FOCUS,&nbsp;FL_UNFOCUS&nbsp;and&nbsp;FL_KEYBOARD&nbsp;events.&nbsp;The<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject.contents.wantkey&nbsp;is&nbsp;by&nbsp;default&nbsp;set&nbsp;to&nbsp;FL_KEY_NORMAL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i.e.,&nbsp;the&nbsp;free&nbsp;flobject&nbsp;will&nbsp;receive&nbsp;all&nbsp;normal&nbsp;keys&nbsp;(0-255)&nbsp;except<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Tab&gt;&nbsp;and&nbsp;&lt;Return&gt;&nbsp;key.&nbsp;If&nbsp;you're&nbsp;interested&nbsp;in&nbsp;&lt;Tab&gt;&nbsp;or&nbsp;&lt;Return&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key,&nbsp;you&nbsp;need&nbsp;to&nbsp;change&nbsp;obj-&gt;wantkey&nbsp;to&nbsp;FL_KEY_TAB&nbsp;or&nbsp;FL_KEY_ALL),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_CONTINUOUS_FREE&nbsp;(Same&nbsp;as&nbsp;FL_NORMAL_FREE&nbsp;but&nbsp;the&nbsp;flobject&nbsp;also<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receives&nbsp;FL_STEP&nbsp;events.&nbsp;This&nbsp;should&nbsp;be&nbsp;used&nbsp;for&nbsp;flobjects&nbsp;that<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change&nbsp;themselves&nbsp;continuously),&nbsp;FL_ALL_FREE&nbsp;(The&nbsp;flobject&nbsp;receives<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all&nbsp;types&nbsp;of&nbsp;events).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -175,23 +185,24 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_add_labelframe"><strong>fl_add_labelframe</strong></a>(frametype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_labelframe">fl_add_labelframe</a>(frametype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;labelframe&nbsp;flobject.<br>
+Adds&nbsp;a&nbsp;labelframe&nbsp;flobject.&nbsp;It&nbsp;is&nbsp;almost&nbsp;the&nbsp;same&nbsp;as&nbsp;a&nbsp;frame&nbsp;except&nbsp;that<br>
+the&nbsp;label&nbsp;is&nbsp;placed&nbsp;on&nbsp;the&nbsp;frame&nbsp;instead&nbsp;of&nbsp;inside&nbsp;or&nbsp;outside&nbsp;of&nbsp;the<br>
+bounding&nbsp;box&nbsp;as&nbsp;in&nbsp;a&nbsp;regular&nbsp;frame.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;frametype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;labelframe&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NO_FRAME&nbsp;(Nothing&nbsp;is&nbsp;drawn),&nbsp;FL_UP_FRAME&nbsp;(A&nbsp;frame&nbsp;appears<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coming&nbsp;out&nbsp;of&nbsp;the&nbsp;screen),&nbsp;FL_DOWN_FRAME&nbsp;(A&nbsp;frame&nbsp;that&nbsp;goes&nbsp;down<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;into&nbsp;the&nbsp;screen),&nbsp;FL_BORDER_FRAME&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;simple&nbsp;outline),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SHADOW_FRAME&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_ENGRAVED_FRAME&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame&nbsp;appears&nbsp;to&nbsp;be&nbsp;engraved),&nbsp;FL_ROUNDED_FRAME&nbsp;(A&nbsp;rounded&nbsp;frame),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_EMBOSSED_FRAME&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;embossed),&nbsp;FL_OVAL_FRAME&nbsp;(An<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elliptic&nbsp;box).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;labelframe&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO_FRAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Nothing&nbsp;is&nbsp;drawn),&nbsp;FL_UP_FRAME&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;coming&nbsp;out&nbsp;of&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;screen),&nbsp;FL_DOWN_FRAME&nbsp;(A&nbsp;frame&nbsp;that&nbsp;goes&nbsp;down&nbsp;into&nbsp;the&nbsp;screen),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_BORDER_FRAME&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;simple&nbsp;outline),&nbsp;FL_SHADOW_FRAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;frame&nbsp;with&nbsp;a&nbsp;shadow),&nbsp;FL_ENGRAVED_FRAME&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engraved),&nbsp;FL_ROUNDED_FRAME&nbsp;(A&nbsp;rounded&nbsp;frame),&nbsp;FL_EMBOSSED_FRAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A&nbsp;frame&nbsp;appears&nbsp;embossed),&nbsp;FL_OVAL_FRAME&nbsp;(An&nbsp;elliptic&nbsp;box).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -215,16 +226,16 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_add_text"><strong>fl_add_text</strong></a>(texttype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_text">fl_add_text</a>(texttype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)&nbsp;-&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;text&nbsp;flobject.<br>
+Adds&nbsp;a&nbsp;text&nbsp;flobject.&nbsp;It&nbsp;simply&nbsp;consists&nbsp;of&nbsp;a&nbsp;label&nbsp;maybe&nbsp;placed&nbsp;in&nbsp;a&nbsp;box.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;texttype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;text&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_TEXT&nbsp;(Normal&nbsp;text&nbsp;type)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;text&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_TEXT<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Normal&nbsp;text&nbsp;type)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -243,19 +254,19 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;txtobj&nbsp;=&nbsp;<a href="#-fl_add_text">fl_add_text</a>(xfdata.FL_NORMAL_TEXT,&nbsp;140,&nbsp;120,&nbsp;400,&nbsp;500,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ptxtobj&nbsp;=&nbsp;<a href="#-fl_add_text">fl_add_text</a>(xfdata.FL_NORMAL_TEXT,&nbsp;140,&nbsp;120,&nbsp;400,&nbsp;500,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"My&nbsp;text&nbsp;flobject")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_cur_fs"><strong>fl_cur_fs</strong></a> = fl_cur_fs_()</dt><dd><tt><a href="#-fl_cur_fs_">fl_cur_fs_</a>()&nbsp;-&gt;&nbsp;ptr_xfontstruct<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;current&nbsp;font&nbsp;structure.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_xforntstruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_xfontstruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;structure&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -264,14 +275,14 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_cur_fs_"><strong>fl_cur_fs_</strong></a>()</dt><dd><tt><a href="#-fl_cur_fs_">fl_cur_fs_</a>()&nbsp;-&gt;&nbsp;ptr_xfontstruct<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;current&nbsp;font&nbsp;structure.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_xforntstruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_xfontstruct&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.XFontStruct<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;structure&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
@@ -280,7 +291,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_cur_win"><strong>fl_cur_win</strong></a> = fl_cur_win_()</dt><dd><tt><a href="#-fl_cur_win_">fl_cur_win_</a>()&nbsp;-&gt;&nbsp;win<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;current&nbsp;window.<br>
@@ -296,7 +307,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_cur_win_"><strong>fl_cur_win_</strong></a>()</dt><dd><tt><a href="#-fl_cur_win_">fl_cur_win_</a>()&nbsp;-&gt;&nbsp;win<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;current&nbsp;window.<br>
@@ -312,7 +323,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_display_"><strong>fl_display_</strong></a>()</dt><dd><tt><a href="#-fl_display_">fl_display_</a>()&nbsp;-&gt;&nbsp;ptr_display<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;current&nbsp;X&nbsp;display.<br>
@@ -320,7 +331,7 @@ Finds&nbsp;out&nbsp;current&nbsp;X&nbsp;display.<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_display&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.Display<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;display?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;display<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -328,14 +339,14 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_fdesc"><strong>fl_fdesc</strong></a> = fl_fdesc_()</dt><dd><tt><a href="#-fl_fdesc_">fl_fdesc_</a>()&nbsp;-&gt;&nbsp;descndt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_fdesc"><strong>fl_fdesc</strong></a> = fl_fdesc_()</dt><dd><tt><a href="#-fl_fdesc_">fl_fdesc_</a>()&nbsp;-&gt;&nbsp;fdescndt<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;descendent&nbsp;of&nbsp;font.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;descndt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fdescndt&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;descendent<br>
 &nbsp;<br>
 Examples<br>
@@ -344,14 +355,14 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_fdesc_"><strong>fl_fdesc_</strong></a>()</dt><dd><tt><a href="#-fl_fdesc_">fl_fdesc_</a>()&nbsp;-&gt;&nbsp;descndt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_fdesc_"><strong>fl_fdesc_</strong></a>()</dt><dd><tt><a href="#-fl_fdesc_">fl_fdesc_</a>()&nbsp;-&gt;&nbsp;fdescndt<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;descendent&nbsp;of&nbsp;font.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;descndt&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fdescndt&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;font&nbsp;descendent<br>
 &nbsp;<br>
 Examples<br>
@@ -360,7 +371,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_fheight"><strong>fl_fheight</strong></a> = fl_fheight_()</dt><dd><tt><a href="#-fl_fheight_">fl_fheight_</a>()&nbsp;-&gt;&nbsp;fheight<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;font&nbsp;height<br>
@@ -376,7 +387,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_fheight_"><strong>fl_fheight_</strong></a>()</dt><dd><tt><a href="#-fl_fheight_">fl_fheight_</a>()&nbsp;-&gt;&nbsp;fheight<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;font&nbsp;height<br>
@@ -392,14 +403,14 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_gc"><strong>fl_gc</strong></a> = fl_gc_()</dt><dd><tt><a href="#-fl_gc_">fl_gc_</a>()&nbsp;-&gt;&nbsp;gc<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;non-text&nbsp;graphics&nbsp;context.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;:&nbsp;xfdata.GC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gctx&nbsp;:&nbsp;xfdata.GC<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graphics&nbsp;context&nbsp;id<br>
 &nbsp;<br>
 Examples<br>
@@ -408,14 +419,14 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_gc_"><strong>fl_gc_</strong></a>()</dt><dd><tt><a href="#-fl_gc_">fl_gc_</a>()&nbsp;-&gt;&nbsp;gc<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;non-text&nbsp;graphics&nbsp;context.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;gc&nbsp;:&nbsp;xfdata.GC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;gctx&nbsp;:&nbsp;xfdata.GC<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graphics&nbsp;context&nbsp;id<br>
 &nbsp;<br>
 Examples<br>
@@ -424,42 +435,42 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_object_ps_dump"><strong>fl_object_ps_dump</strong></a>(ptr_flobject, fname)</dt><dd><tt><a href="#-fl_object_ps_dump">fl_object_ps_dump</a>(ptr_flobject,&nbsp;fname)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;hardcopies&nbsp;of&nbsp;some&nbsp;flobjects&nbsp;in&nbsp;a&nbsp;what-you-see-is-what-you-get<br>
-(WYSIWYG)&nbsp;way,&nbsp;especially&nbsp;those&nbsp;that&nbsp;are&nbsp;dynamic&nbsp;and&nbsp;of&nbsp;vector-graphics<br>
-in&nbsp;nature.&nbsp;It&nbsp;outputs&nbsp;the&nbsp;specified&nbsp;flobject&nbsp;in&nbsp;PostScript.&nbsp;The&nbsp;flobject<br>
-must&nbsp;be&nbsp;visible&nbsp;at&nbsp;the&nbsp;time&nbsp;of&nbsp;the&nbsp;function&nbsp;call.&nbsp;The&nbsp;hardcopy&nbsp;should<br>
-mostly&nbsp;be&nbsp;WYSIWYG&nbsp;and&nbsp;centered&nbsp;on&nbsp;the&nbsp;printed&nbsp;page.&nbsp;The&nbsp;orientation&nbsp;is<br>
-determined&nbsp;such&nbsp;that&nbsp;a&nbsp;balanced&nbsp;margin&nbsp;results,&nbsp;i.e.,&nbsp;if&nbsp;the&nbsp;width&nbsp;of<br>
-the&nbsp;flobject&nbsp;is&nbsp;larger&nbsp;than&nbsp;the&nbsp;height,&nbsp;landscape&nbsp;mode&nbsp;will&nbsp;be&nbsp;used.<br>
-Further,&nbsp;if&nbsp;the&nbsp;flobject&nbsp;is&nbsp;too&nbsp;big&nbsp;to&nbsp;fit&nbsp;on&nbsp;the&nbsp;printed&nbsp;page,&nbsp;a&nbsp;scale<br>
-factor&nbsp;will&nbsp;be&nbsp;applied&nbsp;so&nbsp;the&nbsp;flobject&nbsp;fits.&nbsp;The&nbsp;box&nbsp;underneath&nbsp;the<br>
-flobject&nbsp;is&nbsp;by&nbsp;default&nbsp;not&nbsp;drawn&nbsp;and&nbsp;in&nbsp;the&nbsp;default&nbsp;black&amp;white&nbsp;mode,<br>
-all&nbsp;curves&nbsp;are&nbsp;drawn&nbsp;in&nbsp;black.<br>
+(WYSIWYG)&nbsp;way,&nbsp;especially&nbsp;those&nbsp;that&nbsp;are&nbsp;dynamic&nbsp;and&nbsp;of&nbsp;vector-graphics&nbsp;in<br>
+nature.&nbsp;It&nbsp;outputs&nbsp;the&nbsp;specified&nbsp;flobject&nbsp;in&nbsp;PostScript.&nbsp;The&nbsp;flobject&nbsp;must<br>
+be&nbsp;visible&nbsp;at&nbsp;the&nbsp;time&nbsp;of&nbsp;the&nbsp;function&nbsp;call.&nbsp;The&nbsp;hardcopy&nbsp;should&nbsp;mostly&nbsp;be<br>
+WYSIWYG&nbsp;and&nbsp;centered&nbsp;on&nbsp;the&nbsp;printed&nbsp;page.&nbsp;The&nbsp;orientation&nbsp;is&nbsp;determined<br>
+such&nbsp;that&nbsp;a&nbsp;balanced&nbsp;margin&nbsp;results,&nbsp;i.e.,&nbsp;if&nbsp;the&nbsp;width&nbsp;of&nbsp;the&nbsp;flobject&nbsp;is<br>
+larger&nbsp;than&nbsp;the&nbsp;height,&nbsp;landscape&nbsp;mode&nbsp;will&nbsp;be&nbsp;used.&nbsp;Further,&nbsp;if&nbsp;the<br>
+flobject&nbsp;is&nbsp;too&nbsp;big&nbsp;to&nbsp;fit&nbsp;on&nbsp;the&nbsp;printed&nbsp;page,&nbsp;a&nbsp;scale&nbsp;factor&nbsp;will&nbsp;be<br>
+applied&nbsp;so&nbsp;the&nbsp;flobject&nbsp;fits.&nbsp;The&nbsp;box&nbsp;underneath&nbsp;the&nbsp;flobject&nbsp;is&nbsp;by<br>
+default&nbsp;not&nbsp;drawn&nbsp;and&nbsp;in&nbsp;the&nbsp;default&nbsp;black&amp;white&nbsp;mode,&nbsp;all&nbsp;curves&nbsp;are<br>
+drawn&nbsp;in&nbsp;black.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object.&nbsp;Only&nbsp;the&nbsp;xfdata.FL_XYPLOT&nbsp;flobject&nbsp;is&nbsp;supported.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fname&nbsp;:&nbsp;str<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;output&nbsp;file.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;a&nbsp;fselector&nbsp;will<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;shown&nbsp;to&nbsp;ask&nbsp;the&nbsp;user&nbsp;for&nbsp;a&nbsp;file&nbsp;name.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;of&nbsp;output&nbsp;file.&nbsp;If&nbsp;it&nbsp;is&nbsp;empty&nbsp;(""),&nbsp;a&nbsp;fselector&nbsp;will&nbsp;be&nbsp;shown<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;ask&nbsp;the&nbsp;user&nbsp;for&nbsp;a&nbsp;file&nbsp;name.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;on&nbsp;success,&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;(on&nbsp;success),&nbsp;or&nbsp;-1&nbsp;(on&nbsp;errors)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-fl_object_ps_dump">fl_object_ps_dump</a>(xyplobj,&nbsp;"myhardcopy.ps")&nbsp;&lt;&nbsp;0:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;if&nbsp;<a href="#-fl_object_ps_dump">fl_object_ps_dump</a>(pxyplobj,&nbsp;"myhardcopy.ps")&nbsp;&lt;&nbsp;0:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;&lt;something&gt;<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_request_clipboard"><strong>fl_request_clipboard</strong></a>(ptr_flobject, clipbdtype, pyfn_SelectionCb)</dt><dd><tt><a href="#-fl_request_clipboard">fl_request_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;pyfn_SelectionCb)<br>
 -&gt;&nbsp;result<br>
 &nbsp;<br>
@@ -493,7 +504,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_stuff_clipboard"><strong>fl_stuff_clipboard</strong></a>(ptr_flobject, clipbdtype, datablock, size, pyfn_LoseSelectionCb)</dt><dd><tt><a href="#-fl_stuff_clipboard">fl_stuff_clipboard</a>(ptr_flobject,&nbsp;clipbdtype,&nbsp;datablock,&nbsp;size,<br>
 pyfn_LoseSelectionCb)&nbsp;-&gt;&nbsp;size<br>
 &nbsp;<br>
@@ -527,7 +538,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_textgc"><strong>fl_textgc</strong></a> = fl_textgc_()</dt><dd><tt><a href="#-fl_textgc_">fl_textgc_</a>()&nbsp;-&gt;&nbsp;txtgc<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;text&nbsp;graphics&nbsp;context,<br>
@@ -543,7 +554,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_textgc_"><strong>fl_textgc_</strong></a>()</dt><dd><tt><a href="#-fl_textgc_">fl_textgc_</a>()&nbsp;-&gt;&nbsp;txtgc<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;text&nbsp;graphics&nbsp;context,<br>
@@ -559,11 +570,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-flps_init"><strong>flps_init</strong></a>()</dt><dd><tt><a href="#-flps_init">flps_init</a>()&nbsp;-&gt;&nbsp;ptr_flpscontrol<br>
 &nbsp;<br>
-Customizes&nbsp;the&nbsp;output&nbsp;by&nbsp;changing&nbsp;the&nbsp;PostScript&nbsp;output&nbsp;control<br>
-parameters.<br>
+Customizes&nbsp;the&nbsp;output&nbsp;by&nbsp;changing&nbsp;the&nbsp;PostScript&nbsp;output&nbsp;control&nbsp;parameters.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -576,6 +586,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NN-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

@@ -32,8 +32,8 @@
 Activates&nbsp;a&nbsp;glcanvas&nbsp;flobject&nbsp;before&nbsp;drawing&nbsp;into&nbsp;glcanvas&nbsp;flobject.<br>
 OpenGL&nbsp;drawing&nbsp;routines&nbsp;always&nbsp;draw&nbsp;into&nbsp;the&nbsp;window&nbsp;the&nbsp;current&nbsp;context<br>
 is&nbsp;bound&nbsp;to.&nbsp;For&nbsp;application&nbsp;with&nbsp;a&nbsp;single&nbsp;canvas,&nbsp;this&nbsp;is&nbsp;not&nbsp;a&nbsp;problem.<br>
-In&nbsp;case&nbsp;of&nbsp;multiple&nbsp;canvases,&nbsp;the&nbsp;canvas&nbsp;driver&nbsp;takes&nbsp;care&nbsp;of&nbsp;setting<br>
-the&nbsp;proper&nbsp;context&nbsp;before&nbsp;invoking&nbsp;the&nbsp;expose&nbsp;handler.&nbsp;In&nbsp;some&nbsp;cases,&nbsp;the<br>
+In&nbsp;case&nbsp;of&nbsp;multiple&nbsp;canvases,&nbsp;the&nbsp;canvas&nbsp;driver&nbsp;takes&nbsp;care&nbsp;of&nbsp;setting&nbsp;the<br>
+proper&nbsp;context&nbsp;before&nbsp;invoking&nbsp;the&nbsp;expose&nbsp;handler.&nbsp;In&nbsp;some&nbsp;cases,&nbsp;the<br>
 application&nbsp;may&nbsp;want&nbsp;to&nbsp;draw&nbsp;into&nbsp;canvases&nbsp;actively.&nbsp;In&nbsp;this&nbsp;case,&nbsp;use<br>
 this&nbsp;function&nbsp;for&nbsp;explicit&nbsp;drawing&nbsp;context&nbsp;switching.<br>
 &nbsp;<br>
@@ -44,11 +44,11 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_activate_glcanvas">fl_activate_glcanvas</a>(glcanobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_activate_glcanvas">fl_activate_glcanvas</a>(pglcnvobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_add_glcanvas"><strong>fl_add_glcanvas</strong></a>(canvastype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_glcanvas">fl_add_glcanvas</a>(canvastype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
@@ -78,12 +78,12 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;globj&nbsp;=&nbsp;&nbsp;<a href="#-fl_add_glcanvas">fl_add_glcanvas</a>(xfdata.FL_NORMAL_CANVAS,&nbsp;14,&nbsp;21,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pglcnvobj&nbsp;=&nbsp;&nbsp;<a href="#-fl_add_glcanvas">fl_add_glcanvas</a>(xfdata.FL_NORMAL_CANVAS,&nbsp;14,&nbsp;21,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;654,&nbsp;457,&nbsp;"My&nbsp;Gl&nbsp;Canvas")<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_glcanvas_attributes"><strong>fl_get_glcanvas_attributes</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_glcanvas_attributes">fl_get_glcanvas_attributes</a>(ptr_flobject)&nbsp;-&gt;&nbsp;glconfig<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;attributes&nbsp;of&nbsp;a&nbsp;glcanvas&nbsp;flobject.<br>
@@ -96,17 +96,17 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;glconfig&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;configuration&nbsp;settings.&nbsp;Attributes&nbsp;are&nbsp;(as<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defined&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BUFFER_SIZE,&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_RED_SIZE,&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_ALPHA_SIZE.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;configuration&nbsp;settings.&nbsp;Attributes&nbsp;are&nbsp;(as&nbsp;defined&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,&nbsp;GLX_BUFFER_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,&nbsp;GLX_ACCUM_RED_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,&nbsp;GLX_ACCUM_ALPHA_SIZE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;attrb&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_attributes">fl_get_glcanvas_attributes</a>(glcanobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;attrb&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_attributes">fl_get_glcanvas_attributes</a>(pglcnvobj)<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
@@ -115,8 +115,8 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
- <dl><dt><a name="-fl_get_glcanvas_context"><strong>fl_get_glcanvas_context</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_glcanvas_context">fl_get_glcanvas_context</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_glxcontext<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_get_glcanvas_context"><strong>fl_get_glcanvas_context</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_glcanvas_context">fl_get_glcanvas_context</a>(ptr_flobject)&nbsp;-&gt;&nbsp;glxcontext<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;GLXContext&nbsp;of&nbsp;a&nbsp;glcanvas&nbsp;flobject.<br>
 &nbsp;<br>
@@ -127,16 +127,16 @@ Parameters<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_glxcontext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext<br>
+&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;:&nbsp;xfdata.GLXContext<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;glxcont&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_context">fl_get_glcanvas_context</a>(glcanobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;glxcont&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_context">fl_get_glcanvas_context</a>(pglcnvobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_glcanvas_defaults"><strong>fl_get_glcanvas_defaults</strong></a>()</dt><dd><tt><a href="#-fl_get_glcanvas_defaults">fl_get_glcanvas_defaults</a>()&nbsp;-&gt;&nbsp;glconfig<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;global&nbsp;defaults&nbsp;attributes&nbsp;for&nbsp;glcanvas.<br>
@@ -144,13 +144,13 @@ Finds&nbsp;out&nbsp;the&nbsp;global&nbsp;defaults&nbsp;attributes&nbsp;for&nbsp;
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;glconfig&nbsp;:&nbsp;array&nbsp;of&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings,&nbsp;ending&nbsp;with&nbsp;-1.&nbsp;Attributes&nbsp;are&nbsp;(as<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defined&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BUFFER_SIZE,&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_RED_SIZE,&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_ALPHA_SIZE.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings,&nbsp;ending&nbsp;with&nbsp;-1.&nbsp;Attributes&nbsp;are&nbsp;(as&nbsp;defined<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,&nbsp;GLX_BUFFER_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,&nbsp;GLX_ACCUM_RED_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,&nbsp;GLX_ACCUM_ALPHA_SIZE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -158,16 +158,15 @@ Examples<br>
 &nbsp;<br>
 API_diversion<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_glcanvas_defaults">fl_get_glcanvas_defaults</a>(config)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is&nbsp;<a href="#-fl_get_glcanvas_defaults">fl_get_glcanvas_defaults</a>(config)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_glcanvas_xvisualinfo"><strong>fl_get_glcanvas_xvisualinfo</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_glcanvas_xvisualinfo">fl_get_glcanvas_xvisualinfo</a>(ptr_flobject)&nbsp;-&gt;&nbsp;ptr_xvisualinfo<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;XVisual&nbsp;information&nbsp;that&nbsp;is&nbsp;used&nbsp;to&nbsp;create&nbsp;the&nbsp;context<br>
-of&nbsp;a&nbsp;glcanvas&nbsp;flobject.<br>
+Finds&nbsp;out&nbsp;the&nbsp;XVisual&nbsp;information&nbsp;that&nbsp;is&nbsp;used&nbsp;to&nbsp;create&nbsp;the&nbsp;context&nbsp;of<br>
+a&nbsp;glcanvas&nbsp;flobject.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -181,11 +180,11 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pxviscls&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_xvisualinfo">fl_get_glcanvas_xvisualinfo</a>(glcanobj)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pxviscls&nbsp;=&nbsp;<a href="#-fl_get_glcanvas_xvisualinfo">fl_get_glcanvas_xvisualinfo</a>(pglcnvobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_glwincreate"><strong>fl_glwincreate</strong></a>(glconfig, ptr_glxcontext, width, height)</dt><dd><tt><a href="#-fl_glwincreate">fl_glwincreate</a>(glconfig,&nbsp;ptr_glxcontext,&nbsp;width,&nbsp;height)&nbsp;-&gt;&nbsp;win<br>
 &nbsp;<br>
 Creates&nbsp;a&nbsp;toplevel&nbsp;OpenGL&nbsp;window.<br>
@@ -194,7 +193,7 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;glconfig&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL&nbsp;configuration&nbsp;settings.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_glxcontext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_glxcontext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext??&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;GL&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
@@ -212,7 +211,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;KO</tt></dd></dl>
  <dl><dt><a name="-fl_glwinopen"><strong>fl_glwinopen</strong></a>(glconfig, ptr_glxcontext, width, height)</dt><dd><tt><a href="#-fl_glwinopen">fl_glwinopen</a>(glconfig,&nbsp;ptr_glxcontext,&nbsp;width,&nbsp;height)<br>
 &nbsp;<br>
 Opens&nbsp;a&nbsp;toplevel&nbsp;OpenGL&nbsp;window.<br>
@@ -221,8 +220,8 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;glconfig&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GL&nbsp;configuration&nbsp;settings.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_glxcontext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_glxcontext&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.GLXContext&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glxcontext&nbsp;class&nbsp;instance??<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;GL&nbsp;window&nbsp;in&nbsp;coord&nbsp;units<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
@@ -239,25 +238,28 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;KO</tt></dd></dl>
  <dl><dt><a name="-fl_set_glcanvas_attributes"><strong>fl_set_glcanvas_attributes</strong></a>(ptr_flobject, glconfig)</dt><dd><tt><a href="#-fl_set_glcanvas_attributes">fl_set_glcanvas_attributes</a>(ptr_flobject,&nbsp;glconfig)<br>
 &nbsp;<br>
 Modifies&nbsp;the&nbsp;default&nbsp;configuration&nbsp;of&nbsp;a&nbsp;particular&nbsp;glcanvas&nbsp;flobject.<br>
 You&nbsp;can&nbsp;change&nbsp;a&nbsp;glcanvas&nbsp;attribute&nbsp;on&nbsp;the&nbsp;fly&nbsp;even&nbsp;if&nbsp;the&nbsp;canvas&nbsp;is<br>
-already&nbsp;visible&nbsp;and&nbsp;active.<br>
+already&nbsp;visible&nbsp;and&nbsp;active.&nbsp;By&nbsp;default&nbsp;they&nbsp;are&nbsp;the&nbsp;following&nbsp;(from<br>
+xfdata.py):&nbsp;GLX_RGBA,&nbsp;GLX_DEPTH_SIZE,&nbsp;1,&nbsp;GLX_RED_SIZE,&nbsp;1,&nbsp;GLX_GREEN_SIZE,<br>
+1,&nbsp;GLX_BLUE_SIZE,&nbsp;1,&nbsp;GLX_DOUBLEBUFFER.&nbsp;Pairs&nbsp;is&nbsp;(variable-only)&nbsp;or<br>
+(variable,&nbsp;value).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;glconfig&nbsp;:&nbsp;list&nbsp;of&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings&nbsp;to&nbsp;be&nbsp;set.&nbsp;Attributes&nbsp;are&nbsp;(as<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defined&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BUFFER_SIZE,&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_RED_SIZE,&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_ALPHA_SIZE.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings&nbsp;to&nbsp;be&nbsp;set.&nbsp;Attributes&nbsp;are&nbsp;(as&nbsp;defined&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,&nbsp;GLX_BUFFER_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,&nbsp;GLX_ACCUM_RED_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,&nbsp;GLX_ACCUM_ALPHA_SIZE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -265,49 +267,53 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_glcanvas_defaults"><strong>fl_set_glcanvas_defaults</strong></a>(glconfig)</dt><dd><tt><a href="#-fl_set_glcanvas_defaults">fl_set_glcanvas_defaults</a>(glconfig)<br>
 &nbsp;<br>
-Modifies&nbsp;the&nbsp;global&nbsp;default&nbsp;attributes&nbsp;for&nbsp;glcanvas,&nbsp;before&nbsp;the<br>
-creation&nbsp;of&nbsp;glcanvases.<br>
+Modifies&nbsp;the&nbsp;global&nbsp;default&nbsp;attributes&nbsp;for&nbsp;glcanvas,&nbsp;before&nbsp;the&nbsp;creation<br>
+of&nbsp;glcanvases.&nbsp;By&nbsp;default&nbsp;they&nbsp;are&nbsp;the&nbsp;following&nbsp;(from&nbsp;xfdata.py):<br>
+GLX_RGBA,&nbsp;GLX_DEPTH_SIZE,&nbsp;1,&nbsp;GLX_RED_SIZE,&nbsp;1,&nbsp;GLX_GREEN_SIZE,&nbsp;1,<br>
+GLX_BLUE_SIZE,&nbsp;1,&nbsp;GLX_DOUBLEBUFFER.&nbsp;Pairs&nbsp;is&nbsp;(variable-only)&nbsp;or<br>
+(variable,&nbsp;value).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;glconfig&nbsp;:&nbsp;list&nbsp;of&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings,&nbsp;ending&nbsp;with&nbsp;-1.&nbsp;Attributes&nbsp;are&nbsp;(as<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defined&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BUFFER_SIZE,&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_RED_SIZE,&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_ALPHA_SIZE.&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration&nbsp;settings,&nbsp;ending&nbsp;with&nbsp;-1.&nbsp;Attributes&nbsp;are&nbsp;(as&nbsp;defined<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in&nbsp;OpenGL&nbsp;glXChooseVisual()&nbsp;function)&nbsp;GLX_USE_GL,&nbsp;GLX_BUFFER_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_LEVEL,&nbsp;GLX_RGBA,&nbsp;GLX_DOUBLEBUFFER,&nbsp;GLX_STEREO,&nbsp;GLX_AUX_BUFFERS,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE,&nbsp;GLX_GREEN_SIZE,&nbsp;GLX_BLUE_SIZE,&nbsp;GLX_ALPHA_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_DEPTH_SIZE,&nbsp;GLX_STENCIL_SIZE,&nbsp;GLX_ACCUM_RED_SIZE,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_ACCUM_GREEN_SIZE,&nbsp;GLX_ACCUM_BLUE_SIZE,&nbsp;GLX_ACCUM_ALPHA_SIZE.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;xfdata.py&nbsp;for&nbsp;values.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_glcanvas_defaults">fl_set_glcanvas_defaults</a>([GLX_RGBA,&nbsp;GLX_DEPTH_SIZE,&nbsp;2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLX_RED_SIZE,&nbsp;2,&nbsp;GLX_GREEN_SIZE,&nbsp;2,&nbsp;GLX_BLUE_SIZE,&nbsp;2])<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_glcanvas_direct"><strong>fl_set_glcanvas_direct</strong></a>(ptr_flobject, yesno)</dt><dd><tt><a href="#-fl_set_glcanvas_direct">fl_set_glcanvas_direct</a>(ptr_flobject,&nbsp;yesno)<br>
 &nbsp;<br>
-Changes&nbsp;the&nbsp;rendering&nbsp;context&nbsp;created&nbsp;by&nbsp;a&nbsp;glcanvas.&nbsp;By&nbsp;default&nbsp;it<br>
-uses&nbsp;direct&nbsp;rendering&nbsp;(i.e.&nbsp;by-passing&nbsp;the&nbsp;Xserver).<br>
+Changes&nbsp;the&nbsp;rendering&nbsp;context&nbsp;created&nbsp;by&nbsp;a&nbsp;glcanvas&nbsp;flobject.&nbsp;By&nbsp;default<br>
+it&nbsp;uses&nbsp;direct&nbsp;rendering&nbsp;(i.e.&nbsp;by-passing&nbsp;the&nbsp;Xserver).<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glcanvas&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;use&nbsp;direct&nbsp;or&nbsp;through-Xserver&nbsp;rendering.&nbsp;Values&nbsp;0&nbsp;(to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;use&nbsp;Xserver&nbsp;rendering)&nbsp;or&nbsp;1&nbsp;(to&nbsp;use&nbsp;direct&nbsp;rendering)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;use&nbsp;direct&nbsp;or&nbsp;through-Xserver&nbsp;rendering.&nbsp;Values&nbsp;0&nbsp;(to&nbsp;use<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xserver&nbsp;rendering)&nbsp;or&nbsp;1&nbsp;(to&nbsp;use&nbsp;direct&nbsp;rendering)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_glcanvas_direct">fl_set_glcanvas_direct</a>(glcanobj,&nbsp;0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_glcanvas_direct">fl_set_glcanvas_direct</a>(pglcnvobj,&nbsp;0)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

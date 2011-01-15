@@ -563,8 +563,10 @@ Data descriptors inherited from <a href="exceptions.html#BaseException">exceptio
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-cfuncproto"><strong>cfuncproto</strong></a>(library, cfuncname, retval, arglist, doc<font color="#909090">=''</font>)</dt><dd><tt>Prototype&nbsp;for&nbsp;C&nbsp;functions&nbsp;to&nbsp;be&nbsp;wrapped&nbsp;in&nbsp;python</tt></dd></dl>
- <dl><dt><a name="-check_if_initialized"><strong>check_if_initialized</strong></a>()</dt><dd><tt>Check&nbsp;if&nbsp;fl_initialize()&nbsp;has&nbsp;been&nbsp;called&nbsp;before&nbsp;caller&nbsp;function.<br>
-Needed&nbsp;for&nbsp;most&nbsp;functions,&nbsp;except&nbsp;those&nbsp;supposed&nbsp;to&nbsp;be&nbsp;used<br>
+ <dl><dt><a name="-check_if_flimageinitialized"><strong>check_if_flimageinitialized</strong></a>()</dt><dd><tt>Check&nbsp;if&nbsp;flflimage.flimage_setup()&nbsp;has&nbsp;been&nbsp;called&nbsp;before&nbsp;caller<br>
+function.&nbsp;Needed&nbsp;for&nbsp;flimage_*&nbsp;functions.</tt></dd></dl>
+ <dl><dt><a name="-check_if_flinitialized"><strong>check_if_flinitialized</strong></a>()</dt><dd><tt>Check&nbsp;if&nbsp;flxbasic.fl_initialize()&nbsp;has&nbsp;been&nbsp;called&nbsp;before&nbsp;caller<br>
+function.&nbsp;Needed&nbsp;for&nbsp;most&nbsp;functions,&nbsp;except&nbsp;those&nbsp;supposed&nbsp;to&nbsp;be&nbsp;used<br>
 *BEFORE*&nbsp;initialization&nbsp;or&nbsp;those&nbsp;freely&nbsp;useable.</tt></dd></dl>
  <dl><dt><a name="-checkfatal_allowed_value_in_list"><strong>checkfatal_allowed_value_in_list</strong></a>(paramname, valueslist)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;value&nbsp;is&nbsp;valid&nbsp;in&nbsp;accordance&nbsp;to&nbsp;a&nbsp;list&nbsp;or&nbsp;tuple<br>
 of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;raises&nbsp;a&nbsp;fatal&nbsp;error.</tt></dd></dl>
@@ -588,6 +590,7 @@ of&nbsp;admissible&nbsp;values,&nbsp;otherwise&nbsp;issues&nbsp;a&nbsp;warning.<
  <dl><dt><a name="-convert_to_ubytec_array"><strong>convert_to_ubytec_array</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;a&nbsp;ctypes&nbsp;c_ubyte&nbsp;array</tt></dd></dl>
  <dl><dt><a name="-convert_to_uintc"><strong>convert_to_uintc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_uint</tt></dd></dl>
  <dl><dt><a name="-convert_to_ulongc"><strong>convert_to_ulongc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;long&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ulong</tt></dd></dl>
+ <dl><dt><a name="-convert_to_ushortc"><strong>convert_to_ushortc</strong></a>(paramname)</dt><dd><tt>Converts&nbsp;paramname&nbsp;to&nbsp;python&nbsp;int&nbsp;and&nbsp;to&nbsp;ctypes&nbsp;c_ushort</tt></dd></dl>
  <dl><dt><a name="-convert_userdata_to_ptrvoid"><strong>convert_userdata_to_ptrvoid</strong></a>(udata)</dt><dd><tt>Taking&nbsp;any&nbsp;manageable&nbsp;userdata&nbsp;type&nbsp;to&nbsp;be&nbsp;used&nbsp;in&nbsp;a&nbsp;callback-type<br>
 function,&nbsp;handles&nbsp;it&nbsp;and&nbsp;returns&nbsp;a&nbsp;pointer&nbsp;param&nbsp;compatible&nbsp;with&nbsp;C<br>
 pointer&nbsp;to&nbsp;void.</tt></dd></dl>
@@ -612,7 +615,8 @@ pointer&nbsp;to&nbsp;void.</tt></dd></dl>
  <dl><dt><a name="-make_uintc_and_pointer"><strong>make_uintc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_uint&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
  <dl><dt><a name="-make_ulongc_and_pointer"><strong>make_ulongc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ulong&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
  <dl><dt><a name="-make_ushortc_and_pointer"><strong>make_ushortc_and_pointer</strong></a>()</dt><dd><tt>Makes&nbsp;a&nbsp;ctypes&nbsp;c_ushort&nbsp;and&nbsp;its&nbsp;pointer,&nbsp;and&nbsp;returns&nbsp;both</tt></dd></dl>
- <dl><dt><a name="-set_initialized"><strong>set_initialized</strong></a>()</dt><dd><tt>fl_initialize()&nbsp;has&nbsp;been&nbsp;called</tt></dd></dl>
+ <dl><dt><a name="-set_flimageinitialized"><strong>set_flimageinitialized</strong></a>()</dt><dd><tt>flflimage.flimage_setup()&nbsp;has&nbsp;been&nbsp;called</tt></dd></dl>
+ <dl><dt><a name="-set_flinitialized"><strong>set_flinitialized</strong></a>()</dt><dd><tt>flxbasic.fl_initialize()&nbsp;has&nbsp;been&nbsp;called</tt></dd></dl>
  <dl><dt><a name="-verify_flflimageptr_type"><strong>verify_flflimageptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IMAGE.</tt></dd></dl>
  <dl><dt><a name="-verify_flformptr_type"><strong>verify_flformptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_FORM.</tt></dd></dl>
  <dl><dt><a name="-verify_flobjectptr_type"><strong>verify_flobjectptr_type</strong></a>(paramname)</dt><dd><tt>Checks&nbsp;if&nbsp;paramname&nbsp;is&nbsp;a&nbsp;valid&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT.</tt></dd></dl>
@@ -633,7 +637,8 @@ class&nbsp;instance,&nbsp;different&nbsp;from&nbsp;previous&nbsp;classes.</tt></
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>flinitialized</strong> = False<br>
+<td width="100%"><strong>flimageinitialized</strong> = False<br>
+<strong>flinitialized</strong> = False<br>
 <strong>header_filename</strong> = '/usr/include/forms.h'<br>
 <strong>loaded_xlibraries</strong> = {'libflimage': None, 'libforms': None, 'libformsgl': None, 'libx11': None}</td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

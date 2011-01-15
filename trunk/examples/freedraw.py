@@ -55,34 +55,25 @@ def main(lsysargv, sysargv):
 
 
 # Structure mantainace
-# typedef void ( *DrawFunc )( int, int, int, int, int, unsigned long)
 
 def draw_triangle(fill, x, y, w, h, colr):
 
-    #win = xfl.fl_winget()
     mylistpoint = [ {'x':int(x), 'y':int(y + h - 1)}, \
             {'x':int(x + w / 2), 'y':int(y)}, \
             {'x':int(x + w - 1), 'y':int(y + h - 1)} ]
-    pxpoint = xfl.make_ptr_flpoint(mylistpoint)         # XPoint xpoint[ 4 ];
+    pxpoint = xfl.make_ptr_flpoint(mylistpoint)
 
-    #gc = xfl.fl_get_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
-    #gc = xfl.fl_state[xfl.fl_vmode].gc[0]
-    #xfl.fl_set_foreground(gc, xfl.fl_get_pixel(colr))           # XSetForeground( dpy, gc, xfl.fl_get_pixel( col ))
+    gctx = xfl.fl_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
+    xfl.fl_set_foreground(gctx, colr)
 
     if fill:
-        #XFillPolygon( dpy, win, gc, xpoint, 3, Nonconvex, Unsorted)
         xfl.fl_polyf(pxpoint, 3, colr)
     else:
-        #xpoint[3].x = xpoint[0].x
-        #xpoint[3].y = xpoint[0].y
-        # XDrawLines( dpy, win, gc, xpoint, 4, CoordModeOrigin)
         xfl.fl_polygon(0, pxpoint, 3, colr)
 
-"""static DrawFunc drawfunc[] = {  xfl.fl_oval, xfl.fl_rectangle, draw_triangle};"""
+
 drawfunc = [xfl.fl_oval, xfl.fl_rectangle, draw_triangle]
 
-"""typedef struct { DrawFunc drawit; int x, y, w, h, fill, c[ 3 ]; int newfig; xfl.FL_COLOR col; } DrawFigure;
-"""
 class DrawFigure(object):
     drawit = None
     x = 0
@@ -156,8 +147,6 @@ def change_color(pobj, which):
     cur_fig.c[which] = xfl.fl_get_slider_value(pobj) * 255.01
     xfl.fl_mapcolor(cur_fig.col, cur_fig.c[0], cur_fig.c[1], cur_fig.c[2])
     xfl.fl_mapcolor(xfl.FL_FREE_COL1, cur_fig.c[0], cur_fig.c[1], cur_fig.c[2])
-    #xfl.fl_redraw_object( ( ( FD_drawfree * ) ob->u_vdata )->colorobj)
-    #xfl.fl_redraw_object(pobj.contents.u_vdata.colorobj)
     xfl.fl_redraw_object(drawui.colorobj)
 
 
@@ -192,7 +181,8 @@ def freeobject_handler(pobj, event, mx, my, key, pxev):
     if event == xfl.FL_DRAW:
         if cur_fig.newfig == 1:
             cur_fig.drawit(cur_fig.fill, cur_fig.x + pobj.contents.x, \
-                    cur_fig.y + pobj.contents.y, cur_fig.w, cur_fig.h, cur_fig.col)
+                    cur_fig.y + pobj.contents.y, cur_fig.w, cur_fig.h, \
+                    cur_fig.col)
         else:
             xfl.fl_drw_box(pobj.contents.boxtype, pobj.contents.x, \
                     pobj.contents.y, pobj.contents.w, pobj.contents.h, \
@@ -241,6 +231,8 @@ def create_form_drawfree():
     xfl.fl_set_object_gravity(fdui.freeobj, xfl.FL_NorthWest, \
             xfl.FL_SouthEast)
     xfl.fl_set_object_color(fdui.freeobj, xfl.FL_WHITE, xfl.FL_BLACK)
+
+    xfl.fl_set_background(gctx, xfl.FL_BLACK)
 
     pobj = xfl.fl_add_checkbutton(xfl.FL_PUSH_BUTTON, 15, 25, 100, 35, \
             "Outline")
@@ -292,14 +284,14 @@ def create_form_drawfree():
 
     fdui.miscgrp = xfl.fl_bgn_group()
 
-    obj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 420, 455, 105, 30, "Quit")
-    xfl.fl_set_button_shortcut(obj, "Qq#q", 1)
+    pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 420, 455, 105, 30, "Quit")
+    xfl.fl_set_button_shortcut(pobj, "Qq#q", 1)
 
-    obj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 280, 445, 105, 30, "Refresh")
-    xfl.fl_set_object_callback(obj, refresh_cb, 0)
+    pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 280, 445, 105, 30, "Refresh")
+    xfl.fl_set_object_callback(pobj, refresh_cb, 0)
 
-    obj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 165, 445, 105, 30, "Clear")
-    xfl.fl_set_object_callback(obj, clear_cb, 0)
+    pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 165, 445, 105, 30, "Clear")
+    xfl.fl_set_object_callback(pobj, clear_cb, 0)
 
     xfl.fl_end_group()
 

@@ -48,10 +48,11 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_fmtime"><strong>fl_fmtime</strong></a>(fname)</dt><dd><tt><a href="#-fl_fmtime">fl_fmtime</a>(fname)&nbsp;-&gt;&nbsp;mtime<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;modification&nbsp;time&nbsp;of&nbsp;a&nbsp;specified&nbsp;file.<br>
+Finds&nbsp;out&nbsp;the&nbsp;modification&nbsp;time&nbsp;of&nbsp;a&nbsp;specified&nbsp;file.&nbsp;You&nbsp;can&nbsp;then&nbsp;use<br>
+python&nbsp;time.ctime()&nbsp;to&nbsp;have&nbsp;a&nbsp;textual&nbsp;representation&nbsp;of&nbsp;time.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -69,7 +70,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_free_all_dirlist"><strong>fl_free_all_dirlist</strong></a>()</dt><dd><tt><a href="#-fl_free_all_dirlist">fl_free_all_dirlist</a>()<br>
 &nbsp;<br>
 Frees&nbsp;all&nbsp;the&nbsp;list&nbsp;caches&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_get_dirlist">fl_get_dirlist</a>().<br>
@@ -80,7 +81,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_free_dirlist"><strong>fl_free_dirlist</strong></a>(ptr_dirlist)</dt><dd><tt><a href="#-fl_free_dirlist">fl_free_dirlist</a>(ptr_dirlist)<br>
 &nbsp;<br>
 Frees&nbsp;the&nbsp;list&nbsp;cache&nbsp;returned&nbsp;by&nbsp;<a href="#-fl_get_dirlist">fl_get_dirlist</a>().<br>
@@ -96,7 +97,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_dirlist"><strong>fl_get_dirlist</strong></a>(dirname, pattern, rescan)</dt><dd><tt><a href="#-fl_get_dirlist">fl_get_dirlist</a>(dirname,&nbsp;pattern,&nbsp;rescan)&nbsp;-&gt;&nbsp;ptr_dirlist,&nbsp;numfiles<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;a&nbsp;listing&nbsp;of&nbsp;specified&nbsp;directory.<br>
@@ -108,8 +109,8 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pattern&nbsp;:&nbsp;str<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;regular&nbsp;expression&nbsp;that&nbsp;is&nbsp;used&nbsp;to&nbsp;filter&nbsp;the&nbsp;directory&nbsp;entries<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rescan&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;request&nbsp;a&nbsp;re-read&nbsp;or&nbsp;not.&nbsp;Values&nbsp;0&nbsp;(no&nbsp;re-read)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;non-zero&nbsp;(to&nbsp;do&nbsp;a&nbsp;re-read)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;to&nbsp;request&nbsp;a&nbsp;re-read&nbsp;or&nbsp;not.&nbsp;Values&nbsp;0&nbsp;(no&nbsp;re-read)&nbsp;or<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;non-zero&nbsp;(to&nbsp;do&nbsp;a&nbsp;re-read)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -121,8 +122,7 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pdirlist,&nbsp;nfiles&nbsp;=&nbsp;dirlistfl_get_dirlist("/home/userdir",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*.*",&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;pdirlist,&nbsp;nfiles&nbsp;=&nbsp;<a href="#-fl_get_dirlist">fl_get_dirlist</a>("/home/userdir",&nbsp;"*.*",&nbsp;1)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;print&nbsp;pdirlist[1].name<br>
 &nbsp;<br>
 API_diversion<br>
@@ -132,10 +132,10 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_is_valid_dir"><strong>fl_is_valid_dir</strong></a>(dirname)</dt><dd><tt><a href="#-fl_is_valid_dir">fl_is_valid_dir</a>(dirname)&nbsp;-&gt;&nbsp;yesno<br>
 &nbsp;<br>
-Checks&nbsp;if&nbsp;dirname&nbsp;is&nbsp;a&nbsp;valid&nbsp;name&nbsp;of&nbsp;a&nbsp;directory.&nbsp;You&nbsp;can&nbsp;use<br>
+Checks&nbsp;if&nbsp;dirname&nbsp;is&nbsp;a&nbsp;valid&nbsp;name&nbsp;of&nbsp;a&nbsp;directory.&nbsp;You&nbsp;can&nbsp;use&nbsp;python's<br>
 os.path.isdir(),&nbsp;instead.<br>
 &nbsp;<br>
 Parameters<br>
@@ -156,7 +156,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_dirlist_filter"><strong>fl_set_dirlist_filter</strong></a>(pyfn_DirFilter)</dt><dd><tt><a href="#-fl_set_dirlist_filter">fl_set_dirlist_filter</a>(pyfn_DirFilter)&nbsp;-&gt;&nbsp;DirFilter<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;default&nbsp;filter&nbsp;by&nbsp;which&nbsp;file&nbsp;types&nbsp;are&nbsp;returned.<br>
@@ -166,9 +166,9 @@ normal&nbsp;files&nbsp;and&nbsp;link&nbsp;files).<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_DirFilter&nbsp;:&nbsp;python&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function&nbsp;(strname,&nbsp;inttype)&nbsp;-&gt;&nbsp;(non-zero&nbsp;if<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function&nbsp;([str]name,&nbsp;[int]type)&nbsp;-&gt;&nbsp;(non-zero&nbsp;if<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;to&nbsp;be&nbsp;included,&nbsp;0&nbsp;otherwise)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;used&nbsp;to&nbsp;filter&nbsp;types<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Function&nbsp;used&nbsp;to&nbsp;filter&nbsp;types<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -177,16 +177,16 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;dirfilter(fname,&nbsp;ftype):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;def&nbsp;dirfiltercb(fname,&nbsp;ftype):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;...&nbsp;return&nbsp;(ftype&nbsp;==&nbsp;xfdata.FT_DIR&nbsp;||&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_FILE&nbsp;||<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_SOCK&nbsp;||&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_FIFO&nbsp;||<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_LINK&nbsp;||&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_BLK&nbsp;||<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ftype&nbsp;==&nbsp;xfdata.FT_CHR&nbsp;||&nbsp;type&nbsp;==&nbsp;xfdata.FT_OTHER)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;olddirfiltfunc&nbsp;=&nbsp;<a href="#-fl_set_dirlist_filter">fl_set_dirlist_filter</a>(dirfilter)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;olddirfiltfunc&nbsp;=&nbsp;<a href="#-fl_set_dirlist_filter">fl_set_dirlist_filter</a>(dirfiltercb)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_dirlist_filterdir"><strong>fl_set_dirlist_filterdir</strong></a>(yesno)</dt><dd><tt><a href="#-fl_set_dirlist_filterdir">fl_set_dirlist_filterdir</a>(yesno)&nbsp;-&gt;&nbsp;oldfilt<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;filter&nbsp;to&nbsp;include&nbsp;the&nbsp;directories.&nbsp;By&nbsp;default&nbsp;directories<br>
@@ -209,26 +209,26 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_dirlist_sort"><strong>fl_set_dirlist_sort</strong></a>(method)</dt><dd><tt><a href="#-fl_set_dirlist_sort">fl_set_dirlist_sort</a>(method)&nbsp;-&gt;&nbsp;oldmethod<br>
 &nbsp;<br>
-Changes&nbsp;the&nbsp;default&nbsp;sorting&nbsp;of&nbsp;files&nbsp;in&nbsp;directory.&nbsp;By&nbsp;default&nbsp;the<br>
-files&nbsp;returned&nbsp;are&nbsp;sorted&nbsp;alphabetically.<br>
+Changes&nbsp;the&nbsp;default&nbsp;sorting&nbsp;of&nbsp;files&nbsp;in&nbsp;directory.&nbsp;By&nbsp;default&nbsp;the&nbsp;files<br>
+returned&nbsp;are&nbsp;sorted&nbsp;alphabetically.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;method&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method&nbsp;of&nbsp;sorting.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NONE&nbsp;(Do&nbsp;not&nbsp;sort&nbsp;the&nbsp;entries),&nbsp;FL_ALPHASORT&nbsp;(Sorts&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entries&nbsp;in&nbsp;alphabetic&nbsp;order,&nbsp;default),&nbsp;FL_RALPHASORT&nbsp;(Sorts&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entries&nbsp;in&nbsp;reverse&nbsp;alphabetic&nbsp;order),&nbsp;FL_MTIMESORT&nbsp;(Sorts&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entries&nbsp;according&nbsp;to&nbsp;the&nbsp;modification&nbsp;time),&nbsp;FL_RMTIMESORT&nbsp;(Sorts<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;entries&nbsp;according&nbsp;to&nbsp;the&nbsp;modification&nbsp;time,&nbsp;but&nbsp;reverse&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;order,&nbsp;i.e.,&nbsp;latest&nbsp;first),&nbsp;FL_SIZESORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;increasing&nbsp;size&nbsp;order),&nbsp;FL_RSIZESORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decreasing&nbsp;size&nbsp;order),&nbsp;FL_CASEALPHASORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alphabetic&nbsp;order&nbsp;with&nbsp;no&nbsp;regard&nbsp;to&nbsp;case),&nbsp;FL_RCASEALPHASORT&nbsp;(Sorts<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;entries&nbsp;in&nbsp;reverse&nbsp;alphabetic&nbsp;order&nbsp;with&nbsp;no&nbsp;regard&nbsp;to&nbsp;case).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method&nbsp;of&nbsp;sorting.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NONE&nbsp;(Do&nbsp;not&nbsp;sort<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;entries),&nbsp;FL_ALPHASORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in&nbsp;alphabetic&nbsp;order,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default),&nbsp;FL_RALPHASORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in&nbsp;reverse&nbsp;alphabetic<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;order),&nbsp;FL_MTIMESORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;according&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modification&nbsp;time),&nbsp;FL_RMTIMESORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;according&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;modification&nbsp;time,&nbsp;but&nbsp;reverse&nbsp;the&nbsp;order,&nbsp;i.e.,&nbsp;latest&nbsp;first),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_SIZESORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in&nbsp;increasing&nbsp;size&nbsp;order),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_RSIZESORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in&nbsp;decreasing&nbsp;size&nbsp;order),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_CASEALPHASORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in&nbsp;alphabetic&nbsp;order&nbsp;with&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;regard&nbsp;to&nbsp;case),&nbsp;FL_RCASEALPHASORT&nbsp;(Sorts&nbsp;the&nbsp;entries&nbsp;in&nbsp;reverse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alphabetic&nbsp;order&nbsp;with&nbsp;no&nbsp;regard&nbsp;to&nbsp;case).<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -241,6 +241,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

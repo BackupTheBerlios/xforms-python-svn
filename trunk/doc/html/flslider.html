@@ -35,8 +35,8 @@ Adds&nbsp;a&nbsp;slider&nbsp;to&nbsp;a&nbsp;form.&nbsp;No&nbsp;value&nbsp;is&nbs
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;slidertype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;slider&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SLIDER&nbsp;(normal&nbsp;slider),&nbsp;FL_HOR_SLIDER&nbsp;(horizontal&nbsp;slider),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;slider&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_VERT_SLIDER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(normal&nbsp;slider),&nbsp;FL_HOR_SLIDER&nbsp;(horizontal&nbsp;slider),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_FILL_SLIDER&nbsp;(filled&nbsp;slider),&nbsp;FL_HOR_FILL_SLIDER&nbsp;(horizontal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filled&nbsp;slider),&nbsp;FL_VERT_NICE_SLIDER&nbsp;(*todo*),&nbsp;FL_HOR_NICE_SLIDER<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(horizontal&nbsp;*todo*),&nbsp;FL_VERT_BROWSER_SLIDER&nbsp;(*todo*),<br>
@@ -71,17 +71,17 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_add_valslider"><strong>fl_add_valslider</strong></a>(slidertype, xpos, ypos, width, height, label)</dt><dd><tt><a href="#-fl_add_valslider">fl_add_valslider</a>(slidertype,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height,&nbsp;label)<br>
 -&gt;&nbsp;ptr_flobject<br>
 &nbsp;<br>
-Adds&nbsp;a&nbsp;slider&nbsp;to&nbsp;a&nbsp;form.&nbsp;Its&nbsp;value&nbsp;is&nbsp;displayed&nbsp;above&nbsp;or&nbsp;to&nbsp;the&nbsp;left<br>
-of&nbsp;the&nbsp;slider.<br>
+Adds&nbsp;a&nbsp;slider&nbsp;to&nbsp;a&nbsp;form.&nbsp;Its&nbsp;value&nbsp;is&nbsp;displayed&nbsp;above&nbsp;or&nbsp;to&nbsp;the&nbsp;left&nbsp;of<br>
+the&nbsp;slider.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;slidertype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;slider.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;the&nbsp;slider&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SLIDER&nbsp;(normal&nbsp;slider),&nbsp;FL_HOR_SLIDER&nbsp;(horizontal&nbsp;slider),<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_FILL_SLIDER&nbsp;(filled&nbsp;slider),&nbsp;FL_HOR_FILL_SLIDER&nbsp;(horizontal<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filled&nbsp;slider),&nbsp;FL_VERT_NICE_SLIDER&nbsp;(*todo*),&nbsp;FL_HOR_NICE_SLIDER<br>
@@ -117,7 +117,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_slider_bounds"><strong>fl_get_slider_bounds</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_bounds">fl_get_slider_bounds</a>(ptr_flobject)&nbsp;-&gt;&nbsp;minbound,&nbsp;maxbound<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;slider.<br>
@@ -145,11 +145,11 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_slider_increment"><strong>fl_get_slider_increment</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_increment">fl_get_slider_increment</a>(ptr_flobject)&nbsp;-&gt;&nbsp;leftbtnval,&nbsp;midbtnval<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;current&nbsp;slider&nbsp;increments&nbsp;for&nbsp;clicks&nbsp;with&nbsp;left&nbsp;and&nbsp;middle<br>
-mouse&nbsp;button.<br>
+Finds&nbsp;out&nbsp;current&nbsp;slider&nbsp;increments&nbsp;for&nbsp;clicks&nbsp;with&nbsp;left&nbsp;and&nbsp;middle&nbsp;mouse<br>
+buttons.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -174,15 +174,14 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_slider_repeat"><strong>fl_get_slider_repeat</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_repeat">fl_get_slider_repeat</a>(ptr_flobject)&nbsp;-&gt;&nbsp;tdelay<br>
 &nbsp;<br>
-Finds&nbsp;out&nbsp;the&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the<br>
-scrollbar&nbsp;knob&nbsp;when&nbsp;the&nbsp;mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the<br>
-scrollbar&nbsp;outside&nbsp;of&nbsp;the&nbsp;knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first<br>
-jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in&nbsp;order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon<br>
-when&nbsp;only&nbsp;a&nbsp;single&nbsp;click&nbsp;was&nbsp;intended&nbsp;but&nbsp;the&nbsp;user&nbsp;is&nbsp;a&nbsp;bit&nbsp;slow&nbsp;in<br>
-releasing&nbsp;the&nbsp;mouse&nbsp;button.<br>
+Finds&nbsp;out&nbsp;the&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar<br>
+knob&nbsp;when&nbsp;the&nbsp;mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the&nbsp;scrollbar&nbsp;outside<br>
+of&nbsp;the&nbsp;knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first&nbsp;jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in<br>
+order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon&nbsp;when&nbsp;only&nbsp;a&nbsp;single&nbsp;click&nbsp;was<br>
+intended&nbsp;but&nbsp;the&nbsp;user&nbsp;is&nbsp;a&nbsp;bit&nbsp;slow&nbsp;in&nbsp;releasing&nbsp;the&nbsp;mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -196,11 +195,11 @@ Returns<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;msecs&nbsp;=&nbsp;<a href="#-fl_get_slider_repeat">fl_get_slider_repeat</a>(pslobj)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_slider_value"><strong>fl_get_slider_value</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_slider_value">fl_get_slider_value</a>(ptr_flobject)&nbsp;-&gt;&nbsp;slvalue<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;value&nbsp;of&nbsp;a&nbsp;slider.<br>
@@ -221,7 +220,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_bounds"><strong>fl_set_slider_bounds</strong></a>(ptr_flobject, minbound, maxbound)</dt><dd><tt><a href="#-fl_set_slider_bounds">fl_set_slider_bounds</a>(ptr_flobject,&nbsp;minbound,&nbsp;maxbound)<br>
 &nbsp;<br>
 Defines&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;slider&nbsp;flobject.<br>
@@ -241,20 +240,20 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_filter"><strong>fl_set_slider_filter</strong></a>(ptr_flobject, pyfn_ValFilter)</dt><dd><tt><a href="#-fl_set_slider_filter">fl_set_slider_filter</a>(ptr_flobject,&nbsp;pyfn_ValFilter)<br>
 &nbsp;<br>
-Registers&nbsp;a&nbsp;filter&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;a&nbsp;slider&nbsp;flobject.<br>
-By&nbsp;default,&nbsp;slider&nbsp;value&nbsp;shown&nbsp;in&nbsp;floating&nbsp;point&nbsp;format.<br>
+Registers&nbsp;a&nbsp;filter&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;a&nbsp;slider&nbsp;flobject.&nbsp;By<br>
+default,&nbsp;slider&nbsp;value&nbsp;shown&nbsp;in&nbsp;floating&nbsp;point&nbsp;format.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pyfn_ValFilter&nbsp;:&nbsp;python&nbsp;function,&nbsp;returned&nbsp;value<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;valfloat,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;intprecis)&nbsp;-&gt;&nbsp;string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;slider<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flobject,&nbsp;[float]value,&nbsp;[int]precis)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&gt;&nbsp;[str]text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;to&nbsp;show&nbsp;values&nbsp;in&nbsp;slider,&nbsp;text&nbsp;is&nbsp;what&nbsp;will&nbsp;be&nbsp;shown<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -262,11 +261,10 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_increment"><strong>fl_set_slider_increment</strong></a>(ptr_flobject, leftbtnval, midbtnval)</dt><dd><tt><a href="#-fl_set_slider_increment">fl_set_slider_increment</a>(ptr_flobject,&nbsp;leftbtnval,&nbsp;midbtnval)<br>
 &nbsp;<br>
-Defines&nbsp;slider&nbsp;increments&nbsp;for&nbsp;clicks&nbsp;with&nbsp;left&nbsp;and&nbsp;middle<br>
-mouse&nbsp;button.<br>
+Defines&nbsp;slider&nbsp;increments&nbsp;for&nbsp;clicks&nbsp;with&nbsp;left&nbsp;and&nbsp;middle&nbsp;mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -283,7 +281,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_precision"><strong>fl_set_slider_precision</strong></a>(ptr_flobject, precis)</dt><dd><tt><a href="#-fl_set_slider_precision">fl_set_slider_precision</a>(ptr_flobject,&nbsp;precis)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;precision&nbsp;which&nbsp;value&nbsp;a&nbsp;valslider&nbsp;is&nbsp;shown&nbsp;with.<br>
@@ -301,30 +299,29 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_repeat"><strong>fl_set_slider_repeat</strong></a>(ptr_flobject, tdelay)</dt><dd><tt><a href="#-fl_set_slider_repeat">fl_set_slider_repeat</a>(ptr_flobject,&nbsp;tdelay)<br>
 &nbsp;<br>
-Defines&nbsp;the&nbsp;time&nbsp;delay&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;knob&nbsp;when&nbsp;the<br>
-mouse&nbsp;button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the&nbsp;scrollbar&nbsp;outside&nbsp;of&nbsp;the<br>
-knobs&nbsp;area.&nbsp;The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first&nbsp;jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in<br>
-order&nbsp;to&nbsp;avoid&nbsp;jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon&nbsp;when&nbsp;only&nbsp;a&nbsp;single&nbsp;click<br>
-was&nbsp;intended&nbsp;but&nbsp;the&nbsp;user&nbsp;is&nbsp;a&nbsp;bit&nbsp;slow&nbsp;in&nbsp;releasing&nbsp;the&nbsp;mouse&nbsp;button.<br>
+Defines&nbsp;the&nbsp;time&nbsp;delay&nbsp;between&nbsp;jumps&nbsp;of&nbsp;the&nbsp;scrollbar&nbsp;knob&nbsp;when&nbsp;the&nbsp;mouse<br>
+button&nbsp;is&nbsp;kept&nbsp;pressed&nbsp;down&nbsp;on&nbsp;the&nbsp;scrollbar&nbsp;outside&nbsp;of&nbsp;the&nbsp;knobs&nbsp;area.<br>
+The&nbsp;delay&nbsp;for&nbsp;the&nbsp;very&nbsp;first&nbsp;jump&nbsp;is&nbsp;twice&nbsp;that&nbsp;long&nbsp;in&nbsp;order&nbsp;to&nbsp;avoid<br>
+jumping&nbsp;to&nbsp;start&nbsp;too&nbsp;soon&nbsp;when&nbsp;only&nbsp;a&nbsp;single&nbsp;click&nbsp;was&nbsp;intended&nbsp;but&nbsp;the<br>
+user&nbsp;is&nbsp;a&nbsp;bit&nbsp;slow&nbsp;in&nbsp;releasing&nbsp;the&nbsp;mouse&nbsp;button.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slider&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;tdelay&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;to&nbsp;be&nbsp;set.&nbsp;The&nbsp;default<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;100&nbsp;ms.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;delay&nbsp;(in&nbsp;milliseconds)&nbsp;to&nbsp;be&nbsp;set.&nbsp;Default&nbsp;value&nbsp;is&nbsp;100&nbsp;ms<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_slider_repeat">fl_set_slider_repeat</a>(pslobj,&nbsp;200)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_size"><strong>fl_set_slider_size</strong></a>(ptr_flobject, size)</dt><dd><tt><a href="#-fl_set_slider_size">fl_set_slider_size</a>(ptr_flobject,&nbsp;size)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;slider&nbsp;flobject.<br>
@@ -342,7 +339,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_step"><strong>fl_set_slider_step</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_slider_step">fl_set_slider_step</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;step&nbsp;size&nbsp;to&nbsp;which&nbsp;values&nbsp;are&nbsp;rounded&nbsp;in&nbsp;the<br>
@@ -361,7 +358,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Untested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;NOT&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_slider_value"><strong>fl_set_slider_value</strong></a>(ptr_flobject, slvalue)</dt><dd><tt><a href="#-fl_set_slider_value">fl_set_slider_value</a>(ptr_flobject,&nbsp;slvalue)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;value&nbsp;of&nbsp;a&nbsp;slider.<br>
@@ -379,6 +376,6 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;Tested&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-10 23:20 +0100</body></html>
+<p>Updated on: 2011-01-15 17:41 +0100</body></html>

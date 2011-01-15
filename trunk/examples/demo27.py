@@ -209,7 +209,7 @@ class Demo27(object):
 
     def clearit(self, pobj, data):
         self.onumb = 0
-        xfl.fl_winbackground(self.main_win, xfl.fl_get_flcolor(xfl.FL_COL1))
+        xfl.fl_winbackground(self.main_win, xfl.fl_get_pixel(xfl.FL_COL1))
         self.redrawit()
 
 
@@ -228,7 +228,7 @@ class Demo27(object):
     def init_mainpart(self):
         xfl.fl_pref_wingeometry(400, 300, 400, 400)
         xfl.fl_pref_winsize(400, 400)
-        xfl.fl_winbackground(0, xfl.fl_get_flcolor(xfl.FL_COL1))
+        xfl.fl_winbackground(0, xfl.fl_get_pixel(xfl.FL_COL1))
         self.main_win = xfl.fl_winopen("Drawing")
         xfl.fl_set_event_callback(self.main_callback, 0)
 

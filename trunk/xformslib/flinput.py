@@ -54,16 +54,16 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
     Parameters
     ----------
         inputtype : int
-            type of input to be added. Values (from xfdata.py)
-            FL_NORMAL_INPUT (Any type of text can be typed into this field),
-            FL_FLOAT_INPUT (Only a float value can be typed in, e.g. -23.2e12),
-            FL_INT_INPUT (Only an integer value can be typed in, e.g. -86),
-            FL_DATE_INPUT (Only a date, MM/DD/YY or DD/MM/YY, can be typed in,
-            limited per default to 10 characters), FL_MULTILINE_INPUT (An
-            input field allowing for multiple lines), FL_HIDDEN_INPUT (A normal
-            input field but invisible), FL_SECRET_INPUT (A normal input field
-            that does not show the text, limited per default to a maximum
-            length of 16 characters)
+            type of input to be added. Values (from xfdata.py) FL_NORMAL_INPUT
+            (Any type of text can be typed into this field), FL_FLOAT_INPUT
+            (Only a float value can be typed in, e.g. -23.2e12), FL_INT_INPUT
+            (Only an integer value can be typed in, e.g. -86), FL_DATE_INPUT
+            (Only a date, MM/DD/YY or DD/MM/YY, can be typed in, limited per
+            default to 10 characters), FL_MULTILINE_INPUT (An input field
+            allowing for multiple lines), FL_HIDDEN_INPUT (A normal input
+            field but invisible), FL_SECRET_INPUT (A normal input field that
+            does not show the text, limited per default to a maximum length of
+            16 characters)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -86,7 +86,7 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_input = library.cfuncproto(
@@ -95,7 +95,7 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_input(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(inputtype, xfdata.INPUTTYPE_list)
     i_inputtype = library.convert_to_intc(inputtype)
     i_xpos = library.convert_to_FL_Coord(xpos)
@@ -113,8 +113,8 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
 def fl_set_input(ptr_flobject, text):
     """fl_set_input(ptr_flobject, text)
 
-    Defines the particular input string, with no checks for validity.
-    An empty string can be used to clear an input field.
+    Defines the particular input string, with no checks for validity. An
+    empty string can be used to clear an input field.
 
     Parameters
     ----------
@@ -125,18 +125,18 @@ def fl_set_input(ptr_flobject, text):
 
     Examples
     --------
-        >>> fl_set_input(inpobj, "some text")
+        >>> fl_set_input(pinpobj, "some text")
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_input = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input",
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_input(FL_OBJECT * ob, const char * str)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_text = library.convert_to_stringc(text)
     library.keep_elem_refs(ptr_flobject, text, s_text)
@@ -166,7 +166,7 @@ def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_color = library.cfuncproto(
@@ -175,11 +175,11 @@ def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
         xfdata.FL_COLOR],
         """void fl_set_input_color(FL_OBJECT * ob, FL_COLOR textcol,
            FL_COLOR curscol)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #library.checknonfatal_allowed_value_in_list(txtcolr, xfdata.COLOR_list)
-    #library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
     ul_txtcolr = library.convert_to_FL_COLOR(txtcolr)
+    #library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
     ul_curscolr = library.convert_to_FL_COLOR(curscolr)
     library.keep_elem_refs(ptr_flobject, txtcolr, curscolr, ul_txtcolr, \
             ul_curscolr)
@@ -214,7 +214,7 @@ def fl_get_input_color(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_get_input_color = library.cfuncproto(
@@ -223,7 +223,7 @@ def fl_get_input_color(ptr_flobject):
         cty.POINTER(xfdata.FL_COLOR)],
         """void fl_get_input_color(FL_OBJECT * ob, FL_COLOR * textcol,
            FL_COLOR * curscol)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ul_txtcolr, ptr_txtcolr = library.make_FL_COLOR_and_pointer()
     ul_curscolr, ptr_curscolr = library.make_FL_COLOR_and_pointer()
@@ -248,18 +248,18 @@ def fl_set_input_scroll(ptr_flobject, yesno):
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_input_scroll(pinpobj, 1)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_scroll = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_scroll",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_scroll(FL_OBJECT * ob, int yes)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -286,14 +286,14 @@ def fl_set_input_cursorpos(ptr_flobject, xpos, ypos):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_cursorpos = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_cursorpos",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_cursorpos(FL_OBJECT * ob, int xpos, int ypos)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_xpos = library.convert_to_intc(xpos)
     i_ypos = library.convert_to_intc(ypos)
@@ -304,8 +304,8 @@ def fl_set_input_cursorpos(ptr_flobject, xpos, ypos):
 def fl_set_input_selected(ptr_flobject, yesno):
     """fl_set_input_selected(ptr_flobject, yesno)
 
-    Selects or deselects the current input. It places the cursor
-    at the end of the string when selected.
+    Selects or deselects the current input. It places the cursor at the end
+    of the string when selected.
 
     Parameters
     ----------
@@ -317,18 +317,18 @@ def fl_set_input_selected(ptr_flobject, yesno):
 
     Examples
     --------
-        >>> fl_set_input_selected(inpobj, 1)
+        >>> fl_set_input_selected(pinpobj, 1)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_selected = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_selected",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_selected(FL_OBJECT * ob, int yes)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -338,16 +338,16 @@ def fl_set_input_selected(ptr_flobject, yesno):
 def fl_set_input_selected_range(ptr_flobject, beginchar, endchar):
     """fl_set_input_selected_range(ptr_flobject, beginchar, endchar)
 
-    Selects or deselects the current input of part of it. When begin is
-    0 and end is the last character number, all input is selected. It
-    places the cursor at the beginning of selected string.
+    Selects or deselects the current input of part of it. When begin is 0 and
+    end is the last character number, all input is selected. It places the
+    cursor at the beginning of selected string.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         beginchar : int
-            starting value in characters
+            starting value in characters. Use 0 for real beginning
         endchar : int
             ending value in characters
 
@@ -357,7 +357,7 @@ def fl_set_input_selected_range(ptr_flobject, beginchar, endchar):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_selected_range = library.cfuncproto(
@@ -365,7 +365,7 @@ def fl_set_input_selected_range(ptr_flobject, beginchar, endchar):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_selected_range(FL_OBJECT * ob,
            int begin, int end)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_beginchar = library.convert_to_intc(beginchar)
     i_endchar = library.convert_to_intc(endchar)
@@ -396,7 +396,7 @@ def fl_get_input_selected_range(ptr_flobject):
 
     Examples
     --------
-        >>> selstr, vstart, vend = fl_get_input_selected_range(inpobj)
+        >>> selstr, vstart, vend = fl_get_input_selected_range(pinpobj)
 
     API_diversion
     ----------
@@ -405,7 +405,7 @@ def fl_get_input_selected_range(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_input_selected_range = library.cfuncproto(
@@ -414,7 +414,7 @@ def fl_get_input_selected_range(ptr_flobject):
         cty.POINTER(cty.c_int)],
         """const char * fl_get_input_selected_range(FL_OBJECT * ob,
            int * begin, int * end)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_beginchar, ptr_beginchar = library.make_intc_and_pointer()
     i_endchar, ptr_endchar = library.make_intc_and_pointer()
@@ -443,18 +443,18 @@ def fl_set_input_maxchars(ptr_flobject, maxchars):
 
     Examples
     --------
-        >>> fl_set_input_maxchars(inpobj, 20)
+        >>> fl_set_input_maxchars(pinpobj, 20)
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_maxchars = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_maxchars",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_maxchars(FL_OBJECT * ob, int maxchars)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_maxchars = library.convert_to_intc(maxchars)
     library.keep_elem_refs(ptr_flobject, maxchars, i_maxchars)
@@ -470,27 +470,27 @@ def fl_set_input_format(ptr_flobject, fmt, sep):
     Parameters
     ----------
         fmt : int
-            format for the input. Values (from xfdata.py)
-            FL_INPUT_MMDD (Used as format for FL_DATE_INPUT, it places the
-            month before the day, FL_INPUT_DDMM (Used as format for
-            FL_DATE_INPUT, it places the day before the month).
+            format for the input. Values (from xfdata.py) FL_INPUT_MMDD (Used
+            as format for FL_DATE_INPUT, it places the month before the day),
+            FL_INPUT_DDMM (Used as format for FL_DATE_INPUT, it places the day
+            before the month).
         sep : int or char
             printable single character used as separator
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_input_format(pinpobj, xfdata.FL_INPUT_DDMM, "-")
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_format = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_format",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_format(FL_OBJECT * ob, int fmt, int sep)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(fmt, xfdata.DATEFMT_list)
     i_fmt = library.convert_to_intc(fmt)
@@ -510,33 +510,31 @@ def fl_set_input_hscrollbar(ptr_flobject, pref):
     Defines horizontal scrollbar settings. By default, if an input field of
     type xfdata.FL_MULTILINE_INPUT contains more text than can be shown,
     scrollbars will appear with which the user can scroll the text around
-    horizontally. Turning off scrollbars for an input field does not turn
-    off scrolling, the user can still scroll the field using cursor and
-    other keys.
+    horizontally. Turning off scrollbars for an input field does not turn off
+    scrolling, the user can still scroll the field using cursor and other keys.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         pref : int
-            how is horizontal scrollbar shown. Values (from xfdata.py)
-            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
-            (always off)
+            how is horizontal scrollbar shown. Values (from xfdata.py) FL_AUTO
+            (On when needed, default), FL_ON (always on), FL_OFF (always off)
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_input_hscrollbar(pinpobj, xfdata.FL_ON)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_hscrollbar = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_hscrollbar",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_hscrollbar(FL_OBJECT * ob, int pref)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(pref, xfdata.SCROLLBARVAL_list)
     i_pref = library.convert_to_intc(pref)
@@ -547,12 +545,11 @@ def fl_set_input_hscrollbar(ptr_flobject, pref):
 def fl_set_input_vscrollbar(ptr_flobject, pref):
     """fl_set_input_vscrollbar(ptr_flobject, pref)
 
-    Defines vertical scrollbar settings. By default, if an input field of
-    type xfdata.FL_MULTILINE_INPUT contains more text than can be shown,
-    scrollbars will appear with which the user can scroll the text around
-    vertically. Turning off scrollbars for an input field does not turn off
-    scrolling, the user can still scroll the field using cursor and other
-    keys.
+    Defines vertical scrollbar settings. By default, if an input field of type
+    xfdata.FL_MULTILINE_INPUT contains more text than can be shown, scrollbars
+    will appear with which the user can scroll the text around vertically.
+    Turning off scrollbars for an input field does not turn off scrolling, the
+    user can still scroll the field using cursor and other keys.
 
     Parameters
     ----------
@@ -565,18 +562,18 @@ def fl_set_input_vscrollbar(ptr_flobject, pref):
 
     Examples
     --------
-        >>> fl_set_input_vscrollbar(inpobj, xfdata.FL_OFF)
+        >>> fl_set_input_vscrollbar(pinpobj, xfdata.FL_OFF)
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_vscrollbar = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_vscrollbar",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_vscrollbar(FL_OBJECT * ob, int pref)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.checkfatal_allowed_value_in_list(pref, xfdata.SCROLLBARVAL_list)
     i_pref = library.convert_to_intc(pref)
@@ -603,14 +600,14 @@ def fl_set_input_topline(ptr_flobject, linenum):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_topline = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_topline",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_topline(FL_OBJECT * ob, int top)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_linenum = library.convert_to_intc(linenum)
     library.keep_elem_refs(ptr_flobject, linenum, i_linenum)
@@ -620,8 +617,8 @@ def fl_set_input_topline(ptr_flobject, linenum):
 def fl_set_input_scrollbarsize(ptr_flobject, height, width):
     """fl_set_input_scrollbarsize(ptr_flobject, height, width)
 
-    Changes the size of the scrollbars. By default, the scrollbar size
-    is dependent on the initial size of the input box.
+    Changes the size of the scrollbars. By default, the scrollbar size is
+    dependent on the initial size of the input box.
 
     Parameters
     ----------
@@ -638,14 +635,14 @@ def fl_set_input_scrollbarsize(ptr_flobject, height, width):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_scrollbarsize = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_scrollbarsize",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int, cty.c_int],
         """void fl_set_input_scrollbarsize(FL_OBJECT * ob, int hh, int vw)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_height = library.convert_to_intc(height)
     i_width = library.convert_to_intc(width)
@@ -656,8 +653,8 @@ def fl_set_input_scrollbarsize(ptr_flobject, height, width):
 def fl_get_input_scrollbarsize(ptr_flobject):
     """fl_get_input_scrollbarsize(ptr_flobject) -> height, width
 
-    Finds out the current settings for the horizontal scrollbar height
-    and the vertical scrollbar width.
+    Finds out the current settings for the horizontal scrollbar height and
+    the vertical scrollbar width.
 
     Parameters
     ----------
@@ -682,7 +679,7 @@ def fl_get_input_scrollbarsize(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_input_scrollbarsize = library.cfuncproto(
@@ -691,7 +688,7 @@ def fl_get_input_scrollbarsize(ptr_flobject):
         cty.POINTER(cty.c_int)],
         """void fl_get_input_scrollbarsize(FL_OBJECT * ob, int * hh,
            int * vw)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_height, ptr_height = library.make_intc_and_pointer()
     i_width, ptr_width = library.make_intc_and_pointer()
@@ -710,8 +707,8 @@ def fl_set_input_xoffset(ptr_flobject, offset):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         offset : int
-            positive number of pixels to scroll to the left relative
-            to the nominal position of the text lines.
+            positive number of pixels to scroll to the left relative to the
+            nominal position of the text lines.
 
     Examples
     --------
@@ -719,14 +716,14 @@ def fl_set_input_xoffset(ptr_flobject, offset):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_xoffset = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_xoffset",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_xoffset(FL_OBJECT * ob, int xoff)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_offset = library.convert_to_intc(offset)
     library.keep_elem_refs(ptr_flobject, offset, i_offset)
@@ -750,18 +747,18 @@ def fl_get_input_xoffset(ptr_flobject):
 
     Examples
     --------
-        >>> hoffset = fl_get_input_xoffset(inpobj)
+        >>> hoffset = fl_get_input_xoffset(pinpobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_get_input_xoffset = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_xoffset",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_xoffset(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_input_xoffset(ptr_flobject)
@@ -779,27 +776,28 @@ def fl_set_input_fieldchar(ptr_flobject, fldchar):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         fldchar : int or char
-            character to use in secret input fields
+            character to be used in secret input fields
 
     Returns
     -------
         oldchar : int
-            old field character (ordinal form)
+            old field character in ordinal form. You can then use chr() to
+            display character in ascii form
 
     Examples
     --------
-        >>> oldchar = fl_set_input_fieldchar(inpobj, '*')
+        >>> oldchar = fl_set_input_fieldchar(pinpobj, '*')
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_fieldchar = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_fieldchar",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """int fl_set_input_fieldchar(FL_OBJECT * ob, int fchar)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     if isinstance(fldchar, str):
         # workaround to let a character as int argument
@@ -829,18 +827,18 @@ def fl_get_input_topline(ptr_flobject):
 
     Examples
     --------
-        >>> fl_get_input_topline(ptr_flobject)
+        >>> fl_get_input_topline(pinpobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_get_input_topline = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_topline",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_topline(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_input_topline(ptr_flobject)
@@ -864,18 +862,18 @@ def fl_get_input_screenlines(ptr_flobject):
 
     Examples
     --------
-        >>> fl_get_input_screenlines(inpobj)
+        >>> fl_get_input_screenlines(pinpobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_get_input_screenlines = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_screenlines",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_screenlines(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_input_screenlines(ptr_flobject)
@@ -896,8 +894,8 @@ def fl_get_input_cursorpos(ptr_flobject):
     Returns
     -------
         result : int
-            num. or -1 (if the input field does not have input focus
-            thus does not have a cursor)
+            num. or -1 (if the input field does not have input focus, thus
+            does not have a cursor)
         xpos : int
             horizontal position in characters
         ypos : int
@@ -905,7 +903,7 @@ def fl_get_input_cursorpos(ptr_flobject):
 
     Examples
     --------
-        >>> rslt, x, y = fl_get_input_cursorpos(inpobj)
+        >>> rslt, x, y = fl_get_input_cursorpos(pinpobj)
 
     API_diversion
     -------------
@@ -914,7 +912,7 @@ def fl_get_input_cursorpos(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + NoDoc + Demo = OK
 
     """
     _fl_get_input_cursorpos = library.cfuncproto(
@@ -922,7 +920,7 @@ def fl_get_input_cursorpos(ptr_flobject):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int)],
         """int fl_get_input_cursorpos(FL_OBJECT * ob, int * x, int * y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_xpos, ptr_xpos = library.make_intc_and_pointer()
     i_ypos, ptr_ypos = library.make_intc_and_pointer()
@@ -941,23 +939,23 @@ def fl_set_input_cursor_visible(ptr_flobject, yesno):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         yesno : int
-            flag to set/unset cursor visibility. Values 1 (visible)
-            or 0 (not visible)
+            flag to set/unset cursor visibility. Values 1 (visible) or 0
+            (not visible)
 
     Examples
     --------
-        >>> fl_set_input_cursor_visible(inpobj, 1)
+        >>> fl_set_input_cursor_visible(pinpobj, 1)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_cursor_visible = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_cursor_visible",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_input_cursor_visible(FL_OBJECT * ob, int visible)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -981,18 +979,18 @@ def fl_get_input_numberoflines(ptr_flobject):
 
     Examples
     --------
-        >>> fl_get_input_numberoflines(inpobj)
+        >>> fl_get_input_numberoflines(pinpobj)
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_get_input_numberoflines = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input_numberoflines",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_input_numberoflines(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_input_numberoflines(ptr_flobject)
@@ -1002,8 +1000,8 @@ def fl_get_input_numberoflines(ptr_flobject):
 def fl_get_input_format(ptr_flobject):
     """fl_get_input_format(ptr_flobject) -> fmt, sep
 
-    Provides means for the validator to retrieve some information about
-    user preference or other state dependent informations.
+    Provides means for the validator to retrieve some information about user
+    preference or other state dependent informations.
 
     Parameters
     ----------
@@ -1015,11 +1013,12 @@ def fl_get_input_format(ptr_flobject):
         fmt : int
             format (from xfdata.py, e.g. FL_INPUT_DDMM ..)
         sep : int
-            separator (in ordinal form)
+            separator in ordinal form. You can then use chr() to display
+            character in ascii form
 
     Examples
     --------
-        >>> fmt, sep =  fl_get_input_format(inpobj)
+        >>> fmt, sep =  fl_get_input_format(pinpobj)
 
     API_diversion
     -------------
@@ -1028,7 +1027,7 @@ def fl_get_input_format(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_input_format = library.cfuncproto(
@@ -1036,7 +1035,7 @@ def fl_get_input_format(ptr_flobject):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int)],
         """void fl_get_input_format(FL_OBJECT * ob, int * fmt, int * sep)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_fmt, ptr_fmt = library.make_intc_and_pointer()
     i_sep, ptr_sep = library.make_intc_and_pointer()
@@ -1062,18 +1061,18 @@ def fl_get_input(ptr_flobject):
 
     Examples
     --------
-        >>> usertxt = fl_get_input(inpobj)
+        >>> usertxt = fl_get_input(pinpobj)
 
     Notes
     -----
-        Status: Tested + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_input = library.cfuncproto(
         library.load_so_libforms(), "fl_get_input",
         xfdata.STRING, [cty.POINTER(xfdata.FL_OBJECT)],
         """const char * fl_get_input(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_input(ptr_flobject)
@@ -1091,31 +1090,33 @@ def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         pyfn_InputValidator : python function, returned value
-            name referring to function(ptr_flobject, [str]oldstr, [str]c,
-            [int]num) -> [int]oldfilt
-            function to set validator. oldstr is the string in the input
-            field before the newly typed character c was added to form the
-            new string cur. If the new character is not an acceptable
-            character for the input field, the filter function should return
-            xfdata.FL_INVALID otherwise xfdata.FL_VALID. If xfdata.FL_INVALID
-            is returned, the new character is discarded and the input field
-            remains unmodified. The function returns the old filter. While
-            the built-in filters also sound the keyboard bell, this does not
-            happen if a custom filter only returns FL_INVALID. To also sound
-            the keyboard bell you can logically OR it with
-            xfdata.FL_INVALID|FL_RINGBELL. This still leaves the possibility
-            that the input is valid for every character entered, but the
-            string is invalid for the field because it is incomplete. E.g.
-            12.0e is valid for a float input field for every character typed,
-            but the final string is not a valid floating point number. To
-            guard again this, the filter function is also called just prior
-            to returning the flobject with the argument c (for the newly
-            entered character) set to zero. If the validator returns
-            xfdata.FL_INVALID the flobject is not returned to the application
-            program, but input focus can change to the next input field. If
-            the return value xfdata.FL_INVALID|FL_RINGBELL, the keyboard
-            bell is sounded and the flobject is not returned to the
-            application program and the input focus remains in the flobject.
+            name referring to function(ptr_flobject, [str]oldtxt, [str]curtxt,
+            [int]newchar) -> [int]oldfilt
+            function to set validator is called whenever a new (regular)
+            character is entered. oldtxt is the str text in the input field
+            before the newly typed character newchar (in ordinal form) was
+            added to form the new str text curtxt. If the new character is not
+            an acceptable character for the input field, the function should
+            return xfdata.FL_INVALID otherwise xfdata.FL_VALID. If
+            xfdata.FL_INVALID is returned, the new character is discarded and
+            the input field remains unmodified. The function returns the old
+            filter. While the built-in filters also sound the keyboard bell,
+            this does not happen if a custom filter only returns
+            xfdata.FL_INVALID; to also sound the keyboard bell you can
+            logically OR it with (from xfdata.py) FL_INVALID|FL_RINGBELL. This
+            still leaves the possibility that the input is valid for every
+            character entered, but the string is invalid for the field because
+            it is incomplete. E.g. 12.0e is valid for a float input field for
+            every character typed, but the final string is not a valid floating
+            point number. To guard against this, the filter function is also
+            called just prior to returning the flobject with the argument
+            newchar (for the newly entered character) set to zero. If the
+            validator returns xfdata.FL_INVALID the flobject is not returned
+            to the application program, but input focus can change to the next
+            input field. If the return value is (from xfdata.py)
+            FL_INVALID|FL_RINGBELL, the keyboard bell is sounded and the
+            flobject is not returned to the application program and the input
+            focus remains in the flobject.
 
     Returns
     -------
@@ -1128,7 +1129,7 @@ def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     #FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
@@ -1139,7 +1140,7 @@ def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
         xfdata.FL_INPUTVALIDATOR],
         """FL_INPUTVALIDATOR fl_set_input_filter(FL_OBJECT * ob,
             FL_INPUTVALIDATOR validate)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_function_type(pyfn_InputValidator)
     cfn_InputValidator = xfdata.FL_INPUTVALIDATOR(pyfn_InputValidator)
@@ -1153,7 +1154,7 @@ def fl_validate_input(ptr_flobject):
     """fl_validate_input(ptr_flobject) -> result
 
     Tests if the value in an input field is valid, according to the
-    pre-defined validator function.
+    pre-defined validator function set with fl_set_input_filter().
 
     Parameters
     ----------
@@ -1163,8 +1164,8 @@ def fl_validate_input(ptr_flobject):
     Returns
     -------
         result : int
-            xfdata.FL_VALID (if value is valid or if there is no
-            validator function set for the input), otherwise FL_INVALID
+            xfdata.FL_VALID (if value is valid or if there is no validator
+            function set for the input), otherwise FL_INVALID
 
     Examples
     --------
@@ -1172,14 +1173,14 @@ def fl_validate_input(ptr_flobject):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_validate_input = library.cfuncproto(
         library.load_so_libforms(), "fl_validate_input",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_validate_input(FL_OBJECT * obj)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_validate_input(ptr_flobject)
@@ -1196,21 +1197,25 @@ def fl_set_input_editkeymap(ptr_editkeymap):
 
     Changes the default edit keymaps. Edit keymap is global and affects all
     input field within the application. All cursor keys (<Left>, <Home> etc.)
-    are reserved and their meanings hard-coded, thus can?t be used in the
+    are reserved and their meanings hard-coded, thus cannot be used in the
     mapping. For example, if you try to set del_prev_char to <Home>, pressing
     the <Home> key will not delete the previous character. In filling the
-    keymap structure, ASCII characters (i.e. characters with values below
-    128, including the control characters with values below 32) should be
-    specified by their ASCII codes (<Ctrl> C is 3 etc.), while all others by
-    their Keysyms (XK_F1 etc.). Control and special character combinations
-    can be obtained by adding xfdata.FL_CONTROL_MASK to the Keysym. To
-    specify Meta add xfdata.FL_ALT_MASK to the key value.
+    keymap structure, ASCII characters (i.e. characters with values below 128,
+    including the control characters with values below 32) should be specified
+    by their ASCII codes (<Ctrl> C is 3 etc.), while all others bytheir Keysyms
+    (XK_F1 etc.). Control and special character combinations can be obtained
+    by adding xfdata.FL_CONTROL_MASK to the Keysym. To specify Meta add
+    xfdata.FL_ALT_MASK to the key value. Change of edit keymap is global and
+    affects all input field within the application.
 
     Parameters
     ----------
         ptr_editkeymap : pointer to xfdata.FL_EditKeymap
-            class instance (filled or partially filled). If None, it
-            restores the default keymap.
+            edit keymap class instance (filled or partially filled; the
+            unfilled members must be set to 0 so the default mapping is
+            retained. If None, it restores the default keymap. You can use
+            xfstruct.make_ptr_fleditkeymap() passing a dict whose keys
+            corresponding to xfdata.FL_EditKeymap
 
     Examples
     --------
@@ -1218,14 +1223,14 @@ def fl_set_input_editkeymap(ptr_editkeymap):
 
     Notes
     -----
-        Status: Untested + NoDoc + NoDemo = NOT OK
+        Status: NA-UTest + NoDoc + NoDemo = Maybe
 
     """
     _fl_set_input_editkeymap = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_editkeymap",
         None, [cty.POINTER(xfdata.FL_EditKeymap)],
         """void fl_set_input_editkeymap(const char * keymap)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     if not ptr_editkeymap:         # it is None
         ptr_editkeymap = cty.cast(ptr_editkeymap, cty.c_void_p)
     else:

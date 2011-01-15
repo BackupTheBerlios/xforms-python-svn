@@ -65,8 +65,8 @@ def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
+            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON
+            or FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
             FL_RADIO_BUTTON (Push button that switches off other radio
             buttons), FL_HIDDEN_BUTTON (Invisible normal button),
             FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
@@ -98,7 +98,7 @@ def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_roundbutton = library.cfuncproto(
@@ -107,7 +107,7 @@ def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_roundbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -166,7 +166,7 @@ def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_round3dbutton = library.cfuncproto(
@@ -175,7 +175,7 @@ def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_round3dbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -234,7 +234,7 @@ def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_lightbutton = library.cfuncproto(
@@ -243,7 +243,7 @@ def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_lightbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -302,7 +302,7 @@ def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_checkbutton = library.cfuncproto(
@@ -311,7 +311,7 @@ def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_checkbutton(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -370,7 +370,7 @@ def fl_add_button(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_button = library.cfuncproto(
@@ -379,7 +379,7 @@ def fl_add_button(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_button(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -438,7 +438,7 @@ def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_bitmapbutton = library.cfuncproto(
@@ -447,7 +447,7 @@ def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_bitmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -506,7 +506,7 @@ def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_scrollbutton = library.cfuncproto(
@@ -515,7 +515,7 @@ def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_scrollbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -574,7 +574,7 @@ def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_labelbutton = library.cfuncproto(
@@ -583,7 +583,7 @@ def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_labelbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -622,7 +622,7 @@ def fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_bitmapbutton_data = library.cfuncproto(
@@ -631,7 +631,7 @@ def fl_set_bitmapbutton_data(ptr_flobject, width, height, xbmdatalist):
         cty.POINTER(cty.c_ubyte)],
         """void fl_set_bitmapbutton_data(FL_OBJECT * ob, int w, int h,
            unsigned char * bits)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_intc(height)
@@ -686,7 +686,7 @@ def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_pixmapbutton = library.cfuncproto(
@@ -695,7 +695,7 @@ def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_pixmapbutton(int type, FL_Coord x,
            FL_Coord y, FL_Coord w, FL_Coord h, const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_buttontype = library.convert_to_intc(buttontype)
@@ -729,14 +729,14 @@ def fl_set_pixmapbutton_focus_outline(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_pixmapbutton_focus_outline = library.cfuncproto(
         library.load_so_libforms(), "fl_set_pixmapbutton_focus_outline",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_pixmapbutton_focus_outline(FL_OBJECT * ob, int yes)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -766,7 +766,7 @@ def fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_pixmapbutton_focus_data = library.cfuncproto(
@@ -774,7 +774,7 @@ def fl_set_pixmapbutton_focus_data(ptr_flobject, xpmdata):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(xfdata.STRING)],
         """void fl_set_pixmapbutton_focus_data(FL_OBJECT * ob,
            char * * bits)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     #ptr_bits = cty.cast(bits, cty.POINTER(xfdata.STRING))
     ptr_xpmdata = library.convert_to_ptr_ubytec(xpmdata)
@@ -801,7 +801,7 @@ def fl_set_pixmapbutton_focus_file(ptr_flobject, fname):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_pixmapbutton_focus_file = library.cfuncproto(
@@ -809,7 +809,7 @@ def fl_set_pixmapbutton_focus_file(ptr_flobject, fname):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """void fl_set_pixmapbutton_focus_file(FL_OBJECT * ob,
            const char * fname)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     s_fname = library.convert_to_stringc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
@@ -838,7 +838,7 @@ def fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask):
 
     Notes
     -----
-        Status: Untested + Doc + NoDemo = NOT OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_pixmapbutton_focus_pixmap = library.cfuncproto(
@@ -846,7 +846,7 @@ def fl_set_pixmapbutton_focus_pixmap(ptr_flobject, pixmap, mask):
         None, [cty.POINTER(xfdata.FL_OBJECT), xfdata.Pixmap, xfdata.Pixmap],
         """void fl_set_pixmapbutton_focus_pixmap(FL_OBJECT * ob,
            Pixmap id, Pixmap mask)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ul_pixmap = library.convert_to_Pixmap(pixmap)
     ul_mask = library.convert_to_Pixmap(mask)
@@ -875,14 +875,14 @@ def fl_get_button(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_button = library.cfuncproto(
         library.load_so_libforms(), "fl_get_button",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_button(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_button(ptr_flobject)
@@ -892,7 +892,7 @@ def fl_get_button(ptr_flobject):
 def fl_set_button(ptr_flobject, yesno):
     """fl_set_button(ptr_flobject, yesno)
 
-    Defines the button state (not pushed/pushed).
+    Defines the button state (not pushed, or pushed).
 
     Parameters
     ----------
@@ -908,14 +908,14 @@ def fl_set_button(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_button = library.cfuncproto(
         library.load_so_libforms(), "fl_set_button",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_button(FL_OBJECT * ob, int pushed)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
@@ -925,8 +925,8 @@ def fl_set_button(ptr_flobject, yesno):
 def fl_get_button_numb(ptr_flobject):
     """fl_get_button_numb(ptr_flobject) -> mousebtn
 
-    Finds out the number of the last used mouse button.
-    fl_mouse_button() function will also return the mouse number.
+    Finds out the number of the last used mouse button. fl_mouse_button()
+    function will also return the mouse number.
 
     Parameters
     ----------
@@ -951,14 +951,14 @@ def fl_get_button_numb(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_button_numb = library.cfuncproto(
         library.load_so_libforms(), "fl_get_button_numb",
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
         """int fl_get_button_numb(FL_OBJECT * ob)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_button_numb(ptr_flobject)
@@ -1009,12 +1009,11 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
 
     Examples
     --------
-        >>> newbtnobj = fl_add_roundbutton(1001, xfdata.FL_TOGGLE_BUTTON,
-                145, 199, 120, 30, "MyButton")
+        >>> *todo*
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_create_generic_button = library.cfuncproto(
@@ -1024,7 +1023,7 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
         """FL_OBJECT * fl_create_generic_button(int objclass, int type,
            FL_Coord x, FL_Coord y, FL_Coord w, FL_Coord h,
            const char * label)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(buttontype, \
             xfdata.BUTTONTYPE_list)
     i_btnclass = library.convert_to_intc(btnclass)
@@ -1056,8 +1055,8 @@ def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
             function to handle drawing of button
         pyfn_CleanupButton : python function, no return
             name referring to function(ptr_buttonspec)
-            function to cleanup button. You have to pass an
-            instance of xfdata.FL_BUTTON_SPEC class
+            function to cleanup button. The param is an instance of
+            xfdata.FL_BUTTON_SPEC class
 
     Examples
     --------
@@ -1069,7 +1068,7 @@ def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_DrawButton = cty.CFUNCTYPE(None, cty.POINTER(xfdata.FL_OBJECT))
@@ -1079,7 +1078,7 @@ def fl_add_button_class(btnclass, pyfn_DrawButton, pyfn_CleanupButton):
         None, [cty.c_int, xfdata.FL_DrawButton, xfdata.FL_CleanupButton],
         """void fl_add_button_class(int bclass, FL_DrawButton drawit,
            FL_CleanupButton cleanup)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     i_btnclass = library.convert_to_intc(btnclass)
     library.verify_function_type(pyfn_DrawButton)
     cfn_DrawButton = xfdata.FL_DrawButton(pyfn_DrawButton)
@@ -1112,7 +1111,7 @@ def fl_set_button_mouse_buttons(ptr_flobject, buttons):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_set_button_mouse_buttons = library.cfuncproto(
@@ -1120,7 +1119,7 @@ def fl_set_button_mouse_buttons(ptr_flobject, buttons):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
         """void fl_set_button_mouse_buttons(FL_OBJECT * ob,
            unsigned int buttons)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ui_buttons = library.convert_to_uintc(buttons)
     library.keep_elem_refs(ptr_flobject, buttons, ui_buttons)
@@ -1156,7 +1155,7 @@ def fl_get_button_mouse_buttons(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_button_mouse_buttons = library.cfuncproto(
@@ -1164,7 +1163,7 @@ def fl_get_button_mouse_buttons(ptr_flobject):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_uint)],
         """void fl_get_button_mouse_buttons(FL_OBJECT * ob,
            unsigned int * buttons)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     ui_buttons, ptr_buttons = library.make_uintc_and_pointer()
     library.keep_elem_refs(ptr_flobject, ui_buttons, ptr_buttons)

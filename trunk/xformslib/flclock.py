@@ -51,9 +51,9 @@ def fl_add_clock(clocktype, xpos, ypos, width, height, label):
     Parameters
     ----------
         clocktype : int
-            type of clock to be added. Values (from xfdata.py)
-            FL_ANALOG_CLOCK (An analog clock complete with the second hand),
-            FL_DIGITAL_CLOCK (A digital clock)
+            type of clock to be added. Values (from xfdata.py) FL_ANALOG_CLOCK
+            (An analog clock complete with the second hand), FL_DIGITAL_CLOCK
+            (A digital clock)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -72,12 +72,12 @@ def fl_add_clock(clocktype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> clkobj = fl_add_clock(xfdata.FL_ANALOG_CLOCK, 150, 210,
+        >>> pclkobj = fl_add_clock(xfdata.FL_ANALOG_CLOCK, 150, 210,
                 220, 200, "My great clock")
 
     Notes
     -----
-        Status: Tested + Doc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_add_clock = library.cfuncproto(
@@ -86,7 +86,7 @@ def fl_add_clock(clocktype, xpos, ypos, width, height, label):
         xfdata.FL_Coord, xfdata.FL_Coord, xfdata.FL_Coord, xfdata.STRING],
         """FL_OBJECT * fl_add_clock(int type, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, const char * s)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.checkfatal_allowed_value_in_list(clocktype, \
             xfdata.CLOCKTYPE_list)
     i_clocktype = library.convert_to_intc(clocktype)
@@ -105,8 +105,8 @@ def fl_add_clock(clocktype, xpos, ypos, width, height, label):
 def fl_get_clock(ptr_flobject):
     """fl_get_clock(ptr_flobject) -> hrs, mins, secs
 
-    Finds out time values from a clock flobject, with hours in 0-23,
-    minutes in 0-59 and seconds in 0-59.
+    Finds out time values from a clock flobject, with hours in 0-23, minutes
+    in 0-59 and seconds in 0-59.
 
     Parameters
     ----------
@@ -124,7 +124,7 @@ def fl_get_clock(ptr_flobject):
 
     Examples
     --------
-        >>> hou, mnu, sec = fl_get_clock(clkobj)
+        >>> hou, mnu, sec = fl_get_clock(pclkobj)
 
     API_diversion
     ----------
@@ -133,7 +133,7 @@ def fl_get_clock(ptr_flobject):
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_clock = library.cfuncproto(
@@ -141,7 +141,7 @@ def fl_get_clock(ptr_flobject):
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
         cty.POINTER(cty.c_int), cty.POINTER(cty.c_int)],
         """void fl_get_clock(FL_OBJECT * ob, int * h, int * m, int * s)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_hrs, ptr_hrs = library.make_intc_and_pointer()
     i_mins, ptr_mins = library.make_intc_and_pointer()
@@ -153,7 +153,7 @@ def fl_get_clock(ptr_flobject):
 
 
 def fl_set_clock_adjustment(ptr_flobject, offset):
-    """fl_set_clock_adjustment(ptr_flobject, offset) -> adjust
+    """fl_set_clock_adjustment(ptr_flobject, offset) -> oldadjust
 
     Adjusts the clock to display a time other than local time.
 
@@ -166,16 +166,16 @@ def fl_set_clock_adjustment(ptr_flobject, offset):
 
     Returns
     -------
-        adjust : long
+        oldadjust : long
             old adjustment value
 
     Examples
     --------
-        >>> oldadj = fl_set_clock_adjustment(clkobj, 3600)
+        >>> oldadj = fl_set_clock_adjustment(pclkobj, 3600)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = OK
 
     """
     _fl_set_clock_adjustment = library.cfuncproto(
@@ -183,7 +183,7 @@ def fl_set_clock_adjustment(ptr_flobject, offset):
         cty.c_long, [cty.POINTER(xfdata.FL_OBJECT), cty.c_long],
         """long int fl_set_clock_adjustment(FL_OBJECT * ob,
            long int offset)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     l_offset = library.convert_to_longc(offset)
     library.keep_elem_refs(ptr_flobject, offset, l_offset)
@@ -206,18 +206,18 @@ def fl_set_clock_ampm(ptr_flobject, yesno):
 
     Examples
     --------
-        >>> fl_set_clock_ampm(clkobj, 1)
+        >>> fl_set_clock_ampm(pclkobj, 1)
 
     Notes
     -----
-        Status: Tested + Doc + NoDemo = OK
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_clock_ampm = library.cfuncproto(
         library.load_so_libforms(), "fl_set_clock_ampm",
         None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int],
         """void fl_set_clock_ampm(FL_OBJECT * ob, int y)""")
-    library.check_if_initialized()
+    library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_yesno = library.convert_to_intc(yesno)
     library.keep_elem_refs(ptr_flobject, yesno, i_yesno)
