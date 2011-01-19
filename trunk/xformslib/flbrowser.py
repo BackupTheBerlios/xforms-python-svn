@@ -55,12 +55,13 @@ def fl_add_browser(browsertype, xpos, ypos, width, height, label):
     ----------
         browsertype : int
             type of the browser to be added. Values (from xfdata.py)
-            FL_NORMAL_BROWSER (A browser in which no selections can be made),
-            FL_SELECT_BROWSER (In this case the user can make single line
-            selections), FL_HOLD_BROWSER (Same to FL_SELECT_BROWSER but the
-            selection remains visible until the next selection),
-            FL_MULTI_BROWSER (Multiple selections can be made and remains
-            visible until de-selected).
+            - FL_NORMAL_BROWSER (A browser in which no selections can be made),
+            - FL_SELECT_BROWSER (In this case the user can make single line
+              selections),
+            - FL_HOLD_BROWSER (Same to FL_SELECT_BROWSER but the selection
+              remains visible until the next selection),
+            - FL_MULTI_BROWSER (Multiple selections can be made and remains
+              visible until de-selected).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -464,7 +465,7 @@ def fl_select_browser_line(ptr_flobject, linenum):
     Notes
     -----
         Status: NA-UTest + Doc + NoDemo = Maybe
-ŕ
+
     """
     _fl_select_browser_line = library.cfuncproto(
         library.load_so_libforms(), "fl_select_browser_line",
@@ -553,7 +554,7 @@ def fl_isselected_browser_line(ptr_flobject, linenum):
     Returns
     -------
         yesno : int
-            flag. 1 if selected, otherwise 0
+            flag of selection. 1 if selected, otherwise 0
 
     Examples
     --------
@@ -797,11 +798,14 @@ def fl_set_browser_fontsize(ptr_flobject, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         size : int
-            font size to be set. Values (from xfdata.py) FL_TINY_SIZE (8
-            points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font,
-            default), FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14
-            points font), FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24
-            points font), or other numeric odd or even value
+            font size to be set. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Examples
     --------
@@ -833,23 +837,27 @@ def fl_set_browser_fontstyle(ptr_flobject, style):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         style : int
-            font style to be set. Values (from xfdata.py) FL_NORMAL_STYLE
-            (Helvetica normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            font style to be set. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -926,8 +934,10 @@ def fl_set_browser_vscrollbar(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         howscroll : int
-            if bar is turned on/off. Values (from xfdata.py) FL_AUTO (On when
-            needed, default), FL_ON (always on), FL_OFF (always off).
+            if bar is turned on/off. Values (from xfdata.py)
+            FL_AUTO (On when needed, default),
+            FL_ON (always on),
+            FL_OFF (always off).
 
     Examples
     --------
@@ -964,8 +974,10 @@ def fl_set_browser_hscrollbar(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             browser flobject
         howscroll : int
-            if bar is turned on/off. Values (from xfdata.py) FL_AUTO (On when
-            needed, default), FL_ON (always on), FL_OFF (always off).
+            if bar is turned on/off. Values (from xfdata.py)
+            FL_AUTO (On when needed, default),
+            FL_ON (always on),
+            FL_OFF (always off).
 
     Examples
     --------
@@ -1705,7 +1717,7 @@ def fl_get_browser_scrollbar_repeat(ptr_flobject):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_browser_scrollbar_repeat = library.cfuncproto(
@@ -1742,7 +1754,7 @@ def fl_set_browser_scrollbar_repeat(ptr_flobject, tdelay):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_browser_scrollbar_repeat = library.cfuncproto(

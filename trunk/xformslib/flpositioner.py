@@ -54,12 +54,12 @@ def fl_add_positioner(posittype, xpos, ypos, width, height, label):
     ----------
         posittype : int
             type of positioner to be added. Values (from xfdata.py)
-            FL_NORMAL_POSITIONER (Cross-hair inside a box),
-            FL_OVERLAY_POSITIONER (Cross-hair inside a transparent box, i.e.
-            drawn in in XOR mode), FL_INVISIBLE_POSITIONER (Completely
-            invisible positioner to be used just for the side effect of
-            obtaining a position, typically a flobject is below it that
-            otherwise would receive user events)
+            - FL_NORMAL_POSITIONER (Cross-hair inside a box),
+            - FL_OVERLAY_POSITIONER (Cross-hair inside a transparent box, i.e.
+              drawn in in XOR mode),
+            - FL_INVISIBLE_POSITIONER (Completely invisible positioner to be
+              used just for the side effect of obtaining a position, typically
+              a flobject is below it that otherwise would receive user events)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -186,11 +186,9 @@ def fl_set_positioner_xbounds(ptr_flobject, minbound, maxbound):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             positioner flobject
         minbound : float
-            minimum value limit to be set. By default the minimum
-            value is 0.0.
+            minimum value limit to be set. By default the minimum value is 0.0
         maxbound : float
-            maximum value limit to be set. By default the maximum
-            value is 1.0.
+            maximum value limit to be set. By default the maximum value is 1.0
 
     Examples
     --------
@@ -341,11 +339,9 @@ def fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             positioner flobject
         minbound : float
-            minimum value limit to be set. By default the minimum
-            value is 0.0.
+            minimum value limit to be set. By default the minimum value is 0.0
         maxbound : float
-            maximum value limit to be set. By default the maximum
-            value is 1.0.
+            maximum value limit to be set. By default the maximum value is 1.0
 
     Examples
     --------
@@ -366,7 +362,7 @@ def fl_set_positioner_ybounds(ptr_flobject, minbound, maxbound):
     f_minbound = library.convert_to_doublec(minbound)
     f_maxbound = library.convert_to_doublec(maxbound)
     library.keep_elem_refs(ptr_flobject, minbound, maxbound, f_minbound,
-                        f_maxbound)
+            f_maxbound)
     _fl_set_positioner_ybounds(ptr_flobject, f_minbound, f_maxbound)
 
 
@@ -421,8 +417,8 @@ def fl_get_positioner_ybounds(ptr_flobject):
 def fl_set_positioner_xstep(ptr_flobject, step):
     """fl_set_positioner_xstep(ptr_flobject, step)
 
-    Handles positioner values in horizontal direction to be rounded to
-    some values (multiples of step), e.g. to integer values.
+    Handles positioner values in horizontal direction to be rounded to some
+    values (multiples of step), e.g. to integer values.
 
     Parameters
     ----------
@@ -454,8 +450,8 @@ def fl_set_positioner_xstep(ptr_flobject, step):
 def fl_set_positioner_ystep(ptr_flobject, step):
     """fl_set_positioner_ystep(ptr_flobject, step)
 
-    Handles positioner values in vertical direction to be rounded to
-    some values (multiples of step), e.g. to integer values.
+    Handles positioner values in vertical direction to be rounded to some
+    values (multiples of step), e.g. to integer values.
 
     Parameters
     ----------

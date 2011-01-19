@@ -462,18 +462,19 @@ def fl_set_pixmap_align(ptr_flobject, align, xmargin, ymargin):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             pixmap flobject
         align : int
-            alignment of pixmap. Values (from xfdata.py) FL_ALIGN_CENTER (In
-            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
-            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
-            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of pixmap. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
         xmargin : int
             extra margin to leave in addition to the flobject border
             width. By default it is 3.

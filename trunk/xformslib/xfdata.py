@@ -87,25 +87,6 @@ FL_COORD_POINT = 2      # point
 FL_COORD_centiMM = 3    # one hundredth of a mm
 FL_COORD_centiPOINT = 4    # one hundredth of a point
 
-class admitted_values_for_COORD_UNIT(object):
-    """Coordinates unit
-
-    Admitted values
-    ---------------
-        FL_COORD_PIXEL : pixel
-            Screen coordinate units in pixel (default)
-        FL_COORD_MM : millimeters
-            Screen coordinate units in millimeters
-        FL_COORD_POINT : point
-            Screen coordinate units in points (1/72 inch)
-        FL_COORD_centiMM : one hundredth of a mm
-            Screen coordinate units in centi-millimeters
-        FL_COORD_centiPOINT : one hundredth of a point
-            Screen coordinate units in centi-points, i.e.
-            1/100 of a point
-    """
-    pass
-
 # my add, list of possible values --LK
 COORDUNIT_list = [FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT,
                   FL_COORD_centiMM, FL_COORD_centiPOINT]
@@ -368,22 +349,6 @@ PLACE_list = [FL_PLACE_FREE, FL_PLACE_MOUSE, FL_PLACE_CENTER,
 FL_FULLBORDER = 1       # normal
 FL_TRANSIENT = 2        # set TRANSIENT_FOR property
 FL_NOBORDER = 3         # use override_redirect to suppress decoration.
-
-class admitted_values_for_BORDER(object):
-    """Window manager decoration request and forms attributes
-
-    Admitted values
-    ---------------
-        FL_FULLBORDER
-            Draw full border with title (normal)
-        FL_TRANSIENT
-            Draw borders with possibly less decoration (depends on the
-            window managers behaviour). You might not be able to iconify
-            a form under some WMs.
-        FL_NOBORDER
-            Draw no border at all. You cannot iconify a form with no borders
-    """
-    pass
 
 # my add, list of possible values --LK
 DECORATION_list = [FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER]
@@ -1406,7 +1371,7 @@ class FL_FORM_(cty.Structure):
         parent_obj : pointer to FL_OBJECT
             *todo*
         attached : int
-            not independent anymore
+            not independent flobject anymore
         pre_attach : function, no return
             function(ptr_flform) type
         attach_data : pointer to any type
@@ -1770,7 +1735,7 @@ class Visual(cty.Structure):
         visualid : long_pos
             visual id of this visual
         c_class : int
-            C++? class of screen (monochrome, etc.)
+            (C++ compatible name) class of screen (monochrome, etc.)
         red_mask : long_pos
             mask value for red
         green_mask : long_pos
@@ -2532,7 +2497,7 @@ class XVisualInfo(cty.Structure):
         depth : int
             depth of the visual
         c_class : int
-            C++? class of screen (monochrome, etc.)
+            (C++ compatible name) class of screen (monochrome, etc.)
         red_mask : long_pos
             mask value for red
         green_mask : long_pos
@@ -8338,7 +8303,7 @@ class XWindowAttributes(cty.Structure):
         root : long_pos
             root of screen containing window
         c_class : int
-            C++ InputOutput, InputOnly
+            (C++ compatible name) InputOutput, InputOnly
         bit_gravity : int
             one of bit gravity values
         win_gravity : int

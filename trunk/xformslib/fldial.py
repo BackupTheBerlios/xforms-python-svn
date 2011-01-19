@@ -52,10 +52,10 @@ def fl_add_dial(dialtype, xpos, ypos, width, height, label):
     Parameters
     ----------
         dialtype : int
-            type of dial to be added. Values (from xfdata.py) FL_NORMAL_DIAL
-            (A dial with a knob indicating the position), FL_LINE_DIAL (A dial
-            with a line indicating the position), FL_FILL_DIAL (The area
-            between initial and current is filled)
+            type of dial to be added. Values (from xfdata.py)
+            - FL_NORMAL_DIAL (A dial with a knob indicating the position),
+            - FL_LINE_DIAL (A dial with a line indicating the position),
+            - FL_FILL_DIAL (The area between initial and current is filled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -376,8 +376,9 @@ def fl_set_dial_direction(ptr_flobject, directn):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             dial flobject
         directn : int
-            direction of dial rotation. Values (from xfdata.py) FL_DIAL_CCW
-            (counter-clock-wise rotation) or FL_DIAL_CW (clock-wise rotation)
+            direction of dial rotation. Values (from xfdata.py)
+            - FL_DIAL_CCW (counter-clock-wise rotation)
+            - FL_DIAL_CW (clock-wise rotation)
 
     Examples
     --------

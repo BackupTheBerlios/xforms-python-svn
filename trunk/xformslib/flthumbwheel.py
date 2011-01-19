@@ -328,8 +328,8 @@ def fl_add_thumbwheel(wheeltype, xpos, ypos, width, height, label):
     ----------
         wheeltype : int
             type of thumbwheel to be added. Values (from xfdata.py)
-            FL_VERT_THUMBWHEEL (A vertical thumbwheel), FL_HOR_THUMBWHEEL (A
-            horizontal thumbwheel)
+            - FL_VERT_THUMBWHEEL (A vertical thumbwheel),
+            - FL_HOR_THUMBWHEEL (A horizontal thumbwheel)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

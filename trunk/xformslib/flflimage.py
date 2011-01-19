@@ -655,13 +655,16 @@ def flimage_type_name(imagetype):
     Parameters
     ----------
         imagetype : int
-            type of a supported image. Values (from xfdata.py) FL_IMAGE_MONO
-            (b&w. 1bit bitmaps. 0=white 1=black), FL_IMAGE_GRAY (gray-scale
-            image, 8 bit), FL_IMAGE_CI (generic colormmaped index image),
-            FL_IMAGE_RGB (24 bit RGB-A image, 8bit each), FL_IMAGE_PACKED (24
-            bit RGB-A packed into an int), FL_IMAGE_GRAY16 (gray-scale image,
-            9 to 16 bit), FL_IMAGE_RGB16 (36bits color image), FL_IMAGE_FLEX
-            (all formats). FL_IMAGE_NONE should not be used here.
+            type of a supported image. Values (from xfdata.py)
+            - FL_IMAGE_MONO (b&w. 1bit bitmaps. 0=white 1=black),
+            - FL_IMAGE_GRAY (gray-scale image, 8 bit),
+            - FL_IMAGE_CI (generic colormmaped index image),
+            - FL_IMAGE_RGB (24 bit RGB-A image, 8bit each),
+            - FL_IMAGE_PACKED (24 bit RGB-A packed into an int),
+            - FL_IMAGE_GRAY16 (gray-scale image, 9 to 16 bit),
+            - FL_IMAGE_RGB16 (36bits color image),
+            - FL_IMAGE_FLEX (all formats).
+            FL_IMAGE_NONE should not be used here.
 
     Returns
     -------
@@ -709,29 +712,36 @@ def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
         length : int
             length of text
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            label style. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             label size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtcolr : int_pos
             color to use for text
         bgcolr : int_pos
@@ -895,15 +905,17 @@ def flimage_add_marker(ptr_flimage, mkrname, xpos, ypos, width, height, \
             height of the bounding box of the marker in physical coordinates
         lnstyle : int
             style of the line to draw. Values (from xfdata.py)
-            FL_SOLID (Solid line. Default and most efficient), FL_USERDASH
-            (Dashed line, but the dash pattern is used-definable via
-            fl_dashedlinestyle(). Only the odd numbered segments are
-            drawn with the foreground color), FL_USERDOUBLEDASH (Similar to
-            FL_LINE_USERDASH but both even and odd numbered segments are
-            drawn, with the even numbered segments drawn in the background
-            color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
-            FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
-            [----]), FL_LONGDASH (Long dashed line [_ _ _]).
+            - FL_SOLID (Solid line. Default and most efficient),
+            - FL_USERDASH (Dashed line, but the dash pattern is used-definable
+              via flxbasic.fl_dashedlinestyle(). Only the odd numbered segments
+              are drawn with the foreground color),
+            - FL_USERDOUBLEDASH (Similar to FL_LINE_USERDASH but both even and
+              odd numbered segments are drawn, with the even numbered segments
+              drawn in the background color, as set by flbasic.fl_bk_color()),
+            - FL_DOT (Dotted line [....]),
+            - FL_DOTDASH (Dash-dot-dash line [-.-.]),
+            - FL_DASH (Dashed line [----]),
+            - FL_LONGDASH (Long dashed line [_ _ _]).
         fill : int
             flag if the marker should be filled or not. Values 1 (filled)
             or 0 (not filled)
@@ -2017,14 +2029,14 @@ def flimage_rotate(ptr_flimage, angle, subpixel):
             counter-clock rotation.
         subpixel : int
             if subpixel sampling should be enabled. Values (from xfdata.py)
-            FLIMAGE_NOSUBPIXEL (scale with no subpixel sampling) or
-            FLIMAGE_SUBPIXEL (scale with subpixel sampling). If enabled, the
-            resulting image pixels are interpolated from the original pixels;
-            this usually has an "anti-aliasing" effect that leads to less
-            severe jagged edges and similar artifacts commonly encountered in
-            rotations. However, it also means that a color indexed image gets
-            converted to a RGB image. If preserving the pixel value is
-            important, you should not turn subpixel sampling on.
+            - FLIMAGE_NOSUBPIXEL (scale with no subpixel sampling),
+            - FLIMAGE_SUBPIXEL (scale with subpixel sampling).
+            If enabled, the resulting image pixels are interpolated from the
+            original pixels; this usually has an "anti-aliasing" effect that
+            leads to less severe jagged edges and similar artifacts commonly
+            encountered in rotations. However, it also means that a color
+            indexed image gets converted to a RGB image. If preserving the
+            pixel value is important, you should not turn subpixel sampling on.
 
     Returns
     -------

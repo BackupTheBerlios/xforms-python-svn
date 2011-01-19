@@ -51,9 +51,9 @@ def fl_add_clock(clocktype, xpos, ypos, width, height, label):
     Parameters
     ----------
         clocktype : int
-            type of clock to be added. Values (from xfdata.py) FL_ANALOG_CLOCK
-            (An analog clock complete with the second hand), FL_DIGITAL_CLOCK
-            (A digital clock)
+            type of clock to be added. Values (from xfdata.py)
+            - FL_ANALOG_CLOCK (An analog clock complete with the second hand),
+            - FL_DIGITAL_CLOCK (A digital clock)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

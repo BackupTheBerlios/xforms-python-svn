@@ -55,10 +55,10 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
     ----------
         foldertype : int
             type of tabfolder to be added. Values (from xfdata.py)
-            FL_TOP_TABFOLDER or FL_NORMAL_TABFOLDER (tabfolder with tab on
-            top), FL_BOTTOM_TABFOLDER (tabfolder with tab on bottom),
-            FL_LEFT_TABFOLDER (tabfolder with tab on left), FL_RIGHT_TABFOLDER
-            (tabfolder with tab on right)
+            - FL_TOP_TABFOLDER or FL_NORMAL_TABFOLDER (it has tab on top),
+            - FL_BOTTOM_TABFOLDER (it has tab on bottom),
+            - FL_LEFT_TABFOLDER (it has tab on left),
+            - FL_RIGHT_TABFOLDER (it has tab on right)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -633,7 +633,7 @@ def fl_get_active_folder_number(ptr_flobject):
     -------
         seqnum : int
             sequence number of active folder. The first on the left is 1, the
-            second 2 etc..
+            second is 2 etc..
 
     Examples
     --------
@@ -711,9 +711,9 @@ def fl_get_folder_area(ptr_flobject):
             vertical position of folder, relative to the (top-level)
             form the tabbed folder belongs to
         width : int
-            width
+            width of folder
         height : int
-            height
+            height of folder
 
     Examples
     --------
@@ -800,9 +800,11 @@ def fl_set_tabfolder_autofit(ptr_flobject, howfit):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
         howfit : int
-            how do folders' sizes fit . Values (from xfdata.py) FL_NO (do not
-            scale the form), FL_FIT (Always scale the form), FL_ENLARGE_ONLY
-            (Scale the form only if it is smaller than folder area).
+            how do folders' sizes fit . Values (from xfdata.py)
+            - FL_NO (do not scale the form),
+            - FL_FIT (Always scale the form),
+            - FL_ENLARGE_ONLY (Scale the form only if it is smaller than
+              folder area).
 
     Returns
     -------

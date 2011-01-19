@@ -878,15 +878,17 @@ def fl_linestyle(lnstyle):
     ----------
         lnstyle : int
             style of the line to draw. Values (from xfdata.py)
-            FL_SOLID (Solid line. Default and most efficient), FL_USERDASH
-            (Dashed line, but the dash pattern is used-definable via
-            fl_dashedlinestyle(). Only the odd numbered segments are
-            drawn with the foreground color), FL_USERDOUBLEDASH (Similar to
-            FL_LINE_USERDASH but both even and odd numbered segments are
-            drawn, with the even numbered segments drawn in the background
-            color (as set by fl_bk_color()), FL_DOT (Dotted line [....]),
-            FL_DOTDASH (Dash-dot-dash line [-.-.]), FL_DASH (Dashed line
-            [----]), FL_LONGDASH (Long dashed line [--------]).
+            - FL_SOLID (Solid line. Default and most efficient),
+            - FL_USERDASH (Dashed line, but the dash pattern is definable by
+              user via fl_dashedlinestyle(). Only the odd numbered segments
+              are drawn with the foreground color),
+            - FL_USERDOUBLEDASH (Similar to FL_LINE_USERDASH but both even and
+              odd numbered segments are drawn, with the even numbered segments
+              drawn in the background color, as set by flbasic.fl_bk_color()),
+            - FL_DOT (Dotted line [....]),
+            - FL_DOTDASH (Dash-dot-dash line [-.-.]),
+            - FL_DASH (Dashed line [----]),
+            - FL_LONGDASH (Long dashed line [_ _ _]).
 
     Examples
     --------
@@ -921,12 +923,14 @@ def fl_drawmode(dmode):
     Parameters
     ----------
       dmode : int
-        requested mode setting. Values (from xfdata.py) FL_XOR (Bitwise XOR,
-        exclusive-or, of the pixel value to be drawn with the pixel value
-        already on the screen. Useful for rubber-banding), FL_COPY (Default
-        overwrite mode, final pixel value is the same as source), FL_AND
-        (Bitwise AND of the pixel value to be drawn with the pixel value
-        already on the screen).
+        requested mode setting. Values (from xfdata.py)
+        - FL_XOR (Bitwise XOR, exclusive-or, of the pixel value to be drawn
+          with the pixel value already on the screen. Useful for
+          rubber-banding),
+        - FL_COPY (Default overwrite mode, final pixel value is the same as
+          source),
+        - FL_AND (Bitwise AND of the pixel value to be drawn with the pixel
+          value already on the screen).
 
     Examples
     --------
@@ -1470,23 +1474,27 @@ def fl_drw_frame(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     Parameters
     ----------
         boxtype : int
-            type of frame box. Values (from xfdata.py) FL_NO_BOX (No box at
-            all, it is transparent, just a label), FL_UP_BOX (A box that comes
-            out of the screen), FL_DOWN_BOX (A box that goes down into the
-            screen), FL_BORDER_BOX (A flat box with a border), FL_SHADOW_BOX
-            (A flat box with a shadow), FL_FRAME_BOX (A flat box with an
-            engraved frame), FL_ROUNDED_BOX (A rounded box), FL_EMBOSSED_BOX
-            (A flat box with an embossed frame), FL_FLAT_BOX (A flat box
-            without a border, normally invisible unless given a different color
-            than the surroundings), FL_RFLAT_BOX (A rounded box without a
-            border, normally invisible unless given a different color than the
-            surroundings), FL_RSHADOW_BOX (A rounded box with a shadow),
-            FL_OVAL_BOX (A box shaped like an ellipse), FL_ROUNDED3D_UPBOX (A
-            rounded box coming out of the screen), FL_ROUNDED3D_DOWNBOX (A
-            rounded box going into the screen), FL_OVAL3D_UPBOX (An oval box
-            coming out of the screen), FL_OVAL3D_DOWNBOX (An oval box going
-            into the screen), FL_OVAL3D_FRAMEBOX (An oval box with an engraved
-            frame), FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            type of frame box. Values (from xfdata.py)
+            - FL_NO_BOX (No box at all, it is transparent, just a label),
+            - FL_UP_BOX (A box that comes out of the screen),
+            - FL_DOWN_BOX (A box that goes down into the screen),
+            - FL_BORDER_BOX (A flat box with a border),
+            - FL_SHADOW_BOX (A flat box with a shadow),
+            - FL_FRAME_BOX (A flat box with an engraved frame),
+            - FL_ROUNDED_BOX (A rounded box),
+            - FL_EMBOSSED_BOX (A flat box with an embossed frame),
+            - FL_FLAT_BOX (A flat box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RFLAT_BOX (A rounded box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RSHADOW_BOX (A rounded box with a shadow),
+            - FL_OVAL_BOX (A box shaped like an ellipse),
+            - FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            - FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            - FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            - FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            - FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            - FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1541,24 +1549,27 @@ def fl_drw_checkbox(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     Parameters
     ----------
         boxtype : int
-            type of checkbox to draw. Values (from xfdata.py) FL_NO_BOX (No box
-            at all, it is transparent, just a label), FL_UP_BOX (A box that
-            comes out of the screen), FL_DOWN_BOX (A box that goes down into
-            the screen), FL_BORDER_BOX (A flat box with a border),
-            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat box
-            with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
-            (A flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded box
-            without a border, normally invisible unless given a different color
-            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow), FL_OVAL_BOX (A box shaped like an ellipse),
-            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
-            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
-            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
-            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
-            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
-            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            type of checkbox to draw. Values (from xfdata.py)
+            - FL_NO_BOX (No box at all, it is transparent, just a label),
+            - FL_UP_BOX (A box that comes out of the screen),
+            - FL_DOWN_BOX (A box that goes down into the screen),
+            - FL_BORDER_BOX (A flat box with a border),
+            - FL_SHADOW_BOX (A flat box with a shadow),
+            - FL_FRAME_BOX (A flat box with an engraved frame),
+            - FL_ROUNDED_BOX (A rounded box),
+            - FL_EMBOSSED_BOX (A flat box with an embossed frame),
+            - FL_FLAT_BOX (A flat box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RFLAT_BOX (A rounded box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RSHADOW_BOX (A rounded box with a shadow),
+            - FL_OVAL_BOX (A box shaped like an ellipse),
+            - FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            - FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            - FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            - FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            - FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            - FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1616,29 +1627,36 @@ def fl_get_fontstruct(style, size):
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            font style for text. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            font size for text. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Returns
     -------
@@ -3030,9 +3048,9 @@ def fl_initial_winstate(state):
     Parameters
     ----------
         state : int
-            window state to be set. Values (from xfdata.py) NormalState (most
-            applications want to start this way), IconicState (application
-            wants to start as an icon).
+            window state to be set. Values (from xfdata.py)
+            - NormalState (most applications want to start this way),
+            - IconicState (application wants to start as an icon).
 
     Examples
     --------
@@ -3065,9 +3083,8 @@ def fl_create_colormap(ptr_xvisualinfo, numfilledcolrs):
         ptr_xvisualinfo : pointer to xfdata.XVisualInfo
             XVisualInfo class instance
         numfilledcolrs : int
-            how many colors in the newly created colormap should be
-            filled with XForms' default colors (to avoid flashing
-            effects)
+            how many colors in the newly created colormap should be filled
+            with XForms' default colors (to avoid flashing effects)
 
     Returns
     -------
@@ -3436,7 +3453,7 @@ def FL_ObjWin(ptr_flobject):
     if FL_IS_CANVAS(ptr_flobject):
         return flcanvas.fl_get_canvas_id(ptr_flobject)
     else:
-        return ptr_flobject.contents.form.contents.window.value
+        return ptr_flobject.contents.form.contents.window       #.value
 
 
 def fl_get_real_object_window(ptr_flobject):
@@ -4256,11 +4273,13 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
             resource name
         dtype : int
             type of resource. Values (from xfdata.py)
-            FL_NONE (type for variables not to be used, or not available),
-            FL_SHORT (type for short variable), FL_BOOL (type for boolean
-            variable, int), FL_INT (type for int variable), FL_LONG (type for
-            long variable), FL_FLOAT (type for float variable), FL_STRING (type
-            for c_char_p/string variable)
+            - FL_NONE (type for variables not to be used, or not available),
+            - FL_SHORT (type for short variable),
+            - FL_BOOL (type for boolean variable, int),
+            - FL_INT (type for int variable),
+            - FL_LONG (type for long variable),
+            - FL_FLOAT (type for float variable),
+            - FL_STRING (type for c_char_p/string variable)
         defval : str
             default value for resource data
         size : int
@@ -4517,35 +4536,47 @@ def fl_set_defaults(pdmask, ptr_fliopt):
     Parameters
     ----------
         pdmask : long_pos
-            Mask of program defaults. Values (from xfdata.py) FL_PDDepth
-            (Preferred visual depth, "depth"), FL_PDClass (*todo*), FL_PDDouble
-            (Simulates double buffering, "doubleBuffer"), FL_PDSync (*todo*),
-            FL_PDPrivateMap (Selects private colormap if appropriate,
-            "privateColormap"), FL_PDScrollbarType (Scrollbar type to use for
-            browser and input, "scrollbarType"), FL_PDPupFontSize (Font size
-            for pop-ups, "PupFontSize"), FL_PDButtonFontSize (Default button
-            label font size, "buttonFontSize"), FL_PDInputFontSize (Input
-            label and text font size, "menuFontSize"), FL_PDSliderFontSize
-            (Slider label and text font size), FL_PDVisual (Preferred visual,
-            e.g. TrueColor .., "vclass"), FL_PDULThickness (Underline thickness
-            "ulThickness"), FL_PDULPropWidth (Underline width, 0 for constant
-            width fonts, "ulPropWidth"), FL_PDBS (Turn BackingStore on or off,
-            "backingStore"), FL_PDCoordUnit (Unit of measure for screen
-            coordinates, e.g. pixel, mm, point, etc.., "coordUnit"), FL_PDDebug
-            (Debug level, 0-5, "debug"), FL_PDSharedMap (Forces use of shared
-            colormap, "sharedColormap"), FL_PDStandardMap (Forces use of
-            standard colormap, "standardColormap"), FL_PDBorderWidth (Default
-            border width, "borderWidth"), FL_PDSafe (*todo*), FL_PDMenuFontSize
-            (Menu label font size, "menuFontSize"), FL_PDBrowserFontSize
-            (Browser label and text font size, "browserFontSize"),
-            FL_PDChoiceFontSize (Choice label and choice text font size,
-            "choiceFontSize"), FL_PDLabelFontSize (Label font size for all
-            other flobjects, e.g. box, pixmap etc.., "labelFontSize"),
-            FL_PDButtonLabelSize or FL_PDButtonLabel or FL_PDButtonFontSize
-            (Default button label font size, "buttonFontSize"),
-            FL_PDSliderLabelSize or FL_PDSliderFontSize (Default slider label
-            font size), FL_PDInputLabelSize or FL_PDInputFontSize (Input label
-            and text font size, "menuFontSize").
+            Mask of program defaults. Values (from xfdata.py)
+            - FL_PDDepth (Preferred visual depth, "depth"),
+            - FL_PDClass (class of flobject? *todo*),
+            - FL_PDDouble (Simulates double buffering, "doubleBuffer"),
+            - FL_PDSync (*todo*),
+            - FL_PDPrivateMap (Selects private colormap if appropriate,
+              "privateColormap"),
+            - FL_PDScrollbarType (Scrollbar type to use for browser and input,
+              "scrollbarType"),
+            - FL_PDPupFontSize (Font size for pop-ups, "PupFontSize"),
+            - FL_PDButtonFontSize (Default button label font size,
+              "buttonFontSize"),
+            - FL_PDInputFontSize (Input label and text font size,
+              "menuFontSize"),
+            - FL_PDSliderFontSize (Slider label and text font size),
+            - FL_PDVisual (Preferred visual mode, e.g. TrueColor .., "vclass"),
+            - FL_PDULThickness (Underline thickness, "ulThickness"),
+            - FL_PDULPropWidth (Underline width, 0 for constant width fonts,
+              "ulPropWidth"),
+            - FL_PDBS (Turn BackingStore on or off, "backingStore"),
+            - FL_PDCoordUnit (Unit of measure for screen coordinates, e.g.
+              pixel, mm, point, etc.., "coordUnit"),
+            - FL_PDDebug (Debug level, 0-5, "debug"),
+            - FL_PDSharedMap (Forces use of shared colormap, "sharedColormap"),
+            - FL_PDStandardMap (Forces use of standard colormap,
+              "standardColormap"),
+            - FL_PDBorderWidth (Default border width, "borderWidth"),
+            - FL_PDSafe (*todo*),
+            - FL_PDMenuFontSize (Menu label font size, "menuFontSize"),
+            - FL_PDBrowserFontSize (Browser label and text font size,
+              "browserFontSize"),
+            - FL_PDChoiceFontSize (Choice label and choice text font size,
+              "choiceFontSize"),
+            - FL_PDLabelFontSize (Label font size for all other flobjects,
+              e.g. box, pixmap etc.., "labelFontSize"),
+            - FL_PDButtonLabelSize or FL_PDButtonLabel or FL_PDButtonFontSize
+              (Default button label font size, "buttonFontSize"),
+            - FL_PDSliderLabelSize or FL_PDSliderFontSize (Default slider
+              label font size),
+            - FL_PDInputLabelSize or FL_PDInputFontSize (Input label and text
+              font size, "menuFontSize").
         ptr_fliopt : pointer to xfdata.FL_IOPT array
             program defaults class instance. You can use pass a dict or a list
             of dicts (whose keys correspond to xfdata.FL_IOPT's attributes) to
@@ -4678,7 +4709,9 @@ def fl_vclass_name(vmode):
     Parameters
     ----------
         vmode : int
-            visual mode
+            visual mode. Values (from xfdata.py) StaticGray or StaticGrey,
+            GrayScale or GreyScale, StaticColor, PseudoColor, TrueColor,
+            DirectColor, DefaultVisual
 
     Returns
     -------
@@ -4713,12 +4746,15 @@ def fl_vclass_val(vname):
     Parameters
     ----------
         vname : str
-            name of visual mode
+            textual name of visual mode. Values "StaticGray",
+            "GrayScale", "StaticColor", "PseudoColor", "TrueColor",
+            "DirectColor", or "DefaultVisual"
 
     Returns
     -------
         vmode : int
-            visual mode corresponding to name
+            visual mode corresponding to name (e.g. xfdata.TrueColor,
+            xfdata.DirectColor, etc..)
 
     Examples
     --------

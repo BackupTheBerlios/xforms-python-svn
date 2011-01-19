@@ -94,9 +94,10 @@ def fl_add_io_callback(fd, fmask, pyfn_IoCallback, userdata):
             a valid file descriptor in a unix system from an opened file
         fmask : int
             under what circumstance the input callback should be invoked.
-            Values (from xfdata.py) are FL_READ (file descriptor has data
-            available), FL_WRITE (file descriptor is available for writing),
-            FL_EXCEPT (an I/O error has occurred)
+            Values (from xfdata.py) are:
+            - FL_READ (file descriptor has data available),
+            - FL_WRITE (file descriptor is available for writing),
+            - FL_EXCEPT (an I/O error has occurred)
         pyfn_IoCallback : python function, no return
             name referring to function([int]num, [pointer to void]vdata)
             function to be invoked on said circumstances
@@ -146,9 +147,10 @@ def fl_remove_io_callback(fd, fmask, pyfn_IoCallback):
             a valid file descriptor in a unix system
         fmask : int
             under what circumstance the input callback should be removed.
-            Values (from xfdata.py) are FL_READ (file descriptor has data
-            available), FL_WRITE (file descriptor is available for writing),
-            FL_EXCEPT (an I/O error has occurred)
+            Values (from xfdata.py) are:
+            - FL_READ (file descriptor has data available),
+            - FL_WRITE (file descriptor is available for writing),
+            - FL_EXCEPT (an I/O error has occurred)
         pyfn_IoCallback : python function, no return
             name referring to function([int]num, [pointer to void]pvdata)
             function to be removed on said circumstances
@@ -332,26 +334,24 @@ def fl_input_end_return_handling(endtype):
     Parameters
     ----------
         endtype : int
-            how end return event for input is handled. Values (from xfdata.py)
-            FL_INPUT_END_EVENT_CLASSIC (old behavior)
-                Uses old behavior in handling return of end event for input.
-                An "end of edit" event was not reported back to the program
-                when the user clicked on a non-input flobject, i.e. changed
-                to a different input flobject. This let to some problems
-                when the interaction with the clicked-on non-input flobject
-                depended on the new content of the input flobject, just having
-                been edited, but which had not been been reported back to the
-                caller.
-            FL_INPUT_END_EVENT_ALWAYS (default)
-                Uses new (default) behavior in handling return of end event
-                for input. It means that the user either hits the <Tab> or the
-                <Return> key (except for multi-line inputs) or that he/she
-                clicks onto some other flobject that in principle allows user
-                interaction. These events are interpreted as an indication the
-                user is done editing the input field and thus are reported
-                back to the program, either by returning the input flobject or
-                invoking its callback. But unless the user goes to a different
-                input flobject the input field edited retains the focus.
+            how end return event for input is handled. Values (from xfdata.py):
+            - FL_INPUT_END_EVENT_CLASSIC (old behavior) Uses old behavior in
+              handling return of end event for input. An "end of edit" event
+              was not reported back to the program when the user clicked
+              on a non-input flobject, i.e. changed to a different input
+              flobject. This let to some problems when the interaction with
+              the clicked-on non-input flobject depended on the new content
+              of the input flobject, just having been edited, but which had
+              not been been reported back to the caller.
+            - FL_INPUT_END_EVENT_ALWAYS (default) Uses new behavior in handling
+              return of end event for input. It means that the user either hits
+              the <Tab> or the <Return> key (except for multi-line inputs) or
+              that he/she clicks onto some other flobject that in principle
+              allows user interaction. These events are interpreted as an
+              indication the user is done editing the input field and thus are
+              reported back to the program, either by returning the input
+              flobject or invoking its callback. But unless the user goes to a
+              different input flobject, the input field edited retains focus.
 
     Returns
     -------
@@ -567,23 +567,26 @@ def fl_bgn_form(boxtype, width, height):
     ----------
         boxtype : int
             type of box used as a background. Values (from xfdata.py)
-            FL_NO_BOX (No box at all, it is transparent, just a label),
-            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
-            that goes down into the screen), FL_BORDER_BOX (A flat box with a
-            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
-            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
-            flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded box
-            without a border, normally invisible unless given a different color
-            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
-            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
-            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
-            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
-            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
-            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
-            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            - FL_NO_BOX (No box at all, it is transparent, just a label),
+            - FL_UP_BOX (A box that comes out of the screen),
+            - FL_DOWN_BOX (A box that goes down into the screen),
+            - FL_BORDER_BOX (A flat box with a border),
+            - FL_SHADOW_BOX (A flat box with a shadow),
+            - FL_FRAME_BOX (A flat box with an engraved frame),
+            - FL_ROUNDED_BOX (A rounded box),
+            - FL_EMBOSSED_BOX (A flat box with an embossed frame),
+            - FL_FLAT_BOX (A flat box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RFLAT_BOX (A rounded box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RSHADOW_BOX (A rounded box with a shadow),
+            - FL_OVAL_BOX (A box shaped like an ellipse),
+            - FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            - FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            - FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            - FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            - FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            - FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         width : int
             width of the new form in coord units
         height : int
@@ -1109,8 +1112,8 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, userdata):
 def fl_unfreeze_form(ptr_flform):
     """fl_unfreeze_form(ptr_flform)
 
-    Reverts previous freeze, set with fl_freeze_form(); all
-    changes made in the meantime in a form are drawn at once.
+    Reverts previous freeze, set with fl_freeze_form(); all changes made in
+    the meantime in a form are drawn at once.
 
     Parameters
     ----------
@@ -1868,7 +1871,12 @@ def fl_show_form(ptr_flform, place, border, title):
             FL_PLACE_FULLSCREEN|FL_FREE_SIZE, FL_PLACE_HOTSPOT|FL_FREE_SIZE
         border : int
             window manager decoration. Values (from xfdata.py)
-            FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+            - FL_FULLBORDER (normal, draw full border with title),
+            - FL_TRANSIENT (draws borders with possibly less decoration,
+              depends on the window managers behaviour. You might not be able
+              to iconify a form under some WMs),
+            - FL_NOBORDER (Draw no border at all. You cannot iconify a form
+              with no borders)
         title : str
             title of form
 
@@ -2055,7 +2063,12 @@ def fl_prepare_form_window(ptr_flform, place, border, title):
             FL_PLACE_HOTSPOT|FL_FREE_SIZE
         border : int
             window manager decoration. Values (from xfdata.py)
-            FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+            - FL_FULLBORDER (normal, draw full border with title),
+            - FL_TRANSIENT (draws borders with possibly less decoration,
+              depends on the window managers behaviour. You might not be able
+              to iconify a form under some WMs),
+            - FL_NOBORDER (Draw no border at all. You cannot iconify a form
+              with no borders)
         title : str
             text title of form
 
@@ -2478,23 +2491,26 @@ def fl_set_object_boxtype(ptr_flobject, boxtype):
             flobject whose boxtype has to be set
         boxtype : int
             type of the box to be set. Values (from xfdata.py)
-            FL_NO_BOX (No box at all, it is transparent, just a label),
-            FL_UP_BOX (A box that comes out of the screen), FL_DOWN_BOX (A box
-            that goes down into the screen), FL_BORDER_BOX (A flat box with a
-            border), FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A
-            flat box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX (A
-            flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded box
-            without a border, normally invisible unless given a different color
-            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow)), FL_OVAL_BOX (A box shaped like an ellipse),
-            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
-            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
-            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
-            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
-            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
-            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            - FL_NO_BOX (No box at all, it is transparent, just a label),
+            - FL_UP_BOX (A box that comes out of the screen),
+            - FL_DOWN_BOX (A box that goes down into the screen),
+            - FL_BORDER_BOX (A flat box with a border),
+            - FL_SHADOW_BOX (A flat box with a shadow),
+            - FL_FRAME_BOX (A flat box with an engraved frame),
+            - FL_ROUNDED_BOX (A rounded box),
+            - FL_EMBOSSED_BOX (A flat box with an embossed frame),
+            - FL_FLAT_BOX (A flat box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RFLAT_BOX (A rounded box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RSHADOW_BOX (A rounded box with a shadow),
+            - FL_OVAL_BOX (A box shaped like an ellipse),
+            - FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            - FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            - FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            - FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            - FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            - FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
 
     Examples
     --------
@@ -2520,8 +2536,8 @@ def fl_set_object_boxtype(ptr_flobject, boxtype):
 def fl_get_object_boxtype(ptr_flobject):
     """fl_get_object_boxtype(ptr_flobject) -> typeid
 
-    Finds out the current boxtype of a flobject (e.g. no box, up box,
-    shadow box, etc..).
+    Finds out the current boxtype of a flobject.
+
 
     Parameters
     ----------
@@ -2639,10 +2655,11 @@ def fl_set_object_resize(ptr_flobject, whatresz):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to set
         whatresz : int_pos
-            resize property. Values (from xfdata.py) FL_RESIZE_NONE
-            (Cannot be rescaled/resized), FL_RESIZE_X (Can be rescaled
-            on horizontal axis), FL_RESIZE_Y (Can be rescaled on vertical
-            axis), FL_RESIZE_ALL (Can be rescaled on both axis)
+            resize property. Values (from xfdata.py)
+            - FL_RESIZE_NONE (Cannot be rescaled/resized),
+            - FL_RESIZE_X (Can be rescaled on horizontal axis),
+            - FL_RESIZE_Y (Can be rescaled on vertical axis),
+            - FL_RESIZE_ALL (Can be rescaled on both axis)
 
     Examples
     --------
@@ -2812,11 +2829,14 @@ def fl_set_object_lsize(ptr_flobject, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points
-            font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font,
-            default), FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14
-            points font), FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE
-            (24 points font), or other numeric odd or even value.
+            label size. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value.
 
     Examples
     --------
@@ -2889,22 +2909,27 @@ def fl_set_object_lstyle(ptr_flobject, style):
             flobject to be set
         style : int
             label style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic
-            text), FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text
-            casting a shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved
-            into the form, modifier mask), FL_EMBOSSED_STYLE (Text standing
-            out, modifier mask). Bitwise OR with any of modifiers is allowed.
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed
+              text),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+              text), FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -3068,25 +3093,29 @@ def fl_set_object_return(ptr_flobject, whenretn):
             flobject
         whenretn : int_pos
             return type (when it returns). Values (from xfdata.py)
-            FL_RETURN_NONE (Never notify the application about interactions
-            with this flobject, i.e. never return it nor invoke its callback.
-            Note, this is not meant for deactivation of a flobject, it will
-            still seem to work as normal, it just does not get returned
-            to the application nor does its callback get invoked),
-            FL_RETURN_CHANGED (Return or invoke callback whenever an item is
-            selected, default), FL_RETURN_END (Return or invoke callback on
-            end of an interaction), FL_RETURN_END_CHANGED (Return or invoke
-            callback if end of interaction and selection of an item coincide),
-            FL_RETURN_SELECTION (Return or invoke callback on selection of a
-            line. Please note that for FL_MULTI_BROWSER the browser may be
-            returned just once for a number of lines having been selected),
-            FL_RETURN_DESELECTION (Return or invoke callback on deselection
-            of a line. This only works for FL_MULTI_BROWSER browsers and the
-            browser may be returned just once for a number of lines having
-            been deselected), FL_RETURN_TRIGGERED (*todo*), FL_RETURN_ALWAYS
-            (Return or invoke callback whenever the interaction ends and/or
-            an item is selected. It includes all conditions except
-            FL_RETURN_END_CHANGED). Bitwise OR is allowed.
+            - FL_RETURN_NONE (Never notify the application about interactions
+              with this flobject, i.e. never return it nor invoke its callback.
+              Note, this is not meant for deactivation of a flobject, it will
+              still seem to work as normal, it just does not get returned
+              to the application nor does its callback get invoked),
+            - FL_RETURN_CHANGED (Return or invoke callback whenever an item is
+              selected, default),
+            - FL_RETURN_END (Return or invoke callback on end of an
+              interaction),
+            - FL_RETURN_END_CHANGED (Return or invoke callback if end of
+              interaction and selection of an item coincide),
+            - FL_RETURN_SELECTION (Return or invoke callback on selection of a
+              line. Note that for FL_MULTI_BROWSER the browser may be returned
+              just once for a number of lines having been selected),
+            - FL_RETURN_DESELECTION (Return or invoke callback on deselection
+              of a line. This only works for FL_MULTI_BROWSER browsers and the
+              browser may be returned just once for a number of lines having
+              been deselected),
+            - FL_RETURN_TRIGGERED (*todo*),
+            - FL_RETURN_ALWAYS (Return or invoke callback whenever the
+              interaction ends and/or an item is selected. It includes all
+              conditions except FL_RETURN_END_CHANGED).
+            Bitwise OR is allowed.
 
     Returns
     -------
@@ -3159,18 +3188,20 @@ def fl_set_object_lalign(ptr_flobject, align):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             flobject to be set
         align : int
-            alignment of label. Values (from xfdata.py) FL_ALIGN_CENTER (In
-            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
-            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
-            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside
-            it), FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
-            outside it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of
-            the box, outside it), FL_ALIGN_INSIDE (places the text inside the
-            box), FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of label. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+              outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+              outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -4686,8 +4717,7 @@ def fl_get_object_return_state(ptr_flobject):
     """fl_get_object_return_state(ptr_flobject) -> retnstate
 
     Tells the reason a flobject was returned (or its callback
-    invoked). The returned value is a logical 'OR' of the
-    conditions that led to the flobject getting returned.
+    invoked).
 
     Parameters
     ----------
@@ -4697,7 +4727,8 @@ def fl_get_object_return_state(ptr_flobject):
     Returns
     -------
         retnstate : int
-            current return state
+            current return state as a logical 'OR' of the conditions
+            that led to the flobject getting returned.
 
     Examples
     --------
@@ -4968,10 +4999,13 @@ def fl_set_font(fontnum, size):
             font number
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Examples
     --------
@@ -5005,28 +5039,37 @@ def fl_get_char_height(style, size):
     ----------
         style : int
             font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed
+              text),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            text),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value.
 
     Returns
     -------
@@ -5080,28 +5123,37 @@ def fl_get_char_width(style, size):
     ----------
         style : int
             font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed
+              text),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+              text),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Returns
     -------
@@ -5141,29 +5193,36 @@ def fl_get_string_height(style, size, txtstr, strlng):
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            font style for text. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text to evaluate
         strlng : int
@@ -5223,29 +5282,36 @@ def fl_get_string_width(style, size, txtstr, strlng):
     Parameters
     ----------
         style : int
-            font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            font style for text. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text
         strlng : int
@@ -5293,28 +5359,35 @@ def fl_get_string_widthTAB(style, size, txtstr, strlng):
     ----------
         style : int
             font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text
         strlng : int
@@ -5364,28 +5437,35 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
     ----------
         style : int
             font style. Values (from xfdata.py)
-            FL_NORMAL_STYLE (Helvetica normal text), FL_BOLD_STYLE (Helvetica
-            boldface text), FL_ITALIC_STYLE (Helvetica italic text),
-            FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
-            FL_FIXED_STYLE (Courier fixed width, good for tables),
-            FL_FIXEDBOLD_STYLE (Courier bold fixed text), FL_FIXEDITALIC_STYLE
-            (Courier italic fixed text), FL_FIXEDBOLDITALIC_STYLE (Courier
-            boldface and italic fixed text), FL_TIMES_STYLE (Times-Roman like
-            normal font), FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic text),
-            FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text casting a
-            shadow, modifier mask), FL_ENGRAVED_STYLE (Text engraved into the
-            form, modifier mask), FL_EMBOSSED_STYLE (Text standing out,
-            modifier mask). Bitwise OR with any of modifiers is allowed.
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text
         strlng : int
@@ -5449,18 +5529,19 @@ def fl_get_align_xy(align, xpos, ypos, width, height, xsize, ysize, \
     Parameters
     ----------
         align : int
-            alignment. Values (from xfdata.py) FL_ALIGN_CENTER (In the middle
-            of the box, inside it), FL_ALIGN_TOP (To the top of the box,
-            outside it), FL_ALIGN_BOTTOM (To the bottom of the box, outside
-            it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position of bounding box (upper-left corner)
         ypos : int
@@ -5542,18 +5623,19 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     Parameters
     ----------
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In
-            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
-            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
-            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5565,30 +5647,36 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
         colr : long_pos
             XForms colormap index as color
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed
-            text), FL_TIMES_STYLE (Times-Roman like normal font),
-            FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
-            FL_TIMESITALIC_STYLE (Times-Roman like italic text),
-            FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
-            text), FL_MISC_STYLE (Charter normal text), FL_MISCBOLD_STYLE
-            (Charter boldface text), FL_MISCITALIC_STYLE (Charter italic
-            text), FL_SYMBOL_STYLE (Symbol text), FL_SHADOW_STYLE (Text
-            casting a shadow, modifier mask), FL_ENGRAVED_STYLE (Text
-            engraved into the form, modifier mask), FL_EMBOSSED_STYLE (Text
-            standing out, modifier mask). Bitwise OR with any of modifiers is
-            allowed.
+            font style for text. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            font size. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text to draw
 
@@ -5640,18 +5728,19 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
     Parameters
     ----------
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In
-            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
-            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
-            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5663,29 +5752,36 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
         colr : long_pos
             XForms colormap index as color
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE
-            (Times-Roman like italic text), FL_TIMESBOLDITALIC_STYLE
-            (Times-Roman like boldface and italic text), FL_MISC_STYLE
-            (Charter normal text), FL_MISCBOLD_STYLE (Charter boldface text),
-            FL_MISCITALIC_STYLE (Charter italic text), FL_SYMBOL_STYLE (Symbol
-            text), FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            font style. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
             font size. Values (from xfdata.py)
-            FL_TINY_SIZE (8 points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10
-            points font, default), FL_NORMAL_SIZE (12 points font),
-            FL_MEDIUM_SIZE (14 points font), FL_LARGE_SIZE (18 points font),
-            FL_HUGE_SIZE (24 points font), or other numeric odd or even value
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text to draw
 
@@ -5739,18 +5835,19 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
     Parameters
     ----------
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In
-            the middle of the box, inside it), FL_ALIGN_TOP (To the top of
-            the box, outside it), FL_ALIGN_BOTTOM (To the bottom of the box,
-            outside it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with
-            FL_ALIGN_INSIDE is allowed.
+            alignment of text. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -5762,29 +5859,36 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
         colr : long_pos
             XForms colormap index as color
         style : int
-            font style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE
-            (Times-Roman like italic text), FL_TIMESBOLDITALIC_STYLE
-            (Times-Roman like boldface and italic text), FL_MISC_STYLE
-            (Charter normal text), FL_MISCBOLD_STYLE (Charter boldface text),
-            FL_MISCITALIC_STYLE (Charter italic text), FL_SYMBOL_STYLE (Symbol
-            text), FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            font style for text. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
-            font size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            font size. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
         txtstr : str
             text to draw
         curscolr : int
@@ -5845,24 +5949,27 @@ def fl_drw_box(boxtype, xpos, ypos, width, height, colr, bndrwidth):
     Parameters
     ----------
         boxtype : int
-            type of box to draw. Values (from xfdata.py) FL_NO_BOX (No box
-            at all, it is transparent, just a label), FL_UP_BOX (A box that
-            comes out of the screen), FL_DOWN_BOX (A box that goes down into
-            the screen), FL_BORDER_BOX (A flat box with a border),
-            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat
-            box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
-            (A flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded
-            box without a border, normally invisible unless given a different
-            color than the surroundings), FL_RSHADOW_BOX (A rounded box with
-            a shadow), FL_OVAL_BOX (A box shaped like an ellipse),
-            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
-            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
-            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
-            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
-            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
-            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            type of box to draw. Values (from xfdata.py)
+            - FL_NO_BOX (No box at all, it is transparent, just a label),
+            - FL_UP_BOX (A box that comes out of the screen),
+            - FL_DOWN_BOX (A box that goes down into the screen),
+            - FL_BORDER_BOX (A flat box with a border),
+            - FL_SHADOW_BOX (A flat box with a shadow),
+            - FL_FRAME_BOX (A flat box with an engraved frame),
+            - FL_ROUNDED_BOX (A rounded box),
+            - FL_EMBOSSED_BOX (A flat box with an embossed frame),
+            - FL_FLAT_BOX (A flat box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RFLAT_BOX (A rounded box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RSHADOW_BOX (A rounded box with a shadow),
+            - FL_OVAL_BOX (A box shaped like an ellipse),
+            - FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            - FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            - FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            - FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            - FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            - FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -6392,8 +6499,8 @@ def fl_set_icm_color(colr, red, green, blue):
 def fl_color(colr):
     """fl_color(colr)
 
-    Defines the foreground color in the XForms library's default
-    Graphics Context (gc[0]).
+    Defines the foreground color in the XForms' default Graphics Context
+    (gc[0]).
 
     Parameters
     ----------
@@ -6423,8 +6530,8 @@ def fl_color(colr):
 def fl_bk_color(colr):
     """fl_bk_color(colr)
 
-    Defines the background color in the XForms library's default
-    Graphics Context (gc[0]).
+    Defines the background color in the XForms' default Graphics Context
+    (gc[0]).
 
     Parameters
     ----------
@@ -6454,8 +6561,8 @@ def fl_bk_color(colr):
 def fl_textcolor(colr):
     """fl_textcolor(colr)
 
-    Defines the foreground color for text in the XForms library's default
-    Graphics Context (gc[0]).
+    Defines the foreground color for text in the XForms' default Graphics
+    Context (gc[0]).
 
     Parameters
     ----------
@@ -6485,8 +6592,8 @@ def fl_textcolor(colr):
 def fl_bk_textcolor(colr):
     """fl_bk_textcolor(colr)
 
-    Defines the background color for text in the XForms library's default
-    Graphics Context (gc[0]).
+    Defines the background color for text in the XForms' default Graphics
+    Context (gc[0]).
 
     Parameters
     ----------
@@ -6516,8 +6623,8 @@ def fl_bk_textcolor(colr):
 def fl_set_gamma(red, green, blue):
     """fl_set_gamma(red, green, blue)
 
-    Adjusts the brightness of the builtin colors. Larger the value,
-    brighter the colors.
+    Adjusts the brightness of the builtin colors. Larger the value, brighter
+    the colors.
 
     Parameters
     ----------
@@ -6549,7 +6656,7 @@ def fl_set_gamma(red, green, blue):
     _fl_set_gamma(f_red, f_green, f_blue)
 
 
-# fl_show_errors(y) function placeholder (backwards)
+# fl_show_errors() function placeholder (backwards)
 
 
 # TODO: verify if they are necessary in python
@@ -6688,7 +6795,7 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
         flobjclass : int
             class type of flobject to be made
         otype : int
-            type of the flobject to be made
+            type of the flobject to be made *todo*
         xpos : int
             horizontal position of flobject (upper-left corner)
         ypos : int
@@ -6789,15 +6896,20 @@ def fl_add_child(ptr_flobject1, ptr_flobject2):
 def fl_set_coordunit(unit):
     """fl_set_coordunit(unit)
 
-    Defines the unit to be used for screen coordinates, instead
-    of default ones (pixels).
+    Defines the unit to be used for screen coordinates, instead of default
+    ones (pixels).
 
     Parameters
     ----------
         unit : int
             coord unit type to set. Values (from xfdata.py)
-            FL_COORD_PIXEL, FL_COORD_MM, FL_COORD_POINT,
-            FL_COORD_centiMM, FL_COORD_centiPOINT
+            - FL_COORD_PIXEL (default, screen coordinate units in pixel),
+            - FL_COORD_MM (Screen coordinate units in millimeters),
+            - FL_COORD_POINT (Screen coordinate units in points, 1/72 inch),
+            - FL_COORD_centiMM (Screen coordinate units in centi-millimeters
+              1/100 of millimeters),
+            - FL_COORD_centiPOINT (Screen coordinate units in centi-points,
+              1/100 of a point)
 
     Examples
     --------
@@ -6828,8 +6940,8 @@ def fl_set_border_width(borderwidth):
     Parameters
     ----------
         borderwidth : int
-            value of border width. If it is a negative number, all
-            flobjects appear to have a softer appearance.
+            value of border width. If it is a negative number, all flobjects
+            appear to have a softer appearance.
 
     Examples
     --------
@@ -6942,7 +7054,7 @@ def fl_get_coordunit():
     Returns
     -------
         coordunit : int
-            current coordinates unit (e.g. from xfdata FL_COORD_MM,
+            current coordinates unit (e.g. from xfdata.py FL_COORD_MM,
             FL_COORD_centiPOINT, etc..)
 
     Examples
@@ -7139,12 +7251,13 @@ def fl_mouse_button():
     -------
         mousebtn : long
             which mouse button was pushed or released. Values (from xfdata.py)
-            FL_MBUTTON1 or FL_LEFT_MOUSE (Left mouse button was pressed),
-            FL_MBUTTON2 or FL_MIDDLE_MOUSE (Middle mouse button was pressed),
-            FL_MBUTTON3 or FL_RIGHT_MOUSE (Right mouse button was pressed),
-            FL_MBUTTON4 or FL_SCROLLUP_MOUSE (Mouse scroll wheel was rotated
-            in up direction), FL_MBUTTON5 or FL_SCROLLDOWN_MOUSE (Mouse scroll
-            wheel was rotated in down direction.
+            - FL_MBUTTON1 or FL_LEFT_MOUSE (Left mouse button was pressed),
+            - FL_MBUTTON2 or FL_MIDDLE_MOUSE (Middle mouse button was pressed),
+            - FL_MBUTTON3 or FL_RIGHT_MOUSE (Right mouse button was pressed),
+            - FL_MBUTTON4 or FL_SCROLLUP_MOUSE (Mouse scroll wheel was rotated
+              in up direction),
+            - FL_MBUTTON5 or FL_SCROLLDOWN_MOUSE (Mouse scroll wheel was
+              rotated in down direction.
 
     Examples
     --------

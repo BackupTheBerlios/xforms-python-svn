@@ -54,19 +54,23 @@ def fl_add_slider(slidertype, xpos, ypos, width, height, label):
     Parameters
     ----------
         slidertype : int
-            type of slider to be added. Values (from xfdata.py) FL_VERT_SLIDER
-            (normal slider), FL_HOR_SLIDER (horizontal slider),
-            FL_VERT_FILL_SLIDER (filled slider), FL_HOR_FILL_SLIDER (horizontal
-            filled slider), FL_VERT_NICE_SLIDER (*todo*), FL_HOR_NICE_SLIDER
-            (horizontal *todo*), FL_VERT_BROWSER_SLIDER (*todo*),
-            FL_HOR_BROWSER_SLIDER (horizontal *todo*), FL_VERT_BROWSER_SLIDER2
-            (for vertical scrollbar only), FL_HOR_BROWSER_SLIDER2 (for
-            horizontal scrollbar only), FL_VERT_THIN_SLIDER (for vertical thin
-            scrollbar only), FL_HOR_THIN_SLIDER (for horizontal thin scrollbar
-            only), FL_VERT_NICE_SLIDER2 (for vertical nice scrollbar only),
-            FL_HOR_NICE_SLIDER2 (for horizontal nice scrollbar only),
-            FL_VERT_BASIC_SLIDER (for vertical plain scrollbar only),
-            FL_HOR_BASIC_SLIDER (for horizontal plain scrollbar only).
+            type of slider to be added. Values (from xfdata.py)
+            - FL_VERT_SLIDER (normal slider),
+            - FL_HOR_SLIDER (horizontal slider),
+            - FL_VERT_FILL_SLIDER (filled slider),
+            - FL_HOR_FILL_SLIDER (horizontal filled slider),
+            - FL_VERT_NICE_SLIDER (*todo*),
+            - FL_HOR_NICE_SLIDER (horizontal *todo*),
+            - FL_VERT_BROWSER_SLIDER (*todo*),
+            - FL_HOR_BROWSER_SLIDER (horizontal *todo*),
+            - FL_VERT_BROWSER_SLIDER2 (for vertical scrollbar only),
+            - FL_HOR_BROWSER_SLIDER2 (for horizontal scrollbar only),
+            - FL_VERT_THIN_SLIDER (for vertical thin scrollbar only),
+            - FL_HOR_THIN_SLIDER (for horizontal thin scrollbar only),
+            - FL_VERT_NICE_SLIDER2 (for vertical nice scrollbar only),
+            - FL_HOR_NICE_SLIDER2 (for horizontal nice scrollbar only),
+            - FL_VERT_BASIC_SLIDER (for vertical plain scrollbar only),
+            - FL_HOR_BASIC_SLIDER (for horizontal plain scrollbar only).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -129,18 +133,22 @@ def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
     ----------
         slidertype : int
             type of the slider to be added. Values (from xfdata.py)
-            FL_VERT_SLIDER (normal slider), FL_HOR_SLIDER (horizontal slider),
-            FL_VERT_FILL_SLIDER (filled slider), FL_HOR_FILL_SLIDER (horizontal
-            filled slider), FL_VERT_NICE_SLIDER (*todo*), FL_HOR_NICE_SLIDER
-            (horizontal *todo*), FL_VERT_BROWSER_SLIDER (*todo*),
-            FL_HOR_BROWSER_SLIDER (horizontal *todo*), FL_VERT_BROWSER_SLIDER2
-            (for vertical scrollbar only), FL_HOR_BROWSER_SLIDER2 (for
-            horizontal scrollbar only), FL_VERT_THIN_SLIDER (for vertical thin
-            scrollbar only), FL_HOR_THIN_SLIDER (for horizontal thin scrollbar
-            only), FL_VERT_NICE_SLIDER2 (for vertical nice scrollbar only),
-            FL_HOR_NICE_SLIDER2 (for horizontal nice scrollbar only),
-            FL_VERT_BASIC_SLIDER (for vertical plain scrollbar only),
-            FL_HOR_BASIC_SLIDER (for horizontal plain scrollbar only).
+            - FL_VERT_SLIDER (normal slider),
+            - FL_HOR_SLIDER (horizontal slider),
+            - FL_VERT_FILL_SLIDER (filled slider),
+            - FL_HOR_FILL_SLIDER (horizontal filled slider),
+            - FL_VERT_NICE_SLIDER (*todo*),
+            - FL_HOR_NICE_SLIDER (horizontal *todo*),
+            - FL_VERT_BROWSER_SLIDER (*todo*),
+            - FL_HOR_BROWSER_SLIDER (horizontal *todo*),
+            - FL_VERT_BROWSER_SLIDER2 (for vertical scrollbar only),
+            - FL_HOR_BROWSER_SLIDER2 (for horizontal scrollbar only),
+            - FL_VERT_THIN_SLIDER (for vertical thin scrollbar only),
+            - FL_HOR_THIN_SLIDER (for horizontal thin scrollbar only),
+            - FL_VERT_NICE_SLIDER2 (for vertical nice scrollbar only),
+            - FL_HOR_NICE_SLIDER2 (for horizontal nice scrollbar only),
+            - FL_VERT_BASIC_SLIDER (for vertical plain scrollbar only),
+            - FL_HOR_BASIC_SLIDER (for horizontal plain scrollbar only).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

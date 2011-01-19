@@ -69,7 +69,7 @@ def fl_popup_add(win, title):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_add = library.cfuncproto(
@@ -149,7 +149,7 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
         See: Special sequences in entry text documentation in xfdata.py.
 
     """
@@ -162,7 +162,9 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
+        print "u", u
         ptr_u = library.convert_userdata_to_ptrvoid(u)
+        print "ptr_u", ptr_u
         cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg
@@ -380,8 +382,8 @@ def fl_popup_create(win, title, ptr_flpopupitem):
     ----------
         win : long_pos
             window of a parent flobject (use flxbasic.FL_ObjWin() to find out
-            about it). You can also use either flxbasic.fl_root or None for the
-            root window.
+            about it). You can also use either flxbasic.fl_root or None for
+            the root window.
         title : str
             text of title that gets shown at the top of the popup in a frame.
             If not wanted, pass an empty string. It may contain embedded
@@ -610,7 +612,7 @@ def fl_popup_do(ptr_flpopup):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_do = library.cfuncproto(
@@ -715,10 +717,11 @@ def fl_popup_set_policy(ptr_flpopup, policy):
             popup class instance. If it is None, changes the default
             setting of the policy, used in the creation of new popups.
         policy : int
-            policy to be set. Values (from xfdata.py) FL_POPUP_NORMAL_SELECT
-            (default, keeps the popup opened when the mouse is not released on
-            one of the selectable items), FL_POPUP_DRAG_SELECT (Closes the
-            popup immediately when the mouse button is released).
+            policy to be set. Values (from xfdata.py)
+            - FL_POPUP_NORMAL_SELECT (default, keeps the popup opened when the
+              mouse is not released on one of the selectable items),
+            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the
+              mouse button is released).
 
     Returns
     -------
@@ -731,7 +734,7 @@ def fl_popup_set_policy(ptr_flpopup, policy):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_set_policy = library.cfuncproto(
@@ -849,7 +852,7 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
 
     Defines the font style and size of the popup's title. This setting also
     applies to sub-popups of the popup, thus setting a title font for
-    sub-popups is useless. By default, size and style are (from xfdata)
+    sub-popups is useless. By default, size and style are (from xfdata.py)
     FL_NORMAL_SIZE and FL_EMBOSSED_STYLE.
 
     Parameters
@@ -857,29 +860,36 @@ def fl_popup_set_title_font(ptr_flpopup, style, size):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
-            title style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
-          size : int
-            title size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            title style. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
+        size : int
+            title size. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Examples
     --------
@@ -931,7 +941,7 @@ def fl_popup_entry_get_font(ptr_flpopup):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_get_font = library.cfuncproto(
@@ -958,29 +968,36 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         style : int
-            style of popup entries. Values (from xfdata.py) FL_NORMAL_STYLE
-            (Helvetica normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            style of popup entries. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
-            size of popup entries. Values (from xfdata.py) FL_TINY_SIZE (8
-            points font), FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font,
-            default), FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14
-            points font), FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24
-            points font), or other numeric odd or even value
+            size of popup entries. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Examples
     --------
@@ -988,7 +1005,7 @@ def fl_popup_entry_set_font(ptr_flpopup, style, size):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_set_font = library.cfuncproto(
@@ -1088,18 +1105,21 @@ def fl_popup_get_color(ptr_flpopup, colrpos):
             popup class instance
         colrpos : int
             color type position. Values (from xfdata.py)
-            FL_POPUP_BACKGROUND_COLOR (Background color of the popup, default
-            is FL_MCOL), FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is
-            drawn with when it is selectable and the mouse is on top of it,
-            default is FL_BOTTOM_BCOL), FL_POPUP_TITLE_COLOR (Color used for
-            the title text of a popup, default is FL_BLACK),
-            FL_POPUP_TEXT_COLOR (Color normal used for entry texts, default is
-            FL_BLACK), FL_POPUP_HIGHLIGHT_TEXT_COLOR (Color of the entry text
-            when it is selectable and the mouse is on top of it, default is
-            FL_WHITE), FL_POPUP_DISABLED_TEXT_COLOR (Color for drawing the
-            text of disabled entries, default is FL_INACTIVE_COL),
-            FL_POPUP_RADIO_COLOR (Color the circle drawn for radio entries in
-            'on' state is drawn in).
+            - FL_POPUP_BACKGROUND_COLOR (Background color of the popup,
+              default is FL_MCOL),
+            - FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is drawn with
+              when it is selectable and the mouse is on top of it, default is
+              FL_BOTTOM_BCOL),
+            - FL_POPUP_TITLE_COLOR (Color used for the title text of a popup,
+              default is FL_BLACK),
+            - FL_POPUP_TEXT_COLOR (Color normal used for entry texts, default
+              is FL_BLACK),
+            - FL_POPUP_HIGHLIGHT_TEXT_COLOR (Color of the entry text when it is
+              selectable and the mouse is on top of it, default is FL_WHITE),
+            - FL_POPUP_DISABLED_TEXT_COLOR (Color for drawing the text of
+              disabled entries, default is FL_INACTIVE_COL),
+            - FL_POPUP_RADIO_COLOR (Color the circle drawn for radio entries
+              in 'on' state is drawn in).
 
     Returns
     -------
@@ -1139,18 +1159,21 @@ def fl_popup_set_color(ptr_flpopup, colrpos, colr):
             popup class instance
         colrpos : int
             color type position. Values (from xfdata.py)
-            FL_POPUP_BACKGROUND_COLOR (Background color of the popup, default
-            is FL_MCOL), FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is
-            drawn with when it is selectable and the mouse is on top of it,
-            default is FL_BOTTOM_BCOL), FL_POPUP_TITLE_COLOR (Color used for
-            the title text of a popup, default is FL_BLACK),
-            FL_POPUP_TEXT_COLOR (Color normal used for entry texts, default is
-            FL_BLACK), FL_POPUP_HIGHLIGHT_TEXT_COLOR (Color of the entry text
-            when it is selectable and the mouse is on top of it, default is
-            FL_WHITE), FL_POPUP_DISABLED_TEXT_COLOR (Color for drawing the
-            text of disabled entries, default is FL_INACTIVE_COL),
-            FL_POPUP_RADIO_COLOR (Color the circle drawn for radio entries in
-            'on' state is drawn in).
+            - FL_POPUP_BACKGROUND_COLOR (Background color of the popup, default
+              is FL_MCOL),
+            - FL_POPUP_HIGHLIGHT_COLOR (Backgroud color an entry is drawn with
+              when it is selectable and the mouse is on top of it, default is
+              FL_BOTTOM_BCOL),
+            - FL_POPUP_TITLE_COLOR (Color used for the title text of a popup,
+              default is FL_BLACK),
+            - FL_POPUP_TEXT_COLOR (Color normal used for entry texts, default
+              is FL_BLACK),
+            - FL_POPUP_HIGHLIGHT_TEXT_COLOR (Color of the entry text when it is
+              selectable and the mouse is on top of it, default is FL_WHITE),
+            - FL_POPUP_DISABLED_TEXT_COLOR (Color for drawing the text of
+              disabled entries, default is FL_INACTIVE_COL),
+            - FL_POPUP_RADIO_COLOR (Color the circle drawn for radio entries
+              in 'on' state is drawn in).
         colr : long_pos
             color value to be set
 
@@ -1471,12 +1494,13 @@ def fl_popup_entry_set_state(ptr_flpopupentry, state):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
-            state to be set. Values (from xfdata.py) FL_POPUP_DISABLED (The
-            popup is disabled and cannot be selected), FL_POPUP_HIDDEN (The
-            popup is hidden, i.e. does not get shown, and thus cannot be
-            selected), FL_POPUP_CHECKED (Only relevant for toggle or radio
-            popups, marks it as in "on" state). FL_POPUP_NONE should not be
-            used here.
+            state to be set. Values (from xfdata.py)
+            - FL_POPUP_DISABLED (The popup is disabled and cannot be selected),
+            - FL_POPUP_HIDDEN (The popup is hidden, i.e. does not get shown,
+              and thus cannot be selected),
+            - FL_POPUP_CHECKED (Only relevant for toggle or radio popups,
+              marks it as in "on" state).
+            FL_POPUP_NONE should not be used here.
 
     Returns
     -------
@@ -1516,8 +1540,13 @@ def fl_popup_entry_clear_state(ptr_flpopupentry, state):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
-            state to be cleared. Values (from xfdata.py) FL_POPUP_DISABLED,
-            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. Or a bitwise OR of them.
+            state to be cleared. Values (from xfdata.py)
+            - FL_POPUP_DISABLED (The popup is disabled and cannot be selected),
+            - FL_POPUP_HIDDEN (The popup is hidden, i.e. does not get shown,
+              and thus cannot be selected),
+            - FL_POPUP_CHECKED (Only relevant for toggle or radio popups,
+              marks it as in "on" state).
+            A bitwise OR of them is allowed.
 
     Returns
     -------
@@ -1530,7 +1559,7 @@ def fl_popup_entry_clear_state(ptr_flpopupentry, state):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_clear_state = library.cfuncproto(
@@ -1557,9 +1586,13 @@ def fl_popup_entry_raise_state(ptr_flpopupentry, state):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
-            state to be set. Values (from xfdata.py) FL_POPUP_DISABLED,
-            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. A bitwise OR of them is
-            allowed.
+            state to be set. Values (from xfdata.py)
+            - FL_POPUP_DISABLED (The popup is disabled and cannot be selected),
+            - FL_POPUP_HIDDEN (The popup is hidden, i.e. does not get shown,
+              and thus cannot be selected),
+            - FL_POPUP_CHECKED (Only relevant for toggle or radio popups,
+              marks it as in "on" state).
+            A bitwise OR of them is allowed.
 
     Returns
     -------
@@ -1599,9 +1632,12 @@ def fl_popup_entry_toggle_state(ptr_flpopupentry, state):
         ptr_flpopupentry : pointer to xfdata.FL_POPUP_ENTRY
             popup entry
         state : int_pos
-            state to be toggled. Values (from xfdata.py) FL_POPUP_DISABLED,
-            FL_POPUP_HIDDEN or FL_POPUP_CHECKED. A bitwise OR of them is
-            allowed
+            state to be toggled. Values (from xfdata.py)
+            - FL_POPUP_DISABLED (The popup is disabled and cannot be selected),
+            - FL_POPUP_HIDDEN (The popup is hidden, i.e. does not get shown,
+              and thus cannot be selected),
+            - FL_POPUP_CHECKED (Only relevant for toggle or radio popups,
+              marks it as in "on" state).
 
     Returns
     -------
@@ -1765,11 +1801,11 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, userdata):
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_popup_entry_set_user_data(ppopupentr, "One data")
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_entry_set_user_data = library.cfuncproto(
@@ -1913,7 +1949,7 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
 
 
 def fl_popup_entry_get_by_text(ptr_flpopup, text):
-    """fl_popup_entry_get_by_text(ptr_flpopup, text) ->ptr_flpopupentry
+    """fl_popup_entry_get_by_text(ptr_flpopup, text) -> ptr_flpopupentry
 
     Finds a popup entry that had been created with a certain text, including
     all the special sequences.
@@ -2263,7 +2299,7 @@ def fl_popup_set_min_width(ptr_flpopup, width):
 
     Notes
     -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_popup_set_min_width = library.cfuncproto(

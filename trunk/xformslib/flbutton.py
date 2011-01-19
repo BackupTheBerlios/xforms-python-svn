@@ -44,15 +44,15 @@ from xformslib import flbitmap
 
 # Routines
 
-# fl_create_button function placeholder (internal)
-# fl_create_roundbutton function placeholder (internal)
-# fl_create_round3dbutton function placeholder (internal)
-# fl_create_lightbutton function placeholder (internal)
-# fl_create_checkbutton function placeholder (internal)
-# fl_create_bitmapbutton function placeholder (internal)
-# fl_create_pixmapbutton function placeholder (internal)
-# fl_create_scrollbutton function placeholder (internal)
-# fl_create_labelbutton function placeholder (internal)
+# fl_create_button() function placeholder (internal)
+# fl_create_roundbutton() function placeholder (internal)
+# fl_create_round3dbutton() function placeholder (internal)
+# fl_create_lightbutton() function placeholder (internal)
+# fl_create_checkbutton() function placeholder (internal)
+# fl_create_bitmapbutton() function placeholder (internal)
+# fl_create_pixmapbutton() function placeholder (internal)
+# fl_create_scrollbutton() function placeholder (internal)
+# fl_create_labelbutton() function placeholder (internal)
 
 
 def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
@@ -65,16 +65,20 @@ def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON
-            or FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -133,16 +137,20 @@ def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -201,16 +209,20 @@ def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -269,16 +281,20 @@ def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button flobject to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -337,16 +353,20 @@ def fl_add_button(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -405,16 +425,20 @@ def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -473,16 +497,20 @@ def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -541,16 +569,20 @@ def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -653,16 +685,20 @@ def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
     ----------
         buttontype : int
             type of button to be added. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -936,8 +972,7 @@ def fl_get_button_numb(ptr_flobject):
     Returns
     -------
         mousebtn : int
-            last used mouse button
-            Values (from xfdata.py)
+            last used mouse button. Values (from xfdata.py)
             FL_MBUTTON1 or FL_LEFT_MOUSE (Left mouse button was pressed),
             FL_MBUTTON2 or FL_MIDDLE_MOUSE (Middle mouse button was pressed),
             FL_MBUTTON3 or FL_RIGHT_MOUSE (Right mouse button was pressed),
@@ -981,16 +1016,20 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
             value of a new button class
         buttontype : int
             type of button to be created. Values (from xfdata.py)
-            FL_NORMAL_BUTTON (Returns value when released), FL_PUSH_BUTTON or
-            FL_TOGGLE_BUTTON (Stays pushed until user pushes it again),
-            FL_RADIO_BUTTON (Push button that switches off other radio
-            buttons), FL_HIDDEN_BUTTON (Invisible normal button),
-            FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
-            FL_INOUT_BUTTON (Returns value both when pushed and when released),
-            FL_RETURN_BUTTON (Like a normal button but reacts on the <Return>
-            key), FL_HIDDEN_RET_BUTTON (Invisible return button),
-            FL_MENU_BUTTON (Returns value when pushed, useful e.g. for opening
-            a popup when pushed).
+            - FL_NORMAL_BUTTON (Returns value when released),
+            - FL_PUSH_BUTTON or FL_TOGGLE_BUTTON (Stays pushed until user
+              pushes it again),
+            - FL_RADIO_BUTTON (Push button that switches off other radio
+              buttons),
+            - FL_HIDDEN_BUTTON (Invisible normal button),
+            - FL_TOUCH_BUTTON (Returns value as long as the user pushes it),
+            - FL_INOUT_BUTTON (Returns value both when pushed and when
+              released),
+            - FL_RETURN_BUTTON (Like a normal button but reacts on the
+              <Return> key),
+            - FL_HIDDEN_RET_BUTTON (Invisible return button),
+            - FL_MENU_BUTTON (Returns value when pushed, useful e.g. for
+              opening a popup when pushed).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

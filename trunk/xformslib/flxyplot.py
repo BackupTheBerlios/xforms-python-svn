@@ -56,17 +56,19 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     ----------
         plottype : int
             type of xyplot to be added. Values (from xfdata.py)
-            FL_NORMAL_XYPLOT (xyplot type with solid line), FL_SQUARE_XYPLOT
-            (xyplot type has added square), FL_CIRCLE_XYPLOT (xyplot type has
-            added circle), FL_FILL_XYPLOT (xyplot type is filled completely),
-            FL_POINTS_XYPLOT (xyplot type has only data points),
-            FL_DASHED_XYPLOT (xyplot type has dashed line), FL_IMPULSE_XYPLOT
-            (Data drawn by vertical lines), FL_ACTIVE_XYPLOT (xyplot type
-            accepts interactive manipulations), FL_EMPTY_XYPLOT (Only the
-            axes are drawn), FL_DOTTED_XYPLOT (Data drawn as a dotted line),
-            FL_DOTDASHED_XYPLOT (Data drawn as a dash-dot-dash line),
-            FL_LONGDASHED_XYPLOT (xyplot type has long dashed line),
-            FL_LINEPOINTS_XYPLOT (xyplot type has lines and points).
+            - FL_NORMAL_XYPLOT (xyplot type with solid line)
+            - FL_SQUARE_XYPLOT (xyplot type has added square)
+            - FL_CIRCLE_XYPLOT (xyplot type has added circle)
+            - FL_FILL_XYPLOT (xyplot type is filled completely)
+            - FL_POINTS_XYPLOT (xyplot type has only data points)
+            - FL_DASHED_XYPLOT (xyplot type has dashed line)
+            - FL_IMPULSE_XYPLOT (Data drawn by vertical lines)
+            - FL_ACTIVE_XYPLOT (xyplot type accepts interactive manipulations)
+            - FL_EMPTY_XYPLOT (Only the axes are drawn)
+            - FL_DOTTED_XYPLOT (Data drawn as a dotted line)
+            - FL_DOTDASHED_XYPLOT (Data drawn as a dash-dot-dash line)
+            - FL_LONGDASHED_XYPLOT (xyplot type has long dashed line)
+            - FL_LINEPOINTS_XYPLOT (xyplot type has lines and points).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -239,9 +241,9 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
     Defines or replaces data for a xyplot flobject, by loading a tabulated
     function from a file. The data file should be an ASCII file consisting of
     data lines. Each data line must have two columns, indicating the (x,y)
-    pair with a space, tab or comma (,) separating the two columns. Lines
-    that start with any of "!", ";" or "#" are considered to be comments and
-    are ignored.
+    pair with a space, tab or comma (,) separating the two columns. Lines that
+    start with any of "!", ";" or "#" are considered to be comments and are
+    ignored.
 
     Parameters
     ----------
@@ -354,21 +356,22 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
         ypos : float
             vertical coordinates where text is to be placed
         text : str
-            text to be added to xyplot. If it starts with '@', a symbol
-            is drawn.
+            text to be added to xyplot. If it starts with '@', a symbol is
+            drawn.
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In the
-            middle of the box, inside it), FL_ALIGN_TOP (To the top of the box,
-            outside it), FL_ALIGN_BOTTOM (To the bottom of the box, outside
-            it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
-            is allowed.
+            alignment of text. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
         colr : long_pos
             XForms colormap index as color
 
@@ -1119,18 +1122,20 @@ def fl_set_xyplot_overlay_type(ptr_flobject, ovlnum, plottype):
             overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
             the number set via fl_set_xyplot_maxoverlays()
         plottype : int
-            type of xyplot.  Values (from xfdata.py) FL_NORMAL_XYPLOT (xyplot
-            type with solid line), FL_SQUARE_XYPLOT (xyplot type has added
-            square), FL_CIRCLE_XYPLOT (xyplot type has added circle),
-            FL_FILL_XYPLOT (xyplot type is filled completely), FL_POINTS_XYPLOT
-            (xyplot type has only data points), FL_DASHED_XYPLOT (xyplot type
-            has dashed line), FL_IMPULSE_XYPLOT (Data drawn by vertical lines),
-            FL_ACTIVE_XYPLOT (xyplot type accepts interactive manipulations),
-            FL_EMPTY_XYPLOT (Only the axes are drawn), FL_DOTTED_XYPLOT (Data
-            drawn as a dotted line), FL_DOTDASHED_XYPLOT (Data drawn as a
-            dash-dot-dash line), FL_LONGDASHED_XYPLOT (xyplot type has long
-            dashed line), FL_LINEPOINTS_XYPLOT (xyplot type has lines and
-            points).
+            type of xyplot.  Values (from xfdata.py)
+            - FL_NORMAL_XYPLOT (xyplot type with solid line),
+            - FL_SQUARE_XYPLOT (xyplot type has added square),
+            - FL_CIRCLE_XYPLOT (xyplot type has added circle),
+            - FL_FILL_XYPLOT (xyplot type is filled completely),
+            - FL_POINTS_XYPLOT (xyplot type has only data points),
+            - FL_DASHED_XYPLOT (xyplot type has dashed line),
+            - FL_IMPULSE_XYPLOT (Data drawn by vertical lines),
+            - FL_ACTIVE_XYPLOT (xyplot type accepts interactive manipulations),
+            - FL_EMPTY_XYPLOT (Only the axes are drawn),
+            - FL_DOTTED_XYPLOT (Data drawn as a dotted line),
+            - FL_DOTDASHED_XYPLOT (Data drawn as a dash-dot-dash line),
+            - FL_LONGDASHED_XYPLOT (xyplot type has long dashed line),
+            - FL_LINEPOINTS_XYPLOT (xyplot type has lines and points).
 
     Examples
     --------
@@ -1521,17 +1526,18 @@ def fl_set_xyplot_keys(ptr_flobject, keystxtlist, xposlist, yposlist, align):
         align : int
             alignment of the entire key box relative to the given position.
             Values (from xfdata.py)
-            FL_ALIGN_CENTER (In the middle of the box, inside it), FL_ALIGN_TOP
-            (To the top of the box, outside it), FL_ALIGN_BOTTOM (To the bottom
-            of the box, outside it), FL_ALIGN_LEFT (To the left of the box,
-            outside it), FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
-            is allowed.
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -1617,17 +1623,19 @@ def fl_set_xyplot_key_position(ptr_flobject, xpos, ypos, align):
             horizontal position in world coordinate system
         align : int
             alignment of the entire key box relative to the given position.
-            Values (from xfdata.py) FL_ALIGN_CENTER (In the middle of the box,
-            inside it), FL_ALIGN_TOP (To the top of the box, outside it),
-            FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
-            FL_ALIGN_LEFT (To the left of the box, outside it), FL_ALIGN_RIGHT
-            (To the right of the box, outside it), FL_ALIGN_LEFT_TOP (To the
-            left and top of the box, outside it), FL_ALIGN_RIGHT_TOP (To the
-            right and top of the box, outside it), FL_ALIGN_LEFT_BOTTOM (To
-            the left and bottom of the box, outside it), FL_ALIGN_RIGHT_BOTTOM
-            (To the right and bottom of the box, outside it), FL_ALIGN_INSIDE
-            (places the text inside the box), FL_ALIGN_VERT (not functional
-            yet). Bitwise OR with FL_ALIGN_INSIDE is allowed.
+            Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     Examples
     --------
@@ -1665,29 +1673,36 @@ def fl_set_xyplot_key_font(ptr_flobject, style, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            style for label. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            font size for label. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Examples
     --------
@@ -1878,8 +1893,8 @@ def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
             xyplot flobject
         scale : int
             scaling to be used. Values (from xfdata.py)
-            FL_LINEAR (Uses linear scale for xyplot, default), FL_LOG (Uses
-            logarithmic scale for xyplot)
+            - FL_LINEAR (Uses linear scale for xyplot, default),
+            - FL_LOG (Uses logarithmic scale for xyplot)
         logbase : float
             base of the logarithm to be used. Used only if scale is
             xfdata.FL_LOG
@@ -1918,8 +1933,9 @@ def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         scale : int
-            scaling to be used. Values (from xfdata.py) FL_LINEAR (default) or
-            FL_LOG
+            scaling to be used. Values (from xfdata.py)
+            - FL_LINEAR (Uses linear scale for xyplot, default),
+            - FL_LOG (Uses logarithmic scale for xyplot)
         logbase : float
             base of the logarithm to be used. Used only if scale is
             xfdata.FL_LOG
@@ -1954,7 +1970,7 @@ def fl_clear_xyplot(ptr_flobject):
     including all overlays and all inset texts. It does not reset all
     plotting options, such as line thickness, major/minor divisions etc. nor
     does it free all memories associated with the xyplot, for this
-    fl_free_object() is needed.
+    flbasic.fl_free_object() is needed.
 
     Parameters
     ----------
@@ -2029,10 +2045,10 @@ def fl_set_xyplot_xgrid(ptr_flobject, grid):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         grid : int
-            level of grid to be set. Values (from xfdata.py) FL_GRID_NONE (No
-            grid for xyplot), FL_GRID_MAJOR (Grid for the major divisions of
-            xyplot), FL_GRID_MINOR (Grid for the major and minor divisions of
-            xyplot).
+            level of grid to be set. Values (from xfdata.py)
+            - FL_GRID_NONE (No grid for xyplot),
+            - FL_GRID_MAJOR (Grid for the major divisions of xyplot),
+            - FL_GRID_MINOR (Grid for the major and minor divisions of xyplot)
 
     Examples
     --------
@@ -2066,10 +2082,10 @@ def fl_set_xyplot_ygrid(ptr_flobject, grid):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         grid : int
-            level of grid to be set. Values (from xfdata.py)  FL_GRID_NONE (No
-            grid for xyplot), FL_GRID_MAJOR (Grid for the major divisions of
-            xyplot), FL_GRID_MINOR (Grid for the major and minor divisions of
-            xyplot)
+            level of grid to be set. Values (from xfdata.py)
+            - FL_GRID_NONE (No grid for xyplot),
+            - FL_GRID_MAJOR (Grid for the major divisions of xyplot),
+            - FL_GRID_MINOR (Grid for the major and minor divisions of xyplot)
 
     Examples
     --------
@@ -2103,15 +2119,18 @@ def fl_set_xyplot_grid_linestyle(ptr_flobject, lnstyle):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         lnstyle : int
-            style of the line to draw. Values (from xfdata.py) FL_SOLID (Solid
-            line. Default and most efficient), FL_USERDASH (Dashed line, but
-            the dash pattern is used-definable via fl_dashedlinestyle(). Only
-            the odd numbered segments are drawn with the foreground color),
-            FL_USERDOUBLEDASH (Similar to FL_LINE_USERDASH but both even and
-            odd numbered segments are drawn, with the even numbered segments
-            drawn in the background color, as set by fl_bk_color(), FL_DOT
-            (Dotted line [....]), FL_DOTDASH (Dash-dot-dash line [-.-.]),
-            FL_DASH (Dashed line [----]), FL_LONGDASH (Long dashed line [_ _ _])
+            style of the line to draw. Values (from xfdata.py)
+            - FL_SOLID (Solid line. Default and most efficient),
+            - FL_USERDASH (Dashed line, but the dash pattern is definable by
+              user via flxbasic.fl_dashedlinestyle(). Only the odd numbered
+              segments are drawn with the foreground color),
+            - FL_USERDOUBLEDASH (Similar to FL_LINE_USERDASH but both even and
+              odd numbered segments are drawn, with the even numbered segments
+              drawn in the background color, as set by flbasic.fl_bk_color()),
+            - FL_DOT (Dotted line [....]),
+            - FL_DOTDASH (Dash-dot-dash line [-.-.]),
+            - FL_DASH (Dashed line [----]),
+            - FL_LONGDASH (Long dashed line [_ _ _])
 
     Returns
     -------
@@ -2159,9 +2178,9 @@ def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ticmajor : str
-            text specifying the labels with the embedded character | that
+            text specifying the labels with the embedded character "|" that
             describes major divisions. E.g. to label a plot with Monday,
-            Tuesday etc, major should be given as Monday|Tuesday|...
+            Tuesday etc, major should be given as "Monday|Tuesday|..."
         ticminor : str
             currently unused. It is set to 1, i.e, no divisions between major
             tic marks.
@@ -2208,9 +2227,9 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ticmajor : str
-            text specifying the labels with the embedded character | that
+            text specifying the labels with the embedded character "|" that
             describes major divisions. E.g. to label a plot with Monday,
-            Tuesday etc, major should be given as Monday|Tuesday|...
+            Tuesday etc, major should be given as "Monday|Tuesday|..."
         ticminor : str
             currently unused. It is set to 1, i.e, no divisions between major
             tic marks.

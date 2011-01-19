@@ -54,13 +54,14 @@ def fl_add_chart(charttype, xpos, ypos, width, height, label):
     Parameters
     ----------
         charttype : int
-            type of chart to be created. Values (from xfdata module)
-            FL_BAR_CHART (A vertical bar-chart), FL_HORBAR_CHART (A horizontal
-            bar-chart), FL_LINE_CHART (A line-chart), FL_FILL_CHART (A
-            line-chart but the area below curve is filled), FL_SPIKE_CHART (A
-            chart with a vertical spike for each value), FL_PIE_CHART (A
-            pie-chart), FL_SPECIALPIE_CHART (A pie-chart with displaced first
-            item)
+            type of chart to be created. Values (from xfdata.py)
+            - FL_BAR_CHART (A vertical bar-chart),
+            - FL_HORBAR_CHART (A horizontal bar-chart),
+            - FL_LINE_CHART (A line-chart),
+            - FL_FILL_CHART (A line-chart but the area below curve is filled),
+            - FL_SPIKE_CHART (A chart with a vertical spike for each value),
+            - FL_PIE_CHART (A pie-chart),
+            - FL_SPECIALPIE_CHART (A pie-chart with displaced first item)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -437,23 +438,27 @@ def fl_set_chart_lstyle(ptr_flobject, style):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         style : int
-            label style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            label style. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
 
     Examples
     --------
@@ -487,11 +492,14 @@ def fl_set_chart_lsize(ptr_flobject, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             chart flobject
         size : int
-            label size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            label size. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Examples
     --------

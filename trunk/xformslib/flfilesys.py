@@ -154,17 +154,19 @@ def fl_set_dirlist_sort(method):
     Parameters
     ----------
         method : int
-            method of sorting. Values (from xfdata.py) FL_NONE (Do not sort
-            the entries), FL_ALPHASORT (Sorts the entries in alphabetic order,
-            default), FL_RALPHASORT (Sorts the entries in reverse alphabetic
-            order), FL_MTIMESORT (Sorts the entries according to the
-            modification time), FL_RMTIMESORT (Sorts the entries according to
-            the modification time, but reverse the order, i.e., latest first),
-            FL_SIZESORT (Sorts the entries in increasing size order),
-            FL_RSIZESORT (Sorts the entries in decreasing size order),
-            FL_CASEALPHASORT (Sorts the entries in alphabetic order with no
-            regard to case), FL_RCASEALPHASORT (Sorts the entries in reverse
-            alphabetic order with no regard to case).
+            method of sorting. Values (from xfdata.py)
+            - FL_NONE (Do not sort the entries),
+            - FL_ALPHASORT (Sorts the entries in alphabetic order, default),
+            - FL_RALPHASORT (Sorts the entries in reverse alphabetic order),
+            - FL_MTIMESORT (Sorts the entries according to modification time),
+            - FL_RMTIMESORT (Sorts the entries according to modification time,
+              but reverse the order, i.e., latest first),
+            - FL_SIZESORT (Sorts the entries in increasing size order),
+            - FL_RSIZESORT (Sorts the entries in decreasing size order),
+            - FL_CASEALPHASORT (Sorts the entries in alphabetic order with no
+              regard to case),
+            - FL_RCASEALPHASORT (Sorts the entries in reverse alphabetic order
+              with no regard to case).
 
     Returns
     -------

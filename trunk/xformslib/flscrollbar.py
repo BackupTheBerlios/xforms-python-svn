@@ -52,17 +52,20 @@ def fl_add_scrollbar(scrolltype, xpos, ypos, width, height, label):
     ----------
         scrolltype : int
             type of scrollbar to be added. Values (from xfdata.py)
-            FL_VERT_SCROLLBAR (A vertical scrollbar), FL_HOR_SCROLLBAR (A
-            horizontal scrollbar), FL_VERT_THIN_SCROLLBAR (A different
-            looking vertical scrollbar), FL_HOR_THIN_SCROLLBAR (A different
-            looking horizontal scrollbar), FL_VERT_NICE_SCROLLBAR (A vertical
-            scrollbar using FL_NICE_SLIDER), FL_HOR_NICE_SCROLLBAR (A
-            horizontal scrollbar using FL_NICE_SLIDER), FL_VERT_PLAIN_SCROLLBAR
-            or FL_VERT_BASIC_SCROLLBAR (Similar to FL_THIN_SCROLLBAR),
-            FL_HOR_PLAIN_SCROLLBAR or FL_HOR_BASIC_SCROLLBAR (Similar to
-            FL_HOR_THIN_SCROLLBAR), FL_NORMAL_SCROLLBAR (*todo*),
-            FL_THIN_SCROLLBAR (*todo*), FL_NICE_SCROLLBAR (*todo*),
-            FL_PLAIN_SCROLLBAR (*todo*)
+            - FL_VERT_SCROLLBAR (A vertical scrollbar)
+            - FL_HOR_SCROLLBAR (A horizontal scrollbar)
+            - FL_VERT_THIN_SCROLLBAR (A different looking vertical scrollbar)
+            - FL_HOR_THIN_SCROLLBAR (A different looking horizontal scrollbar)
+            - FL_VERT_NICE_SCROLLBAR (vertical scrollbar using FL_NICE_SLIDER)
+            - FL_HOR_NICE_SCROLLBAR (horizontal scrollbar using FL_NICE_SLIDER)
+            - FL_VERT_PLAIN_SCROLLBAR or FL_VERT_BASIC_SCROLLBAR (Similar to
+              FL_THIN_SCROLLBAR)
+            - FL_HOR_PLAIN_SCROLLBAR or FL_HOR_BASIC_SCROLLBAR (Similar to
+              FL_HOR_THIN_SCROLLBAR)
+            - FL_NORMAL_SCROLLBAR (*todo*)
+            - FL_THIN_SCROLLBAR (*todo*)
+            - FL_NICE_SCROLLBAR (*todo*)
+            - FL_PLAIN_SCROLLBAR (*todo*)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -190,9 +193,9 @@ def fl_set_scrollbar_size(ptr_flobject, barsize):
             scrollbar flobject
         barsize : float
             size of bar. Values between 0.0 and 1.0. The default is
-            xfdata.FL_SLIDER_WIDTH (which is 0.15 for all scrollbars). If it is
-            1.0, the scrollbar covers the box completely and can no longer be
-            moved.
+            xfdata.FL_SLIDER_WIDTH (which is 0.15 for all scrollbars). If it
+            is 1.0, the scrollbar covers the box completely and can no longer
+            be moved.
 
     Examples
     --------
@@ -307,10 +310,9 @@ def fl_set_scrollbar_bounds(ptr_flobject, minbound, maxbound):
     Defines the minimum and maximum value limits of a scrollbar flobject. For
     vertical sliders the slider position for the minimum value is at the left,
     for horizontal sliders at the top of the slider. By setting min to a
-    larger value than max in a call of fl_set_scrollbar_bounds() this can be
-    reversed. When this function is called, if the actual value of a scrollbar
-    is not within the range of the new bounds, its value gets adjusted to the
-    nearest limit.
+    larger value than max in a call this can be reversed. When this function
+    is called, if the actual value of a scrollbar is not within the range of
+    the new bounds, its value gets adjusted to the nearest limit.
 
     Parameters
     ----------

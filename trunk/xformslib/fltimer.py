@@ -63,11 +63,12 @@ def fl_add_timer(timertype, xpos, ypos, width, height, label):
     Parameters
     ----------
         timertype : int
-            type of timer to be added. Values (from xfdata.py) FL_NORMAL_TIMER
-            (Visible, showing a label in a box which blinks when the timer
-            expires), FL_VALUE_TIMER (Visible, showing the time left or the
-            elapsed time. Blinks if the timer expires), FL_HIDDEN_TIMER (Not
-            visible).
+            type of timer to be added. Values (from xfdata.py)
+            - FL_NORMAL_TIMER (Visible, showing a label in a box which blinks
+              when the timer expires),
+            - FL_VALUE_TIMER (Visible, showing the time left or the elapsed
+              time. Blinks if the timer expires),
+            - FL_HIDDEN_TIMER (Not visible).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

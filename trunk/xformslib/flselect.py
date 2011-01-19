@@ -58,16 +58,17 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
     ----------
         selecttype : int
             type of select to be added. Values (from xfdata.py)
-            FL_NORMAL_SELECT (Per default this type is drawn as a rounded,
-            flat box, but you can change that by setting a different boxtype
-            for the flobject, with the text of the currently selected item in
-            its center), FL_MENU_SELECT (This select flobject looks like a
-            button with a little extra box at its right side, just like a
-            FL_MENU_BUTTON and the text of the currently selected item is
-            drawn on the button-like object), FL_DROPLIST_SELECT (This type
-            looks like a button with the text of the currently selected item on
-            top of it and a second square button directly beside it with a
-            downward pointing arrow on it)
+            - FL_NORMAL_SELECT (Per default this type is drawn as a rounded,
+              flat box, but you can change that by setting a different boxtype
+              for the flobject, with the text of the currently selected item
+              in its center),
+            - FL_MENU_SELECT (This select flobject looks like a button with a
+              little extra box at its right side, just like a FL_NMENU_BUTTON
+              and the text of the currently selected item is drawn on the
+              button-like object),
+            - FL_DROPLIST_SELECT (This type looks like a button with the text
+              of the currently selected item on top of it and a second square
+              button directly beside it with a downward pointing arrow on it)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -1001,29 +1002,36 @@ def fl_set_select_text_font(ptr_flobject, style, size):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         style : int
-            text style. Values (from xfdata.py) FL_NORMAL_STYLE (Helvetica
-            normal text), FL_BOLD_STYLE (Helvetica boldface text),
-            FL_ITALIC_STYLE (Helvetica italic text), FL_BOLDITALIC_STYLE
-            (Helvetica boldface and italic text), FL_FIXED_STYLE (Courier
-            fixed width, good for tables), FL_FIXEDBOLD_STYLE (Courier bold
-            fixed text), FL_FIXEDITALIC_STYLE (Courier italic fixed text),
-            FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed text),
-            FL_TIMES_STYLE (Times-Roman like normal font), FL_TIMESBOLD_STYLE
-            (Times-Roman like boldface text), FL_TIMESITALIC_STYLE (Times-Roman
-            like italic text), FL_TIMESBOLDITALIC_STYLE (Times-Roman like
-            boldface and italic text), FL_MISC_STYLE (Charter normal text),
-            FL_MISCBOLD_STYLE (Charter boldface text), FL_MISCITALIC_STYLE
-            (Charter italic text), FL_SYMBOL_STYLE (Symbol text),
-            FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
-            FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
-            FL_EMBOSSED_STYLE (Text standing out, modifier mask). Bitwise OR
-            with any of modifiers is allowed.
+            font style for text. Values (from xfdata.py)
+            - FL_NORMAL_STYLE (Helvetica normal text),
+            - FL_BOLD_STYLE (Helvetica boldface text),
+            - FL_ITALIC_STYLE (Helvetica italic text),
+            - FL_BOLDITALIC_STYLE (Helvetica boldface and italic text),
+            - FL_FIXED_STYLE (Courier fixed width, good for tables),
+            - FL_FIXEDBOLD_STYLE (Courier bold fixed text),
+            - FL_FIXEDITALIC_STYLE (Courier italic fixed text),
+            - FL_FIXEDBOLDITALIC_STYLE (Courier boldface and italic fixed),
+            - FL_TIMES_STYLE (Times-Roman like normal font),
+            - FL_TIMESBOLD_STYLE (Times-Roman like boldface text),
+            - FL_TIMESITALIC_STYLE (Times-Roman like italic text),
+            - FL_TIMESBOLDITALIC_STYLE (Times-Roman like boldface and italic),
+            - FL_MISC_STYLE (Charter normal text),
+            - FL_MISCBOLD_STYLE (Charter boldface text),
+            - FL_MISCITALIC_STYLE (Charter italic text),
+            - FL_SYMBOL_STYLE (Symbol text),
+            - FL_SHADOW_STYLE (Text casting a shadow, modifier mask),
+            - FL_ENGRAVED_STYLE (Text engraved into the form, modifier mask),
+            - FL_EMBOSSED_STYLE (Text standing out, modifier mask).
+            Bitwise OR with any of modifiers is allowed.
         size : int
-            text size. Values (from xfdata.py) FL_TINY_SIZE (8 points font),
-            FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
-            FL_NORMAL_SIZE (12 points font), FL_MEDIUM_SIZE (14 points font),
-            FL_LARGE_SIZE (18 points font), FL_HUGE_SIZE (24 points font), or
-            other numeric odd or even value
+            font size for text. Values (from xfdata.py)
+            - FL_TINY_SIZE (8 points font),
+            - FL_SMALL_SIZE or FL_DEFAULT_SIZE (10 points font, default),
+            - FL_NORMAL_SIZE (12 points font),
+            - FL_MEDIUM_SIZE (14 points font),
+            - FL_LARGE_SIZE (18 points font),
+            - FL_HUGE_SIZE (24 points font),
+            - or other numeric odd or even value
 
     Returns
     -------
@@ -1104,18 +1112,19 @@ def fl_set_select_text_align(ptr_flobject, align):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             select flobject
         align : int
-            alignment of text. Values (from xfdata.py) FL_ALIGN_CENTER (In the
-            middle of the box, inside it), FL_ALIGN_TOP (To the top of the box,
-            outside it), FL_ALIGN_BOTTOM (To the bottom of the box, outside
-            it), FL_ALIGN_LEFT (To the left of the box, outside it),
-            FL_ALIGN_RIGHT (To the right of the box, outside it),
-            FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
-            FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
-            FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box, outside
-            it), FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
-            outside it), FL_ALIGN_INSIDE (places the text inside the box),
-            FL_ALIGN_VERT (not functional yet). Bitwise OR with FL_ALIGN_INSIDE
-            is allowed.
+            alignment of text. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of box, outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of box, outside),
+            - FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
 
     Returns
     -------
@@ -1158,10 +1167,10 @@ def fl_set_select_policy(ptr_flobject, policy):
             select flobject
         policy : int
             popup policy to be set. Values (from xfdata.py)
-            FL_POPUP_NORMAL_SELECT (default, keeps the popup opened when the
-            mouse is not released on one of the selectable items),
-            FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
-            button is released)
+            - FL_POPUP_NORMAL_SELECT (default, keeps the popup opened when the
+              mouse is not released on one of the selectable items),
+            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
+              button is released)
 
     Returns
     -------

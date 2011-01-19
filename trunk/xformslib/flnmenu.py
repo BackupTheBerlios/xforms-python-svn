@@ -53,16 +53,17 @@ def fl_add_nmenu(nmenutype, xpos, ypos, width, height, label):
     Parameters
     ----------
         nmenutype : type of nmenu to be. Values (from xfdata.py)
-            FL_NORMAL_NMENU (Probably the most often used type: shown as text
-            on a borderless background, popup gets opened when clicked on),
-            FL_NORMAL_TOUCH_NMENU (Also shown as text on a borderless
-            background, but popup gets opened when the mouse is moved on top
-            of it without any further user action required), FL_BUTTON_NMENU
-            (When not active shown as text on borderless background, when
-            clicked on popup is shown and the flobject itself being displayed
-            as a button), FL_BUTTON_TOUCH_NMENU (When not active shown as text
-            on borderless background, when mouse is moved onto it the popup is
-            shown and the flobject itself is displayed as a button)
+            - FL_NORMAL_NMENU (Probably the most often used type, shown as text
+              on a borderless background, popup gets opened when clicked on),
+            - FL_NORMAL_TOUCH_NMENU (Also shown as text on a borderless
+              background, but popup gets opened when the mouse is moved on
+              top of it without any further user action required),
+            - FL_BUTTON_NMENU (When not active shown as text on borderless
+              background, when clicked on popup is shown and the flobject
+              itself being displayed as a button),
+            - FL_BUTTON_TOUCH_NMENU (When not active shown as text on
+              borderless background, when mouse is moved onto it the popup is
+              shown and the flobject itself is displayed as a button)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -147,7 +148,7 @@ def fl_clear_nmenu(ptr_flobject):
 
 
 def fl_add_nmenu_items(ptr_flobject, entryitemstxt, x=None, u=None, \
-                       f=None, E=None, L=None, m=None, Rr=None, s=None):
+        f=None, E=None, L=None, m=None, Rr=None, s=None):
     """fl_add_nmenu_items(ptr_flobject, entryitemstxtx=None, u=None, \
     f=None, E=None, L=None, m=None, Rr=None, s=None) -> ptr_flpopupentry
 
@@ -861,8 +862,8 @@ def fl_get_nmenu_item(ptr_flobject):
     Returns
     -------
         ptr_flpopupreturn : pointer to xfdata.FL_POPUP_RETURN
-            popup return class instance, or None (if no selection was made the
-            last time the nmenu flobject was used)
+            popup return class instance, or None (if no selection was made
+            the last time the nmenu flobject was used)
 
     Examples
     --------
@@ -1025,10 +1026,11 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
             nmenu flobject
         policy : int
             under which conditions the nmenu's popup gets closed. Values (from
-            xfdata.py) FL_POPUP_NORMAL_SELECT (default, keeps the popup opened
-            when the mouse is not released on one of the selectable items),
-            FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
-            button is released)
+            xfdata.py)
+            - FL_POPUP_NORMAL_SELECT (default, keeps the popup opened
+              when the mouse is not released on one of the selectable items),
+            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
+              button is released)
 
     Returns
     -------

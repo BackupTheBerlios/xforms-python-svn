@@ -51,24 +51,27 @@ def fl_add_box(boxtype, xpos, ypos, width, height, label):
     Parameters
     ----------
         boxtype : int
-            type of the box to be added. Values (from xfdata.py) FL_NO_BOX (No
-            box at all, it is transparent, just a label), FL_UP_BOX (A box
-            that comes out of the screen), FL_DOWN_BOX (A box that goes down
-            into the screen), FL_BORDER_BOX (A flat box with a border),
-            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat box
-            with an engraved frame), FL_ROUNDED_BOX (A rounded box),
-            FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
-            (A flat box without a border, normally invisible unless given a
-            different color than the surroundings), FL_RFLAT_BOX (A rounded box
-            without a border, normally invisible unless given a different color
-            than the surroundings), FL_RSHADOW_BOX (A rounded box with a
-            shadow), FL_OVAL_BOX (A box shaped like an ellipse),
-            FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
-            FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
-            FL_OVAL3D_UPBOX (An oval box coming out of the screen),
-            FL_OVAL3D_DOWNBOX (An oval box going into the screen),
-            FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
-            FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
+            type of the box to be added. Values (from xfdata.py)
+            - FL_NO_BOX (No box at all, it is transparent, just a label),
+            - FL_UP_BOX (A box that comes out of the screen),
+            - FL_DOWN_BOX (A box that goes down into the screen),
+            - FL_BORDER_BOX (A flat box with a border),
+            - FL_SHADOW_BOX (A flat box with a shadow),
+            - FL_FRAME_BOX (A flat box with an engraved frame),
+            - FL_ROUNDED_BOX (A rounded box),
+            - FL_EMBOSSED_BOX (A flat box with an embossed frame),
+            - FL_FLAT_BOX (A flat box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RFLAT_BOX (A rounded box without a border, normally invisible
+              unless given a different color than the surroundings),
+            - FL_RSHADOW_BOX (A rounded box with a shadow),
+            - FL_OVAL_BOX (A box shaped like an ellipse),
+            - FL_ROUNDED3D_UPBOX (A rounded box coming out of the screen),
+            - FL_ROUNDED3D_DOWNBOX (A rounded box going into the screen),
+            - FL_OVAL3D_UPBOX (An oval box coming out of the screen),
+            - FL_OVAL3D_DOWNBOX (An oval box going into the screen),
+            - FL_OVAL3D_FRAMEBOX (An oval box with an engraved frame),
+            - FL_OVAL3D_EMBOSSEDBOX (An oval box with an embossed frame)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -324,8 +327,8 @@ def fl_object_ps_dump(ptr_flobject, fname):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             object. Only the xfdata.FL_XYPLOT flobject is supported.
         fname : str
-            name of output file. If it is empty (""), a fselector will be shown
-            to ask the user for a file name.
+            name of output file. If it is empty (""), a fselector will be
+            shown to ask the user for a file name.
 
     Returns
     -------
@@ -379,13 +382,16 @@ def fl_add_frame(frametype, xpos, ypos, width, height, label):
     Parameters
     ----------
         frametype : int
-            type of frame to be added. Values (from xfdata.py) FL_NO_FRAME
-            (Nothing is drawn), FL_UP_FRAME (A frame appears coming out of the
-            screen), FL_DOWN_FRAME (A frame that goes down into the screen),
-            FL_BORDER_FRAME (A frame with a simple outline), FL_SHADOW_FRAME
-            (A frame with a shadow), FL_ENGRAVED_FRAME (A frame appears to be
-            engraved), FL_ROUNDED_FRAME (A rounded frame), FL_EMBOSSED_FRAME
-            (A frame appears embossed), FL_OVAL_FRAME (An elliptic box).
+            type of frame to be added. Values (from xfdata.py)
+            - FL_NO_FRAME (Nothing is drawn),
+            - FL_UP_FRAME (A frame appears coming out of the screen),
+            - FL_DOWN_FRAME (A frame that goes down into the screen),
+            - FL_BORDER_FRAME (A frame with a simple outline),
+            - FL_SHADOW_FRAME (A frame with a shadow),
+            - FL_ENGRAVED_FRAME (A frame appears to be engraved),
+            - FL_ROUNDED_FRAME (A rounded frame),
+            - FL_EMBOSSED_FRAME (A frame appears embossed),
+            - FL_OVAL_FRAME (An elliptic box).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -450,13 +456,16 @@ def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
     Parameters
     ----------
         frametype : int
-            type of labelframe to be added. Values (from xfdata.py) FL_NO_FRAME
-            (Nothing is drawn), FL_UP_FRAME (A frame appears coming out of the
-            screen), FL_DOWN_FRAME (A frame that goes down into the screen),
-            FL_BORDER_FRAME (A frame with a simple outline), FL_SHADOW_FRAME
-            (A frame with a shadow), FL_ENGRAVED_FRAME (A frame appears to be
-            engraved), FL_ROUNDED_FRAME (A rounded frame), FL_EMBOSSED_FRAME
-            (A frame appears embossed), FL_OVAL_FRAME (An elliptic box).
+            type of labelframe to be added. Values (from xfdata.py)
+            - FL_NO_FRAME (Nothing is drawn),
+            - FL_UP_FRAME (A frame appears coming out of the screen),
+            - FL_DOWN_FRAME (A frame that goes down into the screen),
+            - FL_BORDER_FRAME (A frame with a simple outline),
+            - FL_SHADOW_FRAME (A frame with a shadow),
+            - FL_ENGRAVED_FRAME (A frame appears to be engraved),
+            - FL_ROUNDED_FRAME (A rounded frame),
+            - FL_EMBOSSED_FRAME (A frame appears embossed),
+            - FL_OVAL_FRAME (An elliptic box).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -511,7 +520,7 @@ def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
 # Object Class: Free
 #####################
 
-# fl_create_free function placeholder (internal)
+# fl_create_free() function placeholder (internal)
 
 
 def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
@@ -523,21 +532,23 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
     Parameters
     ----------
         freetype : int
-            type of free to be added. Value (from xfdata.py) FL_NORMAL_FREE
-            (The flobject will receive the events FL_DRAW, FL_ENTER, FL_LEAVE,
-            FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE), FL_INACTIVE_FREE or
-            FL_SLEEPING_FREE (The flobject only receives FL_DRAW events. This
-            should be used for flobjects without interaction, e.g. a picture),
-            FL_INPUT_FREE (Same as FL_NORMAL_FREE but the flobject also
-            receives FL_FOCUS, FL_UNFOCUS and FL_KEYBOARD events. The
-            ptr_flobject.contents.wantkey is by default set to FL_KEY_NORMAL,
-            i.e., the free flobject will receive all normal keys (0-255) except
-            <Tab> and <Return> key. If you're interested in <Tab> or <Return>
-            key, you need to change obj->wantkey to FL_KEY_TAB or FL_KEY_ALL),
-            FL_CONTINUOUS_FREE (Same as FL_NORMAL_FREE but the flobject also
-            receives FL_STEP events. This should be used for flobjects that
-            change themselves continuously), FL_ALL_FREE (The flobject receives
-            all types of events).
+            type of free to be added. Value (from xfdata.py)
+            - FL_NORMAL_FREE (The flobject will receive the events FL_DRAW,
+              FL_ENTER, FL_LEAVE, FL_MOTION, FL_PUSH, FL_RELEASE and FL_MOUSE),
+            - FL_INACTIVE_FREE or FL_SLEEPING_FREE (The flobject only receives
+              FL_DRAW events. This should be used for flobjects without
+              interaction, e.g. a picture),
+            - FL_INPUT_FREE (Same as FL_NORMAL_FREE but the flobject also
+              receives FL_FOCUS, FL_UNFOCUS and FL_KEYBOARD events. The
+              ptr_flobject.contents.wantkey is by default set to FL_KEY_NORMAL,
+              i.e., the free flobject will receive all normal keys (0-255)
+              except <Tab> and <Return> key. If you are interested in <Tab> or
+              <Return> key, you need to change ptr_flobject.contents.wantkey
+              to FL_KEY_TAB or FL_KEY_ALL),
+            - FL_CONTINUOUS_FREE (Same as FL_NORMAL_FREE but the flobject also
+              receives FL_STEP events. This should be used for flobjects that
+              change themselves continuously),
+            - FL_ALL_FREE (The flobject receives all types of events).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -561,7 +572,8 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
             invocation of this handler. event and ptr_xevent.contents.type can
             both be used to obtain the event types. The routine should return
             whether the status of the object has changed, i.e., whether
-            fl_do_forms() or fl_check_forms() should return this flobject.
+            flbasic.fl_do_forms() or flbasic.fl_check_forms() should return
+            this flobject.
 
     Returns
     -------

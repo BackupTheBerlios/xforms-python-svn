@@ -56,9 +56,9 @@ def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
     Parameters
     ----------
         spinnertype : int
-            type of spinner to be added. Values (from xfdata.py) FL_INT_SPINNER
-            (spinner with integer values), FL_FLOAT_SPINNER (spinner with float
-            values)
+            type of spinner to be added. Values (from xfdata.py)
+            - FL_INT_SPINNER (spinner with integer values),
+            - FL_FLOAT_SPINNER (spinner with float values)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int

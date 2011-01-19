@@ -54,16 +54,16 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
     Parameters
     ----------
         inputtype : int
-            type of input to be added. Values (from xfdata.py) FL_NORMAL_INPUT
-            (Any type of text can be typed into this field), FL_FLOAT_INPUT
-            (Only a float value can be typed in, e.g. -23.2e12), FL_INT_INPUT
-            (Only an integer value can be typed in, e.g. -86), FL_DATE_INPUT
-            (Only a date, MM/DD/YY or DD/MM/YY, can be typed in, limited per
-            default to 10 characters), FL_MULTILINE_INPUT (An input field
-            allowing for multiple lines), FL_HIDDEN_INPUT (A normal input
-            field but invisible), FL_SECRET_INPUT (A normal input field that
-            does not show the text, limited per default to a maximum length of
-            16 characters)
+            type of input to be added. Values (from xfdata.py)
+            - FL_NORMAL_INPUT (Any type of text can be typed into this field)
+            - FL_FLOAT_INPUT (Only a float value can be typed in, e.g. -23.2e2)
+            - FL_INT_INPUT (Only an integer value can be typed in, e.g. -86)
+            - FL_DATE_INPUT (Only a date, MM/DD/YY or DD/MM/YY, can be typed
+              in, limited by default to 10 characters)
+            - FL_MULTILINE_INPUT (An input field allowing for multiple lines)
+            - FL_HIDDEN_INPUT (A normal input field but invisible)
+            - FL_SECRET_INPUT (A normal input field that does not show the
+              text, limited per default to a maximum length of 16 characters)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -470,10 +470,11 @@ def fl_set_input_format(ptr_flobject, fmt, sep):
     Parameters
     ----------
         fmt : int
-            format for the input. Values (from xfdata.py) FL_INPUT_MMDD (Used
-            as format for FL_DATE_INPUT, it places the month before the day),
-            FL_INPUT_DDMM (Used as format for FL_DATE_INPUT, it places the day
-            before the month).
+            format for the input. Values (from xfdata.py)
+            - FL_INPUT_MMDD (Used as format for FL_DATE_INPUT, it places the
+              month before the day),
+            - FL_INPUT_DDMM (Used as format for FL_DATE_INPUT, it places the
+              day before the month).
         sep : int or char
             printable single character used as separator
 
@@ -518,8 +519,10 @@ def fl_set_input_hscrollbar(ptr_flobject, pref):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             input flobject
         pref : int
-            how is horizontal scrollbar shown. Values (from xfdata.py) FL_AUTO
-            (On when needed, default), FL_ON (always on), FL_OFF (always off)
+            how is horizontal scrollbar shown. Values (from xfdata.py)
+            - FL_AUTO (On when needed, default),
+            - FL_ON (always on),
+            - FL_OFF (always off)
 
     Examples
     --------
@@ -557,8 +560,9 @@ def fl_set_input_vscrollbar(ptr_flobject, pref):
             input flobject
         pref : int
             how is vertical scrollbar shown. Values (from xfdata.py)
-            FL_AUTO (On when needed, default), FL_ON (always on), FL_OFF
-            (always off)
+            - FL_AUTO (On when needed, default),
+            - FL_ON (always on),
+            - FL_OFF (always off)
 
     Examples
     --------
@@ -600,7 +604,7 @@ def fl_set_input_topline(ptr_flobject, linenum):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_topline = library.cfuncproto(
@@ -716,7 +720,7 @@ def fl_set_input_xoffset(ptr_flobject, offset):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_xoffset = library.cfuncproto(
@@ -790,7 +794,7 @@ def fl_set_input_fieldchar(ptr_flobject, fldchar):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_fieldchar = library.cfuncproto(
@@ -831,7 +835,7 @@ def fl_get_input_topline(ptr_flobject):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_input_topline = library.cfuncproto(
@@ -866,7 +870,7 @@ def fl_get_input_screenlines(ptr_flobject):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_input_screenlines = library.cfuncproto(
@@ -912,7 +916,7 @@ def fl_get_input_cursorpos(ptr_flobject):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + Demo = OK
+        Status: NA-UTest + Doc + Demo = OK
 
     """
     _fl_get_input_cursorpos = library.cfuncproto(
@@ -948,7 +952,7 @@ def fl_set_input_cursor_visible(ptr_flobject, yesno):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_cursor_visible = library.cfuncproto(
@@ -983,7 +987,7 @@ def fl_get_input_numberoflines(ptr_flobject):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_get_input_numberoflines = library.cfuncproto(
@@ -1129,7 +1133,7 @@ def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     #FL_INPUTVALIDATOR = cty.CFUNCTYPE(cty.c_int, cty.POINTER( \
@@ -1223,7 +1227,7 @@ def fl_set_input_editkeymap(ptr_editkeymap):
 
     Notes
     -----
-        Status: NA-UTest + NoDoc + NoDemo = Maybe
+        Status: NA-UTest + Doc + NoDemo = Maybe
 
     """
     _fl_set_input_editkeymap = library.cfuncproto(

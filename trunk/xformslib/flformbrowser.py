@@ -315,8 +315,8 @@ def fl_get_formbrowser_area(ptr_flobject):
 def fl_set_formbrowser_scroll(ptr_flobject, howscroll):
     """fl_set_formbrowser_scroll(ptr_flobject, howscroll)
 
-    Changes the vertical scrollbar so each action of the scrollbar scrolls to
-    the next forms. By default it scrolls a fixed number of pixels.
+    Changes the vertical scrollbar so each action of the scrollbar scrolls
+    to the next forms. By default it scrolls a fixed number of pixels.
 
     Parameters
     ----------
@@ -324,8 +324,8 @@ def fl_set_formbrowser_scroll(ptr_flobject, howscroll):
             formbrowser flobject
         howscroll : int
             How it scrolls. Values (from xfdata.py)
-            FL_SMOOTH_SCROLL (Default scroll), FL_JUMP_SCROLL (Scrolls in
-            form increments).
+            - FL_SMOOTH_SCROLL (Default scroll),
+            - FL_JUMP_SCROLL (Scrolls in form increments).
 
     Examples
     --------
@@ -361,8 +361,10 @@ def fl_set_formbrowser_hscrollbar(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             formbrowser flobject
         howscroll : int
-            if scrollbar is added or not. Values (from xfdata module) FL_AUTO
-            (On when needed, default), FL_ON (always on), FL_OFF (always off).
+            if scrollbar is added or not. Values (from xfdata.py)
+            - FL_AUTO (On when needed, default),
+            - FL_ON (always on),
+            - FL_OFF (always off).
 
     Examples
     --------
@@ -398,8 +400,10 @@ def fl_set_formbrowser_vscrollbar(ptr_flobject, howscroll):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             formbrowser flobject
         howscroll : int
-            if scrollbar is added or not. Values (from xfdata module) FL_AUTO
-            (On when needed, default), FL_ON (always on), FL_OFF (always off).
+            if scrollbar is added or not. Values (from xfdata.py)
+            - FL_AUTO (On when needed, default),
+            - FL_ON (always on),
+            - FL_OFF (always off).
 
     Examples
     --------
@@ -734,7 +738,10 @@ def fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label):
     """fl_add_formbrowser(frmbrwstype, xpos, ypos, width, height, label)
     -> ptr_flform
 
-    Adds a formbrowser flobject.
+    Adds a formbrowser flobject. It is a container class that is capable of
+    holding multiple forms, the height of which in aggregate may exceed the
+    screen height. The formbrowser also works obviously for a single form that
+    has a height that is larger than the screen height.
 
     Parameters
     ----------

@@ -278,7 +278,7 @@ def set_flimageinitialized():
 
 def convert_to_stringc(paramname):
     """ Converts paramname to python str and to ctypes c_char_p """
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         stringtype = str
     else:
         stringtype = basestring
@@ -295,7 +295,7 @@ def convert_to_stringc(paramname):
 
 def convert_to_ptr_stringc(paramname):
     """ Converts paramname (list of str) to a ctypes pointer to c_char_p """
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         stringtype = str
     else:
         stringtype = basestring
@@ -333,7 +333,7 @@ convert_to_FL_Coord = convert_to_intc
 
 def convert_to_ptr_intc(paramname):
     """ Converts paramname (list of int) to a ctypes pointer to c_int """
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         longtype = int
     else:
         longtype = (long, int)
@@ -400,7 +400,7 @@ def convert_to_ushortc(paramname):
 
 def convert_to_longc(paramname):
     """ Converts paramname to python long and to ctypes c_long """
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         longtype = int
     else:
         longtype = long
@@ -420,7 +420,7 @@ def convert_to_longc(paramname):
 
 def convert_to_ulongc(paramname):
     """ Converts paramname to python long and to ctypes c_ulong """
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         longtype = int
     else:
         longtype = long
@@ -444,7 +444,7 @@ convert_to_Pixmap = convert_to_ulongc
 
 def convert_to_ptr_ulongc(paramname):
     """ Converts paramname (list of long) to a ctypes pointer to c_ulong """
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         longtype = int
     else:
         longtype = (long, int)
@@ -617,7 +617,7 @@ def convert_userdata_to_ptrvoid(udata):
     """ Taking any manageable userdata type to be used in a callback-type
     function, handles it and returns a pointer param compatible with C
     pointer to void."""
-    if sys.version_info[0] > 2:
+    if sys.hexversion > 0x20909f0:
         longtype = int
         stringtype = str
     else:

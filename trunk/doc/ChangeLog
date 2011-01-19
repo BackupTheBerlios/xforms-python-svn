@@ -2,6 +2,10 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110119 (beta18)
+    * new_popup.py example added (not 100% functional, I need to verify why it
+    segfaults).
+    * new layout in docstrings for param with allowed variable values.
     20110115 (beta17)
     * reviewed status of fl*.py functions to reflect real development status.
     Some more unit-tests for flbasic functions, and readjustments in some

@@ -1288,7 +1288,12 @@ def fl_show_command_log(border):
     ----------
         border : int
             window manager decoration. Values (from xfdata.py)
-            FL_FULLBORDER, FL_TRANSIENT, FL_NOBORDER
+           - FL_FULLBORDER (normal, draws full border with title),
+           - FL_TRANSIENT (draws borders with possibly less decoration,
+             depends on the window managers behaviour. You might not be able
+             to iconify a form under some WMs),
+           - FL_NOBORDER (Draw no border at all. You cannot iconify a form
+             with no borders)
 
     Examples
     --------
@@ -1664,8 +1669,12 @@ def fl_set_fselector_border(border):
     Parameters
     ----------
         border : int
-            window manager decoration. Values (from xfdata.py) FL_FULLBORDER,
-            or FL_TRANSIENT. FL_NOBORDER is ignored.
+            window manager decoration. Values (from xfdata.py)
+            - FL_FULLBORDER (normal, draw full border with title),
+            - FL_TRANSIENT (draws borders with possibly less decoration,
+              depends on the window managers behaviour. You might not be able
+              to iconify a form under some WMs),
+            FL_NOBORDER is ignored.
 
     Examples
     --------

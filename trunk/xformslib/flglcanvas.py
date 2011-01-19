@@ -54,8 +54,8 @@ def fl_add_glcanvas(canvastype, xpos, ypos, width, height, label):
     ----------
         canvastype : int
             type of glcanvas to be added. Values (from xfdata.py)
-            FL_NORMAL_CANVAS (normal canvas type), FL_SCROLLED_CANVAS (not
-            enabled)
+            - FL_NORMAL_CANVAS (normal canvas type),
+            - FL_SCROLLED_CANVAS (not enabled)
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -116,8 +116,8 @@ def fl_set_glcanvas_defaults(glconfig):
     Parameters
     ----------
         glconfig : list of int
-            configuration settings, ending with -1. Attributes are (as defined
-            in OpenGL glXChooseVisual() function) GLX_USE_GL, GLX_BUFFER_SIZE,
+            configuration settings, ending with -1. Attributes are, as defined
+            in OpenGL glXChooseVisual() function, GLX_USE_GL, GLX_BUFFER_SIZE,
             GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER, GLX_STEREO, GLX_AUX_BUFFERS,
             GLX_RED_SIZE, GLX_GREEN_SIZE, GLX_BLUE_SIZE, GLX_ALPHA_SIZE,
             GLX_DEPTH_SIZE, GLX_STENCIL_SIZE, GLX_ACCUM_RED_SIZE,
@@ -153,8 +153,8 @@ def fl_get_glcanvas_defaults():
     Returns
     -------
         glconfig : array of int
-            configuration settings, ending with -1. Attributes are (as defined
-            in OpenGL glXChooseVisual() function) GLX_USE_GL, GLX_BUFFER_SIZE,
+            configuration settings, ending with -1. Attributes are, as defined
+            in OpenGL glXChooseVisual() function, GLX_USE_GL, GLX_BUFFER_SIZE,
             GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER, GLX_STEREO, GLX_AUX_BUFFERS,
             GLX_RED_SIZE, GLX_GREEN_SIZE, GLX_BLUE_SIZE, GLX_ALPHA_SIZE,
             GLX_DEPTH_SIZE, GLX_STENCIL_SIZE, GLX_ACCUM_RED_SIZE,
@@ -200,8 +200,8 @@ def fl_set_glcanvas_attributes(ptr_flobject, glconfig):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             glcanvas flobject
         glconfig : list of int
-            configuration settings to be set. Attributes are (as defined in
-            OpenGL glXChooseVisual() function) GLX_USE_GL, GLX_BUFFER_SIZE,
+            configuration settings to be set. Attributes are, as defined in
+            OpenGL glXChooseVisual() function, GLX_USE_GL, GLX_BUFFER_SIZE,
             GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER, GLX_STEREO, GLX_AUX_BUFFERS,
             GLX_RED_SIZE, GLX_GREEN_SIZE, GLX_BLUE_SIZE, GLX_ALPHA_SIZE,
             GLX_DEPTH_SIZE, GLX_STENCIL_SIZE, GLX_ACCUM_RED_SIZE,
@@ -243,8 +243,8 @@ def fl_get_glcanvas_attributes(ptr_flobject):
     Returns
     -------
         glconfig : int
-            glcanvas configuration settings. Attributes are (as defined in
-            OpenGL glXChooseVisual() function) GLX_USE_GL, GLX_BUFFER_SIZE,
+            glcanvas configuration settings. Attributes are, as defined in
+            OpenGL glXChooseVisual() function, GLX_USE_GL, GLX_BUFFER_SIZE,
             GLX_LEVEL, GLX_RGBA, GLX_DOUBLEBUFFER, GLX_STEREO, GLX_AUX_BUFFERS,
             GLX_RED_SIZE, GLX_GREEN_SIZE, GLX_BLUE_SIZE, GLX_ALPHA_SIZE,
             GLX_DEPTH_SIZE, GLX_STENCIL_SIZE, GLX_ACCUM_RED_SIZE,
