@@ -2,54 +2,59 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20110725 (beta19)
+    * realign to upstream XForms (1.0.94pre5, development up to git-20110626,
+      two functions added in flxyplot.py, xyplotactive.py example adjusted)
+    * new sierpinski_new.py example added.
+    * I need to revise examples to verify actual realignment
     20110119 (beta18)
     * new_popup.py example added (not 100% functional, I need to verify why it
-    segfaults).
+      segfaults).
     * new layout in docstrings for param with allowed variable values.
     20110115 (beta17)
     * reviewed status of fl*.py functions to reflect real development status.
-    Some more unit-tests for flbasic functions, and readjustments in some
-    examples.
+      Some more unit-tests for flbasic functions, and readjustments in some
+      examples.
     * some more docstring corrections and bugfixes in fl*.py.
     * in flflimage.py introduced new checks for flimage_setup() before calling
-    flimage_* functions.
+      flimage_* functions.
     * in xfstruct.py created new functions to prepare some class instance params:
-    make_ptr_flimagetext() for xfdata.FLIMAGE_TEXT, make_ptr_flimagemarker()
-    for xfdata.FLIMAGE_MARKER, make_ptr_fleditkeymap() for xfdata.FL_EditKeymap,
-    and make_ptr_flrect() for xfdata.FL_RECT.
+      make_ptr_flimagetext() for xfdata.FLIMAGE_TEXT, make_ptr_flimagemarker()
+      for xfdata.FLIMAGE_MARKER, make_ptr_fleditkeymap() for xfdata.FL_EditKeymap,
+      and make_ptr_flrect() for xfdata.FL_RECT.
     20110110 (beta16)
     * in fd2python.py character ':' of a value text in a fd. file is now
-    recognized and supported.
+      recognized and supported.
     * in flflimage.py removed unneeded checks for flxbasic.fl_initialize()
     * iconvert.py example added.
     * Userdata params in callback/handlers caller functions are handled in
-    different manner, you need to re-cast type from ptr_void to chosen type
-    in the called function to correctly retrieve passed value, using new
-    convert_ptrvoid_to_* functions. Restored c_void_p param type in caller
-    functions instead of variable param type, in flbasic.py, flbrowser.py,
-    flcanvas.py, flgoodies.py, flmisc.py, flnmenu.py, flpopup.py, flselect.py
-    and flxbasic.py. Adapting browserall.py, demo27.py, pmbrowse.py, canvas.py
-    to show how to retrieve passed value (re-casting pointer to void param) in
-    called function.
+      different manner, you need to re-cast type from ptr_void to chosen type
+      in the called function to correctly retrieve passed value, using new
+      convert_ptrvoid_to_* functions. Restored c_void_p param type in caller
+      functions instead of variable param type, in flbasic.py, flbrowser.py,
+      flcanvas.py, flgoodies.py, flmisc.py, flnmenu.py, flpopup.py, flselect.py
+      and flxbasic.py. Adapting browserall.py, demo27.py, pmbrowse.py, canvas.py
+      to show how to retrieve passed value (re-casting pointer to void param) in
+      called function.
     * in library.py function to handle userdata has been renamed to
-    convert_userdata_to_ptrvoid to reflect its real purpose.
+      convert_userdata_to_ptrvoid to reflect its real purpose.
     20110109 (beta15)
     * in xfstruct.py functions to prepare complex xfdata.py'structure to be
-    passed as functions' params has been renamed from make_<name> to
-    make_ptr_<name> (as this reflects real returned type). make_ptr_flpoint()
-    function stores n+1 elements in xfdata.FL_POINT() to prevent Segfault.
+      passed as functions' params has been renamed from make_<name> to
+      make_ptr_<name> (as this reflects real returned type). make_ptr_flpoint()
+      function stores n+1 elements in xfdata.FL_POINT() to prevent Segfault.
     * free_minimal.py example added.
     * removed fl_create_generic_canvas() function in flcanvas.py as internal.
     * some other bugfixes in fd2python.py
     20110108 (beta14)
     * created a new convenience function in library.py to handle userdata
-    parameter in callback-like functions. Modify userdata params in concerned
-    functions of flbasic.py, flbrowser.py, flcanvas.py, flgoodies.py, 
-    flmisc.py, flnmenu.py, flpopup.py, flselect.py and flxbasic.py, so this
-    arg should work almost as expected.
+      parameter in callback-like functions. Modify userdata params in concerned
+      functions of flbasic.py, flbrowser.py, flcanvas.py, flgoodies.py, 
+      flmisc.py, flnmenu.py, flpopup.py, flselect.py and flxbasic.py, so this
+      arg should work almost as expected.
     * canvas.py example added.
     * make_flpoint() function corrected: freedraw.py and demo27.py examples
-    display correctly triangles now.
+      display correctly triangles now.
     20110107 (beta13)
     * mtime now fixed in dirlist.py example.
     * freedraw.py example added (not 100% functional).
@@ -59,211 +64,211 @@ BETA
     20110106 (beta12)
     * dirlist.py example added (not 100% functional)
     * Removed value check of colors. colbrowser.py example added (not 100%
-    functional). Some docstrings adjusted in flbrowser.py.
+      functional). Some docstrings adjusted in flbrowser.py.
     * some typos fixed in xfstruct.py. group.py example fixed using a different
-    .xpm file (for some unknown reasons porsche.xpm is not recognized as xpm
-    format while crab45.xpm is: unfortunately I cannot spot appreciable
-    differences).
+      .xpm file (for some unknown reasons porsche.xpm is not recognized as xpm
+      format while crab45.xpm is: unfortunately I cannot spot appreciable
+      differences).
     20110105 (beta11)
     * another bugfix in flxyplot.py. xyplotover.py and xyplotall.py examples
-    added. Some docs improvement in flbasic.py. Some miscellanous bugfixes.
-    Added group.py example (not 100% functional).
+      added. Some docs improvement in flbasic.py. Some miscellanous bugfixes.
+      Added group.py example (not 100% functional).
     20110104 (beta10)
     * xyplotactive.py example added. Bugfix in flxyplot.py
     * boxtype.py example added (not 100% functional).
     * Some more docstrings in xfdata (for Structures) and in other modules
-    (for function prototypes). Miscellaneous bugfixes.
+      (for function prototypes). Miscellaneous bugfixes.
     20110102 (beta9)
     * Python 3.x should be almost supported now (remaining questions to
-    resolve are utf-8 encoding and unicode strings and single characters,
-    but XForms upstreams needs to be ported to Unicode before).
+      resolve are utf-8 encoding and unicode strings and single characters,
+      but XForms upstreams needs to be ported to Unicode before).
     * minor bugfixes for pixmapbutton in fd2python. Added some minimal
-    example files created as .fd and converted to .py using fd2python.py
+      example files created as .fd and converted to .py using fd2python.py
     * removed test_fl_add_io_callback.py and created a test_flbasic.py
-    test instead.
+      test instead.
     * realign to XForms upstream last version.
     20110101 (beta8)
     * xfdata.py Structures now have a __slots__ attribute, to reduce
-    memory usage.
+      memory usage.
     * Some other miscellaneous bugfixes and typos. Some more docstrings
-    in xfdata (for Structures) and in other modules (for function
-    prototypes).
+      in xfdata (for Structures) and in other modules (for function
+      prototypes).
     20101231 (beta7)
     * bitmapbutton's pixmapbutton's usedata cases now implemented in
-    fd2python. Removing fl_set_dial_return() as deprecated.
+      fd2python. Removing fl_set_dial_return() as deprecated.
     20101230 (beta6)
     * fd2python is almost complete.
     * bugfix for fl_set_button_mouse_buttons(). Removed value check for
-    fl_set_object_return(), as multiple bitwise OR are allowed.
+      fl_set_object_return(), as multiple bitwise OR are allowed.
     20101229 (beta5)
     * about a half of fdesign objects are now manageable by fd2python.py.
     * corrected shortcut in nmenu_minimal.py example.
     * bugfix in ndial.py example (as reported and suggested by Jens Thoms
-    Toerring).
+      Toerring).
     20101227 (beta4)
     * bugfix in fl_initialize()
     * fd2python.py added, to convert .fd fdesign files to xforms-python .py
-    (not completed yet).
+      (not completed yet).
     20101224 (beta3)
     * some leftover typos and bugs fixed. Moving most of constants' possible
-    values description from xfdata.py into concerning functions.
+      values description from xfdata.py into concerning functions.
     20101223 (beta2)
     * some other bugs fixed. Managed special sequences to be passed to
-    fl_popup_add_entries(), fl_popup_insert_entries(), fl_add_select_items(),
-    fl_insert_select_items(), fl_replace_select_item(), fl_add_nmenu_items(),
-    fl_insert_nmenu_items(), fl_replace_nmenu_item() functions, so separate
+      fl_popup_add_entries(), fl_popup_insert_entries(), fl_add_select_items(),
+      fl_insert_select_items(), fl_replace_select_item(), fl_add_nmenu_items(),
+      fl_insert_nmenu_items(), fl_replace_nmenu_item() functions, so separate
       additional args are now supported using python keyword params.
     20101221 (beta1)
     * some miscellaneous bugfixes.
     * Modified some functions with a parameter of str type who can have None
-    value, so they now require empty str (""), instead of None. Bugfix in
-    fl_vclass_name(). Managed FL_IOPT * param for fl_set_defaults().
-    Now fl_initialize() supports command line arguments, as FL_CMD_OPT *
-    is managed. Modified examples to replace empty appoptions param from 0
-    to None. Added arrowbutton_var example to show FL_CMD_OPT wrapper.
-    Managed FL_RESOURCE * param for fl_get_app_resources().
-    * xforms-python has now entered in beta development state! Hopefully most
-    functions should be reasonably stable now.
+      value, so they now require empty str (""), instead of None. Bugfix in
+      fl_vclass_name(). Managed FL_IOPT * param for fl_set_defaults().
+      Now fl_initialize() supports command line arguments, as FL_CMD_OPT *
+      is managed. Modified examples to replace empty appoptions param from 0
+      to None. Added arrowbutton_var example to show FL_CMD_OPT wrapper.
+      Managed FL_RESOURCE * param for fl_get_app_resources().
+      * xforms-python has now entered in beta development state! Hopefully most
+      functions should be reasonably stable now.
 
 ALPHA
     * changed descriptions for color params. Some misc. corrections.
     * continuing params' names change to be more meaningful. Some bugfixes
-    and some typos fixed.
+      and some typos fixed.
     * pointer-to-something params have now meaningful names (WIP),
-    c-compatible type have clearer prefixes (WIP). Bugfixes and typos.
-    make_flpopupitem now verifies type, state and shortcut keys.
-    donothing_popupcb as placeholder callback function moved to xfstruct.py.
-    fl_set_color_leak() removed (backwards). Realign to upstream XForms
-    1.0.94pre4: new fl_full_library_version() function.
+      c-compatible type have clearer prefixes (WIP). Bugfixes and typos.
+      make_flpopupitem now verifies type, state and shortcut keys.
+      donothing_popupcb as placeholder callback function moved to xfstruct.py.
+      fl_set_color_leak() removed (backwards). Realign to upstream XForms
+      1.0.94pre4: new fl_full_library_version() function.
     * bugfixes in some examples. butttype.py example added.
     * managed how to correctly handle char** in fl_set_pixmap_data (thanks to
-    Mark Tolonen, on ctypes-users mailing-list). Some adjustments in examples.
-    New iconify_var.py example.
+      Mark Tolonen, on ctypes-users mailing-list). Some adjustments in examples.
+      New iconify_var.py example.
     * new handling of ubyte array in library.py. Bugfixes for fl_state and
-    fl_vmode.
+      fl_vmode.
     * unit-tests introduced for some flbitmap.py's functions. Some
-    better type checks in library.py.
+      better type checks in library.py.
     * Realign to upstream XForms 1.0.94pre3. Add demo33_var.py example.
     * adjustments for pydoc-generated html files. Remove old and unused
-    internal directory.
+      internal directory.
     * setup.py takes care of examples and html files' installation now.
-    Some malformed docstrings corrected. Remove local links in html files and
-    create a custom index.html to do a modules list.
+      Some malformed docstrings corrected. Remove local links in html files and
+      create a custom index.html to do a modules list.
     * Simplified documentation layout (now you don't need epydoc anymore),
-    html files are now generated using pydoc. Massime docstrings reorganization.
-    Bugfixes and typos' correction. flstruct.py renamed to xfstruct (as it is not
-    part of upstream XForms).
+      html files are now generated using pydoc. Massime docstrings reorganization.
+      Bugfixes and typos' correction. flstruct.py renamed to xfstruct (as it is not
+      part of upstream XForms).
     * New file flstruct.py for functions to prepare xfdata Structures to be
-    used in fl* functions. Some corrections in flnmenu and flpopup (WIP).
+      used in fl* functions. Some corrections in flnmenu and flpopup (WIP).
     * Realignment to upstream XForms version 1.0.94pre1. New mode for importing
-    python package and examples' adjustment. Bugfixes. Some examples remain to
-    adjust.
+      python package and examples' adjustment. Bugfixes. Some examples remain to
+      adjust.
     * Realign to upstream XForms version 1.0.93.
     * Functions to add and insert entries in popups and derived entities
-    (nmenus and selects) supports special sequencies (even if some problematic
-    aspects may still apply).
+      (nmenus and selects) supports special sequencies (even if some problematic
+      aspects may still apply).
     * most of Structure classes in xfdata.py have a docstring now.
     * some bugfixes and other docstrings improved.
     * some docstrings improved.
     * restored correctness of all examples.
     * introduce a new convenience function for checking admittable values
-    with non-fatal consequences (checknonfatal_allowed_value_in_list), as
-    some function can use different values than pre-defined ones).
-    check_admitted_value_in_list renamed to checkfatal_allowed_value_in_list.
+      with non-fatal consequences (checknonfatal_allowed_value_in_list), as
+      some function can use different values than pre-defined ones).
+      check_admitted_value_in_list renamed to checkfatal_allowed_value_in_list.
     * some bugfixes. Realign to upstream XForms. RGB color triples documented.
     * Finally deprecated.py module is gone. Remaining examples who used
-    deprecated functions are removed and replaced by: buttonall_new.py, 
-    thumbwheel_new.py
+      deprecated functions are removed and replaced by: buttonall_new.py, 
+      thumbwheel_new.py
     * better error handling (error message more complete). First unit-test
-    (fbasic.py fl_add_io_callback's function).
+      (fbasic.py fl_add_io_callback's function).
     * polished code to comply (mostly) with PEP8. Clarify use of pointer
-    to void 'vdata' parameter as any type, remove vdata type checking.
+      to void 'vdata' parameter as any type, remove vdata type checking.
     * corrected list of admitted values for align and place, as library's
-     check_admitted_value_in_list function didn't recognize bitwise OR-ed
-     values. Corrected XForms' corresponding version.
+      check_admitted_value_in_list function didn't recognize bitwise OR-ed
+      values. Corrected XForms' corresponding version.
     * introduced support of strings in c_void_p parameters in flbasic. New
-    support function in library.py to check if a function is correctly passed
-    as parameter (e.g. in callback making functions). Fixed a bug in
-    library.py's check_admitted_value_in_list.
+      support function in library.py to check if a function is correctly passed
+      as parameter (e.g. in callback making functions). Fixed a bug in
+      library.py's check_admitted_value_in_list.
     * some bugfixes in code (most of warnings fixed using pylint, pychecker and
-    pyflakes) and docstrings finally compliant to epydoc reStructuredText.
+      pyflakes) and docstrings finally compliant to epydoc reStructuredText.
     * performing a check for all complex structures (e.g. FL_OBJECT, FL_FORM
-    ..) in needed fl_* functions, in order to verify if their type complies
-    with XForms expectations. Some renaming in library's convenience functions.
-    Some bugfixes in functions' initialization and docstrings. Remaining files
-    switched to reStructuredText. Some descriptions in functions' docstrings
-    are not complete yet.
+      ..) in needed fl_* functions, in order to verify if their type complies
+      with XForms expectations. Some renaming in library's convenience functions.
+      Some bugfixes in functions' initialization and docstrings. Remaining files
+      switched to reStructuredText. Some descriptions in functions' docstrings
+      are not complete yet.
     * docstrings in flpositioner.py and flscrollbar.py switched to
-    reStructuredText.
+      reStructuredText.
     * docstrings in flnmenu.py switched to reStructuredText.
     * docstrings in flflinput.py and flmisc.py, switched to reStructuredText.
     * new convenience functions in library.py for checking complex object
-    instances.
+      instances.
     * docstrings in flfilesys.py, flflimage.py, flformbrowser.py,
-    flglcanvas.py, flgoodies.py switched to reStructuredText. Realign to
-    upstream XForms code (flimage_free not returning).
+      flglcanvas.py, flgoodies.py switched to reStructuredText. Realign to
+      upstream XForms code (flimage_free not returning).
     * docstrings in flcounter.py, flcursor.py and fldial.py switched to
-    reStructuredText. Some corrections in docstrings format. Corrected
-    cursor.py example.
+      reStructuredText. Some corrections in docstrings format. Corrected
+      cursor.py example.
     * docstrings in flclock.py switched to reStructuredText.
     * docstrings in flchart.py switched to reStructuredText.
     * docstrings in flcanvas.py switched to reStructuredText.
     * docstrings in flbutton.py switched to reStructuredText.
     * docstrings in flbrowser.py switched to reStructuredText.
     * docstrings in __init__.py, flbasic.py and flbitmap.py switched to
-    reStructuredText.
+      reStructuredText.
     * Realign to upstream XForms code (fl_object_returned function removed).
     * All examples have been adapted. Nonetheless preemptive demo is
-    partially broken.
+      partially broken.
     * another bunch of adapted examples. Some more docstrings.
     * most examples are being re-adapted to new modules' structure and
-    get rid of global variables in them (using python class when
-    necessary).
+      get rid of global variables in them (using python class when
+      necessary).
     * flclock example renamed to clock.py to avoid confusion with module.
     * choice_new and folder_new (replacing deprecated functions) added.
     * massive code reorganization. Its purpose is to realign my code
-    distribution with files' structure already used by XForms upstream.
-    So I will create and modify some files, to be used from now on:
-    - flbasic.py, flbitmap.py, flbrowser.py, flbutton.py, flcanvas.py,
-    flchart.py, flclock.py, flcounter.py, flcursor.py, fldial.py,
-    flfilesys.py, flformbrowser.py, flglcanvas.py, flgoodies.py,
-    flinput.py, flnmenu.py, flpopup.py, flpositioner.py, flscrollbar.py,
-    flselect.py, flslider.py, flspinner.py, fltabfolder.py,
-    flthumbwheel.py, fltimer.py, flxbasic.py, flxyplot.py, flflimage.py;
-    - flmisc.py, for upstream corresponding files that have only one or two
-    viable functions each (box, clipbd, frame, free, AAA, zzz, etc..);
-    - vers.py, containg version information only;
-    - oldfunc.py renamed to deprecated.py, and maintained for deprecated
-    functions and variables;
-    - library.py will contain only support/not public functions;
-    - xfdata.py will be maintained, reordered.
-    Not all demos in examples/ directory are adapted yet.
+      distribution with files' structure already used by XForms upstream.
+      So I will create and modify some files, to be used from now on:
+      - flbasic.py, flbitmap.py, flbrowser.py, flbutton.py, flcanvas.py,
+      flchart.py, flclock.py, flcounter.py, flcursor.py, fldial.py,
+      flfilesys.py, flformbrowser.py, flglcanvas.py, flgoodies.py,
+      flinput.py, flnmenu.py, flpopup.py, flpositioner.py, flscrollbar.py,
+      flselect.py, flslider.py, flspinner.py, fltabfolder.py,
+      flthumbwheel.py, fltimer.py, flxbasic.py, flxyplot.py, flflimage.py;
+      - flmisc.py, for upstream corresponding files that have only one or two
+      viable functions each (box, clipbd, frame, free, AAA, zzz, etc..);
+      - vers.py, containg version information only;
+      - oldfunc.py renamed to deprecated.py, and maintained for deprecated
+      functions and variables;
+      - library.py will contain only support/not public functions;
+      - xfdata.py will be maintained, reordered.
+      Not all demos in examples/ directory are adapted yet.
     * some examples adapted to getter functions's .value modification.
     * pObject and pForm as parameters renamed to pFlObject and pFlForm, to
-    avoid confusion with python "object" type.
+      avoid confusion with python "object" type.
     * start restructuring of docstrings, to introduce @type again for all
-    parameters. Bugfixes and typos corrections.
+      parameters. Bugfixes and typos corrections.
     * new checks for pointer to FL_OBJECT/FL_FORM existence, and for
-    required initialization.
+      required initialization.
     * other functions are tested and documented.
     * lowlevel fl_strdup() removed.
     * another bunch of functions have been tested and documented; in getter
-    functions who return multiple values use .value attribute to return value
-    and not ctypes type.
+      functions who return multiple values use .value attribute to return value
+      and not ctypes type.
     * use some constants from X11/keysymdef.h to be used with
-    fl_set_object_shortcutkey.
+      fl_set_object_shortcutkey.
     * another bunch of functions tested and documented.
     * Porting of chartstrip example.
     * some more function tested and documented
     * removed backward fl_show_errors function.
     * workaround for fl_set_input_format to accept characters (e.g. "/") and
-    ascii numeric values (e.g. 47), as separator.
+      ascii numeric values (e.g. 47), as separator.
     * some more docstrings and checked parameters
     * flps_* functions (except flps_init) are removed from library. After an
-    interesting discussion with XForms upstream maintainer I've decided to get
-    rid of them as they has been undocumented already in old (0.89) docs, and
-    they should be used only in fd2ps program (just in case I leave a
-    placeholder and they are moved to a temporary file, too).
+      interesting discussion with XForms upstream maintainer I've decided to get
+      rid of them as they has been undocumented already in old (0.89) docs, and
+      they should be used only in fd2ps program (just in case I leave a
+      placeholder and they are moved to a temporary file, too).
     * some revision of docstrings
     * realign to upstream (modification of color parameter in flps_*)
     * other docstrings; added simpletable example.
@@ -271,70 +276,62 @@ ALPHA
     * Realign to upstream. Some docstrings completed.
     * Demo examples adapted to new internal/deprecated situation.
     * Deprecated from upstream functions are temporarily moved to a separate
-    python file: you will have to explicitly import "oldfunc.py" if you want
-    to use them. Anyway they are scheduled for removal in about six months
-    from now.
+      python file: you will have to explicitly import "oldfunc.py" if you want
+      to use them. Anyway they are scheduled for removal in about six months
+      from now.
     * some more variables' docstrings.
     * internal and deprecated variables (if not used for menu/pup/choice
-    functions) are removed from xfdata (just in case I leave a placeholder
-    and they are moved to a temporary file, too).
+      functions) are removed from xfdata (just in case I leave a placeholder
+      and they are moved to a temporary file, too).
     * XForms internal and low-level functions I am aware of are (hopefully)
-    removed from library, as they are not supposed to be used here (just in
-    case I leave a placeholder and they are moved to a temporary file).
+      removed from library, as they are not supposed to be used here (just in
+      case I leave a placeholder and they are moved to a temporary file).
     * testing status of function with a working example is completed
     * First bunch of testing status of functions inserted in docstrings
     * Deprecated from upstream functions (old menu/pup/choice and two
-    xlplot functions) are now clearly labeled and documented as such,
-    as they may be removed anytime.
+      xyplot functions) are now clearly labeled and documented as such,
+      as they may be removed anytime.
     * some more docstrings.
     * Added nmenu_minimal example.
-    * Thanks to Jens T. Toerring, now FL_POPUP_ITEM management
-    is correctly supported (for one item with a dict or a single
-    list, for more than one with a series of lists) in functions
-    who use it.
+    * Thanks to Jens T. Toerring, now FL_POPUP_ITEM management is
+      correctly supported (for one item with a dict or a single list,
+      for more than one with a series of lists) in functions who use it.
     * separated namespace for xfdata preserved in library.
-    * bugfixes in demo file because of some commented deprecated
-    variables.
-    * introduce some new functions for nmenus and popups
-    (realigning with upstream XForms).
+    * bugfixes in demo file because of some commented deprecated variables.
+    * introduce some new functions for nmenus and popups (realigning to
+      upstream XForms).
     * library prepared to be able to give status of testing,
-    documentation, example presence, and working state.
+      documentation, example presence, and working state.
     * Get rid of API-diversion.txt, insert API change state in
-    docstrings (more easily keeping update)
+      docstrings (more easily keeping update)
     * Porting of demotest2 example.
     * some variables in xfdata have now their docstrings (and can be
-    documented in .tex files)
+      documented in .tex files)
     * Porting of demotest3 example.
     * Porting of demo27 example.
-    * Start a global review to monitor functions for
-    completing docstrings and testing real working state
-    (this surely will take several weeks, but I think it's
-    absolutely necessary).
-    * FL_POINT argument better handled in functions who used it
-    as parameter.
+    * Start a global review to monitor functions for completing docstrings
+      and testing real working state (this surely will take several weeks,
+      but I think it's absolutely necessary).
+    * FL_POINT argument better handled in functions who used it as parameter.
     * Re-sync with upstream XForms adjustments.
-    * Porting of iconify example (partiually, as some segfault
-    problems prevent a complete porting).
+    * Porting of iconify example (partiually, as some segfault problems prevent
+      a complete porting).
     * some docstrings and bugfixes
     * Porting of grav example.
-    * HTML documentation will be only on website (too heavy to
-    be uploaded every time). New documentation format will be LaTex.
+    * HTML documentation will be only on website (too heavy to be uploaded
+      every time). New documentation format will be LaTex.
     * Porting of nmenu example.
     * more docstrings
     * Porting of select example.
     * bugfixes in some demos. Add lalign_pixmap example.
-    * Complete correction of names in demo files (e.g. pobj is
-    a meaningful name than obj for a pointer to object, and
-    .contents is better than [0] to deal with pointer to Structure
-    attributes)
-    * Thanks to J. T. Toerring (XForms current maintainer) I
-    can finally get rid of my ugly hacks for .visible,
-    .active, and object comparison.
-    * Get rid of api.pdf, use html documentation for API,
-    instead.
+    * Complete correction of names in demo files (e.g. pobj is a meaningful
+      name than obj for a pointer to object, and .contents is better than [0]
+      to deal with pointer to Structure attributes)
+    * Thanks to J. T. Toerring (XForms current maintainer) I can finally
+      get rid of my ugly hacks for .visible, .active, and object comparison.
+    * Get rid of api.pdf, use html documentation for API, instead.
     * Correct some names in demo examples to avoid confusion
-    * Re-sync with XForms upstream adding some new getter
-    functions.
+    * Re-sync with XForms upstream adding some new getter functions.
     * Bugfixes.
     * New docstrings.
     * Add missing fl_reset_cursor function.
@@ -351,23 +348,20 @@ ALPHA
     * Porting of objreturn example
     * Some other better docstrings.
     * Corrected some typos.
-    * Improved docstrings to comply with epydoc guidelines
-    (partial).
+    * Improved docstrings to comply with epydoc guidelines (partial).
     * Improved documentation (initial).
     * bugfixes.
-    * Changing some other param names and restructure
-    other getter functions.
-    * Add a documentation initial draft using python
-    docstrings with epydoc.
-    * Documented API differences between upstream XForms
-    library and xforms-python API.
+    * Changing some other param names and restructure other getter functions.
+    * Add a documentation initial draft using python docstrings with epydoc.
+    * Documented API differences between upstream XForms library and
+      xforms-python API.
     * Updated for XForms 1.0.93pre1 variations
     * Porting of multilabel example.
     * Porting of fbrowse example.
-    * Enable .visible and .active attributes for a
-    FL_OBJECT object, in some functions.
-    * Introduce a check if some numeric parameters are valid
-    in accordance to a list of admitted values.
+    * Enable .visible and .active attributes for a FL_OBJECT object, in
+      some functions.
+    * Introduce a check if some numeric parameters are valid in accordance
+      to a list of admitted values.
     * Porting of scrollbar example.
     * Porting of timer2 example.
     * Porting of timeoutprec example.
@@ -391,9 +385,8 @@ ALPHA
     * Porting of objinactive example.
     * Porting of colsel1 example.
     * Porting of goodies example.
-    * Initial review to give meaningful names to functions'
-    parameters and to modify API for getter functions who return
-    multiple values
+    * Initial review to give meaningful names to functions' parameters
+      and to modify API for getter functions who return multiple values
     * Porting of choice example.
     * Porting of pushbutton example.
     * Porting of symbols example.
@@ -404,62 +397,61 @@ ALPHA
     * Porting of longlabel example.
     * Insert c function prototypes into python functions body (WIP)
     * Continuing explicit conversion for base types
-    * Initial warning function if a deprecated XForms function is
-    used
+    * Initial warning function if a deprecated XForms function is used
     * Prepare/convert base types as function arguments before calling
-    c function call, to reduce chances of segfault (WIP, incomplete)
+      c function call, to reduce chances of segfault (WIP, incomplete)
     * Porting of fdial example.
     * Reworked function to keep references, to reduce overhead
     * Porting of yesno example.
     * Porting of sld_alt example.
     * Porting of objpos example.
     * API change: some getter functions (e.g. fl_get_.....)
-    * Starting API change to avoid parameters as variable
-    addresses modified in place by the c function, use return
-    values instead (WIP, incomplete)
+    * Starting API change to avoid parameters as variable addresses
+      modified in place by the c function, use return values instead
+      (WIP, incomplete)
     * Porting of buttonall example.
     * Porting of touchbutton example.
     * some bugfixes to avoid undefined names
     * There's no point keeping types (xfstruct.py) and constants
-    (xfconst.py) separated: merge both into xfdata.py
+      (xfconst.py) separated: merge both into xfdata.py
     * Porting of free1 and fonts examples.
     * Porting of timer example.
     * Switch to python package format instead of a single module
-    xformslib is now a package.
+      xformslib is now a package.
     * Porting of yesno_cb example.
     * keep reference of elements (param names), too.
     * Porting of demo33 example.
     * Porting of pushme example.
     * Porting of colsel example.
     * start improving docstrings to include function purpose
-    and parameters' meaning
+      and parameters' meaning
     * continue replacing names, bugfixes.
     * reduce some lines length to prevent warnings.
     * Start replacing some function parameters who are python
-    keywords or other reserved words.
+      keywords or other reserved words.
     * Porting of borderwidth example.
     * Some bugfix to avoid "Illegal Instruction" because of
-    inappropriate position of reference to prevent garbage
-    collector.
+      inappropriate position of reference to prevent garbage
+      collector.
     * verify version compatibility (between XForms library and
-    xforms-python) and print a warning if there is a mismatch.
+      xforms-python) and print a warning if there is a mismatch.
     * Porting of arrowbutton example
     * Verified type conversion from py function to c-compatible.
-    * Raw conversion's product needed to be reworked, as
-    there were some problems:
-    - parts related to c standard library and X development
-    library are present (I've yet to understand if they are
-    necessary to be included and if they have to be loaded
-    explicitly by ctypes);
-    - some types are uncorrectly recognized as "unknown *"
-    (they have to be replaced with another coherent type);
-    - constants definitions are not ordered according to
-    the same order of original c header (I'm willing to
-    maintain same order, so future adaptation is easier);
-    - some blocks of code are not converted and are simply
-    missing (lack of functionality to comply with, seriously)
-    - there are unuseful comments, so .py file is too much
-    crowded (aesthetic reorganization).
+    * Raw conversion's product needed to be reworked, as there were
+      some problems:
+      - parts related to c standard library and X development
+      library are present (I've yet to understand if they are
+      necessary to be included and if they have to be loaded
+      explicitly by ctypes);
+      - some types are uncorrectly recognized as "unknown *"
+      (they have to be replaced with another coherent type);
+      - constants definitions are not ordered according to
+      the same order of original c header (I'm willing to
+      maintain same order, so future adaptation is easier);
+      - some blocks of code are not converted and are simply
+      missing (lack of functionality to comply with, seriously)
+      - there are unuseful comments, so .py file is too much
+      crowded (aesthetic reorganization).
 
 0.0.1 (20091027)
     Internal release.

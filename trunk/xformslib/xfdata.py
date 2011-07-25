@@ -26,7 +26,7 @@
 # then heavily reordered and reworked
 
 # ############################################# #
-# Interface to XForms shared flobject libraries   #
+# Interface to XForms shared flobject libraries #
 # ############################################# #
 
 # Using a hack (fake class) to allow docstrings for variables,

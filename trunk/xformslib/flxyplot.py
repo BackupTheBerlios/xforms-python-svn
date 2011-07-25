@@ -2573,3 +2573,123 @@ def fl_set_xyplot_mark_active(ptr_flobject, yesno):
     retval = _fl_set_xyplot_mark_active(ptr_flobject, i_yesno)
     return retval
 
+
+def fl_get_xyplot_screen_area(ptr_flobject):
+    """fl_get_xyplot_screen_area(ptr_flobject) -> llx, lly, urx, ury
+
+    Finds out the the rectangle in screen units into which the data of the
+    xyplot widget are drawn into (when axes are drawn this is also the
+    rectangle formed by those axes).
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            xyplot flobject
+
+    Returns
+    -------
+        llx : int
+            horizontal coordinates (relative to the flobject) of the
+            lower left hand corner
+        lly : int
+            vertical coordinates (relative to the flobject) of the
+            lower left hand corner
+        urx : int
+            horizontal coordinates (relative to the flobject) of the
+            upper right hand corner
+        ury : int
+            vertical coordinates (relative to the flobject) of the
+            upper right hand corner
+
+    Examples
+    --------
+        >>> *todo*
+
+    API_diversion
+    -------------
+        API changed from XForms, upstream is
+        fl_get_xyplot_screen_area(ptr_flobject, llx, lly, urx, ury)
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_get_xyplot_screen_area = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_xyplot_screen_area",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int), cty.POINTER(cty.c_int),
+        cty.POINTER(cty.c_int)],
+        """void fl_get_xyplot_screen_area(FL_OBJECT * obj, FL_COORD * llx,
+           FL_COORD * lly, FL_COORD * urx, FL_COORD * ury)""")
+    library.check_if_flinitialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_llx, ptr_llx = library.make_intc_and_pointer()
+    i_lly, ptr_lly = library.make_intc_and_pointer()
+    i_urx, ptr_urx = library.make_intc_and_pointer()
+    i_ury, ptr_ury = library.make_intc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, i_llx, i_lly, i_urx, i_ury, \
+            ptr_llx, ptr_lly, ptr_urx, ptr_ury)
+    _fl_get_xyplot_screen_area(ptr_flobject, ptr_llx, ptr_lly, ptr_urx, ptr_ury)
+    return i_llx.value, i_lly.value, i_urx.value, i_ury.value
+
+
+def fl_get_xyplot_world_area(ptr_flobject):
+    """fl_get_xyplot_world_area(ptr_flobject) -> llx, lly, urx, ury
+
+    Finds out the the rectangle in world units into which the data of the
+    xyplot widget are drawn into (when axes are drawn this is also the
+    rectangle formed by those axes).
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            xyplot flobject
+
+    Returns
+    -------
+        llx : float
+            horizontal coordinates (in world units) of the
+            lower left hand corner
+        lly : float
+            vertical coordinates (in world units) of the
+            lower left hand corner
+        urx : float
+            horizontal coordinates (in world units) of the
+            upper right hand corner
+        ury : float
+            vertical coordinates (in world units) of the
+            upper right hand corner
+
+    Examples
+    --------
+        >>> *todo*
+
+    API_diversion
+    -------------
+        API changed from XForms, upstream is
+        fl_get_xyplot_world_area(ptr_flobject, llx, lly, urx, ury)
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_get_xyplot_world_area = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_xyplot_world_area",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_float),
+        cty.POINTER(cty.c_float), cty.POINTER(cty.c_float),
+        cty.POINTER(cty.c_float)],
+        """void fl_get_xyplot_world_area(FL_OBJECT * obj, float * llx,
+           float * lly, float * urx, float * ury)""")
+    library.check_if_flinitialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    f_llx, ptr_llx = library.make_floatc_and_pointer()
+    f_lly, ptr_lly = library.make_floatc_and_pointer()
+    f_urx, ptr_urx = library.make_floatc_and_pointer()
+    f_ury, ptr_ury = library.make_floatc_and_pointer()
+    library.keep_elem_refs(ptr_flobject, f_llx, f_lly, f_urx, f_ury, \
+            ptr_llx, ptr_lly, ptr_urx, ptr_ury)
+    _fl_get_xyplot_screen_area(ptr_flobject, ptr_llx, ptr_lly, ptr_urx, ptr_ury)
+    return f_llx.value, f_lly.value, f_urx.value, f_ury.value
+
