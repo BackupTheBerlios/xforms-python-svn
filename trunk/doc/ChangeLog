@@ -2,6 +2,7 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * xyplotactivelog.py example ported.
     20110725 (beta19)
     * realign to upstream XForms (1.0.94pre5, development up to git-20110626,
       two functions added in flxyplot.py, xyplotactive.py example adjusted)

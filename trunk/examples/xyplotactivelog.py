@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it has been ported from
-#  xyplotactive.c XForms demo, with some adaptations.
+#  xyplotactivelog.c XForms demo, with some adaptations.
 #
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
@@ -77,6 +77,14 @@ def bounds_cb(pobj, data):
         xmin = float(xfl.fl_get_input(xypui.xmin))
         xmax = float(xfl.fl_get_input(xypui.xmax))
 
+        if xmin <= 0.0:
+            xmin = 1.0
+            xfl.fl_set_input(xypui.xmin, "1.0")
+
+        if xmax <= 0.0:
+            xmax = 10.0
+            xfl.fl_set_input(xypui.xmax, "10.0")
+
         xfl.fl_set_xyplot_xbounds(xypui.xyplot, xmin, xmax)
 
         xmin, xmax = xfl.fl_get_xyplot_xbounds(xypui.xyplot)
@@ -90,6 +98,14 @@ def bounds_cb(pobj, data):
     else:
         ymin = float(xfl.fl_get_input(xypui.ymin))
         ymax = float(xfl.fl_get_input(xypui.ymax))
+
+        if ymin <= 0.0:
+            ymin = 1.0
+            xfl.fl_set_input(xypui.ymin, "1.0")
+
+        if ymax <= 0.0:
+            ymax = 10.0
+            xfl.fl_set_input(xypui.ymax, "10.0")
 
         xfl.fl_set_xyplot_ybounds(xypui.xyplot, ymin, ymax)
 
@@ -113,30 +129,30 @@ def main(lsysargv, sysargv):
 
     # Fill-in form initialization code
 
-    xfl.fl_set_xyplot_ybounds(xypui.xyplot, 0.0, 10.0)
+    xfl.fl_set_xyplot_ybounds(xypui.xyplot, 1.0, 10.0)
     for i in range(0, 11):
-        x[i] = y[i] = float(i)
+        x[i] = y[i] = float(i) + 1
 
 
-    xfl.fl_add_xyplot_overlay(xypui.xyplot, 1, x, y, 11, xfl.FL_YELLOW)
+    xfl.fl_add_xyplot_overlay(xypui.xyplot, 1, x, y, 10, xfl.FL_YELLOW)
     xfl.fl_set_xyplot_overlay_type(xypui.xyplot, 1, xfl.FL_LINEPOINTS_XYPLOT)
     xfl.fl_set_xyplot_interpolate(xypui.xyplot, 1, 2, 0.1)
 
     #srand( time( NULL ) );
 
     RAND_MAX = xfl.INT_MAX
-    for i in range(0, 11):
+    for i in range(0, 10):
         y[i] += float(random.random() / RAND_MAX - 0.5)
 
     xfl.fl_set_xyplot_data(xypui.xyplot, x, y, 11, \
-            "Active xyplot with overlay", "x-axis", "y-axis")
+            "Active (log) xyplot with overlay", "x-axis", "y-axis")
     xfl.fl_set_xyplot_linewidth(xypui.xyplot, 0, 2)
     xfl.fl_set_xyplot_xgrid(xypui.xyplot, xfl.FL_GRID_MINOR)
 
     # Show the first form
 
     xfl.fl_show_form(xypui.axypform, xfl.FL_PLACE_MOUSE | xfl.FL_FREE_SIZE,
-            xfl.FL_FULLBORDER, "xyplotactive")
+            xfl.FL_FULLBORDER, "xyplotactivelog")
 
     xfl.fl_do_forms()
 
@@ -153,6 +169,9 @@ def create_form_axypform():
 
     fdui.xyplot = xfl.fl_add_xyplot(xfl.FL_ACTIVE_XYPLOT, 20, 50, \
             285, 235, "")
+    xfl.fl_set_xyplot_xscale(fdui.xyplot, xfl.FL_LOG, 2.0)
+    xfl.fl_set_xyplot_yscale(fdui.xyplot, xfl.FL_LOG, 2.0)
+
     xfl.fl_set_object_boxtype(fdui.xyplot, xfl.FL_DOWN_BOX)
     xfl.fl_set_object_color(fdui.xyplot, xfl.FL_BLACK, xfl.FL_GREEN)
     xfl.fl_set_object_lalign(fdui.xyplot, xfl.FL_ALIGN_BOTTOM | \
@@ -186,7 +205,7 @@ def create_form_axypform():
 
     fdui.xmin = xfl.fl_add_input(xfl.FL_FLOAT_INPUT, 315, 150, 50, 20,
             " x_min")
-    xfl.fl_set_input(fdui.xmin, "0.0")
+    xfl.fl_set_input(fdui.xmin, "1.0")
     xfl.fl_set_object_lalign(fdui.xmin, xfl.FL_ALIGN_RIGHT)
     xfl.fl_set_object_callback(fdui.xmin, bounds_cb, 0)
     xfl.fl_set_object_gravity(fdui.xmin, xfl.FL_NorthEast, xfl.FL_NorthEast)
@@ -200,7 +219,7 @@ def create_form_axypform():
 
     fdui.ymin = xfl.fl_add_input(xfl.FL_FLOAT_INPUT, 315, 200, 50, 20,
              " y_min")
-    xfl.fl_set_input(fdui.ymin, "0.0")
+    xfl.fl_set_input(fdui.ymin, "1.0")
     xfl.fl_set_object_lalign(fdui.ymin, xfl.FL_ALIGN_RIGHT)
     xfl.fl_set_object_callback(fdui.ymin, bounds_cb, 1)
     xfl.fl_set_object_gravity(fdui.ymin, xfl.FL_NorthEast, xfl.FL_NorthEast)
@@ -227,5 +246,5 @@ def create_form_axypform():
 
 
 if __name__ == '__main__':
-    print("********* xyplotactive.py *********")
+    print("********* xyplotactivelog.py *********")
     main(len(sys.argv), sys.argv)
