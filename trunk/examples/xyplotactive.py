@@ -123,6 +123,7 @@ def main(lsysargv, sysargv):
     xfl.fl_set_xyplot_interpolate(xypui.xyplot, 1, 2, 0.1)
 
     #srand( time( NULL ) );
+    random.seed(None)
 
     RAND_MAX = xfl.INT_MAX
     for i in range(0, 11):

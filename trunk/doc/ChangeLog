@@ -2,6 +2,7 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * better docs for format parameters in flgoddies.py related functions.
     * xyplotactivelog.py example ported.
     20110725 (beta19)
     * realign to upstream XForms (1.0.94pre5, development up to git-20110626,

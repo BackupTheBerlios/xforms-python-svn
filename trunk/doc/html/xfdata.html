@@ -30,8 +30,6 @@
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="xfdata.html#admitted_value_for_BROWSERLINES_APPEARANCE">admitted_value_for_BROWSERLINES_APPEARANCE</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_BORDER">admitted_values_for_BORDER</a>
-</font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_COORD_UNIT">admitted_values_for_COORD_UNIT</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_CURSORS">admitted_values_for_CURSORS</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_EventNames">admitted_values_for_EventNames</a>
 </font></dt><dt><font face="helvetica, arial"><a href="xfdata.html#admitted_values_for_FILETYPE">admitted_values_for_FILETYPE</a>
@@ -2111,7 +2109,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;parent_obj&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attached&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;independent&nbsp;anymore<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;independent&nbsp;flobject&nbsp;anymore<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pre_attach&nbsp;:&nbsp;function,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function(ptr_flform)&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attach_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
@@ -2432,7 +2430,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;parent_obj&nbsp;:&nbsp;pointer&nbsp;to&nbsp;<a href="#FL_OBJECT">FL_OBJECT</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attached&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;independent&nbsp;anymore<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;independent&nbsp;flobject&nbsp;anymore<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pre_attach&nbsp;:&nbsp;function,&nbsp;no&nbsp;return<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function(ptr_flform)&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attach_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
@@ -7150,7 +7148,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;visualid&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual&nbsp;id&nbsp;of&nbsp;this&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_class&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C++?&nbsp;class&nbsp;of&nbsp;screen&nbsp;(monochrome,&nbsp;etc.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(C++&nbsp;compatible&nbsp;name)&nbsp;class&nbsp;of&nbsp;screen&nbsp;(monochrome,&nbsp;etc.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red_mask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green_mask&nbsp;:&nbsp;long_pos<br>
@@ -13019,7 +13017,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depth&nbsp;of&nbsp;the&nbsp;visual<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_class&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C++?&nbsp;class&nbsp;of&nbsp;screen&nbsp;(monochrome,&nbsp;etc.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(C++&nbsp;compatible&nbsp;name)&nbsp;class&nbsp;of&nbsp;screen&nbsp;(monochrome,&nbsp;etc.)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;red_mask&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask&nbsp;value&nbsp;for&nbsp;red<br>
 &nbsp;&nbsp;&nbsp;&nbsp;green_mask&nbsp;:&nbsp;long_pos<br>
@@ -13121,7 +13119,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;:&nbsp;long_pos<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;of&nbsp;screen&nbsp;containing&nbsp;window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;c_class&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C++&nbsp;InputOutput,&nbsp;InputOnly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(C++&nbsp;compatible&nbsp;name)&nbsp;InputOutput,&nbsp;InputOnly<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bit_gravity&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one&nbsp;of&nbsp;bit&nbsp;gravity&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;win_gravity&nbsp;:&nbsp;int<br>
@@ -13504,63 +13502,6 @@ In&nbsp;some&nbsp;cases&nbsp;the&nbsp;character&nbsp;'@'&nbsp;might&nbsp;need&nb
 of&nbsp;the&nbsp;lines&nbsp;without&nbsp;introducing&nbsp;the&nbsp;special&nbsp;meaning&nbsp;mentioned&nbsp;above.&nbsp;In<br>
 this&nbsp;case&nbsp;you&nbsp;can&nbsp;use&nbsp;"@@"&nbsp;or&nbsp;change&nbsp;the&nbsp;special&nbsp;character&nbsp;to&nbsp;something<br>
 other&nbsp;than&nbsp;'@'&nbsp;using&nbsp;flbrowser.fl_set_browser_specialkey()&nbsp;function.<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="admitted_values_for_BORDER">class <strong>admitted_values_for_BORDER</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Window&nbsp;manager&nbsp;decoration&nbsp;request&nbsp;and&nbsp;forms&nbsp;attributes<br>
-&nbsp;<br>
-Admitted&nbsp;values<br>
----------------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_FULLBORDER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Draw&nbsp;full&nbsp;border&nbsp;with&nbsp;title&nbsp;(normal)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_TRANSIENT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Draw&nbsp;borders&nbsp;with&nbsp;possibly&nbsp;less&nbsp;decoration&nbsp;(depends&nbsp;on&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window&nbsp;managers&nbsp;behaviour).&nbsp;You&nbsp;might&nbsp;not&nbsp;be&nbsp;able&nbsp;to&nbsp;iconify<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;form&nbsp;under&nbsp;some&nbsp;WMs.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_NOBORDER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Draw&nbsp;no&nbsp;border&nbsp;at&nbsp;all.&nbsp;You&nbsp;cannot&nbsp;iconify&nbsp;a&nbsp;form&nbsp;with&nbsp;no&nbsp;borders<br>&nbsp;</tt></td></tr>
-<tr><td>&nbsp;</td>
-<td width="100%">Data descriptors defined here:<br>
-<dl><dt><strong>__dict__</strong></dt>
-<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-<dl><dt><strong>__weakref__</strong></dt>
-<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
-</dl>
-</td></tr></table> <p>
-<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
-<tr bgcolor="#ffc8d8">
-<td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="admitted_values_for_COORD_UNIT">class <strong>admitted_values_for_COORD_UNIT</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
-<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
-<td colspan=2><tt>Coordinates&nbsp;unit<br>
-&nbsp;<br>
-Admitted&nbsp;values<br>
----------------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_COORD_PIXEL&nbsp;:&nbsp;pixel<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Screen">Screen</a>&nbsp;coordinate&nbsp;units&nbsp;in&nbsp;pixel&nbsp;(default)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_COORD_MM&nbsp;:&nbsp;millimeters<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Screen">Screen</a>&nbsp;coordinate&nbsp;units&nbsp;in&nbsp;millimeters<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_COORD_POINT&nbsp;:&nbsp;point<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Screen">Screen</a>&nbsp;coordinate&nbsp;units&nbsp;in&nbsp;points&nbsp;(1/72&nbsp;inch)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_COORD_centiMM&nbsp;:&nbsp;one&nbsp;hundredth&nbsp;of&nbsp;a&nbsp;mm<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Screen">Screen</a>&nbsp;coordinate&nbsp;units&nbsp;in&nbsp;centi-millimeters<br>
-&nbsp;&nbsp;&nbsp;&nbsp;FL_COORD_centiPOINT&nbsp;:&nbsp;one&nbsp;hundredth&nbsp;of&nbsp;a&nbsp;point<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Screen">Screen</a>&nbsp;coordinate&nbsp;units&nbsp;in&nbsp;centi-points,&nbsp;i.e.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1/100&nbsp;of&nbsp;a&nbsp;point<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Data descriptors defined here:<br>
 <dl><dt><strong>__dict__</strong></dt>
@@ -17371,4 +17312,4 @@ Methods inherited from _ctypes._CData:<br>
 <strong>special_sequences_for_entry_text_t</strong> = '     %t (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
 <strong>special_sequences_for_entry_text_u</strong> = '     %u (with additional separate argument as da...xforms-python it does not fully work as expected.'<br>
 <strong>special_sequences_for_entry_text_x</strong> = '     %x (with additional separate argument as a ...is passed to all callback routines for the entry.'</td></tr></table>
-<p>Updated on: 2011-01-15 17:41 +0100</body></html>
+<p>Updated on: 2011-08-09 18:25 +0200</body></html>

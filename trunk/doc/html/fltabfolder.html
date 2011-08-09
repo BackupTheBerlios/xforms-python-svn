@@ -39,10 +39,10 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;foldertype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;tabfolder&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_TOP_TABFOLDER&nbsp;or&nbsp;FL_NORMAL_TABFOLDER&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top),&nbsp;FL_BOTTOM_TABFOLDER&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on&nbsp;bottom),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_LEFT_TABFOLDER&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on&nbsp;left),&nbsp;FL_RIGHT_TABFOLDER<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(tabfolder&nbsp;with&nbsp;tab&nbsp;on&nbsp;right)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_TOP_TABFOLDER&nbsp;or&nbsp;FL_NORMAL_TABFOLDER&nbsp;(it&nbsp;has&nbsp;tab&nbsp;on&nbsp;top),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_BOTTOM_TABFOLDER&nbsp;(it&nbsp;has&nbsp;tab&nbsp;on&nbsp;bottom),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_LEFT_TABFOLDER&nbsp;(it&nbsp;has&nbsp;tab&nbsp;on&nbsp;left),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_RIGHT_TABFOLDER&nbsp;(it&nbsp;has&nbsp;tab&nbsp;on&nbsp;right)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -220,7 +220,7 @@ Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;seqnum&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sequence&nbsp;number&nbsp;of&nbsp;active&nbsp;folder.&nbsp;The&nbsp;first&nbsp;on&nbsp;the&nbsp;left&nbsp;is&nbsp;1,&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;2&nbsp;etc..<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;is&nbsp;2&nbsp;etc..<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -271,9 +271,9 @@ Returns<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;folder,&nbsp;relative&nbsp;to&nbsp;the&nbsp;(top-level)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;form&nbsp;the&nbsp;tabbed&nbsp;folder&nbsp;belongs&nbsp;to<br>
 &nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;folder<br>
 &nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;folder<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -528,9 +528,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tabfolder&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;howfit&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;do&nbsp;folders'&nbsp;sizes&nbsp;fit&nbsp;.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NO&nbsp;(do&nbsp;not<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;the&nbsp;form),&nbsp;FL_FIT&nbsp;(Always&nbsp;scale&nbsp;the&nbsp;form),&nbsp;FL_ENLARGE_ONLY<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Scale&nbsp;the&nbsp;form&nbsp;only&nbsp;if&nbsp;it&nbsp;is&nbsp;smaller&nbsp;than&nbsp;folder&nbsp;area).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;do&nbsp;folders'&nbsp;sizes&nbsp;fit&nbsp;.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NO&nbsp;(do&nbsp;not&nbsp;scale&nbsp;the&nbsp;form),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_FIT&nbsp;(Always&nbsp;scale&nbsp;the&nbsp;form),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_ENLARGE_ONLY&nbsp;(Scale&nbsp;the&nbsp;form&nbsp;only&nbsp;if&nbsp;it&nbsp;is&nbsp;smaller&nbsp;than<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;folder&nbsp;area).<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -568,4 +570,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-15 17:41 +0100</body></html>
+<p>Updated on: 2011-08-09 18:25 +0200</body></html>

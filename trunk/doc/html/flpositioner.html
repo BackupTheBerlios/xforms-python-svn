@@ -36,12 +36,12 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;posittype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;positioner&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_POSITIONER&nbsp;(Cross-hair&nbsp;inside&nbsp;a&nbsp;box),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_OVERLAY_POSITIONER&nbsp;(Cross-hair&nbsp;inside&nbsp;a&nbsp;transparent&nbsp;box,&nbsp;i.e.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawn&nbsp;in&nbsp;in&nbsp;XOR&nbsp;mode),&nbsp;FL_INVISIBLE_POSITIONER&nbsp;(Completely<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invisible&nbsp;positioner&nbsp;to&nbsp;be&nbsp;used&nbsp;just&nbsp;for&nbsp;the&nbsp;side&nbsp;effect&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obtaining&nbsp;a&nbsp;position,&nbsp;typically&nbsp;a&nbsp;flobject&nbsp;is&nbsp;below&nbsp;it&nbsp;that<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;otherwise&nbsp;would&nbsp;receive&nbsp;user&nbsp;events)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NORMAL_POSITIONER&nbsp;(Cross-hair&nbsp;inside&nbsp;a&nbsp;box),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_OVERLAY_POSITIONER&nbsp;(Cross-hair&nbsp;inside&nbsp;a&nbsp;transparent&nbsp;box,&nbsp;i.e.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drawn&nbsp;in&nbsp;in&nbsp;XOR&nbsp;mode),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_INVISIBLE_POSITIONER&nbsp;(Completely&nbsp;invisible&nbsp;positioner&nbsp;to&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;used&nbsp;just&nbsp;for&nbsp;the&nbsp;side&nbsp;effect&nbsp;of&nbsp;obtaining&nbsp;a&nbsp;position,&nbsp;typically<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;flobject&nbsp;is&nbsp;below&nbsp;it&nbsp;that&nbsp;otherwise&nbsp;would&nbsp;receive&nbsp;user&nbsp;events)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -176,11 +176,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum&nbsp;value&nbsp;is&nbsp;0.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;1.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum&nbsp;value&nbsp;is&nbsp;1.0<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -191,8 +189,8 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_positioner_xstep"><strong>fl_set_positioner_xstep</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_positioner_xstep">fl_set_positioner_xstep</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
-Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;horizontal&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to<br>
-some&nbsp;values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
+Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;horizontal&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to&nbsp;some<br>
+values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -236,11 +234,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positioner&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;minbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;0.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;minimum&nbsp;value&nbsp;is&nbsp;0.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;maxbound&nbsp;:&nbsp;float<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;1.0.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maximum&nbsp;value&nbsp;limit&nbsp;to&nbsp;be&nbsp;set.&nbsp;By&nbsp;default&nbsp;the&nbsp;maximum&nbsp;value&nbsp;is&nbsp;1.0<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -251,8 +247,8 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_set_positioner_ystep"><strong>fl_set_positioner_ystep</strong></a>(ptr_flobject, step)</dt><dd><tt><a href="#-fl_set_positioner_ystep">fl_set_positioner_ystep</a>(ptr_flobject,&nbsp;step)<br>
 &nbsp;<br>
-Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;vertical&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to<br>
-some&nbsp;values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
+Handles&nbsp;positioner&nbsp;values&nbsp;in&nbsp;vertical&nbsp;direction&nbsp;to&nbsp;be&nbsp;rounded&nbsp;to&nbsp;some<br>
+values&nbsp;(multiples&nbsp;of&nbsp;step),&nbsp;e.g.&nbsp;to&nbsp;integer&nbsp;values.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -287,4 +283,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-15 17:41 +0100</body></html>
+<p>Updated on: 2011-08-09 18:25 +0200</body></html>

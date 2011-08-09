@@ -35,16 +35,17 @@ Adds&nbsp;a&nbsp;new&nbsp;generation&nbsp;menu&nbsp;(nmenu)&nbsp;object.&nbsp;It
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;nmenutype&nbsp;:&nbsp;type&nbsp;of&nbsp;nmenu&nbsp;to&nbsp;be.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_NMENU&nbsp;(Probably&nbsp;the&nbsp;most&nbsp;often&nbsp;used&nbsp;type:&nbsp;shown&nbsp;as&nbsp;text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;a&nbsp;borderless&nbsp;background,&nbsp;popup&nbsp;gets&nbsp;opened&nbsp;when&nbsp;clicked&nbsp;on),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_NORMAL_TOUCH_NMENU&nbsp;(Also&nbsp;shown&nbsp;as&nbsp;text&nbsp;on&nbsp;a&nbsp;borderless<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background,&nbsp;but&nbsp;popup&nbsp;gets&nbsp;opened&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;moved&nbsp;on&nbsp;top<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;it&nbsp;without&nbsp;any&nbsp;further&nbsp;user&nbsp;action&nbsp;required),&nbsp;FL_BUTTON_NMENU<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(When&nbsp;not&nbsp;active&nbsp;shown&nbsp;as&nbsp;text&nbsp;on&nbsp;borderless&nbsp;background,&nbsp;when<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clicked&nbsp;on&nbsp;popup&nbsp;is&nbsp;shown&nbsp;and&nbsp;the&nbsp;flobject&nbsp;itself&nbsp;being&nbsp;displayed<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;a&nbsp;button),&nbsp;FL_BUTTON_TOUCH_NMENU&nbsp;(When&nbsp;not&nbsp;active&nbsp;shown&nbsp;as&nbsp;text<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;borderless&nbsp;background,&nbsp;when&nbsp;mouse&nbsp;is&nbsp;moved&nbsp;onto&nbsp;it&nbsp;the&nbsp;popup&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shown&nbsp;and&nbsp;the&nbsp;flobject&nbsp;itself&nbsp;is&nbsp;displayed&nbsp;as&nbsp;a&nbsp;button)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NORMAL_NMENU&nbsp;(Probably&nbsp;the&nbsp;most&nbsp;often&nbsp;used&nbsp;type,&nbsp;shown&nbsp;as&nbsp;text<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;a&nbsp;borderless&nbsp;background,&nbsp;popup&nbsp;gets&nbsp;opened&nbsp;when&nbsp;clicked&nbsp;on),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NORMAL_TOUCH_NMENU&nbsp;(Also&nbsp;shown&nbsp;as&nbsp;text&nbsp;on&nbsp;a&nbsp;borderless<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background,&nbsp;but&nbsp;popup&nbsp;gets&nbsp;opened&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;moved&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;of&nbsp;it&nbsp;without&nbsp;any&nbsp;further&nbsp;user&nbsp;action&nbsp;required),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_BUTTON_NMENU&nbsp;(When&nbsp;not&nbsp;active&nbsp;shown&nbsp;as&nbsp;text&nbsp;on&nbsp;borderless<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background,&nbsp;when&nbsp;clicked&nbsp;on&nbsp;popup&nbsp;is&nbsp;shown&nbsp;and&nbsp;the&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itself&nbsp;being&nbsp;displayed&nbsp;as&nbsp;a&nbsp;button),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_BUTTON_TOUCH_NMENU&nbsp;(When&nbsp;not&nbsp;active&nbsp;shown&nbsp;as&nbsp;text&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;borderless&nbsp;background,&nbsp;when&nbsp;mouse&nbsp;is&nbsp;moved&nbsp;onto&nbsp;it&nbsp;the&nbsp;popup&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shown&nbsp;and&nbsp;the&nbsp;flobject&nbsp;itself&nbsp;is&nbsp;displayed&nbsp;as&nbsp;a&nbsp;button)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -211,8 +212,8 @@ Parameters<br>
 Returns<br>
 -------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupreturn&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_RETURN<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;return&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(if&nbsp;no&nbsp;selection&nbsp;was&nbsp;made&nbsp;the<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last&nbsp;time&nbsp;the&nbsp;nmenu&nbsp;flobject&nbsp;was&nbsp;used)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup&nbsp;return&nbsp;class&nbsp;instance,&nbsp;or&nbsp;None&nbsp;(if&nbsp;no&nbsp;selection&nbsp;was&nbsp;made<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;last&nbsp;time&nbsp;the&nbsp;nmenu&nbsp;flobject&nbsp;was&nbsp;used)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -571,10 +572,11 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nmenu&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;policy&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;under&nbsp;which&nbsp;conditions&nbsp;the&nbsp;nmenu's&nbsp;popup&nbsp;gets&nbsp;closed.&nbsp;Values&nbsp;(from<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.py)&nbsp;FL_POPUP_NORMAL_SELECT&nbsp;(default,&nbsp;keeps&nbsp;the&nbsp;popup&nbsp;opened<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;not&nbsp;released&nbsp;on&nbsp;one&nbsp;of&nbsp;the&nbsp;selectable&nbsp;items),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_POPUP_DRAG_SELECT&nbsp;(Closes&nbsp;the&nbsp;popup&nbsp;immediately&nbsp;when&nbsp;the&nbsp;mouse<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;is&nbsp;released)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_POPUP_NORMAL_SELECT&nbsp;(default,&nbsp;keeps&nbsp;the&nbsp;popup&nbsp;opened<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;the&nbsp;mouse&nbsp;is&nbsp;not&nbsp;released&nbsp;on&nbsp;one&nbsp;of&nbsp;the&nbsp;selectable&nbsp;items),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_POPUP_DRAG_SELECT&nbsp;(Closes&nbsp;the&nbsp;popup&nbsp;immediately&nbsp;when&nbsp;the&nbsp;mouse<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;button&nbsp;is&nbsp;released)<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -613,4 +615,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-15 17:41 +0100</body></html>
+<p>Updated on: 2011-08-09 18:25 +0200</body></html>

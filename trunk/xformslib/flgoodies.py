@@ -185,8 +185,8 @@ def fl_show_msg(fmttxt):
     Parameters
     ----------
         fmttxt : str
-            the message to show (with format parameters, e.g. %s, %d, %f
-            etc..)
+            the message to show (with format parameters, e.g. %s, %d, %i,
+            %f, %c, %e, %E, %x, %X, %o, %g, %G, %u, %%)
 
     Examples
     --------
@@ -354,7 +354,8 @@ def fl_show_alert2(centered, fmttxt):
             if alert has to be displayed centered on the screen or not.
             Values 1 (if centered) or 0 (not centered)
         fmttxt : str
-            formatted message text
+            formatted message text (with format parameters, e.g. %s, %d,
+            %i, %f, %c, %e, %E, %x, %X, %o, %g, %G, %u, %%)
 
     Examples
     --------

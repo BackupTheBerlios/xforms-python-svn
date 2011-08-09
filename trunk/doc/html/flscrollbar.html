@@ -36,17 +36,20 @@ Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;scrolltype&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;scrollbar&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_VERT_SCROLLBAR&nbsp;(A&nbsp;vertical&nbsp;scrollbar),&nbsp;FL_HOR_SCROLLBAR&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;scrollbar),&nbsp;FL_VERT_THIN_SCROLLBAR&nbsp;(A&nbsp;different<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;looking&nbsp;vertical&nbsp;scrollbar),&nbsp;FL_HOR_THIN_SCROLLBAR&nbsp;(A&nbsp;different<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;looking&nbsp;horizontal&nbsp;scrollbar),&nbsp;FL_VERT_NICE_SCROLLBAR&nbsp;(A&nbsp;vertical<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;using&nbsp;FL_NICE_SLIDER),&nbsp;FL_HOR_NICE_SCROLLBAR&nbsp;(A<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;scrollbar&nbsp;using&nbsp;FL_NICE_SLIDER),&nbsp;FL_VERT_PLAIN_SCROLLBAR<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;FL_VERT_BASIC_SCROLLBAR&nbsp;(Similar&nbsp;to&nbsp;FL_THIN_SCROLLBAR),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_PLAIN_SCROLLBAR&nbsp;or&nbsp;FL_HOR_BASIC_SCROLLBAR&nbsp;(Similar&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_THIN_SCROLLBAR),&nbsp;FL_NORMAL_SCROLLBAR&nbsp;(*todo*),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_THIN_SCROLLBAR&nbsp;(*todo*),&nbsp;FL_NICE_SCROLLBAR&nbsp;(*todo*),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_PLAIN_SCROLLBAR&nbsp;(*todo*)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_VERT_SCROLLBAR&nbsp;(A&nbsp;vertical&nbsp;scrollbar)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_HOR_SCROLLBAR&nbsp;(A&nbsp;horizontal&nbsp;scrollbar)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_VERT_THIN_SCROLLBAR&nbsp;(A&nbsp;different&nbsp;looking&nbsp;vertical&nbsp;scrollbar)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_HOR_THIN_SCROLLBAR&nbsp;(A&nbsp;different&nbsp;looking&nbsp;horizontal&nbsp;scrollbar)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_VERT_NICE_SCROLLBAR&nbsp;(vertical&nbsp;scrollbar&nbsp;using&nbsp;FL_NICE_SLIDER)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_HOR_NICE_SCROLLBAR&nbsp;(horizontal&nbsp;scrollbar&nbsp;using&nbsp;FL_NICE_SLIDER)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_VERT_PLAIN_SCROLLBAR&nbsp;or&nbsp;FL_VERT_BASIC_SCROLLBAR&nbsp;(Similar&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_THIN_SCROLLBAR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_HOR_PLAIN_SCROLLBAR&nbsp;or&nbsp;FL_HOR_BASIC_SCROLLBAR&nbsp;(Similar&nbsp;to<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_HOR_THIN_SCROLLBAR)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NORMAL_SCROLLBAR&nbsp;(*todo*)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_THIN_SCROLLBAR&nbsp;(*todo*)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NICE_SCROLLBAR&nbsp;(*todo*)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_PLAIN_SCROLLBAR&nbsp;(*todo*)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -154,10 +157,9 @@ Notes<br>
 Defines&nbsp;the&nbsp;minimum&nbsp;and&nbsp;maximum&nbsp;value&nbsp;limits&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;flobject.&nbsp;For<br>
 vertical&nbsp;sliders&nbsp;the&nbsp;slider&nbsp;position&nbsp;for&nbsp;the&nbsp;minimum&nbsp;value&nbsp;is&nbsp;at&nbsp;the&nbsp;left,<br>
 for&nbsp;horizontal&nbsp;sliders&nbsp;at&nbsp;the&nbsp;top&nbsp;of&nbsp;the&nbsp;slider.&nbsp;By&nbsp;setting&nbsp;min&nbsp;to&nbsp;a<br>
-larger&nbsp;value&nbsp;than&nbsp;max&nbsp;in&nbsp;a&nbsp;call&nbsp;of&nbsp;<a href="#-fl_set_scrollbar_bounds">fl_set_scrollbar_bounds</a>()&nbsp;this&nbsp;can&nbsp;be<br>
-reversed.&nbsp;When&nbsp;this&nbsp;function&nbsp;is&nbsp;called,&nbsp;if&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;a&nbsp;scrollbar<br>
-is&nbsp;not&nbsp;within&nbsp;the&nbsp;range&nbsp;of&nbsp;the&nbsp;new&nbsp;bounds,&nbsp;its&nbsp;value&nbsp;gets&nbsp;adjusted&nbsp;to&nbsp;the<br>
-nearest&nbsp;limit.<br>
+larger&nbsp;value&nbsp;than&nbsp;max&nbsp;in&nbsp;a&nbsp;call&nbsp;this&nbsp;can&nbsp;be&nbsp;reversed.&nbsp;When&nbsp;this&nbsp;function<br>
+is&nbsp;called,&nbsp;if&nbsp;the&nbsp;actual&nbsp;value&nbsp;of&nbsp;a&nbsp;scrollbar&nbsp;is&nbsp;not&nbsp;within&nbsp;the&nbsp;range&nbsp;of<br>
+the&nbsp;new&nbsp;bounds,&nbsp;its&nbsp;value&nbsp;gets&nbsp;adjusted&nbsp;to&nbsp;the&nbsp;nearest&nbsp;limit.<br>
 &nbsp;<br>
 Parameters<br>
 ----------<br>
@@ -210,9 +212,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollbar&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;barsize&nbsp;:&nbsp;float<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size&nbsp;of&nbsp;bar.&nbsp;Values&nbsp;between&nbsp;0.0&nbsp;and&nbsp;1.0.&nbsp;The&nbsp;default&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_SLIDER_WIDTH&nbsp;(which&nbsp;is&nbsp;0.15&nbsp;for&nbsp;all&nbsp;scrollbars).&nbsp;If&nbsp;it&nbsp;is<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.0,&nbsp;the&nbsp;scrollbar&nbsp;covers&nbsp;the&nbsp;box&nbsp;completely&nbsp;and&nbsp;can&nbsp;no&nbsp;longer&nbsp;be<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;moved.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_SLIDER_WIDTH&nbsp;(which&nbsp;is&nbsp;0.15&nbsp;for&nbsp;all&nbsp;scrollbars).&nbsp;If&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;1.0,&nbsp;the&nbsp;scrollbar&nbsp;covers&nbsp;the&nbsp;box&nbsp;completely&nbsp;and&nbsp;can&nbsp;no&nbsp;longer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;be&nbsp;moved.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -258,4 +260,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-15 17:41 +0100</body></html>
+<p>Updated on: 2011-08-09 18:25 +0200</body></html>

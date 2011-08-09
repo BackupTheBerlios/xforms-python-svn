@@ -36,16 +36,16 @@ Adds&nbsp;an&nbsp;input&nbsp;flobject.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;inputtype&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;input&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_NORMAL_INPUT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Any&nbsp;type&nbsp;of&nbsp;text&nbsp;can&nbsp;be&nbsp;typed&nbsp;into&nbsp;this&nbsp;field),&nbsp;FL_FLOAT_INPUT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Only&nbsp;a&nbsp;float&nbsp;value&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;e.g.&nbsp;-23.2e12),&nbsp;FL_INT_INPUT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Only&nbsp;an&nbsp;integer&nbsp;value&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;e.g.&nbsp;-86),&nbsp;FL_DATE_INPUT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Only&nbsp;a&nbsp;date,&nbsp;MM/DD/YY&nbsp;or&nbsp;DD/MM/YY,&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;limited&nbsp;per<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default&nbsp;to&nbsp;10&nbsp;characters),&nbsp;FL_MULTILINE_INPUT&nbsp;(An&nbsp;input&nbsp;field<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;allowing&nbsp;for&nbsp;multiple&nbsp;lines),&nbsp;FL_HIDDEN_INPUT&nbsp;(A&nbsp;normal&nbsp;input<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field&nbsp;but&nbsp;invisible),&nbsp;FL_SECRET_INPUT&nbsp;(A&nbsp;normal&nbsp;input&nbsp;field&nbsp;that<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;does&nbsp;not&nbsp;show&nbsp;the&nbsp;text,&nbsp;limited&nbsp;per&nbsp;default&nbsp;to&nbsp;a&nbsp;maximum&nbsp;length&nbsp;of<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;16&nbsp;characters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;of&nbsp;input&nbsp;to&nbsp;be&nbsp;added.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_NORMAL_INPUT&nbsp;(Any&nbsp;type&nbsp;of&nbsp;text&nbsp;can&nbsp;be&nbsp;typed&nbsp;into&nbsp;this&nbsp;field)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_FLOAT_INPUT&nbsp;(Only&nbsp;a&nbsp;float&nbsp;value&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;e.g.&nbsp;-23.2e2)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_INT_INPUT&nbsp;(Only&nbsp;an&nbsp;integer&nbsp;value&nbsp;can&nbsp;be&nbsp;typed&nbsp;in,&nbsp;e.g.&nbsp;-86)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_DATE_INPUT&nbsp;(Only&nbsp;a&nbsp;date,&nbsp;MM/DD/YY&nbsp;or&nbsp;DD/MM/YY,&nbsp;can&nbsp;be&nbsp;typed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in,&nbsp;limited&nbsp;by&nbsp;default&nbsp;to&nbsp;10&nbsp;characters)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_MULTILINE_INPUT&nbsp;(An&nbsp;input&nbsp;field&nbsp;allowing&nbsp;for&nbsp;multiple&nbsp;lines)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_HIDDEN_INPUT&nbsp;(A&nbsp;normal&nbsp;input&nbsp;field&nbsp;but&nbsp;invisible)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_SECRET_INPUT&nbsp;(A&nbsp;normal&nbsp;input&nbsp;field&nbsp;that&nbsp;does&nbsp;not&nbsp;show&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text,&nbsp;limited&nbsp;per&nbsp;default&nbsp;to&nbsp;a&nbsp;maximum&nbsp;length&nbsp;of&nbsp;16&nbsp;characters)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;(upper-left&nbsp;corner)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
@@ -149,7 +149,7 @@ API_diversion<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
  <dl><dt><a name="-fl_get_input_format"><strong>fl_get_input_format</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_input_format">fl_get_input_format</a>(ptr_flobject)&nbsp;-&gt;&nbsp;fmt,&nbsp;sep<br>
 &nbsp;<br>
 Provides&nbsp;means&nbsp;for&nbsp;the&nbsp;validator&nbsp;to&nbsp;retrieve&nbsp;some&nbsp;information&nbsp;about&nbsp;user<br>
@@ -200,7 +200,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_input_screenlines"><strong>fl_get_input_screenlines</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_input_screenlines">fl_get_input_screenlines</a>(ptr_flobject)&nbsp;-&gt;&nbsp;numlines<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;number&nbsp;of&nbsp;lines&nbsp;that&nbsp;fit&nbsp;inside&nbsp;the&nbsp;input&nbsp;box.<br>
@@ -221,7 +221,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_input_scrollbarsize"><strong>fl_get_input_scrollbarsize</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_input_scrollbarsize">fl_get_input_scrollbarsize</a>(ptr_flobject)&nbsp;-&gt;&nbsp;height,&nbsp;width<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;current&nbsp;settings&nbsp;for&nbsp;the&nbsp;horizontal&nbsp;scrollbar&nbsp;height&nbsp;and<br>
@@ -302,7 +302,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_input_xoffset"><strong>fl_get_input_xoffset</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_input_xoffset">fl_get_input_xoffset</a>(ptr_flobject)&nbsp;-&gt;&nbsp;offset<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;current&nbsp;horizontal&nbsp;scrolling&nbsp;offset.<br>
@@ -381,7 +381,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_input_cursorpos"><strong>fl_set_input_cursorpos</strong></a>(ptr_flobject, xpos, ypos)</dt><dd><tt><a href="#-fl_set_input_cursorpos">fl_set_input_cursorpos</a>(ptr_flobject,&nbsp;xpos,&nbsp;ypos)<br>
 &nbsp;<br>
 Moves&nbsp;the&nbsp;cursor&nbsp;within&nbsp;the&nbsp;input&nbsp;field.<br>
@@ -432,7 +432,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_input_fieldchar"><strong>fl_set_input_fieldchar</strong></a>(ptr_flobject, fldchar)</dt><dd><tt><a href="#-fl_set_input_fieldchar">fl_set_input_fieldchar</a>(ptr_flobject,&nbsp;fldchar)&nbsp;-&gt;&nbsp;oldchar<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;character&nbsp;used&nbsp;to&nbsp;draw&nbsp;the&nbsp;text,&nbsp;for&nbsp;secret&nbsp;input&nbsp;field.<br>
@@ -457,7 +457,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_input_filter"><strong>fl_set_input_filter</strong></a>(ptr_flobject, pyfn_InputValidator)</dt><dd><tt><a href="#-fl_set_input_filter">fl_set_input_filter</a>(ptr_flobject,&nbsp;pyfn_InputValidator)&nbsp;-&gt;&nbsp;InputValidator<br>
 &nbsp;<br>
 Defines&nbsp;up&nbsp;a&nbsp;validator&nbsp;function,&nbsp;that&nbsp;is&nbsp;is&nbsp;called&nbsp;whenever&nbsp;a&nbsp;new<br>
@@ -507,7 +507,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_input_format"><strong>fl_set_input_format</strong></a>(ptr_flobject, fmt, sep)</dt><dd><tt><a href="#-fl_set_input_format">fl_set_input_format</a>(ptr_flobject,&nbsp;fmt,&nbsp;sep)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;format&nbsp;used&nbsp;for&nbsp;an&nbsp;input&nbsp;flobject.&nbsp;Currently&nbsp;used&nbsp;only&nbsp;for<br>
@@ -516,10 +516,11 @@ xfdata.FL_DATE_INPUT&nbsp;flobjects.<br>
 Parameters<br>
 ----------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fmt&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;for&nbsp;the&nbsp;input.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_INPUT_MMDD&nbsp;(Used<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;as&nbsp;format&nbsp;for&nbsp;FL_DATE_INPUT,&nbsp;it&nbsp;places&nbsp;the&nbsp;month&nbsp;before&nbsp;the&nbsp;day),<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_INPUT_DDMM&nbsp;(Used&nbsp;as&nbsp;format&nbsp;for&nbsp;FL_DATE_INPUT,&nbsp;it&nbsp;places&nbsp;the&nbsp;day<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;before&nbsp;the&nbsp;month).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format&nbsp;for&nbsp;the&nbsp;input.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_INPUT_MMDD&nbsp;(Used&nbsp;as&nbsp;format&nbsp;for&nbsp;FL_DATE_INPUT,&nbsp;it&nbsp;places&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;month&nbsp;before&nbsp;the&nbsp;day),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_INPUT_DDMM&nbsp;(Used&nbsp;as&nbsp;format&nbsp;for&nbsp;FL_DATE_INPUT,&nbsp;it&nbsp;places&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day&nbsp;before&nbsp;the&nbsp;month).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sep&nbsp;:&nbsp;int&nbsp;or&nbsp;char<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printable&nbsp;single&nbsp;character&nbsp;used&nbsp;as&nbsp;separator<br>
 &nbsp;<br>
@@ -543,8 +544,10 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flobject&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_OBJECT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;horizontal&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)&nbsp;FL_AUTO<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),&nbsp;FL_ON&nbsp;(always&nbsp;on),&nbsp;FL_OFF&nbsp;(always&nbsp;off)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;horizontal&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_ON&nbsp;(always&nbsp;on),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_OFF&nbsp;(always&nbsp;off)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -676,7 +679,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_input_vscrollbar"><strong>fl_set_input_vscrollbar</strong></a>(ptr_flobject, pref)</dt><dd><tt><a href="#-fl_set_input_vscrollbar">fl_set_input_vscrollbar</a>(ptr_flobject,&nbsp;pref)<br>
 &nbsp;<br>
 Defines&nbsp;vertical&nbsp;scrollbar&nbsp;settings.&nbsp;By&nbsp;default,&nbsp;if&nbsp;an&nbsp;input&nbsp;field&nbsp;of&nbsp;type<br>
@@ -691,8 +694,9 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input&nbsp;flobject<br>
 &nbsp;&nbsp;&nbsp;&nbsp;pref&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;how&nbsp;is&nbsp;vertical&nbsp;scrollbar&nbsp;shown.&nbsp;Values&nbsp;(from&nbsp;xfdata.py)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),&nbsp;FL_ON&nbsp;(always&nbsp;on),&nbsp;FL_OFF<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(always&nbsp;off)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_AUTO&nbsp;(On&nbsp;when&nbsp;needed,&nbsp;default),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_ON&nbsp;(always&nbsp;on),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;FL_OFF&nbsp;(always&nbsp;off)<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -719,7 +723,7 @@ Examples<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_validate_input"><strong>fl_validate_input</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_validate_input">fl_validate_input</a>(ptr_flobject)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Tests&nbsp;if&nbsp;the&nbsp;value&nbsp;in&nbsp;an&nbsp;input&nbsp;field&nbsp;is&nbsp;valid,&nbsp;according&nbsp;to&nbsp;the<br>
@@ -744,4 +748,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-01-15 17:41 +0100</body></html>
+<p>Updated on: 2011-08-09 18:25 +0200</body></html>
