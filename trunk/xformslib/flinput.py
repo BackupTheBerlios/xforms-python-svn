@@ -1243,3 +1243,65 @@ def fl_set_input_editkeymap(ptr_editkeymap):
     library.keep_elem_refs(ptr_editkeymap)
     _fl_set_input_editkeymap(ptr_editkeymap)
 
+
+def fl_get_input_editkeymap(ptr_editkeymap):
+    """fl_set_input_editkeymap(ptr_editkeymap) -> ptr_editkeymap
+
+    Obtains the current map of the edit keys.
+
+    Parameters
+    ----------
+        ptr_editkeymap : pointer to xfdata.FL_EditKeymap
+            edit keymap class instance (all members must be set to 0).
+            You can use xfstruct.make_ptr_fleditkeymap() passing a dict
+            whose keys corresponding to xfdata.FL_EditKeymap
+
+    Returns
+    -------
+        ptr_editkeymap : pointer to xfdata.FL_EditKeymap
+            edit keymap class instance.
+
+    Examples
+    --------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_get_input_editkeymap = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_input_editkeymap",
+        None, [cty.POINTER(xfdata.FL_EditKeymap)],
+        """void fl_get_input_editkeymap(FL_EditKeymap * keymap)""")
+    library.check_if_flinitialized()
+    ptr_editkeymap = cty.cast(ptr_editkeymap, cty.POINTER( \
+           xfdata.FL_EditKeymap))
+    library.verify_otherclassptr_type(ptr_editkeymap, cty.POINTER( \
+           xfdata.FL_EditKeymap))
+    library.keep_elem_refs(ptr_editkeymap)
+    _fl_get_input_editkeymap(ptr_editkeymap)
+    return ptr_editkeymap
+
+
+def fl_set_default_editkeymap():
+    """fl_set_default_editkeymap()
+
+    Reverts to the default keymap for edit keys.
+
+    Examples
+    --------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_set_default_editkeymap = library.cfuncproto(
+        library.load_so_libforms(), "fl_set_default_editkeymap",
+        None, [],
+        """void fl_set_default_editkeymap(void)""")
+    library.check_if_flinitialized()
+    _fl_set_default_editkeymap()
+

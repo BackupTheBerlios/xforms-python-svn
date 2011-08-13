@@ -85,7 +85,7 @@ def noop(ptrimg, strng):
 
 def parse_command_line(lsysargv, sysargv):
 
-    imgsetup, pimgsetup = xfl.make_flimagesetup_and_pointer()
+    #imgsetup, pimgsetup = xfl.make_flimagesetup_and_pointer()
     imgsetup.visual_cue = xfl.cfunc_int_ptrflimage_str(noop)
 
     argsnoopt = sysargv[:]
@@ -109,6 +109,9 @@ def parse_command_line(lsysargv, sysargv):
 
 
 def initialize():
+    global imgsetup, pimgsetup
+    imgsetup, pimgsetup = xfl.make_flimagesetup_and_pointer()
+    xfl.flimage_setup(pimgsetup)
     xfl.flimage_enable_xpm()
     xfl.flimage_enable_gif()
     xfl.flimage_enable_bmp()

@@ -2,6 +2,9 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * realign to upstream XForms (1.0.94pre5, development up to git-20110811):
+    new functions in flinput.py. Some bugfixes in xfstruct.py.
+    * bugfix in fl_remove_timeout(). iconvert.py and freedraw.py examples fixed.
     * better docs for format parameters in flgoddies.py related functions.
     * xyplotactivelog.py example ported.
     20110725 (beta19)

@@ -457,9 +457,9 @@ def fl_remove_timeout(timeoutid):
         None, [cty.c_int], \
         """void fl_remove_timeout(int id) """)
     library.check_if_flinitialized()
-    i_timerid = library.convert_to_intc(timerid)
-    library.keep_elem_refs(timerid, i_timerid)
-    _fl_remove_timeout(i_timerid)
+    i_timeoutid = library.convert_to_intc(timeoutid)
+    library.keep_elem_refs(timeoutid, i_timeoutid)
+    _fl_remove_timeout(i_timeoutid)
 
 
 # Basic public routine prototypes

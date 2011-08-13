@@ -43,6 +43,8 @@ max_h = 150
 def main(lsysargv, sysargv):
     global drawui
     dpy = xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
+    gctx = xfl.fl_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
+    xfl.fl_set_background(gctx, xfl.FL_GRAY)
     drawui = create_form_drawfree()
     xfl.fl_set_object_color(drawui.colorobj, xfl.FL_FREE_COL1, xfl.FL_FREE_COL1)
     draw_initialize(drawui)
@@ -63,8 +65,8 @@ def draw_triangle(fill, x, y, w, h, colr):
             {'x':int(x + w - 1), 'y':int(y + h - 1)} ]
     pxpoint = xfl.make_ptr_flpoint(mylistpoint)
 
-    gctx = xfl.fl_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
-    xfl.fl_set_foreground(gctx, colr)
+    #gctx = xfl.fl_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
+    #xfl.fl_set_foreground(gctx, xfl.fl_get_flcolor(colr))
 
     if fill:
         xfl.fl_polyf(pxpoint, 3, colr)
@@ -217,6 +219,10 @@ def freeobject_handler(pobj, event, mx, my, key, pxev):
 
 
 def create_form_drawfree():
+
+    #gctx = xfl.fl_gc()       #xfl.fl_state[xfl.fl_get_vclass()].gc[0]
+    #xfl.fl_set_background(gctx, xfl.FL_BLACK)
+
     fdui = FD_drawfree()
 
     fdui.drawfree = xfl.fl_bgn_form(xfl.FL_NO_BOX, 530, 490)
@@ -231,8 +237,6 @@ def create_form_drawfree():
     xfl.fl_set_object_gravity(fdui.freeobj, xfl.FL_NorthWest, \
             xfl.FL_SouthEast)
     xfl.fl_set_object_color(fdui.freeobj, xfl.FL_WHITE, xfl.FL_BLACK)
-
-    xfl.fl_set_background(gctx, xfl.FL_BLACK)
 
     pobj = xfl.fl_add_checkbutton(xfl.FL_PUSH_BUTTON, 15, 25, 100, 35, \
             "Outline")

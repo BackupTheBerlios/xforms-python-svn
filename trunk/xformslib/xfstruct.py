@@ -1154,7 +1154,8 @@ def make_ptr_fleditkeymap(dictfleditkeymap):
     'moveto_eol', 'moveto_bof', 'moveto_eof', 'transpose', 'paste',
     'backspace', 'del_to_bol', 'del_to_eol', 'clear_field', 'del_to_eos'.
     You are not required to manually pass all keys' values; remaining keys
-    are filled with 0, so default keymap will be used."""
+    are filled with 0, so default keymap will be used. If you pass None
+    instead of a dict, all keys are filled with 0 (default keymap)."""
 
     # one dict only
     if isinstance(dictfleditkeymap, dict):
@@ -1339,7 +1340,96 @@ def make_ptr_fleditkeymap(dictfleditkeymap):
         library.keep_elem_refs(dictfleditkeymap, structfleditkeymap, \
                 ptr_fleditkeymap, pydelprevchar, l_delprevchar, pydelnextchar,
                 l_delnextchar, pydelprevword, l_delprevword, pydelnextword, \
-                l_pydelnextword, pymovetoprevline, l_movetoprevline, \
+                l_delnextword, pymovetoprevline, l_movetoprevline, \
+                pymovetonextline, l_movetonextline, pymovetoprevchar, \
+                l_movetoprevchar, pymovetonextchar, pymovetoprevword, \
+                l_movetoprevword, pymovetonextword, l_movetonextword, \
+                pymovetoprevpage, l_movetoprevpage, pymovetonextpage, \
+                l_movetonextpage, pymovetobol, l_movetobol, pymovetoeol, \
+                l_movetoeol, pymovetobof, l_movetobof, pymovetoeof, \
+                l_movetoeof, pytranspose, l_transpose, pypaste, l_paste, \
+                pybackspace, l_backspace, pydeltobol, l_deltobol, pydeltoeol, \
+                l_deltoeol, pyclearfield, l_clearfield, pydeltoeos, l_deltoeos)
+        return ptr_fleditkeymap
+
+    elif not dictfleditkeymap:  # None passed, all keys set to zero
+        pydelprevchar = 0
+        l_delprevchar = library.convert_to_longc(pydelprevchar)
+        pydelnextchar = 0
+        l_delnextchar = library.convert_to_longc(pydelnextchar)
+        pydelprevword = 0
+        l_delprevword = library.convert_to_longc(pydelprevword)
+        pydelnextword = 0
+        l_delnextword = library.convert_to_longc(pydelnextword)
+        pymovetoprevline = 0
+        l_movetoprevline = library.convert_to_longc(pymovetoprevline)
+        pymovetonextline = 0
+        l_movetonextline = library.convert_to_longc(pymovetonextline)
+        pymovetoprevchar = 0
+        l_movetoprevchar = library.convert_to_longc(pymovetoprevchar)
+        pymovetonextchar = 0
+        l_movetonextchar = library.convert_to_longc(pymovetonextchar)
+        pymovetoprevword = 0
+        l_movetoprevword = library.convert_to_longc(pymovetoprevword)
+        pymovetonextword = 0
+        l_movetonextword = library.convert_to_longc(pymovetonextword)
+        pymovetoprevpage = 0
+        l_movetoprevpage = library.convert_to_longc(pymovetoprevpage)
+        pymovetonextpage = 0
+        l_movetonextpage = library.convert_to_longc(pymovetonextpage)
+        pymovetobol = 0
+        l_movetobol = library.convert_to_longc(pymovetobol)
+        pymovetoeol = 0
+        l_movetoeol = library.convert_to_longc(pymovetoeol)
+        pymovetobof = 0
+        l_movetobof = library.convert_to_longc(pymovetobof)
+        pymovetoeof = 0
+        l_movetoeof = library.convert_to_longc(pymovetoeof)
+        pytranspose = 0
+        l_transpose = library.convert_to_longc(pytranspose)
+        pypaste = 0
+        l_paste = library.convert_to_longc(pypaste)
+        pybackspace = 0
+        l_backspace = library.convert_to_longc(pybackspace)
+        pydeltobol = 0
+        l_deltobol = library.convert_to_longc(pydeltobol)
+        pydeltoeol = 0
+        l_deltoeol = library.convert_to_longc(pydeltoeol)
+        pyclearfield  = 0
+        l_clearfield  = library.convert_to_longc(pyclearfield )
+        pydeltoeos = 0
+        l_deltoeos = library.convert_to_longc(pydeltoeos)
+
+        structfleditkeymap = (xfdata.FL_EditKeymap)()
+        structfleditkeymap.del_prev_char = l_delprevchar
+        structfleditkeymap.del_next_char = l_delnextchar
+        structfleditkeymap.del_prev_word = l_delprevword
+        structfleditkeymap.del_next_word = l_delnextword
+        structfleditkeymap.moveto_prev_line = l_movetoprevline
+        structfleditkeymap.moveto_next_line = l_movetonextline
+        structfleditkeymap.moveto_prev_char = l_movetoprevchar
+        structfleditkeymap.moveto_next_char = l_movetonextchar
+        structfleditkeymap.moveto_prev_word = l_movetoprevword
+        structfleditkeymap.moveto_next_word = l_movetonextword
+        structfleditkeymap.moveto_prev_page = l_movetoprevpage
+        structfleditkeymap.moveto_next_page = l_movetonextpage
+        structfleditkeymap.moveto_bol = l_movetobol
+        structfleditkeymap.moveto_eol = l_movetoeol
+        structfleditkeymap.moveto_bof = l_movetobof
+        structfleditkeymap.moveto_eof = l_movetoeof
+        structfleditkeymap.transpose = l_transpose
+        structfleditkeymap.paste = l_paste
+        structfleditkeymap.backspace = l_backspace
+        structfleditkeymap.del_to_bol = l_deltobol
+        structfleditkeymap.del_to_eol = l_deltoeol
+        structfleditkeymap.clear_field = l_clearfield
+        structfleditkeymap.del_to_eos = l_deltoeos
+
+        ptr_fleditkeymap = cty.pointer(structfleditkeymap)
+        library.keep_elem_refs(dictfleditkeymap, structfleditkeymap, \
+                ptr_fleditkeymap, pydelprevchar, l_delprevchar, pydelnextchar,
+                l_delnextchar, pydelprevword, l_delprevword, pydelnextword, \
+                l_delnextword, pymovetoprevline, l_movetoprevline, \
                 pymovetonextline, l_movetonextline, pymovetoprevchar, \
                 l_movetoprevchar, pymovetonextchar, pymovetoprevword, \
                 l_movetoprevword, pymovetonextword, l_movetonextword, \
@@ -1353,7 +1443,7 @@ def make_ptr_fleditkeymap(dictfleditkeymap):
 
     else:
         raise library.XFormsTypeError("Parameter %s (of type %s) must be" \
-                " a python dict" % \
+                " a python dict, or 'None' (for all keys to be set to 0)." % \
                 (dictfleditkeymap, type(dictfleditkeymap)))
 
 
