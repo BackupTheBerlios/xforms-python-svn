@@ -2813,6 +2813,7 @@ Display = _XDisplay
 # Fonts related
 
 FL_MAX_FONTSIZES = 10
+FL_MAX_FONTNAME_LENGTH = 80
 
 class FL_FONT(cty.Structure):
     """Font class
@@ -2834,7 +2835,7 @@ FL_FONT._fields_ = [
         ('fs', cty.POINTER(XFontStruct) * FL_MAX_FONTSIZES),
         ('size', cty.c_short * FL_MAX_FONTSIZES),
         ('nsize', cty.c_short),
-        ('fname', cty.c_char * 80), ]
+        ('fname', cty.c_char * (FL_MAX_FONTNAME_LENGTH + 1)), ]
 
 
 # /usr/include/X11/Xlib.h 439

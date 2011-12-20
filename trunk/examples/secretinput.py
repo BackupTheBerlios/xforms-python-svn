@@ -24,8 +24,10 @@ class Flsecrinp(object):
 
         ppassword1 = xfl.fl_add_input(xfl.FL_SECRET_INPUT, 140, 40, \
                 160, 40, "Password 1:")
+        xfl.fl_set_object_return(ppassword1, xfl.FL_RETURN_CHANGED)
         ppassword2 = xfl.fl_add_input(xfl.FL_SECRET_INPUT, 140, 100, \
                 160, 40, "Password 2:")
+        xfl.fl_set_object_return(ppassword2, xfl.FL_RETURN_CHANGED)
         pinfo = xfl.fl_add_box(xfl.FL_SHADOW_BOX, 20, 160, 360, 40, "")
         pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 280, 240, \
                 100, 40, "Quit")

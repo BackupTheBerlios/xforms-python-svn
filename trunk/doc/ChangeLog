@@ -2,10 +2,15 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    * Support functions in xfstruct.py are prepended by 'fls_' to specify their
+      purpose. Realign to upstream XForms (1.0.94pre7, development up to
+      git-20111117), except for examples (as usual). Examples' review started,
+      with some bugfixes.
+    * some bugfixes.
     * realign to upstream XForms (1.0.94pre5, development up to git-20110811):
-    new functions in flinput.py. Some bugfixes in xfstruct.py.
+      new functions in flinput.py. Some bugfixes in xfstruct.py.
     * bugfix in fl_remove_timeout(). iconvert.py and freedraw.py examples fixed.
-    * better docs for format parameters in flgoddies.py related functions.
+    * better docs for format parameters in flgoodies.py related functions.
     * xyplotactivelog.py example ported.
     20110725 (beta19)
     * realign to upstream XForms (1.0.94pre5, development up to git-20110626,

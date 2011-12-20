@@ -280,7 +280,7 @@ def fl_add_canvas_handler(ptr_flobject, evtnum, pyfn_HandleCanvas, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------

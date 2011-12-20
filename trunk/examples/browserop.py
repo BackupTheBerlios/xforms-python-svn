@@ -15,18 +15,17 @@ import sys
 import xformslib as xfl
 
 
-
 class BrowserOp(object):
     def __init__(self, lsysargv, sysargv):
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.create_form()
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER, \
                 xfl.FL_TRANSIENT, "Browser Op")
-
-        while xfl.fl_do_forms():
+        while not xfl.fl_is_same_object(xfl.fl_do_forms(), self.pexitobj):
             pass
-
-        xfl.fl_hide_form(self.pform)
+        #xfl.fl_hide_form(self.pform)
+        xfl.fl_finish()
+        sys.exit(0)
 
 
     def addit(self, pobj, data):
@@ -59,9 +58,9 @@ class BrowserOp(object):
         xfl.fl_clear_browser(self.pbrowserobj)
 
 
-    def exitcb(self, pobj, arg):
-        xfl.fl_finish()
-        sys.exit(0)
+    #def exitcb(self, pobj, arg):
+    #    xfl.fl_finish()
+    #    sys.exit(0)
 
 
     def create_form(self):
@@ -96,7 +95,7 @@ class BrowserOp(object):
 
         self.pexitobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 250, 370, \
                 120, 30, "Exit")
-        xfl.fl_set_object_callback(self.pexitobj, self.exitcb, 0)
+        #xfl.fl_set_object_callback(self.pexitobj, self.exitcb, 0)
 
         xfl.fl_end_form()
 
@@ -105,4 +104,3 @@ class BrowserOp(object):
 if __name__ == '__main__':
     print("********* browserop.py *********")
     BrowserOp(len(sys.argv), sys.argv)
-

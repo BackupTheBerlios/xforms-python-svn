@@ -45,7 +45,7 @@ class FlPopup(object):
 
 
     def style_cb(self, ppopupretn):
-        pudata = xfl.convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry1 = ppopupretn.contents.popup.contents.entries
@@ -69,7 +69,7 @@ class FlPopup(object):
 
 
     def size_cb(self, ppopupretn):
-        pudata = xfl.convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry2 = ppopupretn.contents.popup.contents.entries
@@ -90,7 +90,7 @@ class FlPopup(object):
 
 
     def mod_cb(self, ppopupretn):
-        pudata = xfl.convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry3 = ppopupretn.contents.popup.contents.entries
@@ -120,7 +120,7 @@ class FlPopup(object):
         #    if ( e != r->entry )
         #        xfl.fl_popup_entry_clear_state( e, xfl.FL_POPUP_CHECKED );
         #
-        pudata = xfl.convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry4 = ppopupretn.contents.popup.contents.entries

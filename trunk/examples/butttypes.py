@@ -14,7 +14,6 @@ import sys
 import xformslib as xfl
 
 
-
 class Flbuttontypes(object):
     def __init__(self, lsysargv, sysargv):
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
@@ -27,7 +26,6 @@ class Flbuttontypes(object):
 
 
     def create_form_form0(self):
-
         self.form0 = xfl.fl_bgn_form(xfl.FL_NO_BOX, 360, 330)
 
         pobj0 = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 360, 330, "")
@@ -103,14 +101,11 @@ class Flbuttontypes(object):
                 xfl.fl_finish()
                 sys.exit(0)
         else:
-            #sprintf( buf, "%s callback called: %d", ob->label, xfl.fl_get_button( ob ))
             buf = "%s callback called: %d" % (xfl.fl_get_object_label(pobj), \
                     xfl.fl_get_button(pobj))
             xfl.fl_addto_browser(self.br, buf)
 
 
-
 if __name__ == '__main__':
     print("********* butttypes.py *********")
     appl = Flbuttontypes(len(sys.argv), sys.argv)
-

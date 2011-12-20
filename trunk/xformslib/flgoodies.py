@@ -1742,7 +1742,7 @@ def fl_set_fselector_callback(pyfn_FSCB, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -1959,7 +1959,7 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -2254,7 +2254,7 @@ def fl_goodies_atclose(ptr_flform, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------

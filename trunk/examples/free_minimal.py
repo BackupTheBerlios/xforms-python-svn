@@ -17,7 +17,7 @@ import xformslib as xfl
 def freehandler(pobj, evt, mx, my, key, pxev):
 
     mypoint1 = [{'x':25, 'y':14}, {'x':14, 'y':25}, {'x':50, 'y':70}]
-    ppoint1 = xfl.make_ptr_flpoint(mypoint1)
+    ppoint1 = xfl.fls_make_ptr_flpoint(mypoint1)
     xfl.fl_lines(ppoint1, 3, xfl.FL_RED)
 
     xfl.fl_line(90, 90, 150, 90, xfl.FL_GREEN)
@@ -32,7 +32,7 @@ def freehandler(pobj, evt, mx, my, key, pxev):
 
     mypoint2 = [{'x':70, 'y':70}, {'x':70, 'y':75}, {'x':75, 'y':80}, \
         {'x':80, 'y':75}]
-    ppoint2 = xfl.make_ptr_flpoint(mypoint2)
+    ppoint2 = xfl.fls_make_ptr_flpoint(mypoint2)
     xfl.fl_points(ppoint2, 4, xfl.FL_MAGENTA)
 
     xfl.fl_diagline(180, 90, 25, 20, xfl.FL_CYAN)
@@ -83,28 +83,28 @@ def freehandler(pobj, evt, mx, my, key, pxev):
 
     mypoint3 = [{'x':10, 'y':300}, {'x':50, 'y':310}, {'x':40, 'y':350}, \
             {'x':70, 'y':360}, {'x':20, 'y':370}]
-    ppoint3 = xfl.make_ptr_flpoint(mypoint3)
+    ppoint3 = xfl.fls_make_ptr_flpoint(mypoint3)
     xfl.fl_polygon(0, ppoint3, 5, xfl.FL_AZURE)
 
     mypoint4 = [{'x':90, 'y':280}, {'x':130, 'y':310}, {'x':140, 'y':300}, \
             {'x':170, 'y':360}, {'x':180, 'y':370}, {'x':160, 'y':300}]
-    ppoint4 = xfl.make_ptr_flpoint(mypoint4)
+    ppoint4 = xfl.fls_make_ptr_flpoint(mypoint4)
     xfl.fl_polygon(1, ppoint4, 6, xfl.FL_BEIGE)
 
     mypoint5 = [{'x':200, 'y':280}, {'x':210, 'y':280}, {'x':220, 'y':300}, \
             {'x':210, 'y':320}, {'x':200, 'y':320}, {'x':190, 'y':300}]
-    ppoint5 = xfl.make_ptr_flpoint(mypoint5)
+    ppoint5 = xfl.fls_make_ptr_flpoint(mypoint5)
     xfl.fl_polyf(ppoint5, 6, xfl.FL_BISQUE)
 
     mypoint6 = [{'x':240, 'y':280}, {'x':250, 'y':280}, {'x':260, 'y':300}, \
             {'x':250, 'y':320}, {'x':240, 'y':320}, {'x':230, 'y':300}]
-    ppoint6 = xfl.make_ptr_flpoint(mypoint6)
+    ppoint6 = xfl.fls_make_ptr_flpoint(mypoint6)
     xfl.fl_polyl(ppoint6, 6, xfl.FL_BLANCHEDALMOND)
 
     mypoint7 = [{'x':300, 'y':280}, {'x':320, 'y':280}, {'x':320, 'y':300}, \
             {'x':340, 'y':310}, {'x':310, 'y':330}, {'x':310, 'y':350}, \
             {'x':300, 'y':340}, {'x':290, 'y':350}, {'x':310, 'y':300}]
-    ppoint7 = xfl.make_ptr_flpoint(mypoint7)
+    ppoint7 = xfl.fls_make_ptr_flpoint(mypoint7)
     xfl.fl_polybound(ppoint7, 9, xfl.FL_BLUEVIOLET)
 
     return 0

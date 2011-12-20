@@ -40,9 +40,6 @@ from xformslib import xfdata
 # Image related routines
 #########################
 
-# fl_safe_free function placeholder (low-level)
-
-
 def FL_RGB2GRAY(r, g, b):
     uir = library.convert_to_uintc(r)
     uig = library.convert_to_uintc(g)
@@ -73,7 +70,7 @@ def flimage_setup(ptr_flimagesetup):
     ----------
         ptr_flimagesetup : pointer to xfdata.FLIMAGE_SETUP
             imagesetup class instance. You can use
-            xfstruct.make_flimagesetup_and_pointer() to prepare it.
+            xfstruct.fls_make_flimagesetup_and_pointer() to prepare it.
 
     Examples
     ---------
@@ -815,7 +812,7 @@ def flimage_add_text_struct(ptr_flimage, ptr_flimagetext):
             image class instance
         ptr_flimagetext : pointer to xfdata.FLIMAGE_TEXT
             flimagetext class instance. You can use
-            xfstruct.make_ptr_flimagetext(), passing a dict whose keys are
+            xfstruct.fls_make_ptr_flimagetext(), passing a dict whose keys are
             corresponding to xfdata.FLIMAGE_TEXT attributes.
 
     Returns
@@ -983,7 +980,7 @@ def flimage_add_marker_struct(ptr_flimage, ptr_flimagemarker):
             image
         ptr_flimagemarker : pointer to xfdata.FLIMAGE_MARKER
             flimagemarker class instance. You can use
-            xfstruct.make_ptr_flimagemarker(), passing a dict whose keys are
+            xfstruct.fls_make_ptr_flimagemarker(), passing a dict whose keys are
             corresponding to xfdata.FLIMAGE_MARKER attributes.
 
     Returns

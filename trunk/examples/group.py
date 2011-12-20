@@ -59,14 +59,14 @@ def init_gui(fd):
 
     xfl.fl_add_select_items(fd.choice, "Option1|Option2|Option3")
 
-    crab = xfl.import_xpmdata_from_file("crab45.xpm")          # "porsche.xpm"
+    crab = xfl.fls_import_xpmdata_from_file("crab45.xpm")          # "porsche.xpm"
     xfl.fl_set_pixmapbutton_data(fd.pixbutton, crab)
     xfl.fl_set_pixmap_data(fd.pix, crab)
-    bm1_width, bm1_height, bm1_bits = xfl.import_xbmdata_from_file("bm1.xbm")
+    bm1_width, bm1_height, bm1_bits = xfl.fls_import_xbmdata_from_file("bm1.xbm")
     xfl.fl_set_bitmapbutton_data(fd.bitbutton, bm1_width, bm1_height, \
             bm1_bits)
     nomail_width, nomail_height, nomail_bits = \
-            xfl.import_xbmdata_from_file("nomail.xbm")
+            xfl.fls_import_xbmdata_from_file("nomail.xbm")
     xfl.fl_set_bitmap_data(fd.bit, nomail_width, nomail_height, nomail_bits)
 
     xfl.fl_set_browser_fontsize(fd.browser, xfl.FL_NORMAL_SIZE)

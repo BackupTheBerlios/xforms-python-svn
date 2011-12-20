@@ -430,7 +430,7 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
         ptr_flpoint : pointer to xfdata.FL_POINT
             an array of point class instances. You can prepare it passing a
             dict or a list of dicts (whose key are corresponding to
-            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
+            xfdata.FL_POINT's members) to xfstruct.fls_make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -438,7 +438,7 @@ def fl_polygon(fill, ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>> ppointmap = xfstruct.fls_make_ptr_flpoint([{'x' : 12, 'y' : 32},
         >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
         >>> fl_polygon(1, ppointmap, 3, xfdata.FL_PALEGREEN)
 
@@ -474,7 +474,7 @@ def fl_polyf(ptr_flpoint, numpoints, colr):
         ptr_flpoint : pointer to xfdata.FL_POINT
             an array of point class instances. You can prepare it passing a
             dict or a list of dicts (whose key are corresponding to
-            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
+            xfdata.FL_POINT's members) to xfstruct.fls_make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -482,7 +482,7 @@ def fl_polyf(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>> ppointmap = xfstruct.fls_make_ptr_flpoint([{'x' : 12, 'y' : 32},
         >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
         >>> fl_polyf(ppointmap, 3, xfdata.FL_PALEGREEN)
 
@@ -504,7 +504,7 @@ def fl_polyl(ptr_flpoint, numpoints, colr):
         ptr_flpoint : pointer to xfdata.FL_POINT
             an array of point class instances. You can prepare it passing a
             dict or a list of dicts (whose key are corresponding to
-            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
+            xfdata.FL_POINT's members) to xfstruct.fls_make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -512,7 +512,7 @@ def fl_polyl(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' = 32},
+        >>> ppointmap = xfstruct.fls_make_ptr_flpoint([{'x' : 12, 'y' = 32},
         >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
         >>> fl_polyl(ppointmap, 3, xfdata.FL_ORCHID)
 
@@ -534,7 +534,7 @@ def fl_polybound(ptr_flpoint, numpoints, colr):
         ptr_flpoint : pointer to xfdata.FL_POINT
             an array of point class instances. You can prepare it passing a
             dict or a list of dicts (whose key are corresponding to
-            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
+            xfdata.FL_POINT's members) to xfstruct.fls_make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -542,7 +542,7 @@ def fl_polybound(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>> ppointmap = xfstruct.fls_make_ptr_flpoint([{'x' : 12, 'y' : 32},
         >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
         >>> fl_polybound(ppointmap, 3, xfdata.FL_DARKGOLD)
 
@@ -565,7 +565,7 @@ def fl_lines(ptr_flpoint, numpoints, colr):
         ptr_flpoint : pointer to xfdata.FL_POINT
             an array of point class instances. You can prepare it passing a
             dict or a list of dicts (whose key are corresponding to
-            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
+            xfdata.FL_POINT's members) to xfstruct.fls_make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -573,7 +573,7 @@ def fl_lines(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>> ppointmap = xfstruct.fls_make_ptr_flpoint([{'x' : 12, 'y' : 32},
         >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
         >>> fl_lines(ppointmap, 3, xfdata.FL_DODGERBLUE)
 
@@ -690,7 +690,7 @@ def fl_points(ptr_flpoint, numpoints, colr):
         ptr_flpoint : pointer to xfdata.FL_POINT
             an array of point class instances. You can prepare it passing a
             dict or a list of dicts (whose key are corresponding to
-            xfdata.FL_POINT's members) to xfstruct.make_ptr_flpoint() function
+            xfdata.FL_POINT's members) to xfstruct.fls_make_ptr_flpoint() function
         numpoints : int
             number of points
         colr : long_pos
@@ -698,7 +698,7 @@ def fl_points(ptr_flpoint, numpoints, colr):
 
     Examples
     --------
-        >>> ppointmap = xfstruct.make_ptr_flpoint([{'x' : 12, 'y' : 32},
+        >>> ppointmap = xfstruct.fls_make_ptr_flpoint([{'x' : 12, 'y' : 32},
         >>>         {'x' : 24, 'y' : 100}, {'x' : 87, 'y' : 132}])
         >>> fl_points(ppointmap, 3, xfdata.FL_AZURE)
 
@@ -3699,7 +3699,7 @@ def fl_set_event_callback(pyfn_AppEventCb, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -3756,7 +3756,7 @@ def fl_set_idle_callback(pyfn_AppEventCb, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -3961,7 +3961,7 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -4181,7 +4181,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
         ptr_appoptions : pointer to xfdata.FL_CMD_OPT
             possible options passed as a flcmdopt class instance. You can
             prepare it passing a dict (with keys corresponding to
-            xfdata.FL_CMD_OPT attributes) to xfstruct.make_ptr_flcmdopt()
+            xfdata.FL_CMD_OPT attributes) to xfstruct.fls_make_ptr_flcmdopt()
             function. If it is None, user application has no options
         numappopts : int
             number of options passed in appoptions. If it is 0, user
@@ -4291,7 +4291,7 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
             text representation of the resource value, or None (on failure)
         varvalue : any type
             variable value. You will need to use the appropriate
-            xfstruct.convert_ptrvoid_to_*() function to retrieve correct value
+            xfstruct.fls_convert_ptrvoid_to_*() function to retrieve correct value
 
     Examples
     --------
@@ -4394,7 +4394,7 @@ def fl_get_app_resources(ptr_flresource, numresources):
         ptr_flresource : pointer to xfdata.FL_RESOURCE
             an array of resource class instances. You can pass a dict or a
             list of dicts (whose keys corresponding to xfdata.FL_RESOURCE
-            attributes) to xfstruct.make_ptr_flresource() function
+            attributes) to xfstruct.fls_make_ptr_flresource() function
         numresources : int
             number of resources (starting from 1) passed with ptr_flresource
 
@@ -4580,7 +4580,7 @@ def fl_set_defaults(pdmask, ptr_fliopt):
         ptr_fliopt : pointer to xfdata.FL_IOPT array
             program defaults class instance. You can use pass a dict or a list
             of dicts (whose keys correspond to xfdata.FL_IOPT's attributes) to
-            xfstruct.make_ptr_fliopt() function.
+            xfstruct.fls_make_ptr_fliopt() function.
 
     Examples
     --------

@@ -400,7 +400,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -815,7 +815,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flresource&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;resource&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;pass&nbsp;a&nbsp;dict&nbsp;or&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_RESOURCE<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes)&nbsp;to&nbsp;xfstruct.make_ptr_flresource()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attributes)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flresource()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numresources&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;resources&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;passed&nbsp;with&nbsp;ptr_flresource<br>
 &nbsp;<br>
@@ -1217,7 +1217,7 @@ Returns<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;representation&nbsp;of&nbsp;the&nbsp;resource&nbsp;value,&nbsp;or&nbsp;None&nbsp;(on&nbsp;failure)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;varvalue&nbsp;:&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable&nbsp;value.&nbsp;You&nbsp;will&nbsp;need&nbsp;to&nbsp;use&nbsp;the&nbsp;appropriate<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function&nbsp;to&nbsp;retrieve&nbsp;correct&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.fls_convert_ptrvoid_to_*()&nbsp;function&nbsp;to&nbsp;retrieve&nbsp;correct&nbsp;value<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -1470,7 +1470,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_appoptions&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_CMD_OPT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;possible&nbsp;options&nbsp;passed&nbsp;as&nbsp;a&nbsp;flcmdopt&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a&nbsp;dict&nbsp;(with&nbsp;keys&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_CMD_OPT&nbsp;attributes)&nbsp;to&nbsp;xfstruct.make_ptr_flcmdopt()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_CMD_OPT&nbsp;attributes)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flcmdopt()<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function.&nbsp;If&nbsp;it&nbsp;is&nbsp;None,&nbsp;user&nbsp;application&nbsp;has&nbsp;no&nbsp;options<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numappopts&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;options&nbsp;passed&nbsp;in&nbsp;appoptions.&nbsp;If&nbsp;it&nbsp;is&nbsp;0,&nbsp;user<br>
@@ -1587,7 +1587,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpoint&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POINT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;key&nbsp;are&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.make_ptr_flpoint()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpoint()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
@@ -1595,7 +1595,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.fls_make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'x'&nbsp;:&nbsp;24,&nbsp;'y'&nbsp;:&nbsp;100},&nbsp;{'x'&nbsp;:&nbsp;87,&nbsp;'y'&nbsp;:&nbsp;132}])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_lines">fl_lines</a>(ppointmap,&nbsp;3,&nbsp;xfdata.FL_DODGERBLUE)<br>
 &nbsp;<br>
@@ -1922,7 +1922,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpoint&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POINT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;key&nbsp;are&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.make_ptr_flpoint()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpoint()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
@@ -1930,7 +1930,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.fls_make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'x'&nbsp;:&nbsp;24,&nbsp;'y'&nbsp;:&nbsp;100},&nbsp;{'x'&nbsp;:&nbsp;87,&nbsp;'y'&nbsp;:&nbsp;132}])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_points">fl_points</a>(ppointmap,&nbsp;3,&nbsp;xfdata.FL_AZURE)<br>
 &nbsp;<br>
@@ -1946,7 +1946,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpoint&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POINT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;key&nbsp;are&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.make_ptr_flpoint()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpoint()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
@@ -1954,7 +1954,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.fls_make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'x'&nbsp;:&nbsp;24,&nbsp;'y'&nbsp;:&nbsp;100},&nbsp;{'x'&nbsp;:&nbsp;87,&nbsp;'y'&nbsp;:&nbsp;132}])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polybound">fl_polybound</a>(ppointmap,&nbsp;3,&nbsp;xfdata.FL_DARKGOLD)<br>
 &nbsp;<br>
@@ -1970,7 +1970,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpoint&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POINT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;key&nbsp;are&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.make_ptr_flpoint()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpoint()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
@@ -1978,7 +1978,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.fls_make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'x'&nbsp;:&nbsp;24,&nbsp;'y'&nbsp;:&nbsp;100},&nbsp;{'x'&nbsp;:&nbsp;87,&nbsp;'y'&nbsp;:&nbsp;132}])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polyf">fl_polyf</a>(ppointmap,&nbsp;3,&nbsp;xfdata.FL_PALEGREEN)<br>
 &nbsp;<br>
@@ -1997,7 +1997,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpoint&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POINT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;key&nbsp;are&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.make_ptr_flpoint()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpoint()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
@@ -2005,7 +2005,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.fls_make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;:&nbsp;32},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'x'&nbsp;:&nbsp;24,&nbsp;'y'&nbsp;:&nbsp;100},&nbsp;{'x'&nbsp;:&nbsp;87,&nbsp;'y'&nbsp;:&nbsp;132}])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polygon">fl_polygon</a>(1,&nbsp;ppointmap,&nbsp;3,&nbsp;xfdata.FL_PALEGREEN)<br>
 &nbsp;<br>
@@ -2021,7 +2021,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpoint&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POINT<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;array&nbsp;of&nbsp;point&nbsp;class&nbsp;instances.&nbsp;You&nbsp;can&nbsp;prepare&nbsp;it&nbsp;passing&nbsp;a<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dict&nbsp;or&nbsp;a&nbsp;list&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;key&nbsp;are&nbsp;corresponding&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.make_ptr_flpoint()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfdata.FL_POINT's&nbsp;members)&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpoint()&nbsp;function<br>
 &nbsp;&nbsp;&nbsp;&nbsp;numpoints&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;points<br>
 &nbsp;&nbsp;&nbsp;&nbsp;colr&nbsp;:&nbsp;long_pos<br>
@@ -2029,7 +2029,7 @@ Parameters<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;=&nbsp;32},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;ppointmap&nbsp;=&nbsp;xfstruct.fls_make_ptr_flpoint([{'x'&nbsp;:&nbsp;12,&nbsp;'y'&nbsp;=&nbsp;32},<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'x'&nbsp;:&nbsp;24,&nbsp;'y'&nbsp;:&nbsp;100},&nbsp;{'x'&nbsp;:&nbsp;87,&nbsp;'y'&nbsp;:&nbsp;132}])<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_polyl">fl_polyl</a>(ppointmap,&nbsp;3,&nbsp;xfdata.FL_ORCHID)<br>
 &nbsp;<br>
@@ -2508,7 +2508,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_fliopt&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_IOPT&nbsp;array<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;program&nbsp;defaults&nbsp;class&nbsp;instance.&nbsp;You&nbsp;can&nbsp;use&nbsp;pass&nbsp;a&nbsp;dict&nbsp;or&nbsp;a&nbsp;list<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;dicts&nbsp;(whose&nbsp;keys&nbsp;correspond&nbsp;to&nbsp;xfdata.FL_IOPT's&nbsp;attributes)&nbsp;to<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.make_ptr_fliopt()&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.fls_make_ptr_fliopt()&nbsp;function.<br>
 &nbsp;<br>
 Examples<br>
 --------<br>
@@ -2562,7 +2562,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -2687,7 +2687,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -3624,4 +3624,4 @@ Notes<br>
 <strong>fl_state</strong> = &lt;flxbasic.FL_State_Array_6 object&gt;<br>
 <strong>fl_vmode</strong> = c_int(-1)<br>
 <strong>fl_vroot</strong> = c_ulong(0L)</td></tr></table>
-<p>Updated on: 2011-08-09 18:25 +0200</body></html>
+<p>Updated on: 2011-12-20 14:51 +0100</body></html>

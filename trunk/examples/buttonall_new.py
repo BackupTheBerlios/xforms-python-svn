@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 #  This file is part of xforms-python, and it is a variant of
-#  buttonall.c XForms demo, not using deprecated functions, with some
-#  adaptations.
+#  buttonall.c XForms demo, not using deprecated functions, with
+#  some adaptations.
 #
 #  buttonall.c was written by M. Overmars and T.C. Zhao (1997),
 #  See CREDITS file for XForms copyright attribution, and LICENSE
@@ -32,9 +32,7 @@ class FD_buttform(object):
 
 
 class ButtonAll(object):
-
     def __init__(self, lsysargv, sysargv):
-
         xfl.fl_initialize(lsysargv, sysargv, "", 0, 0)
         self.fd_buttform = self.create_form_buttform()
 
@@ -60,7 +58,6 @@ class ButtonAll(object):
 
 
     def bw_cb(self, pobj, data):
-
         bws = [-4, -3, -2, -1, 1, 2, 3, 4]
         n = xfl.fl_get_select_item(pobj).contents.val - 1
         # xfl.FL_POPUP_RETURN
@@ -71,21 +68,20 @@ class ButtonAll(object):
         xfl.fl_set_object_bw(self.fd_buttform.done, bws[n])
 
         # redrawing the backface wipes out the done button. Redraw it
-        xfl.fl_redraw_object(self.fd_buttform.done)
+        #xfl.fl_redraw_object(self.fd_buttform.done)
         xfl.fl_unfreeze_form(pobj.contents.form)
 
 
     def create_form_buttform(self):
-
         fdui = FD_buttform()
 
         fdui.buttform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 290, 260)
 
-        fdui.backface = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 290, 260, \
-                "")
+        fdui.backface = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 290, \
+                260, "")
 
-        fdui.done = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 185, 215, \
-                90, 30, "Done")
+        fdui.done = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 185, \
+                215, 90, 30, "Done")
         xfl.fl_set_object_lalign(fdui.done, xfl.FL_ALIGN_CENTER)
         xfl.fl_set_object_callback(fdui.done, self.done_cb, 0)
 
@@ -99,13 +95,15 @@ class ButtonAll(object):
                 30, 30, "")
         xfl.fl_set_object_color(pobj, xfl.FL_COL1, xfl.FL_GREEN)
 
-        fdui.bbutt = xfl.fl_add_bitmapbutton(xfl.FL_NORMAL_BUTTON, 25, 85, \
-                40, 40, "bitmapbutton")
-        xfl.fl_set_object_color(fdui.bbutt, xfl.FL_COL1, xfl.FL_BLACK)
+        fdui.bbutt = xfl.fl_add_bitmapbutton(xfl.FL_NORMAL_BUTTON, \
+                25, 85, 40, 40, "bitmapbutton")
+        xfl.fl_set_object_color(fdui.bbutt, xfl.FL_COL1, \
+                xfl.FL_BLACK)
 
-        fdui.pbutt = xfl.fl_add_pixmapbutton(xfl.FL_NORMAL_BUTTON, 25, 25, \
-                40, 40, "pixmapbutton")
-        xfl.fl_set_object_color(fdui.pbutt, xfl.FL_COL1, xfl.FL_YELLOW)
+        fdui.pbutt = xfl.fl_add_pixmapbutton(xfl.FL_NORMAL_BUTTON, \
+                25, 25, 40, 40, "pixmapbutton")
+        xfl.fl_set_object_color(fdui.pbutt, xfl.FL_COL1, \
+                xfl.FL_YELLOW)
 
         pobj = xfl.fl_add_checkbutton(xfl.FL_RADIO_BUTTON, 100, 31, \
                 70, 32, "Red")
@@ -172,4 +170,3 @@ class ButtonAll(object):
 if __name__ == '__main__':
     print("********* buttonall_new.py *********")
     ButtonAll(len(sys.argv), sys.argv)
-

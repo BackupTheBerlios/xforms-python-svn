@@ -19,8 +19,8 @@
     You should have received a copy of the GNU LGPL along with this
     program. If not, see <http://www.gnu.org/licenses/>.
 
-    See CREDITS file to read acknowledgements and thanks to XForms,
-    ctypes and other developers.
+    See CREDITS file to read acknowledgements and thanks to XForms',
+    ctypes' and other developers.
 """
 
 
@@ -278,7 +278,7 @@ def set_flimageinitialized():
 
 def convert_to_stringc(paramname):
     """ Converts paramname to python str and to ctypes c_char_p """
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         stringtype = str
     else:
         stringtype = basestring
@@ -288,14 +288,14 @@ def convert_to_stringc(paramname):
         retv = cty.c_char_p(paramname)
         return retv
     else:               # not a str / unicode str / c_char_p
-        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+        raise XFormsTypeError("Provided parameter '%s' is of %s, "
                 "but a 'str'/'c_char_p' type should be used." % \
                 (paramname, type(paramname)))
 
 
 def convert_to_ptr_stringc(paramname):
     """ Converts paramname (list of str) to a ctypes pointer to c_char_p """
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         stringtype = str
     else:
         stringtype = basestring
@@ -303,13 +303,13 @@ def convert_to_ptr_stringc(paramname):
         for idx in range(0, len(paramname)):
             if not isinstance(paramname[idx], stringtype):
                 # every part must be a str
-                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                raise XFormsTypeError("Provided parameter '%s' is of %s,"
                         " but a 'list of str'/'pointer to c_char_p' type"
                         " should be used." % (paramname, type(paramname)))
         retv = (cty.c_char_p * len(paramname))(*paramname)    # already a ptr
         return retv
     else:               # not a list
-        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+        raise XFormsTypeError("Provided parameter '%s' is of %s type, "
                 "but a 'list of str'/'array of c_char_p' type should "
                 "be used." % (paramname, type(paramname)))
 
@@ -320,7 +320,7 @@ def convert_to_intc(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but an 'int'/'c_int' type should be used." % \
                     (paramname, type(paramname)))
         retv = cty.c_int(retv0)
@@ -333,7 +333,7 @@ convert_to_FL_Coord = convert_to_intc
 
 def convert_to_ptr_intc(paramname):
     """ Converts paramname (list of int) to a ctypes pointer to c_int """
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         longtype = int
     else:
         longtype = (long, int)
@@ -341,7 +341,7 @@ def convert_to_ptr_intc(paramname):
         for idx in range(0, len(paramname)):
             if not isinstance(paramname[idx], longtype):
                 # every part must be an int/long
-                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                raise XFormsTypeError("Provided parameter '%s' is of %s,"
                         " but a 'list of int'/'pointer to c_int' type"
                         " should be used." % (paramname, type(paramname)))
         retv = (cty.c_int * len(paramname))(*paramname)    # already a ptr
@@ -358,7 +358,7 @@ def convert_to_uintc(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but an 'int_pos'/'c_uint' type should be used." % \
                     (paramname, type(paramname)))
         else:
@@ -374,7 +374,7 @@ def convert_to_shortc(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but an 'int'/'c_short' type should be used." % \
                     (paramname, type(paramname)))
         retv = cty.c_short(retv0)
@@ -389,7 +389,7 @@ def convert_to_ushortc(paramname):
         try:
             retv0 = int(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but an 'int'/'c_ushort' type should be used." % \
                     (paramname, type(paramname)))
         retv = cty.c_ushort(retv0)
@@ -400,7 +400,7 @@ def convert_to_ushortc(paramname):
 
 def convert_to_longc(paramname):
     """ Converts paramname to python long and to ctypes c_long """
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         longtype = int
     else:
         longtype = long
@@ -408,7 +408,7 @@ def convert_to_longc(paramname):
         try:
             retv0 = longtype(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but a 'long'/'c_long' type should be used." % \
                     (paramname, type(paramname)))
         else:
@@ -420,7 +420,7 @@ def convert_to_longc(paramname):
 
 def convert_to_ulongc(paramname):
     """ Converts paramname to python long and to ctypes c_ulong """
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         longtype = int
     else:
         longtype = long
@@ -428,7 +428,7 @@ def convert_to_ulongc(paramname):
         try:
             retv0 = longtype(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but a 'long_pos'/'c_ulong' type should be used." % \
                     (paramname, type(paramname)))
         else:
@@ -444,7 +444,7 @@ convert_to_Pixmap = convert_to_ulongc
 
 def convert_to_ptr_ulongc(paramname):
     """ Converts paramname (list of long) to a ctypes pointer to c_ulong """
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         longtype = int
     else:
         longtype = (long, int)
@@ -452,13 +452,13 @@ def convert_to_ptr_ulongc(paramname):
         for idx in range(0, len(paramname)):
             if not isinstance(paramname[idx], longtype):
                 # every part must be an int/long
-                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                raise XFormsTypeError("Provided parameter '%s' is of %s,"
                         " but a 'list of long'/'pointer to c_ulong' type"
                         " should be used." % (paramname, type(paramname)))
         retv = (cty.c_ulong * len(paramname))(*paramname)    # already a ptr
         return retv
     else:               # not a list
-        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+        raise XFormsTypeError("Provided parameter '%s' is of %s,"
                 " but a 'list of long'/'pointer to c_ulong' type"
                 " should be used." % (paramname, type(paramname)))
 
@@ -469,7 +469,7 @@ def convert_to_doublec(paramname):
         try:
             retv0 = float(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but a 'float'/'c_double' type should be used." % \
                     (paramname, type(paramname)))
         else:
@@ -486,13 +486,13 @@ def convert_to_ptr_doublec(paramname):
         for idx in range(0, len(paramname)):
             if not isinstance(paramname[idx], float):
                 # every part must be a float
-                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                raise XFormsTypeError("Provided parameter '%s' is of %s,"
                         " but a 'list of float'/'pointer to c_double' type"
                         " should be used." % (paramname, type(paramname)))
         retv = (cty.c_float * len(paramname))(*paramname)    # already a ptr
         return retv
     else:               # not a list
-        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+        raise XFormsTypeError("Provided parameter '%s' is of %s,"
                 " but a 'list of float'/'pointer to c_double' type"
                 " should be used." % (paramname, type(paramname)))
 
@@ -503,7 +503,7 @@ def convert_to_floatc(paramname):
         try:
             retv0 = float(paramname)
         except ValueError:
-            raise XFormsTypeError("Provided parameter '%s' has %s type, "
+            raise XFormsTypeError("Provided parameter '%s' is of %s, "
                     "but a 'float'/'c_float' type should be used." % \
                     (paramname, type(paramname)))
         else:
@@ -520,13 +520,13 @@ def convert_to_ptr_floatc(paramname):
         for idx in range(0, len(paramname)):
             if not isinstance(paramname[idx], float):
                 # every part must be a float
-                raise XFormsTypeError("Provided parameter '%s' has %s type,"
+                raise XFormsTypeError("Provided parameter '%s' is of %s,"
                         " but a 'list of float'/'pointer to c_float' type"
                         " should be used." % (paramname, type(paramname)))
         retv = (cty.c_float * len(paramname))(*paramname)    # already a ptr
         return retv
     else:               # not a list
-        raise XFormsTypeError("Provided parameter '%s' has %s type,"
+        raise XFormsTypeError("Provided parameter '%s' is of %s,"
                 " but a 'list of float'/'pointer to c_float' type"
                 " should be used." % (paramname, type(paramname)))
 
@@ -540,7 +540,7 @@ def convert_to_ubytec_array(paramname):
             retv[n] = paramname[n]
         return retv
     else:               # not a list
-        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+        raise XFormsTypeError("Provided parameter '%s' is of %s, "
                 "but a 'list of int'/'c_ubyte' type should be used." % \
                 (paramname, type(paramname)))
 
@@ -617,7 +617,7 @@ def convert_userdata_to_ptrvoid(udata):
     """ Taking any manageable userdata type to be used in a callback-type
     function, handles it and returns a pointer param compatible with C
     pointer to void."""
-    if sys.hexversion > 0x20909f0:
+    if sys.hexversion > 0x20909f0:      # python 3.x
         longtype = int
         stringtype = str
     else:
@@ -642,7 +642,7 @@ def convert_userdata_to_ptrvoid(udata):
         tmpvdata = convert_to_stringc(udata)
         ptr_vdata = cty.pointer(tmpvdata)
     else:
-        raise XFormsTypeError("Provided parameter '%s' has %s type, "
+        raise XFormsTypeError("Provided parameter '%s' is of %s, "
                 "so it cannot be handled as user_data/pointer to void." % \
                 (udata, type(udata)))
     ptr_vdata2 = cty.cast(ptr_vdata, cty.c_void_p)      # void *-compatible
@@ -655,7 +655,7 @@ def checkfatal_allowed_value_in_list(paramname, valueslist):
         of admissible values, otherwise raises a fatal error."""
     if isinstance(valueslist, (list, tuple)):
         if paramname not in valueslist:
-            raise XFormsValueError("Parameter %s value (whose type is %s)"
+            raise XFormsValueError("Parameter %s value (of %s)"
                     " should be one of those included in list/tuple %s." % \
                     (paramname, type(paramname), valueslist))
 
@@ -664,7 +664,7 @@ def checknonfatal_allowed_value_in_list(paramname, valueslist):
         of admissible values, otherwise issues a warning."""
     if isinstance(valueslist, (list, tuple)):
         if paramname not in valueslist:
-            nonfatalwarnmsg = "Parameter %s value (whose type is %s) is" \
+            nonfatalwarnmsg = "Parameter %s value (of %s) is" \
                     " not one of those included in list/tuple %s." % \
                     (paramname, type(paramname), valueslist)
             warnings.warn(nonfatalwarnmsg, XFormsWarning, 3)
@@ -682,7 +682,7 @@ def checknonfatal_allowed_value_in_list(paramname, valueslist):
 def verify_tuplelist_type(paramname):
     """Checks if paramname is a valid list or tuple."""
     if not isinstance(paramname, (list, tuple)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 " a list or a tuple type should be used." % \
                 (paramname, type(paramname)))
     else:
@@ -692,7 +692,7 @@ def verify_tuplelist_type(paramname):
 def verify_flobjectptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_OBJECT."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_OBJECT)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_OBJECT type should be used." % \
                 (paramname, type(paramname)))
 
@@ -700,7 +700,7 @@ def verify_flobjectptr_type(paramname):
 def verify_flformptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_FORM."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_FORM)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_FORM type should be used." % \
                 (paramname, type(paramname)))
 
@@ -708,7 +708,7 @@ def verify_flformptr_type(paramname):
 def verify_flflimageptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_IMAGE."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_IMAGE)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_IMAGE type should be used." % \
                 (paramname, type(paramname)))
 
@@ -716,7 +716,7 @@ def verify_flflimageptr_type(paramname):
 def verify_flpopupptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_POPUP."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_POPUP type should be used." % \
                 (paramname, type(paramname)))
 
@@ -724,7 +724,7 @@ def verify_flpopupptr_type(paramname):
 def verify_flpopupentryptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_POPUP_ENTRY."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_ENTRY)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_POPUP_ENTRY type should be used." % \
                 (paramname, type(paramname)))
 
@@ -732,7 +732,7 @@ def verify_flpopupentryptr_type(paramname):
 def verify_flpopupreturnptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_POPUP_RETURN."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_RETURN)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_POPUP_RETURN type should be used." % \
                 (paramname, type(paramname)))
 
@@ -740,7 +740,7 @@ def verify_flpopupreturnptr_type(paramname):
 def verify_flpopupitemptr_type(paramname):
     """Checks if paramname is a valid pointer to xfdata.FL_POPUP_ITEM."""
     if not isinstance(paramname, cty.POINTER(xfdata.FL_POPUP_ITEM)):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to xfdata.FL_POPUP_ITEM type should be used." % \
                 (paramname, type(paramname)))
 
@@ -749,7 +749,7 @@ def verify_function_type(paramname):
     """ Checks if paramname value is a valid python function to be passed as
     e.g. callback in a public function."""
     if not hasattr(paramname, '__call__'):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a python function type should be used." % \
                 (paramname, type(paramname)))
 
@@ -758,7 +758,7 @@ def verify_otherclassptr_type(paramname, pstructinst):
     """ Checks if paramname value is a valid pointer to a provided 'Structure'
     class instance, different from previous classes."""
     if not isinstance(paramname, pstructinst):
-        raise XFormsTypeError("Provided parameter %s has %s type, but " \
+        raise XFormsTypeError("Provided parameter %s is of %s, but " \
                 "a pointer to %s 'Structure' class instance should be " \
                 "used." %  (paramname, type(paramname), pstructinst))
 

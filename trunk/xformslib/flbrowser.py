@@ -1504,7 +1504,7 @@ def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, \
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -1553,7 +1553,7 @@ def fl_set_browser_vscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, \
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------

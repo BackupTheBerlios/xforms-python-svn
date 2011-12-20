@@ -50,9 +50,8 @@ class Flcanvas(object):
 
 
     def canvas_expose(self, pobj, win, w, h, pxev, pvdata):
-        odata = xfl.convert_ptrvoid_to_ptrflobject(pvdata).contents
+        odata = xfl.fls_convert_ptrvoid_to_ptrflobject(pvdata).contents
         print("odata:", odata)
-        #FD_canvasform *ui = d;
         #XFillRectangle( fl_get_display( ), win, canvasGC, 0, 0, w, h );
         xfl.fl_rectangle(1, 0, 0, w, h, xfl.FL_YELLOW)
         xfl.fl_addto_browser(self.fd_canvasform.br, "Expose")
@@ -60,9 +59,8 @@ class Flcanvas(object):
 
 
     def canvas_key(self, pobj, win, w, h, pxev, pvdata):
-        sdata = xfl.convert_ptrvoid_to_ptrstringc(pvdata).contents.value
+        sdata = xfl.fls_convert_ptrvoid_to_ptrstringc(pvdata).contents.value
         print("sdata:", sdata)
-        #FD_canvasform *ui = d;
         #sprintf( buf, "KeyPress: keysym=%ld",
         #	 XKeycodeToKeysym( fl_display, ev->xkey.keycode, 0 ) );
         buf = "KeyPress: keysym=%ld" % pxev.contents.xkey.keycode
@@ -71,7 +69,7 @@ class Flcanvas(object):
 
 
     def canvas_but(self, pobj, win, w, h, pxev, pvdata):
-        ddata = xfl.convert_ptrvoid_to_ptrfloatc(pvdata).contents.value
+        ddata = xfl.fls_convert_ptrvoid_to_ptrfloatc(pvdata).contents.value
         print("ddata:", ddata)
         #FD_canvasform *ui = d;
         if pxev.contents.type == xfl.ButtonPress:
@@ -86,7 +84,7 @@ class Flcanvas(object):
 
 
     def canvas_move(self, pobj, win, w, h, pxev, pvdata):
-        fdata = xfl.convert_ptrvoid_to_ptrflform(pvdata).contents
+        fdata = xfl.fls_convert_ptrvoid_to_ptrflform(pvdata).contents
         print("fdata:", fdata)
         #FD_canvasform *ui = d;
         #sprintf( buf, "Position: %d %d", ev->xmotion.x, ev->xmotion.y );
@@ -97,7 +95,7 @@ class Flcanvas(object):
 
 
     def canvas_misc(self, pobj, win, w, h, pxev, pvdata):
-        fdata = xfl.convert_ptrvoid_to_ptrflform(pvdata).contents
+        fdata = xfl.fls_convert_ptrvoid_to_ptrflform(pvdata).contents
         print("fdata:", fdata)
         #FD_canvasform *ui = d;
         if pxev.contents.xcrossing.type == xfl.EnterNotify:
@@ -122,10 +120,10 @@ class Flcanvas(object):
         #canvasGC = XCreateGC( fl_get_display( ),fl_state[ fl_vmode ].trailblazer,
         #					  0, 0 );
         #XSetForeground( fl_get_display( ), canvasGC, fl_get_pixel( FL_BLACK ) );
-        #xfl.fl_set_foreground(xfl.fl_root, xfl.fl_get_pixel(xfl.FL_BLACK))
-
+        #xfl.fl_set_foreground(xfl.fl_gc(), xfl.fl_get_pixel(xfl.FL_BLACK))
 
     # callbacks
+
     def sensitive_setting(self, pobj, evtnum):
         #FL_HANDLE_CANVAS hc;
         countn = 1

@@ -114,7 +114,7 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         u : pointer to any type
             user data to be passed to callbacks for entry; invoked callback
             has to take care of type check and re-cast ptr_void to chosen type
-            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
+            using appropriate xfstruct.fls_convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
@@ -253,7 +253,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         u : pointer to any type
             user data to be passed to callbacks for entry; invoked callback
             has to take care of type check and re-cast ptr_void to chosen type
-            using appropriate xfstruct.convert_ptrvoid_to_* function (separated
+            using appropriate xfstruct.fls_convert_ptrvoid_to_* function (separated
             additional argument corresponding to %u in-text special sequence)
         f : python callback function, returned value
             name referring to function(ptr_flpopupreturn) -> int
@@ -392,7 +392,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be created. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
-            to xfstruct.make_ptr_flpopupitem function.
+            to xfstruct.fls_make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -437,7 +437,7 @@ def fl_popup_add_items(ptr_flpopup, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be added. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
-            to xfstruct.make_ptr_flpopupitem function.
+            to xfstruct.fls_make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -483,7 +483,7 @@ def fl_popup_insert_items(ptr_flpopup, ptr_flpopupentry, ptr_flpopupitem):
         ptr_flpopupitem : pointer to xfdata.FL_POPUP_ITEM
             new popup item to be inserted. It can be prepared passing a dict
             (whose keys are corresponding to xfdata.FL_POPUP_ITEM's members)
-            to xfstruct.make_ptr_flpopupitem function.
+            to xfstruct.fls_make_ptr_flpopupitem function.
 
     Returns
     -------
@@ -1792,7 +1792,7 @@ def fl_popup_entry_set_user_data(ptr_flpopupentry, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -1918,7 +1918,7 @@ def fl_popup_entry_get_by_user_data(ptr_flpopup, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data assigned to the popup entry; callback has to take
             care of type check and re-cast from ptr_void to chosen type
-            using appropriate xfstruct.convert_ptrvoid_to_*() function
+            using appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------

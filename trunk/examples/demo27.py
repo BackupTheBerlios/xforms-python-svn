@@ -61,7 +61,7 @@ class Demo27(object):
 
     # color form callback routine
     def color_callback(self, pobj, pvdata):
-        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
         print("ldata", ldata)
 
         self.r = int(255 * xfl.fl_get_slider_value(self.predsl))
@@ -111,7 +111,7 @@ class Demo27(object):
 
     # control form callback routine
     def control_callback(self, pobj, pvdata):
-        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
         print("ldata", ldata)
         if xfl.fl_is_same_object(pobj, self.psizeobj):
             self.cursize = int(40 * xfl.fl_get_slider_value(self.psizeobj))
@@ -182,7 +182,7 @@ class Demo27(object):
                     stobj.size)}, {'x':int(stobj.x + stobj.size), \
                     'y':int(stobj.y + stobj.size)}, {'x':int(stobj.x), \
                     'y':int(stobj.y - stobj.size)}]
-            pxpoint = xfl.make_ptr_flpoint(mylistpoint)
+            pxpoint = xfl.fls_make_ptr_flpoint(mylistpoint)
             xfl.fl_polyf(pxpoint, 3, xfl.FL_FREE_COL1)
 
 
@@ -215,7 +215,7 @@ class Demo27(object):
 
     # Event callback routine
     def main_callback(self, pxev, pvdata):
-        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
         print("ldata", ldata)
         xfl.fl_winset(self.main_win)
         if pxev.contents.type == xfl.Expose:

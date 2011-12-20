@@ -80,7 +80,6 @@ class BorderWidth(object):
         while xfl.fl_do_forms():
             pass                # empty
 
-
     # callbacks for form bwform
 
     def done_callback(self, pobj, data):
@@ -96,7 +95,6 @@ class BorderWidth(object):
         xfl.fl_set_object_bw(self.pbwgroup, bw)
         xfl.fl_set_object_bw(self.pdoneobj, bw)
         xfl.fl_popup_set_bw(pr.contents.popup, bw)
-
 
 
 if __name__ == '__main__':

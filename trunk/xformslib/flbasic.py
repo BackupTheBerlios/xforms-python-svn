@@ -104,7 +104,7 @@ def fl_add_io_callback(fd, fmask, pyfn_IoCallback, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -204,7 +204,7 @@ def fl_add_signal_callback(sglnum, pyfn_SignalHandler, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -398,7 +398,7 @@ def fl_add_timeout(msec, pyfn_TimeoutCallback, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -912,7 +912,7 @@ def fl_set_form_atclose(ptr_flform, pyfn_FormAtclose, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -963,7 +963,7 @@ def fl_set_atclose(pyfn_FormAtclose, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -1015,7 +1015,7 @@ def fl_set_form_atactivate(ptr_flform, pyfn_FormAtactivate, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Return
     ------
@@ -1069,7 +1069,7 @@ def fl_set_form_atdeactivate(ptr_flform, pyfn_FormAtdeactivate, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Returns
     -------
@@ -1508,7 +1508,7 @@ def fl_set_form_callback(ptr_flform, pyfn_FormCallbackPtr, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------
@@ -3913,7 +3913,7 @@ def fl_for_all_objects(ptr_flform, pyfn_operatecb, userdata):
         userdata : any type (e.g. None, int, str, etc..)
             user data to be passed to function; invoked callback has to take
             care of type check and re-cast from ptr_void to chosen type using
-            appropriate xfstruct.convert_ptrvoid_to_*() function
+            appropriate xfstruct.fls_convert_ptrvoid_to_*() function
 
     Examples
     --------

@@ -150,6 +150,27 @@ API_diversion<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_get_input_editkeymap"><strong>fl_get_input_editkeymap</strong></a>()</dt><dd><tt><a href="#-fl_set_input_editkeymap">fl_set_input_editkeymap</a>()&nbsp;-&gt;&nbsp;ptr_fleditkeymap<br>
+&nbsp;<br>
+Obtains&nbsp;the&nbsp;current&nbsp;map&nbsp;of&nbsp;the&nbsp;edit&nbsp;keys.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_fleditkeymap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_EditKeymap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edit&nbsp;keymap&nbsp;class&nbsp;instance<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+API_diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_input_editkeymap">fl_get_input_editkeymap</a>(ptr_fleditkeymap)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_input_format"><strong>fl_get_input_format</strong></a>(ptr_flobject)</dt><dd><tt><a href="#-fl_get_input_format">fl_get_input_format</a>(ptr_flobject)&nbsp;-&gt;&nbsp;fmt,&nbsp;sep<br>
 &nbsp;<br>
 Provides&nbsp;means&nbsp;for&nbsp;the&nbsp;validator&nbsp;to&nbsp;retrieve&nbsp;some&nbsp;information&nbsp;about&nbsp;user<br>
@@ -324,6 +345,17 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;NoDoc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_set_default_editkeymap"><strong>fl_set_default_editkeymap</strong></a>()</dt><dd><tt><a href="#-fl_set_default_editkeymap">fl_set_default_editkeymap</a>()<br>
+&nbsp;<br>
+Reverts&nbsp;to&nbsp;the&nbsp;default&nbsp;keymap&nbsp;for&nbsp;edit&nbsp;keys.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_set_input"><strong>fl_set_input</strong></a>(ptr_flobject, text)</dt><dd><tt><a href="#-fl_set_input">fl_set_input</a>(ptr_flobject,&nbsp;text)<br>
 &nbsp;<br>
 Defines&nbsp;the&nbsp;particular&nbsp;input&nbsp;string,&nbsp;with&nbsp;no&nbsp;checks&nbsp;for&nbsp;validity.&nbsp;An<br>
@@ -402,7 +434,7 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
- <dl><dt><a name="-fl_set_input_editkeymap"><strong>fl_set_input_editkeymap</strong></a>(ptr_editkeymap)</dt><dd><tt><a href="#-fl_set_input_editkeymap">fl_set_input_editkeymap</a>(ptr_editkeymap)<br>
+ <dl><dt><a name="-fl_set_input_editkeymap"><strong>fl_set_input_editkeymap</strong></a>(ptr_fleditkeymap)</dt><dd><tt><a href="#-fl_set_input_editkeymap">fl_set_input_editkeymap</a>(ptr_fleditkeymap)<br>
 &nbsp;<br>
 Changes&nbsp;the&nbsp;default&nbsp;edit&nbsp;keymaps.&nbsp;Edit&nbsp;keymap&nbsp;is&nbsp;global&nbsp;and&nbsp;affects&nbsp;all<br>
 input&nbsp;field&nbsp;within&nbsp;the&nbsp;application.&nbsp;All&nbsp;cursor&nbsp;keys&nbsp;(&lt;Left&gt;,&nbsp;&lt;Home&gt;&nbsp;etc.)<br>
@@ -419,11 +451,11 @@ affects&nbsp;all&nbsp;input&nbsp;field&nbsp;within&nbsp;the&nbsp;application.<br
 &nbsp;<br>
 Parameters<br>
 ----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_editkeymap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_EditKeymap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ptr_fleditkeymap&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_EditKeymap<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;edit&nbsp;keymap&nbsp;class&nbsp;instance&nbsp;(filled&nbsp;or&nbsp;partially&nbsp;filled;&nbsp;the<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unfilled&nbsp;members&nbsp;must&nbsp;be&nbsp;set&nbsp;to&nbsp;0&nbsp;so&nbsp;the&nbsp;default&nbsp;mapping&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retained.&nbsp;If&nbsp;None,&nbsp;it&nbsp;restores&nbsp;the&nbsp;default&nbsp;keymap.&nbsp;You&nbsp;can&nbsp;use<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.make_ptr_fleditkeymap()&nbsp;passing&nbsp;a&nbsp;dict&nbsp;whose&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xfstruct.fls_make_ptr_fleditkeymap()&nbsp;passing&nbsp;a&nbsp;dict&nbsp;whose&nbsp;keys<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_EditKeymap<br>
 &nbsp;<br>
 Examples<br>
@@ -748,4 +780,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-08-09 18:25 +0200</body></html>
+<p>Updated on: 2011-12-20 14:51 +0100</body></html>

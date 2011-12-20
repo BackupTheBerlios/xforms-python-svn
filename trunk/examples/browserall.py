@@ -16,9 +16,7 @@ import xformslib as xfl
 
 
 class BrowserAll(object):
-
     def __init__(self, lsysargv, sysargv):
-
         self.pbr = [0, 0, 0, 0]
         self.bnames = ["NORMAL_BROWSER", "SELECT_BROWSER", "HOLD_BROWSER", \
                 "MULTI_BROWSER"]
@@ -28,7 +26,9 @@ class BrowserAll(object):
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER | xfl.FL_FREE_SIZE, \
                 xfl.FL_TRANSIENT, "All Browsers")
         xfl.fl_do_forms()
-        xfl.fl_hide_form(self.pform)
+        #xfl.fl_hide_form(self.pform)
+        xfl.fl_finish()
+        sys.exit(0)
 
 
     def create_form(self):
@@ -131,7 +131,6 @@ class BrowserAll(object):
 
 
     def br_callback(self, pobj, arg):
-
         mb = ["left", "middle", "right", "scroll-up", "scroll-down"]
         i = xfl.fl_mouse_button()
         if i >= xfl.FL_LEFT_MOUSE and i <= xfl.FL_SCROLLDOWN_MOUSE:
@@ -155,7 +154,7 @@ class BrowserAll(object):
 
 
     def vcallback(self, pobj, topline, pvdata):
-        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
         print("ldata", ldata)
         yoffset = xfl.fl_get_browser_yoffset(self.pbr[0])
         for i in range(0, 4):
@@ -164,13 +163,12 @@ class BrowserAll(object):
 
     def donothing(self, pobj, topline, pvdata):
         print "pvdata", pvdata
-        ldata = xfl.convert_ptrvoid_to_ptrlongc(pvdata).contents.value
+        ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
         print "ldata", ldata
         pass        # placeholder for disabled vcallback
 
 
     def link_browsers(self, pobj, data):
-
         sync = xfl.fl_get_button(pobj)
         if sync:
             linktxt = "Unlink"
@@ -184,16 +182,15 @@ class BrowserAll(object):
                 xfl.fl_set_browser_vscrollbar(self.pbr[i], xfl.FL_OFF)
                 xfl.fl_set_browser_yoffset(self.pbr[i], yoffset)
             xfl.fl_set_browser_vscroll_callback(self.pbr[0], \
-                    self.vcallback, 11)          # 0
+                    self.vcallback, 0)          # 11
         else:
             for i in range(1, 4):
                 xfl.fl_set_browser_vscrollbar(self.pbr[i], xfl.FL_ON)
             xfl.fl_set_browser_vscroll_callback(self.pbr[0], \
-                    self.donothing, 12)          # 0
+                    self.donothing, 0)          # 12
 
 
     def fill_browsers(self):
-
         for i in range(0, 4):
             for j in range(1, 100+1):
                 if j == 5 or j == 6:

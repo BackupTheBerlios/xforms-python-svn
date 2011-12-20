@@ -82,7 +82,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry;&nbsp;invoked&nbsp;callback<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
@@ -130,7 +130,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;added.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_ptr_flpopupitem&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -165,7 +165,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;created.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_ptr_flpopupitem&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -368,7 +368,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;assigned&nbsp;to&nbsp;the&nbsp;popup&nbsp;entry;&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -780,7 +780,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;userdata&nbsp;:&nbsp;any&nbsp;type&nbsp;(e.g.&nbsp;None,&nbsp;int,&nbsp;str,&nbsp;etc..)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;function;&nbsp;invoked&nbsp;callback&nbsp;has&nbsp;to&nbsp;take<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;from&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type&nbsp;using<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*()&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*()&nbsp;function<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1059,7 +1059,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user&nbsp;data&nbsp;to&nbsp;be&nbsp;passed&nbsp;to&nbsp;callbacks&nbsp;for&nbsp;entry;&nbsp;invoked&nbsp;callback<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;has&nbsp;to&nbsp;take&nbsp;care&nbsp;of&nbsp;type&nbsp;check&nbsp;and&nbsp;re-cast&nbsp;ptr_void&nbsp;to&nbsp;chosen&nbsp;type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;appropriate&nbsp;xfstruct.fls_convert_ptrvoid_to_*&nbsp;function&nbsp;(separated<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;additional&nbsp;argument&nbsp;corresponding&nbsp;to&nbsp;%u&nbsp;in-text&nbsp;special&nbsp;sequence)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;:&nbsp;python&nbsp;callback&nbsp;function,&nbsp;returned&nbsp;value<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;referring&nbsp;to&nbsp;function(ptr_flpopupreturn)&nbsp;-&gt;&nbsp;int<br>
@@ -1117,7 +1117,7 @@ Parameters<br>
 &nbsp;&nbsp;&nbsp;&nbsp;ptr_flpopupitem&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;popup&nbsp;item&nbsp;to&nbsp;be&nbsp;inserted.&nbsp;It&nbsp;can&nbsp;be&nbsp;prepared&nbsp;passing&nbsp;a&nbsp;dict<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(whose&nbsp;keys&nbsp;are&nbsp;corresponding&nbsp;to&nbsp;xfdata.FL_POPUP_ITEM's&nbsp;members)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.make_ptr_flpopupitem&nbsp;function.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;xfstruct.fls_make_ptr_flpopupitem&nbsp;function.<br>
 &nbsp;<br>
 Returns<br>
 -------<br>
@@ -1391,4 +1391,4 @@ Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
 </td></tr></table>
-<p>Updated on: 2011-08-09 18:25 +0200</body></html>
+<p>Updated on: 2011-12-20 14:51 +0100</body></html>

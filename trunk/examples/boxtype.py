@@ -80,7 +80,7 @@ class Flboxtype(object):
         self.create_form()
 
         sorceress_width, sorceress_height, sorceress_bits = \
-                xfl.import_xbmdata_from_file("srs.xbm")
+                xfl.fls_import_xbmdata_from_file("srs.xbm")
         xfl.fl_set_bitmap_data(tobj[2], sorceress_width, sorceress_height, \
                 sorceress_bits)
 
@@ -145,13 +145,10 @@ class Flboxtype(object):
         if lastbt != req_bt:
             xfl.fl_freeze_form(self.pform)
             xfl.fl_redraw_form(self.pform)
-            #for ( i = 0; i < sizeof tobj / sizeof *tobj; i++ )
             for i in range(0, len(tobj)):
                 xfl.fl_set_object_boxtype(tobj[i], btypes[req_bt]['val'])
-                if self.pform.contents.frozen:
-                    # workaround to avoid error on unfreezing
-                    xfl.fl_unfreeze_form(self.pform)
-                lastbt = req_bt
+            xfl.fl_unfreeze_form(self.pform)
+            lastbt = req_bt
 
 
     def mode_cb(self, pobj, arg):
@@ -255,7 +252,7 @@ class Flboxtype(object):
         xfl.fl_popup_set_title(xfl.fl_get_select_popup(self.pmodeob), \
                 "Graphics mode")
 
-        xfl.fl_end_form ()
+        xfl.fl_end_form()
 
 
 

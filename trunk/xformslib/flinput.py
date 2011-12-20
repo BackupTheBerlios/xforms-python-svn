@@ -1196,8 +1196,8 @@ fl_set_input_shortcut = flbasic.fl_set_object_shortcut
 
 # edit keys
 
-def fl_set_input_editkeymap(ptr_editkeymap):
-    """fl_set_input_editkeymap(ptr_editkeymap)
+def fl_set_input_editkeymap(ptr_fleditkeymap):
+    """fl_set_input_editkeymap(ptr_fleditkeymap)
 
     Changes the default edit keymaps. Edit keymap is global and affects all
     input field within the application. All cursor keys (<Left>, <Home> etc.)
@@ -1214,11 +1214,11 @@ def fl_set_input_editkeymap(ptr_editkeymap):
 
     Parameters
     ----------
-        ptr_editkeymap : pointer to xfdata.FL_EditKeymap
+        ptr_fleditkeymap : pointer to xfdata.FL_EditKeymap
             edit keymap class instance (filled or partially filled; the
             unfilled members must be set to 0 so the default mapping is
             retained. If None, it restores the default keymap. You can use
-            xfstruct.make_ptr_fleditkeymap() passing a dict whose keys
+            xfstruct.fls_make_ptr_fleditkeymap() passing a dict whose keys
             corresponding to xfdata.FL_EditKeymap
 
     Examples
@@ -1233,37 +1233,35 @@ def fl_set_input_editkeymap(ptr_editkeymap):
     _fl_set_input_editkeymap = library.cfuncproto(
         library.load_so_libforms(), "fl_set_input_editkeymap",
         None, [cty.POINTER(xfdata.FL_EditKeymap)],
-        """void fl_set_input_editkeymap(const char * keymap)""")
+        """void fl_set_input_editkeymap(FL_EditKeymap * keymap)""")
     library.check_if_flinitialized()
-    if not ptr_editkeymap:         # it is None
-        ptr_editkeymap = cty.cast(ptr_editkeymap, cty.c_void_p)
+    if not ptr_fleditkeymap:         # it is None
+        ptr_fleditkeymap = cty.cast(ptr_fleditkeymap, cty.c_void_p)
     else:
-        library.verify_otherclassptr_type(ptr_editkeymap, cty.POINTER( \
+        library.verify_otherclassptr_type(ptr_fleditkeymap, cty.POINTER( \
             xfdata.FL_EditKeymap))
-    library.keep_elem_refs(ptr_editkeymap)
-    _fl_set_input_editkeymap(ptr_editkeymap)
+    library.keep_elem_refs(ptr_fleditkeymap)
+    _fl_set_input_editkeymap(ptr_fleditkeymap)
 
 
-def fl_get_input_editkeymap(ptr_editkeymap):
-    """fl_set_input_editkeymap(ptr_editkeymap) -> ptr_editkeymap
+def fl_get_input_editkeymap():
+    """fl_set_input_editkeymap() -> ptr_fleditkeymap
 
     Obtains the current map of the edit keys.
 
-    Parameters
-    ----------
-        ptr_editkeymap : pointer to xfdata.FL_EditKeymap
-            edit keymap class instance (all members must be set to 0).
-            You can use xfstruct.make_ptr_fleditkeymap() passing a dict
-            whose keys corresponding to xfdata.FL_EditKeymap
-
     Returns
     -------
-        ptr_editkeymap : pointer to xfdata.FL_EditKeymap
-            edit keymap class instance.
+        ptr_fleditkeymap : pointer to xfdata.FL_EditKeymap
+            edit keymap class instance
 
     Examples
     --------
         >>> *todo*
+
+    API_diversion
+    -------------
+        API changed from XForms, upstream is
+        fl_get_input_editkeymap(ptr_fleditkeymap)
 
     Notes
     -----
@@ -1275,13 +1273,11 @@ def fl_get_input_editkeymap(ptr_editkeymap):
         None, [cty.POINTER(xfdata.FL_EditKeymap)],
         """void fl_get_input_editkeymap(FL_EditKeymap * keymap)""")
     library.check_if_flinitialized()
-    ptr_editkeymap = cty.cast(ptr_editkeymap, cty.POINTER( \
-           xfdata.FL_EditKeymap))
-    library.verify_otherclassptr_type(ptr_editkeymap, cty.POINTER( \
-           xfdata.FL_EditKeymap))
-    library.keep_elem_refs(ptr_editkeymap)
-    _fl_get_input_editkeymap(ptr_editkeymap)
-    return ptr_editkeymap
+    fleditkeymap = xfdata.FL_EditKeymap()
+    ptr_fleditkeymap = cty.pointer(fleditkeymap)
+    library.keep_elem_refs(fleditkeymap, ptr_fleditkeymap)
+    _fl_get_input_editkeymap(ptr_fleditkeymap)
+    return ptr_fleditkeymap
 
 
 def fl_set_default_editkeymap():
@@ -1301,7 +1297,7 @@ def fl_set_default_editkeymap():
     _fl_set_default_editkeymap = library.cfuncproto(
         library.load_so_libforms(), "fl_set_default_editkeymap",
         None, [],
-        """void fl_set_default_editkeymap(void)""")
+        """void fl_set_default_editkeymap()""")
     library.check_if_flinitialized()
     _fl_set_default_editkeymap()
 
