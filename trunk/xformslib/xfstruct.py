@@ -4,12 +4,13 @@
 """ Support functions to deal with xforms-python wrapper's functions.
 """
 
-#    Copyright (C) 2009, 2010, 2011  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Lesser General Public License as
-#    published by the Free Software Foundation, version 2.1 of the License.
+#    published by the Free Software Foundation, version 2.1 of the License,
+#    or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -674,7 +675,7 @@ def fls_make_ptr_flpoint(dictflpoint):
         else:
             pyclsx = dictflpoint['x']
             sh_clsx = library.convert_to_shortc(pyclsx)
-            print "pyclsx, sh_clsx", pyclsx, sh_clsx
+            print("pyclsx, sh_clsx", pyclsx, sh_clsx)
 
         if not 'y' in dictflpoint:      # no y passed
             raise library.XFormsTypeError("fls_make_ptr_flpoint dict (" \
@@ -683,7 +684,7 @@ def fls_make_ptr_flpoint(dictflpoint):
         else:
             pyclsy = dictflpoint['y']
             sh_clsy = library.convert_to_shortc(pyclsy)
-            print "pyclsy, sh_clsy", pyclsy, sh_clsy
+            print("pyclsy, sh_clsy", pyclsy, sh_clsy)
             structflpoint = (xfdata.FL_POINT *2)()      # * 2)()
         structflpoint[0].x = sh_clsx
         structflpoint[0].y = sh_clsy
