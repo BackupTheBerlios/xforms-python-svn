@@ -17,7 +17,6 @@ import xformslib as xfl
 
 
 class Flobjpos(object):
-
     def __init__(self, lsysargv, sysargv):
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         pform = xfl.fl_bgn_form(xfl.FL_DOWN_BOX, 400, 200)
@@ -35,11 +34,8 @@ class Flobjpos(object):
 
 
     def move_cb(self, pobj, data):
-
-        dx = 8
-        dy = 8
+        dx = dy = 8
         x, y, w, h = xfl.fl_get_object_geometry(self.pbut)
-
         xlimitup = x + w + dx
         xlimitdown = x + dx
         ylimitup = y + h + dy
@@ -54,12 +50,9 @@ class Flobjpos(object):
             dy = -(dy*16)
         x += dx
         y += dy
-
         xfl.fl_set_object_position(self.pbut, x, y)
-
 
 
 if __name__ == '__main__':
     print ("********* objpos.py *********")
     Flobjpos(len(sys.argv), sys.argv)
-

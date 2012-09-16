@@ -15,57 +15,45 @@ import os
 import xformslib as xfl
 
 
-
 class FLfbrowse1(object):
     def __init__(self, lsysargv, sysargv):
-
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
-
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 130, 100)
-
-        self.pbr = xfl.fl_add_browser(xfl.FL_NORMAL_BROWSER, 5, 5, 95, 90, "")
-        pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 105, 5, 20, 8, "Exit")
-        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 105, 75, 20, 8, "Load")
+        self.pbr = xfl.fl_add_browser(xfl.FL_NORMAL_BROWSER, 5, 5, 95, 90, \
+                "")
+        pbut = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 105, 5, 20, 8, \
+                "Exit")
+        pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 105, 75, 20, 8, \
+                "Load")
         xfl.fl_set_object_callback(pobj, self.load_file, 0)
-
         pobj = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 105, 60, 20, 8, \
                 "Small")
         xfl.fl_set_object_callback(pobj, self.set_size, xfl.FL_SMALL_SIZE)
         xfl.fl_call_object_callback(pobj)
         xfl.fl_set_button(pobj, 1)
-
         pobj = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 105, 50, 20, 8, \
                 "Normal")
         xfl.fl_set_object_callback(pobj, self.set_size, xfl.FL_NORMAL_SIZE)
-
         pobj = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 105, 40, 20, 8, \
                 "Large")
         xfl.fl_set_object_callback(pobj, self.set_size, xfl.FL_LARGE_SIZE)
-
         xfl.fl_end_form()
-
         xfl.fl_scale_form(pform, 4.0, 4.0)
         xfl.fl_adjust_form_size(pform)
-
         xfl.fl_clear_browser(self.pbr)
         xfl.fl_add_browser_line(self.pbr, "LOAD A FILE.")
-
         xfl.fl_show_form(pform, xfl.FL_PLACE_FREE, xfl.FL_FULLBORDER, \
                 "Browser")
-
         while True:
             pobj = xfl.fl_do_forms()
             if xfl.fl_is_same_object(pobj, pbut):
                 break
-
         xfl.fl_hide_form(pform)
         xfl.fl_finish()
 
 
     def load_file(self, pobj, arg):
         myfilename = xfl.fl_show_input("Filename to load", "")
-        #if not xfl.fl_load_browser(self.pbr, myfilename):
-        #    xfl.fl_add_browser_line(self.pbr, "NO SUCH FILE!")
         if not myfilename or not os.path.exists(myfilename):
             xfl.fl_load_browser(self.pbr, "")
             xfl.fl_add_browser_line(self.pbr, "NO SUCH FILE!")
@@ -77,8 +65,6 @@ class FLfbrowse1(object):
         xfl.fl_set_browser_fontsize(self.pbr, arg)
 
 
-
 if __name__ == '__main__':
     print("********* fbrowse1.py *********")
-    appl = FLfbrowse1(len(sys.argv), sys.argv)
-
+    FLfbrowse1(len(sys.argv), sys.argv)

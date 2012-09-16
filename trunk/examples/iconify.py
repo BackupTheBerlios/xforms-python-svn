@@ -15,7 +15,6 @@ import sys
 import xformslib as xfl
 
 
-
 # contents from "crab.xpm" file
 # width height ncolors chars_per_pixel / pixels data
 crab = ["28 28 6 2 ", \
@@ -56,35 +55,28 @@ crab = ["28 28 6 2 ", \
 
 
 def main(lsysargv, sysargv):
-
     xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
     pform = create_form_form()
-
-    pix, w, h, mask, hx, hy = xfl.fl_read_pixmapfile(xfl.fl_root, "crab.xpm", 0)
+    pix, w, h, mask, hx, hy = xfl.fl_read_pixmapfile(xfl.fl_root, \
+            "crab.xpm", 0)
     xfl.fl_set_form_icon(pform, pix, mask)
-
-    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, "IconTest")
+    xfl.fl_show_form(pform, xfl.FL_PLACE_CENTER, xfl.FL_FULLBORDER, \
+            "IconTest")
     xfl.fl_do_forms()
     return 0
 
 
 def create_form_form():
-
     pform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 151, 111)
-
     pobj = xfl.fl_add_pixmapbutton(xfl.FL_NORMAL_BUTTON, 0, 0, 151, 111, \
             "Iconify Me\nvia Window Manager")
     xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_BOTTOM | xfl.FL_ALIGN_INSIDE)
     xfl.fl_set_object_lstyle(pobj, xfl.FL_BOLD_STYLE)
     xfl.fl_set_pixmap_data(pobj, crab)
-
     xfl.fl_end_form()
-
     return pform
-
 
 
 if __name__ == '__main__':
     print("********* iconify.py *********")
     main(len(sys.argv), sys.argv)
-

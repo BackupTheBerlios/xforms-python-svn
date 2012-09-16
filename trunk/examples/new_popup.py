@@ -12,31 +12,23 @@ import xformslib as xfl
 
 
 class FlPopup(object):
-
     def __init__(self, lsysargv, sysargv):
         self.pm = None
-
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
-
         pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 260, 210)
-
         xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 260, 210, "")
-
         pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 150, 150, \
-            90, 35, "Done")
+                90, 35, "Done")
         xfl.fl_set_object_callback(pobj, self.done_cb, 0)
-
         pobj = xfl.fl_add_button(xfl.FL_MENU_BUTTON, 30, 90, 100, 30, "Popup")
         xfl.fl_set_button_shortcut(pobj, "Pp#p", 1)
         xfl.fl_set_object_callback(pobj, self.do_pup, 0)
-
         xfl.fl_end_form()
-
         # initialize
         xfl.fl_show_form(pform, xfl.FL_PLACE_MOUSE, xfl.FL_TRANSIENT, \
                 "New Popup Demo")
-
         xfl.fl_do_forms()
+        sys.exit(0)
 
 
     def done_cb(self, pobj, data):      # data unused
@@ -45,31 +37,34 @@ class FlPopup(object):
 
 
     def style_cb(self, ppopupretn):
-        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc( \
+                ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry1 = ppopupretn.contents.popup.contents.entries
         for idx in range(0, 3):
             try:
-                print pmyentry1, pmyentry1[idx].text
+                print(pmyentry1, pmyentry1[idx].text)
                 xfl.fl_popup_entry_clear_state(pmyentry1[idx], \
                         xfl.FL_POPUP_CHECKED)
             except:
                 break
         #xfl.fl_popup_entry_raise_state(ppopupretn.contents.entry, \
         #        xfl.FL_POPUP_CHECKED)
-
         style, size = xfl.fl_popup_entry_get_font(self.pm)
         mod = style & (xfl.FL_SHADOW_STYLE | \
                 xfl.FL_ENGRAVED_STYLE | xfl.FL_EMBOSSED_STYLE)
-        print "style", style, "mod", mod, "pr->val", ppopupretn.contents.val, "pr->val|mod", ppopupretn.contents.val | mod
+        print("style", style, "mod", mod, "pr->val", \
+                ppopupretn.contents.val, "pr->val|mod", \
+                ppopupretn.contents.val | mod)
         xfl.fl_popup_entry_set_font(self.pm, ppopupretn.contents.val | mod, \
                 size)
         return xfl.FL_IGNORE
 
 
     def size_cb(self, ppopupretn):
-        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc( \
+                ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry2 = ppopupretn.contents.popup.contents.entries
@@ -81,7 +76,6 @@ class FlPopup(object):
                 break
         #xfl.fl_popup_entry_raise_state(ppopupretn.contents.entry, \
         #        xfl.FL_POPUP_CHECKED)
-
         style, unused = xfl.fl_popup_entry_get_font(self.pm)
         xfl.fl_popup_entry_set_font(self.pm, style, ppopupretn.contents.val)
         style, unused = xfl.fl_popup_get_title_font(self.pm)
@@ -90,7 +84,8 @@ class FlPopup(object):
 
 
     def mod_cb(self, ppopupretn):
-        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc( \
+                ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry3 = ppopupretn.contents.popup.contents.entries
@@ -102,15 +97,16 @@ class FlPopup(object):
                 break
         #xfl.fl_popup_entry_raise_state(ppopupretn.contents.entry, \
         #        xfl.FL_POPUP_CHECKED)
-
         style, size = xfl.fl_popup_entry_get_font(self.pm)
-        print "style, size", style, size
+        print("style, size", style, size)
         if ppopupretn.contents.val != 0:
             style &= ~ (xfl.FL_SHADOW_STYLE | xfl.FL_ENGRAVED_STYLE | \
                     xfl.FL_EMBOSSED_STYLE)
-            xfl.fl_popup_entry_set_font(self.pm, style | ppopupretn.contents.val, size)
+            xfl.fl_popup_entry_set_font(self.pm, style | \
+                    ppopupretn.contents.val, size)
         else:
-            xfl.fl_popup_entry_set_font(self.pm, ppopupretn.contents.val, size)
+            xfl.fl_popup_entry_set_font(self.pm, ppopupretn.contents.val, \
+                    size)
         return xfl.FL_IGNORE
 
 
@@ -119,8 +115,8 @@ class FlPopup(object):
         #for ( e = r->popup->entries; e != NULL; e = e->next )
         #    if ( e != r->entry )
         #        xfl.fl_popup_entry_clear_state( e, xfl.FL_POPUP_CHECKED );
-        #
-        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc(ppopupretn.contents.user_data)
+        pudata = xfl.fls_convert_ptrvoid_to_ptrlongc( \
+                ppopupretn.contents.user_data)
         udataval = pudata.contents.value
         print("Userdata: %d" % udataval)
         pmyentry4 = ppopupretn.contents.popup.contents.entries
@@ -139,13 +135,11 @@ class FlPopup(object):
     def do_pup(self, pobj, q):      # q unused
         if self.pm is None:
             owin = xfl.FL_ObjWin(pobj)
-
             self.pm = xfl.fl_popup_add(owin, "Popup")
             self.psm1 = xfl.fl_popup_add(owin, "STYLES")
             self.psm2 = xfl.fl_popup_add(owin, "SIZES")
             self.psm3 = xfl.fl_popup_add(owin, "MODS")
             self.psm4 = xfl.fl_popup_add(owin, "POLICIES")
-
             self.ppopnor = xfl.fl_popup_add_entries(self.psm4, \
                     "FL_POPUP_NORMAL_SELECT%T%x%f", \
                     x=xfl.FL_POPUP_NORMAL_SELECT, f=self.pol_cb)
@@ -155,8 +149,8 @@ class FlPopup(object):
                     x=xfl.FL_POPUP_DRAG_SELECT, f=self.pol_cb)
             xfl.fl_popup_entry_set_user_data(self.ppopdra, 16)
 
-            self.pmodnon = xfl.fl_popup_add_entries(self.psm3, "None%x%f%R", \
-                    x=xfl.FL_NORMAL_STYLE, f=self.mod_cb, Rr=1)            #%R
+            self.pmodnon = xfl.fl_popup_add_entries(self.psm3, \
+                    "None%x%f%R", x=xfl.FL_NORMAL_STYLE, f=self.mod_cb, Rr=1)            #%R
             xfl.fl_popup_entry_set_user_data(self.pmodnon, 11)
             self.pmodsha = xfl.fl_popup_add_entries(self.psm3, \
                     "FL_SHADOW_STYLE%x%f%r", x=xfl.FL_SHADOW_STYLE, \
@@ -185,11 +179,11 @@ class FlPopup(object):
             xfl.fl_popup_entry_set_user_data(self.pstyita, 3)
             self.pstybolita = xfl.fl_popup_add_entries(self.psm1, \
                     "FL_BOLDITALIC_STYLE%SO%x%f%r%s", \
-                    x=xfl.FL_BOLDITALIC_STYLE, f=self.style_cb, Rr=1, s="oO^O")
+                    x=xfl.FL_BOLDITALIC_STYLE, f=self.style_cb, \
+                    Rr=1, s="oO^O")
             xfl.fl_popup_entry_set_user_data(self.pstybolita, 4)
             xfl.fl_popup_add_entries(self.psm1, \
                     "%l|Font modifier%SCtrl-M%m%s", m=self.psm3, s="^m")
-
             self.psiztin = xfl.fl_popup_add_entries(self.psm2, \
                     "FL_TINY_SIZE%x%f%r", x=xfl.FL_TINY_SIZE, \
                     f=self.size_cb, Rr=1)
@@ -214,24 +208,18 @@ class FlPopup(object):
                     "FL_HUGE_SIZE%x%f%r", x=xfl.FL_HUGE_SIZE, \
                     f=self.size_cb, Rr=1)
             xfl.fl_popup_entry_set_user_data(self.psizhug, 10)
-
             xfl.fl_popup_add_entries(self.pm, "Font style%m", m=self.psm1)
             xfl.fl_popup_add_entries(self.pm, "Font size%m", m=self.psm2)
             xfl.fl_popup_add_entries(self.pm, "Policy%m", m=self.psm4)
-
             xfl.fl_popup_set_min_width(self.pm, 100)
-
         if xfl.fl_get_button_numb(pobj) >= xfl.FL_SHORTCUT:
             xfl.fl_popup_set_position(self.pm, \
                     pobj.contents.form.contents.x + pobj.contents.x, \
                     pobj.contents.form.contents.y + pobj.contents.y + \
                     pobj.contents.h)
-
         xfl.fl_popup_do(self.pm)
-
 
 
 if __name__ == '__main__':
     print("********* new_popup.py *********")
     FlPopup(len(sys.argv), sys.argv)
-

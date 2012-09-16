@@ -3,11 +3,15 @@ importing package directly (new preferred way):
 
     import xformslib
 
-e.g. import xformslib
+* e.g.: import xformslib
+
 (you will need to use xformslib.fl_<xxx> for functions and
 xformslib.FL_<XXX> for data)
-e.g. import xformslib as xfl
-(you can use xfl..fl_<xxx> for functions and xfl.FL_<XXX> for data)
+
+* e.g.: import xformslib as xfl
+
+(you can use xfl.fl<xxx> for functions and xfl.FL<XXX> for data)
+
 
 -----------------------------------------------------------------------
 The following methods are NOT recommended anymore:

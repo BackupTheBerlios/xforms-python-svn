@@ -72,7 +72,7 @@ class BrowserOp(object):
 
         self.pinputobj = xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 20, 370, \
                 210, 30, "")
-
+        xfl.fl_set_object_return( self.pinputobj, xfl.FL_RETURN_CHANGED)
         self.pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 250, 20, \
                 120, 30, "Add")
         xfl.fl_set_object_callback(self.pobj, self.addit, 0)

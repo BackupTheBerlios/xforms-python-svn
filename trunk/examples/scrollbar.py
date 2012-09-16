@@ -14,7 +14,6 @@ import sys
 import xformslib as xfl
 
 
-
 # Forms and Objects
 class FD_scb(object):
     scb = None
@@ -33,7 +32,6 @@ class FD_scb(object):
 
 class Flscrollbar(object):
     def __init__(self, lsysargv, sysargv):
-
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_scb = self.create_form_scb()
         xfl.fl_show_form(self.fd_scb.scb, xfl.FL_PLACE_CENTERFREE, \
@@ -43,11 +41,8 @@ class Flscrollbar(object):
 
 
     def create_form_scb(self):
-
         fdui = FD_scb()
-
         fdui.scb = xfl.fl_bgn_form(xfl.FL_NO_BOX, 470, 230)
-
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 470, 230, "")
         fdui.hor = xfl.fl_add_scrollbar(xfl.FL_HOR_SCROLLBAR, 30, 15, \
                 230, 17, "HOR_SCROLLBAR")
@@ -109,9 +104,7 @@ class Flscrollbar(object):
         xfl.fl_set_object_callback(pobj, self.noop_cb, 0)
         xfl.fl_set_scrollbar_value(pobj, 0.97)
         xfl.fl_set_scrollbar_size(pobj, 0.20)
-
         xfl.fl_end_form()
-
         return fdui
 
 
@@ -142,8 +135,6 @@ class Flscrollbar(object):
         pass
 
 
-
 if __name__ == '__main__':
     print ("********* scrollbar.py *********")
     Flscrollbar(len(sys.argv), sys.argv)
-

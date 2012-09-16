@@ -14,9 +14,7 @@ import sys
 import xformslib as xfl
 
 
-
 class Flndial(object):
-
     def __init__(self, lsysargv, sysargv):
         self.pdials = [0] * 3
         self.ptexts = [0] * 3
@@ -27,6 +25,7 @@ class Flndial(object):
                 "A Form")
         xfl.fl_do_forms()
         xfl.fl_finish()
+        sys.exit(0)
 
 
     def cb(self, pobj, data):
@@ -42,9 +41,7 @@ class Flndial(object):
         label = ["Red", "Green", "Blue"]
         col = [xfl.FL_RED, xfl.FL_GREEN, xfl.FL_BLUE]
         y = 70
-
         self.pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 300, 330)
-
         pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 45, 15, \
                 210, 45, "Color Editor")
         xfl.fl_set_object_lsize(pobj, xfl.FL_LARGE_SIZE)
@@ -64,12 +61,10 @@ class Flndial(object):
         xfl.fl_set_object_color(self.presult, xfl.FL_FREE_COL1, \
                 xfl.FL_FREE_COL1)
         xfl.fl_mapcolor(xfl.FL_FREE_COL1, 128, 128, 128)
-        xfl.fl_set_object_dblbuffer(self.presult, 1)       # to avoid flicker
+        xfl.fl_set_object_dblbuffer(self.presult, 1)    # to avoid flicker
         xfl.fl_end_form()
-
 
 
 if __name__ == '__main__':
     print("********* ndial.py *********")
     Flndial(len(sys.argv), sys.argv)
-

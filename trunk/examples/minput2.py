@@ -14,7 +14,6 @@ import sys
 import xformslib as xfl
 
 
-
 # Forms and Objects
 class FD_inputform(object):
     inputform = None
@@ -27,9 +26,7 @@ class FD_inputform(object):
 
 
 class Flminput2(object):
-
     def __init__(self, lsysargv, sysargv):
-
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.ui = self.create_form_inputform()
         xfl.fl_register_raw_callback(self.ui.inputform, xfl.KeyPressMask, \
@@ -61,11 +58,8 @@ class Flminput2(object):
 
 
     def create_form_inputform(self):
-
         fdui = FD_inputform()
-
         fdui.inputform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 475, 485)
-
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 475, 485, "")
         fdui.input1 = xfl.fl_add_input(xfl.FL_MULTILINE_INPUT, 15, 275, \
                 350, 180, "")
@@ -82,14 +76,10 @@ class Flminput2(object):
                 349, 185, "")
         xfl.fl_set_object_lalign(fdui.input2, xfl.FL_ALIGN_TOP)
         xfl.fl_set_object_callback(fdui.input2, self.input_callback, 2)
-
         xfl.fl_end_form()
-
         return fdui
-
 
 
 if __name__ == '__main__':
     print("********* minput2.py *********")
     Flminput2(len(sys.argv), sys.argv)
-

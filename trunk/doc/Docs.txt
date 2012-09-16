@@ -17,7 +17,7 @@ Every fl* function has a status entry in docstring representing its current
 development state:
 a) status of unit-testing coverage:
     1) UnitTest: it is fully covered by 1 working and 2+ failing unit-tests
-    2) Half-UTest : there is at least one occurence of failing tests
+    2) Half-UTest: there is at least one occurence of failing tests
     3) NA-UTest: not covered by unit-tests, yes
     4) NN-Utest: unit-test is pointless here (no args, no return value)
 b) status of documentation:
@@ -28,8 +28,9 @@ c) presence of demo/example:
     2) NoDemo: no demos/examples are available or ported
 d) Usable state:
     1) OK: it is almost surely well usable (only if Demo-ed and Documented, or
-    Tested and Documented)
+       Tested and Documented)
     2) Maybe: there are no demos and no unit-tests, only documentation; its
-    usage is not verified or it may fail under some circumstances
+       usage is not verified or it may fail under some circumstances
     3) KO: doc is not complete, unit-test and demos do not exist; it is known
-    to be incomplete or not handled well; it is likely supposed to fail on run.
+       to be incomplete or not handled well; it is likely supposed to fail on
+       run.

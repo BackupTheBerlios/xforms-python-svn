@@ -19,7 +19,6 @@ import xformslib as xfl
 
 
 # Main part
-
 class OBJ(object):
     type = 0
     r = 0
@@ -32,7 +31,6 @@ class OBJ(object):
 
 class Demo27(object):
     def __init__(self, lsysargv, sysargv):
-
         self.pcolorform = None    # placeholder
         # Color Part
         self.r = 128
@@ -41,29 +39,24 @@ class Demo27(object):
         # Control Part
         self.curobj = 1
         self.cursize = 20
-
         self.structob = []
         for a in range(0, 10000):
             self.structob.append(OBJ())              # ob[ 10000 ]
-
         self.onumb = 0
-
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.init_colorpart()
         self.init_controlpart()
         self.init_mainpart()
-        #self.color_callback(self.pcolorobj, 0)
-
+        #self.color_callback(self.pcolorobj, 0) # cause NULL pointer access
         while xfl.fl_do_forms():
             pass
         xfl.fl_finish()
+        sys.exit(0)
 
 
     # color form callback routine
     def color_callback(self, pobj, pvdata):
         ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
-        print("ldata", ldata)
-
         self.r = int(255 * xfl.fl_get_slider_value(self.predsl))
         self.g = int(255 * xfl.fl_get_slider_value(self.pgreensl))
         self.b = int(255 * xfl.fl_get_slider_value(self.pbluesl))
@@ -74,14 +67,13 @@ class Demo27(object):
     def create_colorform(self):
         if self.pcolorform:
             return
-
         self.pcolorform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 315, 190)
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 315, 190, "")
-        self.pbluesl = xfl.fl_add_slider(xfl.FL_HOR_SLIDER, 20, 25, 220, 35, \
-                "")
+        self.pbluesl = xfl.fl_add_slider(xfl.FL_HOR_SLIDER, 20, 25, \
+                220, 35, "")
         xfl.fl_set_object_color(self.pbluesl, xfl.FL_COL1, xfl.FL_BLUE)
-        self.predsl = xfl.fl_add_slider(xfl.FL_HOR_SLIDER, 20, 135, 220, 35, \
-                "")
+        self.predsl = xfl.fl_add_slider(xfl.FL_HOR_SLIDER, 20, 135, \
+                220, 35, "")
         xfl.fl_set_object_color(self.predsl, xfl.FL_COL1, xfl.FL_RED)
         self.pgreensl = xfl.fl_add_slider(xfl.FL_HOR_SLIDER, 20, 80, \
                 220, 35, "")
@@ -112,7 +104,6 @@ class Demo27(object):
     # control form callback routine
     def control_callback(self, pobj, pvdata):
         ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
-        print("ldata", ldata)
         if xfl.fl_is_same_object(pobj, self.psizeobj):
             self.cursize = int(40 * xfl.fl_get_slider_value(self.psizeobj))
         elif xfl.fl_is_same_object(pobj, self.pexitobj):
@@ -122,7 +113,6 @@ class Demo27(object):
 
     def create_controlform(self):
         self.pcontrolform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 260, 230)
-
         xfl.fl_bgn_group()
         self.psquareobj = xfl.fl_add_button(xfl.FL_RADIO_BUTTON, 20, 150, \
                 60, 60, "@square")
@@ -132,15 +122,13 @@ class Demo27(object):
                 "@circle")
         xfl.fl_set_object_lcol(pobj, xfl.FL_YELLOW)
         xfl.fl_set_object_callback(pobj, self.select_object, 2)
-        pobj = xfl.fl_add_button(xfl.FL_RADIO_BUTTON, 20, 30, 60, 60, 
-                            "@8>")
+        pobj = xfl.fl_add_button(xfl.FL_RADIO_BUTTON, 20, 30, 60, 60, \
+                "@8>")
         xfl.fl_set_object_lcol(pobj, xfl.FL_YELLOW)
         xfl.fl_set_object_callback(pobj, self.select_object, 3)
         xfl.fl_end_group()
-
         self.pexitobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 160, 30, \
                 80, 30, "Exit")
-
         pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 160, 180, 80, 30, \
                 "Clear")
         xfl.fl_set_object_callback(pobj, self.clearit, 0)
@@ -148,7 +136,6 @@ class Demo27(object):
         self.psizeobj = xfl.fl_add_slider(xfl.FL_VERT_SLIDER, 100, 30, \
                 40, 180, "size")
         xfl.fl_set_slider_bounds(self.psizeobj, 0.025, 1.0)
-
         xfl.fl_end_form()
 
 
@@ -165,11 +152,9 @@ class Demo27(object):
 
 
     def drawit(self, stobj):
-
         xfl.fl_winset(self.main_win)
         xfl.fl_mapcolor(xfl.FL_FREE_COL1, stobj.r, \
                     stobj.g, stobj.b)
-
         if stobj.type == 1:
             xfl.fl_rectf(stobj.x - stobj.size, \
                     stobj.y - stobj.size, 2 * stobj.size, \
@@ -178,9 +163,12 @@ class Demo27(object):
             xfl.fl_circf(stobj.x, stobj.y, stobj.size, \
                     xfl.FL_FREE_COL1)
         elif stobj.type == 3:
-            mylistpoint = [{'x':int(stobj.x - stobj.size), 'y':int(stobj.y + \
-                    stobj.size)}, {'x':int(stobj.x + stobj.size), \
-                    'y':int(stobj.y + stobj.size)}, {'x':int(stobj.x), \
+            mylistpoint = [ \
+                    {'x':int(stobj.x - stobj.size), \
+                    'y':int(stobj.y + stobj.size)}, \
+                    {'x':int(stobj.x + stobj.size), \
+                    'y':int(stobj.y + stobj.size)}, \
+                    {'x':int(stobj.x), \
                     'y':int(stobj.y - stobj.size)}]
             pxpoint = xfl.fls_make_ptr_flpoint(mylistpoint)
             xfl.fl_polyf(pxpoint, 3, xfl.FL_FREE_COL1)
@@ -216,7 +204,6 @@ class Demo27(object):
     # Event callback routine
     def main_callback(self, pxev, pvdata):
         ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
-        print("ldata", ldata)
         xfl.fl_winset(self.main_win)
         if pxev.contents.type == xfl.Expose:
             self.redrawit()
@@ -233,8 +220,6 @@ class Demo27(object):
         xfl.fl_set_event_callback(self.main_callback, 0)
 
 
-
 if __name__ == '__main__':
     print("********* demo27.py *********")
     Demo27(len(sys.argv), sys.argv)
-

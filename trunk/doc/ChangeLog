@@ -2,6 +2,14 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20120916
+    * realign to upstream XForms (1.0.94pre7, development up to git-20120313,
+      browserop.py and browserall.py example fixed, flxbasic.py and xfdata.py
+      updated)
+    20120204 (beta20)
+    * Two major changes: license is now LGPL 2.1 or later; python 2.x support is
+      gone (only python >= 3.2 is supported now).
+    * Examples review terminated. Bugfixes.
     * Support functions in xfstruct.py are prepended by 'fls_' to specify their
       purpose. Realign to upstream XForms (1.0.94pre7, development up to
       git-20111117), except for examples (as usual). Examples' review started,

@@ -16,7 +16,6 @@ import sys
 import xformslib as xfl
 
 
-
 class FD_form0(object):
     form0 = None
     vdata = None
@@ -35,36 +34,31 @@ class FD_form0(object):
 
 class Flpreempt(object):
     def __init__(self, lsysargv, sysargv):
-
         self.INTERVAL = 800      # wait this long before show tip
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
-
         self.fd_form0 = self.create_form_form0()
-
         # Fill-in form initialization code
         xfl.fl_set_button(self.fd_form0.peek, 1)
         xfl.fl_set_button(self.fd_form0.enter, 1)
         xfl.fl_set_button(self.fd_form0.leave, 1)
         xfl.fl_set_button(self.fd_form0.push, 1)
         xfl.fl_set_button(self.fd_form0.release, 1)
-
         xfl.fl_set_object_prehandler(self.fd_form0.butt, \
                 self.preemptive_handler)
-
         self.set_tip(self.fd_form0.done, "Want to quit ?\nPress me")
         self.set_tip(self.fd_form0.peek, "Turn preempting off")
         self.set_tip(self.fd_form0.override, "Turn preempting on")
-        #xfl.fl_set_object_helper(self.fd_form0.done, "Want to quit ?\nPress me")
+        #xfl.fl_set_object_helper(self.fd_form0.done, \
+        #       "Want to quit ?\nPress me")
         #xfl.fl_set_object_helper(self.fd_form0.peek, "Turn preempting off")
-        #xfl.fl_set_object_helper(self.fd_form0.override, "Turn preempting on")
-
+        #xfl.fl_set_object_helper(self.fd_form0.override, \
+        #       "Turn preempting on")
         # Show the first form
         xfl.fl_show_form(self.fd_form0.form0, xfl.FL_PLACE_CENTER, \
                 xfl.FL_TRANSIENT, "Preemptive")
-
-        while not xfl.fl_is_same_object(xfl.fl_do_forms(), self.fd_form0.done):
+        while not xfl.fl_is_same_object(xfl.fl_do_forms(), \
+                self.fd_form0.done):
             pass        # empty
-
         xfl.fl_finish()
 
 
@@ -86,13 +80,11 @@ class Flpreempt(object):
     # which event to take over is better kept in a state variable even though
     # query the status via xfl.fl_get_button is cheap
     def preemptive_handler(self, pobj, event, mx, my, key, xev):
-
         override = xfl.fl_get_button(self.fd_form0.override)
         if override:
             what = "preempted"
         else:
             what = "detected"
-
         if event == xfl.FL_ENTER:
             if xfl.fl_get_button(self.fd_form0.enter):
                 buf = "%s %s" % ("FL_ENTER", what)
@@ -150,12 +142,10 @@ class Flpreempt(object):
 
     # Form definition
     def create_form_form0(self):
-
         fdui = FD_form0()
         fdui.form0 = xfl.fl_bgn_form(xfl.FL_NO_BOX, 320, 250)
         xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 320, 250, "")
         xfl.fl_add_frame(xfl.FL_ENGRAVED_FRAME, 200, 70, 95, 100, "")
-
         fdui.butt = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 20, 70, \
                 170, 100, "A Button")
         fdui.enter = xfl.fl_add_checkbutton(xfl.FL_PUSH_BUTTON, 210, 70, \
@@ -184,8 +174,6 @@ class Flpreempt(object):
         return fdui
 
 
-
 if __name__ == '__main__':
     print ("********* preemptive.py *********")
     Flpreempt(len(sys.argv), sys.argv)
-

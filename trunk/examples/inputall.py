@@ -15,7 +15,6 @@ import sys
 import xformslib as xfl
 
 
-
 # Forms and Objects
 class FD_input(object):
     input_ = None
@@ -33,10 +32,8 @@ class FD_input(object):
 
 class Flinputall(object):
     def __init__(self, lsysargv, sysargv):
-
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.fd_input = self.create_form_input()
-
         # fill-in form initialization code
         xfl.fl_set_object_dblbuffer(self.fd_input.report, 1)
         xfl.fl_set_object_return(self.fd_input.norminput, \
@@ -51,24 +48,24 @@ class Flinputall(object):
                 xfl.FL_RETURN_ALWAYS)
         xfl.fl_set_object_return(self.fd_input.multiinput, \
                 xfl.FL_RETURN_ALWAYS)
-
         # show the first form
         xfl.fl_show_form(self.fd_input.input_, xfl.FL_PLACE_CENTERFREE, \
                 xfl.FL_FULLBORDER, "input")
-
         while xfl.fl_do_forms():
             pass    # empty
 
-
     # callbacks for form input
+
     def done_cb(self, pobj, data):
         xfl.fl_finish()
         sys.exit(0)
+
 
     def input_cb(self, pobj, data):
         unused, cx, cy = xfl.fl_get_input_cursorpos(pobj)
         buf = "x = %d, y = %d" % (cx, cy)
         xfl.fl_set_object_label(self.fd_input.report, buf)
+
 
     def hide_show_cb(self, pobj, data):
         if xfl.fl_object_is_visible(self.fd_input.multiinput):
@@ -79,27 +76,24 @@ class Flinputall(object):
 
     # Form definition file
     def create_form_input(self):
-
         fdui = FD_input()
-
         fdui.input_ = xfl.fl_bgn_form(xfl.FL_NO_BOX, 441, 441)
-
         pobj = xfl.fl_add_box( xfl.FL_UP_BOX, 0, 0, 441, 441, "")
         fdui.norminput = xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 40, 40, \
                 340, 30, "Normal Input")
         xfl.fl_set_object_lalign(fdui.norminput, xfl.FL_ALIGN_LEFT_TOP)
         xfl.fl_set_object_callback(fdui.norminput, self.input_cb, 0)
         xfl.fl_set_object_return(fdui.norminput, xfl.FL_RETURN_END_CHANGED)
-        fdui.intinput = xfl.fl_add_input(xfl.FL_INT_INPUT, 40, 100, 160, 30, \
-                "Integer Input")
+        fdui.intinput = xfl.fl_add_input(xfl.FL_INT_INPUT, 40, 100, 160, \
+                30, "Integer Input")
         xfl.fl_set_object_lalign(fdui.intinput, xfl.FL_ALIGN_LEFT_TOP)
         xfl.fl_set_object_return(fdui.intinput, xfl.FL_RETURN_END_CHANGED)
         fdui.floatinput = xfl.fl_add_input(xfl.FL_FLOAT_INPUT, 230, 100, \
                 160, 30, "Float Input")
         xfl.fl_set_object_lalign(fdui.floatinput, xfl.FL_ALIGN_LEFT_TOP)
         xfl.fl_set_object_return(fdui.floatinput, xfl.FL_RETURN_END_CHANGED)
-        fdui.dateinput = xfl.fl_add_input(xfl.FL_DATE_INPUT, 40, 150, 160, 30, \
-                "Date Input")
+        fdui.dateinput = xfl.fl_add_input(xfl.FL_DATE_INPUT, 40, 150, \
+                160, 30, "Date Input")
         xfl.fl_set_object_lalign(fdui.dateinput, xfl.FL_ALIGN_LEFT_TOP)
         xfl.fl_set_object_return(fdui.dateinput, xfl.FL_RETURN_END_CHANGED)
         fdui.secretinput = xfl.fl_add_input(xfl.FL_SECRET_INPUT, 230, 150, \
@@ -121,14 +115,10 @@ class Flinputall(object):
                 "Hide/Show")
         xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_CENTER)
         xfl.fl_set_object_callback(pobj, self.hide_show_cb, 0)
-
         xfl.fl_end_form()
-
         return fdui
-
 
 
 if __name__ == '__main__':
     print("********* inputall.py *********")
     Flinputall(len(sys.argv), sys.argv)
-

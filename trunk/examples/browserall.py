@@ -64,25 +64,22 @@ class BrowserAll(object):
         xfl.fl_bgn_group()
         self.pobj2 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 20, 500, \
                 100, 30, "Tiny")
-        xfl.fl_set_object_lsize(self.pobj2, xfl.FL_TINY_SIZE)
         xfl.fl_set_object_callback(self.pobj2, self.set_size, \
-                xfl.fl_get_object_lsize(self.pobj2))
+                xfl.FL_TINY_SIZE)
         self.pobj3 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 130, 500, \
                 100, 30, "Small")
-        xfl.fl_set_object_lsize(self.pobj3, xfl.FL_SMALL_SIZE)
         xfl.fl_set_object_callback(self.pobj3, self.set_size, \
-                xfl.fl_get_object_lsize(self.pobj3))
+                xfl.FL_SMALL_SIZE)
         xfl.fl_set_button(self.pobj3, 1)
         self.pobj4 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 240, 500, \
                 100, 30, "Normal")
-        xfl.fl_set_object_lsize(self.pobj4, xfl.FL_NORMAL_SIZE)
         xfl.fl_set_object_callback(self.pobj4, self.set_size, \
-                xfl.fl_get_object_lsize(self.pobj4))
+                xfl.FL_NORMAL_SIZE)
         self.pobj5 = xfl.fl_add_lightbutton(xfl.FL_RADIO_BUTTON, 350, 500, \
                 100, 30, "Large")
         xfl.fl_set_object_lsize(self.pobj5, xfl.FL_LARGE_SIZE)
         xfl.fl_set_object_callback(self.pobj5, self.set_size, \
-                xfl.fl_get_object_lsize(self.pobj5))
+                xfl.FL_LARGE_SIZE)
         self.pobj6 = xfl.fl_add_button(xfl.FL_BUTTON, 470, 510, 45, 30, \
                 "Link")
         xfl.fl_set_object_callback(self.pobj6, self.link_browsers, 0)

@@ -16,7 +16,6 @@ import sys
 import xformslib as xfl
 
 
-
 # Forms and Objects
 class genericform(object):
     vdata = None
@@ -55,24 +54,19 @@ class FD_inputform(genericform):
 
 
 class Flfolder(object):
-
     def __init__(self, lsysargv, sysargv):
-
         xfl.fl_set_border_width(-2)
         xfl.fl_initialize(lsysargv, sysargv, 'FormDemo', 0, 0)
         self.fd_mainform = self.create_form_mainform()
         xfl.fl_set_object_return(self.fd_mainform.folder, xfl.FL_RETURN_NONE)
-
         self.make_folder(self.fd_mainform.folder)
-
         # show the first form
         xfl.fl_show_form(self.fd_mainform.mainform, xfl.FL_PLACE_ASPECT, \
                 xfl.FL_FULLBORDER, "TabFolder")
-
         xfl.fl_do_forms()
 
-
     # callback routines
+
     def hide_show_cb(self, pobj, data):
         if data:
             xfl.fl_show_object(self.fd_mainform.folder)
@@ -101,7 +95,6 @@ class Flfolder(object):
 
 
     def done_cb(self, pobj, data):
-
         if xfl.fl_show_question("Do you want to quit ?", 0):
             print("will quit after 5 seconds\n")
             xfl.fl_msleep(5000)
@@ -114,11 +107,8 @@ class Flfolder(object):
 
 
     def create_form_buttonform(self):
-
         fdui = FD_buttonform()
-
         fdui.buttonform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 430, 210)
-
         pobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, 0, 0, 430, 210, "")
         pobj1 = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 30, 151, \
                 80, 30, "Button")
@@ -148,18 +138,13 @@ class Flfolder(object):
         xfl.fl_set_object_boxtype(pobj8, xfl.FL_SHADOW_BOX)
         xfl.fl_set_object_color(pobj8, xfl.FL_COL1, xfl.FL_SLATEBLUE)
         xfl.fl_set_object_lalign(pobj8, xfl.FL_ALIGN_CENTER)
-
         xfl.fl_end_form()
-
         return fdui
 
 
     def create_form_staticform(self):
-
         fdui = FD_staticform()
-
         fdui.staticform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 431, 211)
-
         pobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, 0, 0, 431, 211, "")
         xfl.fl_set_object_color(pobj, xfl.FL_INDIANRED, xfl.FL_INDIANRED)
         xfl.fl_set_object_lcolor(pobj, xfl.FL_INDIANRED)
@@ -179,18 +164,13 @@ class Flfolder(object):
         xfl.fl_set_pixmap_file(pobj5, "porsche.xpm")
         pobj6 = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 310, 150, 70, 25, "Text")
         xfl.fl_set_object_boxtype(pobj6, xfl.FL_BORDER_BOX)
-
         xfl.fl_end_form()
-
         return fdui
 
 
     def create_form_mainform(self):
-
         fdui = FD_mainform()
-
         fdui.mainform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 461, 291)
-
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 461, 291, "")
         fdui.done = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 381, 250, \
                 64, 25, "Done")
@@ -222,18 +202,13 @@ class Flfolder(object):
                 69, 27, "Deactivate")
         xfl.fl_set_object_lalign(fdui.deactivate, xfl.FL_ALIGN_CENTER)
         xfl.fl_set_object_callback(fdui.deactivate, self.deactivate_cb, 0)
-
         xfl.fl_end_form()
-
         return fdui
 
 
     def create_form_valuatorform(self):
-
         fdui = FD_valuatorform()
-
         fdui.valuatorform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 431, 211)
-
         pobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, 0, 0, 431, 211, "")
         pobj1 = xfl.fl_add_positioner(xfl.FL_NORMAL_POSITIONER, 280, 50, \
                 82, 72, "")
@@ -273,18 +248,13 @@ class Flfolder(object):
                 140, 16, "")
         xfl.fl_set_object_resize(pobj9, xfl.FL_RESIZE_ALL)
         xfl.fl_set_scrollbar_size(pobj9, 0.25)
-
         xfl.fl_end_form()
-
         return fdui
 
 
     def create_form_choiceform(self):
-
         fdui = FD_choiceform()
-
         fdui.choiceform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 431, 211)
-
         pobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, 0, 0, 431, 211, "")
         fdui.pulldown = xfl.fl_add_nmenu(xfl.FL_NORMAL_NMENU, 45, 36, \
                 45, 21, "Menu")
@@ -299,18 +269,13 @@ class Flfolder(object):
                 75, 26, "Menu")
         xfl.fl_set_object_boxtype(fdui.pushmenu, xfl.FL_UP_BOX)
         xfl.fl_set_object_lstyle(fdui.pushmenu, xfl.FL_BOLD_STYLE)
-
         xfl.fl_end_form()
-
         return fdui
 
 
     def create_form_inputform(self):
-
         fdui = FD_inputform()
-
         fdui.inputform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 430, 210)
-
         pobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, 0, 0, 430, 210, "")
         pobj1 = xfl.fl_add_input(xfl.FL_MULTILINE_INPUT, 70, 20, 280, 90, \
                 "MultiLine\nInput")
@@ -318,36 +283,30 @@ class Flfolder(object):
         pobj2 = xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 80, 132, 250, 34, \
                 "Input")
         xfl.fl_set_object_return(pobj2, xfl.FL_RETURN_END_CHANGED)
-
         xfl.fl_end_form()
-
         return fdui
 
 
     def make_folder(self, folder):
-        x = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+        #x = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
         y = [5.5, 4, 4.5, 3.8, 4, 5]
         label = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat"]
-
         fd_buttonform = self.create_form_buttonform()
         fd_staticform = self.create_form_staticform()
         fd_valuatorform = self.create_form_valuatorform()
         fd_choiceform = self.create_form_choiceform()
         fd_inputform = self.create_form_inputform()
-
         # fill-in form initialization code
         for i in range (0, len(y)):
-            xfl.fl_add_chart_value(fd_staticform.chart, y[i], label[i], i + 1)
-
+            xfl.fl_add_chart_value(fd_staticform.chart, y[i], label[i], \
+                    i + 1)
         xfl.fl_add_nmenu_items(fd_choiceform.pulldown, \
                     "MenuEntry1|MenuEntry2|MenuEntry3|MenuEntry4")
         xfl.fl_add_nmenu_items(fd_choiceform.pushmenu, \
                      "MenuEntry1|MenuEntry2|MenuEntry3")
         xfl.fl_add_select_items(fd_choiceform.choice, \
                        "Choice1|Choice2|Choice3|Choice4|Choice5|Choice6")
-
         xfl.fl_load_browser(fd_choiceform.browser, "Readme")
-
         xfl.fl_addto_tabfolder(folder, "ButtonObj", fd_buttonform.buttonform)
         xfl.fl_addto_tabfolder(folder, "StaticObj", fd_staticform.staticform)
         xfl.fl_addto_tabfolder(folder, "ValuatorObj", \
@@ -356,8 +315,6 @@ class Flfolder(object):
         xfl.fl_addto_tabfolder(folder, "InputObj", fd_inputform.inputform)
 
 
-
 if __name__ == '__main__':
     print("********* folder_new.py *********")
     Flfolder(len(sys.argv), sys.argv)
-

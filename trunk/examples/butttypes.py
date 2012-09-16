@@ -108,4 +108,4 @@ class Flbuttontypes(object):
 
 if __name__ == '__main__':
     print("********* butttypes.py *********")
-    appl = Flbuttontypes(len(sys.argv), sys.argv)
+    Flbuttontypes(len(sys.argv), sys.argv)

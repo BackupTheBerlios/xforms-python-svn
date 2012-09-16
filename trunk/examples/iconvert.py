@@ -16,7 +16,6 @@
 #  Exit status:  0 (success) 1 (bad command line)  3 (conversion failed)
 #
 
-
 import sys
 import os
 #sys.path.append("..")
@@ -24,25 +23,18 @@ import xformslib as xfl
 
 
 def main(lsysargv, sysargv):
-
-    #FL_IMAGE *im;
     fmt = ""
-    #char *const *args;
-
     initialize()
     notoptargs = parse_command_line(lsysargv, sysargv)
-
-    if len(notoptargs) == 4:            # $0, infile, outfile and fmt
+    if len(notoptargs) == 4:        # $0, infile, outfile and fmt
         fmt = notoptargs[-1]
-    elif len(notoptargs) == 3:          # $0, infile and outfile
+    elif len(notoptargs) == 3:      # $0, infile and outfile
         # get file extension without '.'
         fmt = (os.path.splitext(notoptargs[-1])[1]).replace(".", "")
-    else:                               # too few or too much args
+    else:                           # too few or too much args
         usage(sysargv[0], 0)
-
     if not os.path.exists(notoptargs[0]):
         sys.exit(3)
-
     pimg = xfl.flimage_load(notoptargs[1])
     if xfl.flimage_dump(pimg, notoptargs[2], fmt) < 0:
         sys.exit(3)
@@ -51,16 +43,12 @@ def main(lsysargv, sysargv):
 
 
 def usage(strngcmd, more):
-
     msg = "Usage: %s [-verbose][-help] infile outfile [fmt]\n" % strngcmd
     print(msg)
-
     if not more:
         sys.exit(1)
-
     print("The output format is determined by the file extension " \
             "or fmt.\n fmt or extension must be one of the following\n")
-
     n = xfl.flimage_get_number_of_formats()
     k = 0
     msg = ""
@@ -72,7 +60,6 @@ def usage(strngcmd, more):
             if k % 6 == 0:
                 msg += "\n"
     print(msg)
-
     if k % 6:
         print("\n")
     sys.exit(1)
@@ -84,10 +71,7 @@ def noop(ptrimg, strng):
 
 
 def parse_command_line(lsysargv, sysargv):
-
-    #imgsetup, pimgsetup = xfl.fls_make_flimagesetup_and_pointer()
     imgsetup.visual_cue = xfl.cfunc_int_ptrflimage_str(noop)
-
     argsnoopt = sysargv[:]
     for i in range(0, lsysargv):
         if sysargv[i].startswith("-"):
@@ -103,7 +87,6 @@ def parse_command_line(lsysargv, sysargv):
                 usage(sysargv[0], 0)
         else:
             continue
-
     xfl.flimage_setup(pimgsetup)
     return argsnoopt
 
@@ -124,8 +107,6 @@ def initialize():
     xfl.flimage_enable_jpeg()
 
 
-
 if __name__ == '__main__':
     print("********* iconvert.py *********")
     main(len(sys.argv), sys.argv)
-
