@@ -32,7 +32,7 @@ class BrowserAll(object):
 
 
     def create_form(self):
-        self.pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 700, 570)
+        self.pform = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, 700, 570)
         self.preadout = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 50, 30, \
                 600, 50, "")
         xfl.fl_set_object_lsize(self.preadout, xfl.FL_NORMAL_SIZE)
@@ -113,7 +113,7 @@ class BrowserAll(object):
 
 
     def deselect(self, pobj, arg):
-        for i in range(0, 4):
+        for i in range(2, 4):
             xfl.fl_deselect_browser(self.pbr[i])
 
 

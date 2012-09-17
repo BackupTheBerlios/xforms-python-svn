@@ -40,7 +40,7 @@ class Flpositioner(object):
 
 
     # callback routine
-    def positioner_cb(self, pobj, q):
+    def positioner_cb(self, pobj, data):
         strng = "%f" % xfl.fl_get_positioner_xvalue(pobj)
         xfl.fl_set_object_label(self.pxval, strng)
         strng = "%f" % xfl.fl_get_positioner_yvalue(pobj)

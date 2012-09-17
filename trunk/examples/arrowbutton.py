@@ -23,7 +23,7 @@ def main(lsysargv, sysargv):
 
     xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
 
-    pform = xfl.fl_bgn_form(xfl.FL_UP_BOX, 400, 400)
+    pform = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, 400, 400)
 
     pobj1 = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 50, 250, 100, 100, "@1")
     xfl.fl_set_object_lcol(pobj1, xfl.FL_BLUE)

@@ -14,13 +14,15 @@ import xformslib as xfl
 
 
 def main(lsysargv, sysargv):
-    i = 0
+    oldcol = 1
+    newcol = 0
     xfl.fl_initialize(lsysargv, sysargv, "FormDemo", 0, 0 )
-    print("Click one of trasparent colors to exit")
-    while True:
-        i = xfl.fl_show_colormap(i)
-        if i >= 157:
-            break
+    #print("Click one of trasparent colors to exit")
+    while oldcol != newcol:
+        oldcol = newcol
+        newcol = xfl.fl_show_colormap(oldcol)
+        #if newcol >= 157:
+        #    break
     xfl.fl_finish()
     return 0
 

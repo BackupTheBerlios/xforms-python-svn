@@ -14,7 +14,7 @@ import xformslib as xfl
 
 
 # Forms and Objects
-class FD_gravity(object):
+class FD_gravity_form(object):
     grav = None
     box = None
     rx = None
@@ -26,7 +26,7 @@ class FD_grav_data(object):
     ry = None
     grav = 0
 
-class FD_help(object):
+class FD_help_form(object):
     help_ = None
     is_shown = 0
 
@@ -235,7 +235,7 @@ class Flgrav(object):
 
 
     def create_form_gravity(self, help_):
-        fdui = FD_gravity()
+        fdui = FD_gravity_form()
         label = ["NW", "N", "NE", "W", "-", "E", "SW", "S", "SE"]
         s = 25
         m = 5
@@ -312,21 +312,24 @@ class Flgrav(object):
 
 
     def create_form_help(self):
-        fdui = FD_help()
-        text = ["Gravity and resize settings demonstration", "",
-            "The interaction between gravity and resize settings",
-            "can sometimes be difficult to understand  This pro-",
-            "gram allows you to test some of the effects.", "",
-            "With the sets of buttons in the upper left hand and",
-            "lower right hand corner you can set the gravity for",
-            "the corresponding corners of the green rectangle.", "",
-            "With the buttons labeled 'X Resize' and 'Y Resize'",
-            "you can set if the rectangle may be scaled in x-",
-            "and/or y-direction. Please note that for several",
-            "combinations of gravity settings the resizing",
-            "settings are not taken into account by XForms. In",
-            "these cases the corresponding buttons are grayed",
-            "out (but not deactivated)."]
+        fdui = FD_help_form()
+        text = "Gravity and resize settings demonstration\n"
+            "\n"
+            "The interaction between gravity and resize settings\n"
+            "can sometimes be difficult to understand  This pro-\n"
+            "gram allows you to test some of the effects.\n"
+            "\n"
+            "With the sets of buttons in the upper left hand and\n"
+            "lower right hand corner you can set the gravity for\n"
+            "the corresponding corners of the green rectangle.\n"
+            "\n"
+            "With the buttons labeled 'X Resize' and 'Y Resize\n'"
+            "you can set if the rectangle may be scaled in x-\n"
+            "and/or y-direction. Please note that for several\n"
+            "combinations of gravity settings the resizing\n"
+            "settings are not taken into account by XForms. In\n"
+            "these cases the corresponding buttons are grayed\n"
+            "out (but not deactivated)."
         fdui.help_ = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, 345, 325)
         fdui.is_shown = 0
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 345, 325, "")
@@ -335,8 +338,7 @@ class Flgrav(object):
         xfl.fl_set_object_bw(pobj, -1)
         xfl.fl_set_object_color(pobj, xfl.FL_WHITE, xfl.FL_WHITE)
         xfl.fl_set_object_gravity(pobj, xfl.FL_NorthWest, xfl.FL_SouthEast)
-        for i in range(0, len(text)):   # i < sizeof text / sizeof *text
-            xfl.fl_add_browser_line(pobj, text[i])
+        xfl.fl_add_browser_line(pobj, text)
         pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 133, 295, 80, 25, \
                 "Close")
         xfl.fl_set_object_bw(pobj, -1)

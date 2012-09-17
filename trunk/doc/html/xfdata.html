@@ -2098,7 +2098,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num_auto_objects&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;needs_full_redraw&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sort_of_modal&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;internal&nbsp;use<br>
@@ -2114,7 +2114,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function(ptr_flform)&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attach_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;no_tooltip&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in_redraw&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
@@ -2218,6 +2218,9 @@ Data descriptors defined here:<br>
 <dl><dt><strong>icon_pixmap</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
+<dl><dt><strong>in_redraw</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
 <dl><dt><strong>key_callback</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
@@ -2230,7 +2233,7 @@ Data descriptors defined here:<br>
 <dl><dt><strong>motion_callback</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
-<dl><dt><strong>no_tooltip</strong></dt>
+<dl><dt><strong>needs_full_redraw</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
 <dl><dt><strong>num_auto_objects</strong></dt>
@@ -2252,9 +2255,6 @@ Data descriptors defined here:<br>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
 <dl><dt><strong>sort_of_modal</strong></dt>
-<dd><tt>Structure/Union&nbsp;member</tt></dd>
-</dl>
-<dl><dt><strong>top</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
 <dl><dt><strong>u_cdata</strong></dt>
@@ -2419,7 +2419,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other&nbsp;attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;num_auto_objects&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;needs_full_redraw&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
 &nbsp;&nbsp;&nbsp;&nbsp;sort_of_modal&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;internal&nbsp;use<br>
@@ -2435,7 +2435,7 @@ Attributes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function(ptr_flform)&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;attach_data&nbsp;:&nbsp;pointer&nbsp;to&nbsp;any&nbsp;type<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
-&nbsp;&nbsp;&nbsp;&nbsp;no_tooltip&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;in_redraw&nbsp;:&nbsp;int<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
@@ -2539,6 +2539,9 @@ Data descriptors defined here:<br>
 <dl><dt><strong>icon_pixmap</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
+<dl><dt><strong>in_redraw</strong></dt>
+<dd><tt>Structure/Union&nbsp;member</tt></dd>
+</dl>
 <dl><dt><strong>key_callback</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
@@ -2551,7 +2554,7 @@ Data descriptors defined here:<br>
 <dl><dt><strong>motion_callback</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
-<dl><dt><strong>no_tooltip</strong></dt>
+<dl><dt><strong>needs_full_redraw</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
 <dl><dt><strong>num_auto_objects</strong></dt>
@@ -2573,9 +2576,6 @@ Data descriptors defined here:<br>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
 <dl><dt><strong>sort_of_modal</strong></dt>
-<dd><tt>Structure/Union&nbsp;member</tt></dd>
-</dl>
-<dl><dt><strong>top</strong></dt>
 <dd><tt>Structure/Union&nbsp;member</tt></dd>
 </dl>
 <dl><dt><strong>u_cdata</strong></dt>
@@ -13838,7 +13838,7 @@ Admitted&nbsp;values<br>
 Admitted&nbsp;values<br>
 ---------------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_NOEVENT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No&nbsp;event<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_DRAW<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;flobject&nbsp;has&nbsp;to&nbsp;be&nbsp;(re)drawn.&nbsp;To&nbsp;figure&nbsp;out&nbsp;the&nbsp;actual&nbsp;size<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;flobject&nbsp;you&nbsp;can&nbsp;use&nbsp;the&nbsp;fields&nbsp;ptr_flobject.contents.x,<br>
@@ -13970,7 +13970,7 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FL_DBLCLICK,&nbsp;FL_PUSH,&nbsp;FL_RELEASE&nbsp;sequence.&nbsp;Set&nbsp;click&nbsp;timeout<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;none-zero&nbsp;to&nbsp;activate&nbsp;FL_TRPLCLICK.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_ATTRIB<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;attribute&nbsp;change&nbsp;*todo*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;an&nbsp;attribute&nbsp;of&nbsp;a&nbsp;flobject&nbsp;is&nbsp;changed<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_KEYRELEASE<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;pressed&nbsp;key&nbsp;is&nbsp;released.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_PS<br>
@@ -13982,7 +13982,11 @@ Admitted&nbsp;values<br>
 &nbsp;&nbsp;&nbsp;&nbsp;FL_RESIZED<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;flobject&nbsp;has&nbsp;been&nbsp;resized&nbsp;by&nbsp;scale_form&nbsp;the&nbsp;flobject&nbsp;has&nbsp;been<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resized&nbsp;by&nbsp;scale_form.&nbsp;Tell&nbsp;it&nbsp;that&nbsp;this&nbsp;has&nbsp;happened&nbsp;so&nbsp;that<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;can&nbsp;resize&nbsp;any&nbsp;FL_FORMs&nbsp;that&nbsp;it&nbsp;contains.<br>&nbsp;</tt></td></tr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it&nbsp;can&nbsp;resize&nbsp;any&nbsp;FL_FORMs&nbsp;that&nbsp;it&nbsp;contains.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FL_PASTE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;was&nbsp;pasted&nbsp;into&nbsp;input&nbsp;flobject<br>
+&nbsp;&nbsp;&nbsp;&nbsp;FL_TRIGGER<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;of&nbsp;flbasic.fl_trigger_object()<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Data descriptors defined here:<br>
 <dl><dt><strong>__dict__</strong></dt>
@@ -16222,7 +16226,7 @@ Methods inherited from _ctypes._CData:<br>
 <strong>FL_BURLYWOOD</strong> = 42<br>
 <strong>FL_BUSY_CURSOR</strong> = 150<br>
 <strong>FL_BUTTON</strong> = 1<br>
-<strong>FL_BUTTON_ALIGN</strong> = 8192<br>
+<strong>FL_BUTTON_ALIGN</strong> = 0<br>
 <strong>FL_BUTTON_BOXTYPE</strong> = 1<br>
 <strong>FL_BUTTON_BW</strong> = 1<br>
 <strong>FL_BUTTON_COL1</strong> = 11<br>
@@ -16655,6 +16659,7 @@ Methods inherited from _ctypes._CData:<br>
 <strong>FL_PALETURQUOISE</strong> = 128<br>
 <strong>FL_PALEVIOLETRED</strong> = 129<br>
 <strong>FL_PAPAYAWHIP</strong> = 130<br>
+<strong>FL_PASTE</strong> = 23<br>
 <strong>FL_PATH_MAX</strong> = 1024<br>
 <strong>FL_PCBITS</strong> = 8<br>
 <strong>FL_PCMAX</strong> = 255<br>
@@ -16801,6 +16806,7 @@ Methods inherited from _ctypes._CData:<br>
 <strong>FL_SALMON</strong> = 140<br>
 <strong>FL_SANDYBROWN</strong> = 141<br>
 <strong>FL_SCROLLBAR</strong> = 31<br>
+<strong>FL_SCROLLBAR_ALIGN</strong> = 2<br>
 <strong>FL_SCROLLBUTTON</strong> = 32<br>
 <strong>FL_SCROLLDOWNMOUSE</strong> = 5<br>
 <strong>FL_SCROLLDOWN_MOUSE</strong> = 5<br>
@@ -16865,7 +16871,7 @@ Methods inherited from _ctypes._CData:<br>
 <strong>FL_TBOX</strong> = 44<br>
 <strong>FL_TEAL</strong> = 152<br>
 <strong>FL_TEXT</strong> = 11<br>
-<strong>FL_TEXT_ALIGN</strong> = 4<br>
+<strong>FL_TEXT_ALIGN</strong> = 8196<br>
 <strong>FL_TEXT_BOXTYPE</strong> = 8<br>
 <strong>FL_TEXT_COL1</strong> = 11<br>
 <strong>FL_TEXT_COL2</strong> = 16<br>
@@ -16896,6 +16902,7 @@ Methods inherited from _ctypes._CData:<br>
 <strong>FL_TOP_TABFOLDER</strong> = 0<br>
 <strong>FL_TOUCH_BUTTON</strong> = 4<br>
 <strong>FL_TRANSIENT</strong> = 2<br>
+<strong>FL_TRIGGER</strong> = 24<br>
 <strong>FL_TRPLCLICK</strong> = 17<br>
 <strong>FL_TRUE</strong> = True<br>
 <strong>FL_TURQUOISE</strong> = 154<br>
@@ -17313,4 +17320,4 @@ Methods inherited from _ctypes._CData:<br>
 <strong>special_sequences_for_entry_text_t</strong> = '     %t (no argument)<font color="#c040c0">\n</font>    makes the entry a "tog...ens automatically when the entry<font color="#c040c0">\n</font>    is selected.'<br>
 <strong>special_sequences_for_entry_text_u</strong> = '     %u (with additional separate argument as da...xforms-python it does not fully work as expected.'<br>
 <strong>special_sequences_for_entry_text_x</strong> = '     %x (with additional separate argument as a ...is passed to all callback routines for the entry.'</td></tr></table>
-<p>Updated on: 2012-09-16 22:02 +0200</body></html>
+<p>Updated on: 2012-09-17 17:37 +0200<p>Updated on: 2012-09-17 17:39 +0200<p>Updated on: 2012-09-17 17:41 +0200</body></html>

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head><title>Python: module library</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
@@ -12,12 +12,13 @@
     <p><tt>Convenience/internal&nbsp;functions&nbsp;to&nbsp;deal&nbsp;with&nbsp;xforms-python&nbsp;wrapper's<br>
 functions.<br>
 &nbsp;<br>
-Copyright&nbsp;(C)&nbsp;2009,&nbsp;2010,&nbsp;2011&nbsp;&nbsp;Luca&nbsp;Lazzaroni&nbsp;"LukenShiro"<br>
+Copyright&nbsp;(C)&nbsp;2009,&nbsp;2010,&nbsp;2011,&nbsp;2012&nbsp;&nbsp;Luca&nbsp;Lazzaroni&nbsp;"LukenShiro"<br>
 e-mail:&nbsp;&lt;lukenshiro@ngi.it&gt;<br>
 &nbsp;<br>
 This&nbsp;program&nbsp;is&nbsp;free&nbsp;software:&nbsp;you&nbsp;can&nbsp;redistribute&nbsp;it&nbsp;and/or&nbsp;modify<br>
 it&nbsp;under&nbsp;the&nbsp;terms&nbsp;of&nbsp;the&nbsp;GNU&nbsp;Lesser&nbsp;General&nbsp;Public&nbsp;License&nbsp;as<br>
-published&nbsp;by&nbsp;the&nbsp;Free&nbsp;Software&nbsp;Foundation,&nbsp;version&nbsp;2.1&nbsp;of&nbsp;the&nbsp;License.<br>
+published&nbsp;by&nbsp;the&nbsp;Free&nbsp;Software&nbsp;Foundation,&nbsp;version&nbsp;2.1&nbsp;of&nbsp;the&nbsp;License,<br>
+or&nbsp;(at&nbsp;your&nbsp;option)&nbsp;any&nbsp;later&nbsp;version.<br>
 &nbsp;<br>
 This&nbsp;program&nbsp;is&nbsp;distributed&nbsp;in&nbsp;the&nbsp;hope&nbsp;that&nbsp;it&nbsp;will&nbsp;be&nbsp;useful,<br>
 but&nbsp;WITHOUT&nbsp;ANY&nbsp;WARRANTY;&nbsp;without&nbsp;even&nbsp;the&nbsp;implied&nbsp;warranty&nbsp;of<br>
@@ -39,9 +40,8 @@ ctypes'&nbsp;and&nbsp;other&nbsp;developers.</tt></p>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ctypes.html">ctypes</a><br>
 <a href="ctypes.util.html">ctypes.util</a><br>
 </td><td width="25%" valign=top><a href="sys.html">sys</a><br>
-<a href="vers.html">vers</a><br>
-</td><td width="25%" valign=top><a href="warnings.html">warnings</a><br>
-<a href="xfdata.html">xfdata</a><br>
+<a href="warnings.html">warnings</a><br>
+</td><td width="25%" valign=top><a href="xfdata.html">xfdata</a><br>
 </td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
@@ -50,7 +50,7 @@ ctypes'&nbsp;and&nbsp;other&nbsp;developers.</tt></p>
     
 <tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl>
-<dt><font face="helvetica, arial"><a href="exceptions.html#OSError">exceptions.OSError</a>(<a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>)
+<dt><font face="helvetica, arial"><a href="builtins.html#OSError">builtins.OSError</a>(<a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>)
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="library.html#XFormsGenericError">XFormsGenericError</a>
@@ -58,20 +58,20 @@ ctypes'&nbsp;and&nbsp;other&nbsp;developers.</tt></p>
 </font></dt><dt><font face="helvetica, arial"><a href="library.html#XFormsLoadError">XFormsLoadError</a>
 </font></dt></dl>
 </dd>
-<dt><font face="helvetica, arial"><a href="exceptions.html#TypeError">exceptions.TypeError</a>(<a href="exceptions.html#StandardError">exceptions.StandardError</a>)
+<dt><font face="helvetica, arial"><a href="builtins.html#TypeError">builtins.TypeError</a>(<a href="builtins.html#Exception">builtins.Exception</a>)
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="library.html#XFormsTypeError">XFormsTypeError</a>
 </font></dt></dl>
 </dd>
-<dt><font face="helvetica, arial"><a href="exceptions.html#ValueError">exceptions.ValueError</a>(<a href="exceptions.html#StandardError">exceptions.StandardError</a>)
+<dt><font face="helvetica, arial"><a href="builtins.html#ValueError">builtins.ValueError</a>(<a href="builtins.html#Exception">builtins.Exception</a>)
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="library.html#XFormsFuncNotSupported">XFormsFuncNotSupported</a>
 </font></dt><dt><font face="helvetica, arial"><a href="library.html#XFormsValueError">XFormsValueError</a>
 </font></dt></dl>
 </dd>
-<dt><font face="helvetica, arial"><a href="exceptions.html#Warning">exceptions.Warning</a>(<a href="exceptions.html#Exception">exceptions.Exception</a>)
+<dt><font face="helvetica, arial"><a href="builtins.html#Warning">builtins.Warning</a>(<a href="builtins.html#Exception">builtins.Exception</a>)
 </font></dt><dd>
 <dl>
 <dt><font face="helvetica, arial"><a href="library.html#XFormsWarning">XFormsWarning</a>
@@ -82,7 +82,7 @@ ctypes'&nbsp;and&nbsp;other&nbsp;developers.</tt></p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsFuncNotSupported">class <strong>XFormsFuncNotSupported</strong></a>(<a href="exceptions.html#ValueError">exceptions.ValueError</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsFuncNotSupported">class <strong>XFormsFuncNotSupported</strong></a>(<a href="builtins.html#ValueError">builtins.ValueError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Fatal&nbsp;error&nbsp;for&nbsp;XForms&nbsp;functions&nbsp;not&nbsp;supported&nbsp;or&nbsp;not&nbsp;yet<br>
@@ -90,11 +90,10 @@ stabilized&nbsp;in&nbsp;xforms-python.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsFuncNotSupported">XFormsFuncNotSupported</a></dd>
-<dd><a href="exceptions.html#ValueError">exceptions.ValueError</a></dd>
-<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#ValueError">builtins.ValueError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -102,24 +101,18 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
-<dl><dt><a name="XFormsFuncNotSupported-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#ValueError">builtins.ValueError</a>:<br>
+<dl><dt><a name="XFormsFuncNotSupported-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#ValueError">builtins.ValueError</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsFuncNotSupported-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsFuncNotSupported-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsFuncNotSupported-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsFuncNotSupported-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsFuncNotSupported-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsFuncNotSupported-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
@@ -131,33 +124,39 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsFuncNotSupported-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsFuncNotSupported-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
-<dl><dt><a name="XFormsFuncNotSupported-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsFuncNotSupported-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsFuncNotSupported-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsGenericError">class <strong>XFormsGenericError</strong></a>(<a href="exceptions.html#OSError">exceptions.OSError</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsGenericError">class <strong>XFormsGenericError</strong></a>(<a href="builtins.html#OSError">builtins.OSError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Fatal&nbsp;generic&nbsp;error<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsGenericError">XFormsGenericError</a></dd>
-<dd><a href="exceptions.html#OSError">exceptions.OSError</a></dd>
-<dd><a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a></dd>
-<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#OSError">builtins.OSError</a></dd>
+<dd><a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -165,21 +164,21 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
-<dl><dt><a name="XFormsGenericError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#OSError">builtins.OSError</a>:<br>
+<dl><dt><a name="XFormsGenericError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#OSError">builtins.OSError</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsGenericError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+Methods inherited from <a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>:<br>
 <dl><dt><a name="XFormsGenericError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
 <dl><dt><a name="XFormsGenericError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+Data descriptors inherited from <a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>:<br>
 <dl><dt><strong>errno</strong></dt>
 <dd><tt>exception&nbsp;errno</tt></dd>
 </dl>
@@ -190,16 +189,10 @@ Data descriptors inherited from <a href="exceptions.html#EnvironmentError">excep
 <dd><tt>exception&nbsp;strerror</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsGenericError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsGenericError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsGenericError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsGenericError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsGenericError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsGenericError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
 
@@ -207,21 +200,28 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsGenericError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
 
-<dl><dt><a name="XFormsGenericError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsGenericError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsGenericError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsInitError">class <strong>XFormsInitError</strong></a>(<a href="exceptions.html#OSError">exceptions.OSError</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsInitError">class <strong>XFormsInitError</strong></a>(<a href="builtins.html#OSError">builtins.OSError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Fatal&nbsp;error&nbsp;in&nbsp;initializing&nbsp;library,&nbsp;not&nbsp;using&nbsp;fl_initialize()<br>
@@ -229,12 +229,11 @@ before&nbsp;functions&nbsp;who&nbsp;require&nbsp;it.<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsInitError">XFormsInitError</a></dd>
-<dd><a href="exceptions.html#OSError">exceptions.OSError</a></dd>
-<dd><a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a></dd>
-<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#OSError">builtins.OSError</a></dd>
+<dd><a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -242,21 +241,21 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
-<dl><dt><a name="XFormsInitError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#OSError">builtins.OSError</a>:<br>
+<dl><dt><a name="XFormsInitError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#OSError">builtins.OSError</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsInitError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+Methods inherited from <a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>:<br>
 <dl><dt><a name="XFormsInitError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
 <dl><dt><a name="XFormsInitError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+Data descriptors inherited from <a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>:<br>
 <dl><dt><strong>errno</strong></dt>
 <dd><tt>exception&nbsp;errno</tt></dd>
 </dl>
@@ -267,16 +266,10 @@ Data descriptors inherited from <a href="exceptions.html#EnvironmentError">excep
 <dd><tt>exception&nbsp;strerror</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsInitError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsInitError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsInitError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsInitError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsInitError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsInitError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
 
@@ -284,33 +277,39 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsInitError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
 
-<dl><dt><a name="XFormsInitError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsInitError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsInitError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsLoadError">class <strong>XFormsLoadError</strong></a>(<a href="exceptions.html#OSError">exceptions.OSError</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsLoadError">class <strong>XFormsLoadError</strong></a>(<a href="builtins.html#OSError">builtins.OSError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Fatal&nbsp;error&nbsp;in&nbsp;loading&nbsp;shared&nbsp;flobject&nbsp;library<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsLoadError">XFormsLoadError</a></dd>
-<dd><a href="exceptions.html#OSError">exceptions.OSError</a></dd>
-<dd><a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a></dd>
-<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#OSError">builtins.OSError</a></dd>
+<dd><a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -318,21 +317,21 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
-<dl><dt><a name="XFormsLoadError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#OSError">builtins.OSError</a>:<br>
+<dl><dt><a name="XFormsLoadError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#OSError">exceptions.OSError</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#OSError">builtins.OSError</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsLoadError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+Methods inherited from <a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>:<br>
 <dl><dt><a name="XFormsLoadError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
 <dl><dt><a name="XFormsLoadError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#EnvironmentError">exceptions.EnvironmentError</a>:<br>
+Data descriptors inherited from <a href="builtins.html#EnvironmentError">builtins.EnvironmentError</a>:<br>
 <dl><dt><strong>errno</strong></dt>
 <dd><tt>exception&nbsp;errno</tt></dd>
 </dl>
@@ -343,16 +342,10 @@ Data descriptors inherited from <a href="exceptions.html#EnvironmentError">excep
 <dd><tt>exception&nbsp;strerror</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsLoadError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsLoadError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsLoadError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsLoadError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsLoadError-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsLoadError-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
 
@@ -360,32 +353,38 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsLoadError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
 
-<dl><dt><a name="XFormsLoadError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsLoadError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsLoadError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsTypeError">class <strong>XFormsTypeError</strong></a>(<a href="exceptions.html#TypeError">exceptions.TypeError</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsTypeError">class <strong>XFormsTypeError</strong></a>(<a href="builtins.html#TypeError">builtins.TypeError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Fatal&nbsp;generic&nbsp;error&nbsp;for&nbsp;type&nbsp;mismatch<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsTypeError">XFormsTypeError</a></dd>
-<dd><a href="exceptions.html#TypeError">exceptions.TypeError</a></dd>
-<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#TypeError">builtins.TypeError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -393,24 +392,18 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#TypeError">exceptions.TypeError</a>:<br>
-<dl><dt><a name="XFormsTypeError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#TypeError">builtins.TypeError</a>:<br>
+<dl><dt><a name="XFormsTypeError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#TypeError">exceptions.TypeError</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#TypeError">builtins.TypeError</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsTypeError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsTypeError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsTypeError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsTypeError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsTypeError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsTypeError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
@@ -422,32 +415,38 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsTypeError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsTypeError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
-<dl><dt><a name="XFormsTypeError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsTypeError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsTypeError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsValueError">class <strong>XFormsValueError</strong></a>(<a href="exceptions.html#ValueError">exceptions.ValueError</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsValueError">class <strong>XFormsValueError</strong></a>(<a href="builtins.html#ValueError">builtins.ValueError</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Fatal&nbsp;generic&nbsp;error&nbsp;for&nbsp;unexpected&nbsp;value<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsValueError">XFormsValueError</a></dd>
-<dd><a href="exceptions.html#ValueError">exceptions.ValueError</a></dd>
-<dd><a href="exceptions.html#StandardError">exceptions.StandardError</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#ValueError">builtins.ValueError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -455,24 +454,18 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
-<dl><dt><a name="XFormsValueError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#ValueError">builtins.ValueError</a>:<br>
+<dl><dt><a name="XFormsValueError-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#ValueError">exceptions.ValueError</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#ValueError">builtins.ValueError</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsValueError-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsValueError-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsValueError-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsValueError-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsValueError-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsValueError-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
@@ -484,31 +477,38 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsValueError-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsValueError-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
-<dl><dt><a name="XFormsValueError-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsValueError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsValueError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table> <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
-<font color="#000000" face="helvetica, arial"><a name="XFormsWarning">class <strong>XFormsWarning</strong></a>(<a href="exceptions.html#Warning">exceptions.Warning</a>)</font></td></tr>
+<font color="#000000" face="helvetica, arial"><a name="XFormsWarning">class <strong>XFormsWarning</strong></a>(<a href="builtins.html#Warning">builtins.Warning</a>)</font></td></tr>
     
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Generic&nbsp;warning&nbsp;for&nbsp;non&nbsp;fatal&nbsp;errors<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%"><dl><dt>Method resolution order:</dt>
 <dd><a href="library.html#XFormsWarning">XFormsWarning</a></dd>
-<dd><a href="exceptions.html#Warning">exceptions.Warning</a></dd>
-<dd><a href="exceptions.html#Exception">exceptions.Exception</a></dd>
-<dd><a href="exceptions.html#BaseException">exceptions.BaseException</a></dd>
-<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+<dd><a href="builtins.html#Warning">builtins.Warning</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
 </dl>
 <hr>
 Data descriptors defined here:<br>
@@ -516,24 +516,18 @@ Data descriptors defined here:<br>
 <dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
 </dl>
 <hr>
-Methods inherited from <a href="exceptions.html#Warning">exceptions.Warning</a>:<br>
-<dl><dt><a name="XFormsWarning-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;x.__class__.__doc__&nbsp;for&nbsp;signature</tt></dd></dl>
+Methods inherited from <a href="builtins.html#Warning">builtins.Warning</a>:<br>
+<dl><dt><a name="XFormsWarning-__init__"><strong>__init__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__init__">__init__</a>(...)&nbsp;initializes&nbsp;x;&nbsp;see&nbsp;help(type(x))&nbsp;for&nbsp;signature</tt></dd></dl>
 
 <hr>
-Data and other attributes inherited from <a href="exceptions.html#Warning">exceptions.Warning</a>:<br>
+Data and other attributes inherited from <a href="builtins.html#Warning">builtins.Warning</a>:<br>
 <dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#XFormsWarning-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
 
 <hr>
-Methods inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
 <dl><dt><a name="XFormsWarning-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
 
 <dl><dt><a name="XFormsWarning-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
-
-<dl><dt><a name="XFormsWarning-__getitem__"><strong>__getitem__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__getitem__">__getitem__</a>(y)&nbsp;&lt;==&gt;&nbsp;x[y]</tt></dd></dl>
-
-<dl><dt><a name="XFormsWarning-__getslice__"><strong>__getslice__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__getslice__">__getslice__</a>(i,&nbsp;j)&nbsp;&lt;==&gt;&nbsp;x[i:j]<br>
-&nbsp;<br>
-Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd></dl>
 
 <dl><dt><a name="XFormsWarning-__reduce__"><strong>__reduce__</strong></a>(...)</dt></dl>
 
@@ -545,15 +539,22 @@ Use&nbsp;of&nbsp;negative&nbsp;indices&nbsp;is&nbsp;not&nbsp;supported.</tt></dd
 
 <dl><dt><a name="XFormsWarning-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#XFormsWarning-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
 
-<dl><dt><a name="XFormsWarning-__unicode__"><strong>__unicode__</strong></a>(...)</dt></dl>
+<dl><dt><a name="XFormsWarning-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt>Exception.<a href="#XFormsWarning-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
 
 <hr>
-Data descriptors inherited from <a href="exceptions.html#BaseException">exceptions.BaseException</a>:<br>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
 <dl><dt><strong>__dict__</strong></dt>
 </dl>
-<dl><dt><strong>args</strong></dt>
+<dl><dt><strong>__traceback__</strong></dt>
 </dl>
-<dl><dt><strong>message</strong></dt>
+<dl><dt><strong>args</strong></dt>
 </dl>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -637,8 +638,9 @@ class&nbsp;instance,&nbsp;different&nbsp;from&nbsp;previous&nbsp;classes.</tt></
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>flimageinitialized</strong> = False<br>
+<td width="100%"><strong>__vers_against_xforms__</strong> = '1.0.94pre10'<br>
+<strong>flimageinitialized</strong> = False<br>
 <strong>flinitialized</strong> = False<br>
 <strong>header_filename</strong> = '/usr/include/forms.h'<br>
 <strong>loaded_xlibraries</strong> = {'libflimage': None, 'libforms': None, 'libformsgl': None, 'libx11': None}</td></tr></table>
-<p>Updated on: 2011-12-20 14:51 +0100<p>Updated on: 2012-02-04 18:41 +0100<p>Updated on: 2012-09-16 22:02 +0200</body></html>
+<p>Updated on: 2012-09-17 17:41 +0200</body></html>

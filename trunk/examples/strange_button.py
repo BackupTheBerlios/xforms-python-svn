@@ -84,6 +84,7 @@ class Flstrangebutton(object):
                 "(Also try the scroll wheel if you have.)" )
 
         pobj = xfl.fl_add_button(xfl.FL_RETURN_BUTTON, 50, 130, 70, 30, "Exit" );
+        xfl.fl_set_button_mouse_buttons(pobj, 1)
 
         xfl.fl_end_form()
         xfl.fl_adjust_form_size(fdui.x)

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head><title>Python: module flxbasic</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
@@ -826,6 +826,45 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_get_clipping"><strong>fl_get_clipping</strong></a>(includeglobal)</dt><dd><tt><a href="#-fl_get_clipping">fl_get_clipping</a>(includeglobal)&nbsp;-&gt;&nbsp;yesno,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height<br>
+&nbsp;<br>
+Determines&nbsp;if&nbsp;normal&nbsp;clipping&nbsp;(e.g.&nbsp;"non-text")&nbsp;is&nbsp;on&nbsp;and&nbsp;the&nbsp;region<br>
+clipped&nbsp;to&nbsp;<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;includeglobal&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag;&nbsp;if&nbsp;set&nbsp;also&nbsp;clipping&nbsp;due&nbsp;to&nbsp;global&nbsp;clipping&nbsp;is&nbsp;taken&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;account&nbsp;(and&nbsp;the&nbsp;reported&nbsp;clipping&nbsp;region&nbsp;is&nbsp;the&nbsp;one&nbsp;resulting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;intersection&nbsp;of&nbsp;the&nbsp;normal&nbsp;clipping&nbsp;region&nbsp;and&nbsp;the&nbsp;one&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;global&nbsp;clipping).<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;there&nbsp;is&nbsp;clipping&nbsp;going&nbsp;on&nbsp;(which&nbsp;may,&nbsp;if&nbsp;includeglobal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;set,&nbsp;also&nbsp;be&nbsp;due&nbsp;to&nbsp;global&nbsp;clipping)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;<br>
+Example<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+API&nbsp;diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_clipping">fl_get_clipping</a>(includeglobal,&nbsp;px,&nbsp;py,&nbsp;pw,&nbsp;ph)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_decoration_sizes"><strong>fl_get_decoration_sizes</strong></a>(ptr_flform)</dt><dd><tt><a href="#-fl_get_decoration_sizes">fl_get_decoration_sizes</a>(ptr_flform)<br>
 -&gt;&nbsp;result,&nbsp;topsz,&nbsp;rightsz,&nbsp;bottomsz,&nbsp;leftsz<br>
 &nbsp;<br>
@@ -1098,6 +1137,35 @@ Notes<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_form_vclass"><strong>fl_get_form_vclass</strong></a>(a)</dt></dl>
  <dl><dt><a name="-fl_get_gc"><strong>fl_get_gc</strong></a>()</dt></dl>
+ <dl><dt><a name="-fl_get_global_clipping"><strong>fl_get_global_clipping</strong></a>()</dt><dd><tt><a href="#-fl_get_global_clipping">fl_get_global_clipping</a>()&nbsp;-&gt;&nbsp;yesno,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height<br>
+&nbsp;<br>
+Determines&nbsp;if&nbsp;global&nbsp;clipping&nbsp;is&nbsp;on&nbsp;or&nbsp;off&nbsp;and&nbsp;the&nbsp;clipping&nbsp;rectangle.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;global&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on&nbsp;or&nbsp;not<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;<br>
+Example<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+API&nbsp;diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_global_clipping">fl_get_global_clipping</a>(px,&nbsp;py,&nbsp;pw,&nbsp;ph)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_get_linestyle"><strong>fl_get_linestyle</strong></a>()</dt><dd><tt><a href="#-fl_get_linestyle">fl_get_linestyle</a>()&nbsp;-&gt;&nbsp;linestyle<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;the&nbsp;style&nbsp;of&nbsp;line.<br>
@@ -1228,6 +1296,44 @@ API_diversion<br>
 -------------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_resource">fl_get_resource</a>(resname,&nbsp;resclass,&nbsp;dtype,&nbsp;defval,&nbsp;val,&nbsp;size)<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_get_text_clipping"><strong>fl_get_text_clipping</strong></a>(includeglobal)</dt><dd><tt><a href="#-fl_get_text_clipping">fl_get_text_clipping</a>(includeglobal)&nbsp;-&gt;&nbsp;yesno,&nbsp;xpos,&nbsp;ypos,&nbsp;width,&nbsp;height<br>
+&nbsp;<br>
+Determines&nbsp;if&nbsp;text&nbsp;clipping&nbsp;is&nbsp;on&nbsp;and&nbsp;the&nbsp;region&nbsp;clipped&nbsp;to&nbsp;<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;includeglobal&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag;&nbsp;if&nbsp;set&nbsp;also&nbsp;clipping&nbsp;due&nbsp;to&nbsp;global&nbsp;clipping&nbsp;is&nbsp;taken&nbsp;into<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;account&nbsp;(and&nbsp;the&nbsp;reported&nbsp;clipping&nbsp;region&nbsp;is&nbsp;the&nbsp;one&nbsp;resulting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;intersection&nbsp;of&nbsp;the&nbsp;text&nbsp;clipping&nbsp;region&nbsp;and&nbsp;the&nbsp;one&nbsp;for<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;global&nbsp;clipping).<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;there&nbsp;is&nbsp;clipping&nbsp;going&nbsp;on&nbsp;(which&nbsp;may,&nbsp;if&nbsp;includeglobal<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;set,&nbsp;also&nbsp;be&nbsp;due&nbsp;to&nbsp;global&nbsp;clipping)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xpos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ypos&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;of&nbsp;the&nbsp;clipping&nbsp;rectangle<br>
+&nbsp;<br>
+Example<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
+&nbsp;<br>
+API&nbsp;diversion<br>
+-------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;API&nbsp;changed&nbsp;from&nbsp;XForms,&nbsp;upstream&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#-fl_get_text_clipping">fl_get_text_clipping</a>(includeglobal,&nbsp;px,&nbsp;py,&nbsp;pw,&nbsp;ph)<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -1489,6 +1595,70 @@ Examples<br>
 Notes<br>
 -----<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;Demo&nbsp;=&nbsp;OK</tt></dd></dl>
+ <dl><dt><a name="-fl_is_clipped"><strong>fl_is_clipped</strong></a>(includeglobal)</dt><dd><tt><a href="#-fl_is_clipped">fl_is_clipped</a>(includeglobal)&nbsp;-&gt;&nbsp;yesno<br>
+&nbsp;<br>
+Determines&nbsp;if&nbsp;"normal"&nbsp;(i.e.&nbsp;non-text)&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;includeglobal&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;(if&nbsp;set)&nbsp;for&nbsp;including&nbsp;global&nbsp;clipping&nbsp;(used&nbsp;e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;redrawing&nbsp;on&nbsp;an&nbsp;expose&nbsp;event),&nbsp;otherwise&nbsp;only<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clipping&nbsp;set&nbsp;via&nbsp;a&nbsp;call&nbsp;of&nbsp;<a href="#-fl_set_clipping">fl_set_clipping</a>()&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reported.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on&nbsp;or&nbsp;off<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;clipd&nbsp;=&nbsp;<a href="#-fl_is_clipped">fl_is_clipped</a>(1)???<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_is_global_clipped"><strong>fl_is_global_clipped</strong></a>()</dt><dd><tt><a href="#-fl_is_global_clipped">fl_is_global_clipped</a>()&nbsp;-&gt;&nbsp;yesno<br>
+&nbsp;<br>
+Determines&nbsp;if&nbsp;global&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on&nbsp;or&nbsp;not.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;global&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on&nbsp;or&nbsp;off<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;clipd&nbsp;=&nbsp;<a href="#-fl_is_global_clipped">fl_is_global_clipped</a>()<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
+ <dl><dt><a name="-fl_is_text_clipped"><strong>fl_is_text_clipped</strong></a>(includeglobal)</dt><dd><tt><a href="#-fl_is_text_clipped">fl_is_text_clipped</a>(includeglobal)&nbsp;-&gt;&nbsp;yesno<br>
+&nbsp;<br>
+Determines&nbsp;if&nbsp;"text"&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on.<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;includeglobal&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;(if&nbsp;set)&nbsp;for&nbsp;including&nbsp;global&nbsp;clipping&nbsp;(used&nbsp;e.g.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;redrawing&nbsp;on&nbsp;an&nbsp;expose&nbsp;event),&nbsp;otherwise&nbsp;only<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clipping&nbsp;set&nbsp;via&nbsp;a&nbsp;call&nbsp;of&nbsp;<a href="#-fl_set_clipping">fl_set_clipping</a>()&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reported.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;yesno&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;if&nbsp;clipping&nbsp;is&nbsp;switched&nbsp;on&nbsp;or&nbsp;off<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;clipd&nbsp;=&nbsp;<a href="#-fl_is_text_clipped">fl_is_text_clipped</a>(1)???<br>
+&nbsp;<br>
+Notes<br>
+-----<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
  <dl><dt><a name="-fl_keypressed"><strong>fl_keypressed</strong></a> = fl_keysym_pressed(keysym)</dt><dd><tt><a href="#-fl_keysym_pressed">fl_keysym_pressed</a>(keysym)&nbsp;-&gt;&nbsp;result<br>
 &nbsp;<br>
 Finds&nbsp;out&nbsp;if&nbsp;a&nbsp;keyboard&nbsp;symbol&nbsp;has&nbsp;been&nbsp;pressed,&nbsp;or&nbsp;not.<br>
@@ -2429,30 +2599,6 @@ Parameters<br>
 Examples<br>
 --------<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;<a href="#-fl_set_clipping">fl_set_clipping</a>(250,&nbsp;200,&nbsp;100,&nbsp;80)<br>
-&nbsp;<br>
-Notes<br>
------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;NA-UTest&nbsp;+&nbsp;Doc&nbsp;+&nbsp;NoDemo&nbsp;=&nbsp;Maybe</tt></dd></dl>
- <dl><dt><a name="-fl_set_clippings"><strong>fl_set_clippings</strong></a>(ptr_rect, numrects)</dt><dd><tt><a href="#-fl_set_clippings">fl_set_clippings</a>(ptr_rect,&nbsp;numrects)<br>
-&nbsp;<br>
-Changes&nbsp;the&nbsp;clip-mask&nbsp;in&nbsp;the&nbsp;specified&nbsp;GC&nbsp;to&nbsp;the&nbsp;specified&nbsp;list&nbsp;of<br>
-rectangles&nbsp;and&nbsp;sets&nbsp;the&nbsp;clip&nbsp;origin.&nbsp;The&nbsp;output&nbsp;is&nbsp;clipped&nbsp;to&nbsp;remain<br>
-contained&nbsp;within&nbsp;the&nbsp;rectangles.&nbsp;The&nbsp;clip-origin&nbsp;is&nbsp;interpreted&nbsp;relative<br>
-to&nbsp;the&nbsp;origin&nbsp;of&nbsp;whatever&nbsp;destination&nbsp;drawable&nbsp;is&nbsp;specified&nbsp;in&nbsp;a&nbsp;graphics<br>
-request.&nbsp;The&nbsp;rectangle&nbsp;coordinates&nbsp;are&nbsp;interpreted&nbsp;relative&nbsp;to&nbsp;the<br>
-clip-origin.&nbsp;The&nbsp;rectangles&nbsp;should&nbsp;be&nbsp;nonintersecting,&nbsp;or&nbsp;the&nbsp;graphics<br>
-results&nbsp;will&nbsp;be&nbsp;undefined.<br>
-&nbsp;<br>
-Parameters<br>
-----------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;ptr_rect&nbsp;:&nbsp;pointer&nbsp;to&nbsp;xfdata.FL_RECT<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rectangle&nbsp;class&nbsp;instance<br>
-&nbsp;&nbsp;&nbsp;&nbsp;numrects&nbsp;:&nbsp;int<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;of&nbsp;rectangles<br>
-&nbsp;<br>
-Examples<br>
---------<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&gt;&gt;&gt;&nbsp;*todo*<br>
 &nbsp;<br>
 Notes<br>
 -----<br>
@@ -3617,11 +3763,11 @@ Notes<br>
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>fl_current_form</strong> = &lt;xfdata.LP_FL_FORM_ object&gt;<br>
 <strong>fl_display</strong> = &lt;xfdata.LP__XDisplay object&gt;<br>
-<strong>fl_root</strong> = c_ulong(0L)<br>
+<strong>fl_root</strong> = c_ulong(0)<br>
 <strong>fl_screen</strong> = c_int(0)<br>
 <strong>fl_scrh</strong> = c_int(0)<br>
 <strong>fl_scrw</strong> = c_int(0)<br>
 <strong>fl_state</strong> = &lt;flxbasic.FL_State_Array_6 object&gt;<br>
 <strong>fl_vmode</strong> = c_int(-1)<br>
-<strong>fl_vroot</strong> = c_ulong(0L)</td></tr></table>
-<p>Updated on: 2011-12-20 14:51 +0100<p>Updated on: 2012-02-04 18:41 +0100<p>Updated on: 2012-09-16 22:02 +0200</body></html>
+<strong>fl_vroot</strong> = c_ulong(0)</td></tr></table>
+<p>Updated on: 2012-09-17 17:41 +0200</body></html>

@@ -30,7 +30,7 @@ class Flstrsize(object):
         xfl.fl_show_form(self.fd_form0.form0, xfl.FL_PLACE_CENTER, \
                 xfl.FL_FULLBORDER, "form0")
         xfl.fl_do_forms()
-
+        sys.exit(0)
 
     # callbacks for form form0
     def exit_cb(self, pobj, data):
@@ -45,7 +45,7 @@ class Flstrsize(object):
         h, asc, desc = xfl.fl_get_string_height( \
                 xfl.fl_get_object_lstyle(pobj), \
                 xfl.fl_get_object_lsize(pobj), s, len(s))
-        buf = "w=%d h=%d" % (w, h)
+        buf = "w = %d, h = %d" % (w, h)
         xfl.fl_set_object_label(self.fd_form0.text, buf)
 
 
@@ -53,9 +53,8 @@ class Flstrsize(object):
     def create_form_form0(self):
 
         fdui = FD_form0()
-        fdui.form0 = xfl.fl_bgn_form(xfl.FL_NO_BOX, 311, 181)
+        fdui.form0 = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, 311, 181)
 
-        xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 311, 181, "")
         pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 220, 130, \
                 80, 30, "Done")
         xfl.fl_set_object_callback(pobj, self.exit_cb, 0)
@@ -65,6 +64,9 @@ class Flstrsize(object):
                 130, 30, "Text")
         xfl.fl_set_object_lalign(fdui.text, \
                 xfl.fl_to_inside_lalign(xfl.FL_ALIGN_LEFT))
+        pexitobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 220, 130, \
+                80, 30, "Done")
+        xfl.fl_set_object_callback(pexitobj, self.exit_cb, 0)
         xfl.fl_end_form()
         return fdui
 

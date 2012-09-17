@@ -3451,39 +3451,38 @@ def fl_set_object_return(ptr_flobject, whenretn):
     return retval
 
 
-# TODO: verify what its purpose is (internal use only?)
-def fl_notify_object(ptr_flobject, cause):
-    """fl_notify_object(ptr_flobject, cause)
-
-    Notifies to XForms if attributes, size or position are to be changed.
-
-    Parameters
-    ----------
-        ptr_flobject : pointer to xfdata.FL_OBJECT
-            flobject
-        cause : int
-            cause for notification. Values (from xfdata.py) FL_ATTRIB,
-            FL_RESIZED, FL_MOVEORIGIN
-
-    Examples
-    --------
-        >>> fl_notify_object(pobj5, xfdata.FL_RESIZED)
-
-    Notes
-    -----
-        Status: NA-UTest + Doc + NoDemo = KO (not clear purpose)
-
-    """
-    _fl_notify_object = library.cfuncproto(
-        library.load_so_libforms(), "fl_notify_object", \
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], \
-        """void fl_notify_object(FL_OBJECT * obj, int cause) """)
-    library.check_if_flinitialized()
-    library.verify_flobjectptr_type(ptr_flobject)
-    #library.checkfatal_allowed_value_in_list(cause, xfdata.EVENTS_list)
-    icause = library.convert_to_intc(cause)
-    library.keep_elem_refs(ptr_flobject, cause, icause)
-    _fl_notify_object(ptr_flobject, icause)
+#def fl_notify_object(ptr_flobject, cause):
+#    """fl_notify_object(ptr_flobject, cause)
+#
+#    Notifies to XForms if attributes, size or position are to be changed.
+#
+#    Parameters
+#    ----------
+#        ptr_flobject : pointer to xfdata.FL_OBJECT
+#            flobject
+#        cause : int
+#            cause for notification. Values (from xfdata.py) FL_ATTRIB,
+#            FL_RESIZED, FL_MOVEORIGIN
+#
+#    Examples
+#    --------
+#        >>> fl_notify_object(pobj5, xfdata.FL_RESIZED)
+#
+#    Notes
+#    -----
+#        Status: NA-UTest + Doc + NoDemo = KO (not clear purpose)
+#
+#    """
+#    _fl_notify_object = library.cfuncproto(
+#        library.load_so_libforms(), "fl_notify_object", \
+#        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], \
+#        """void fl_notify_object(FL_OBJECT * obj, int cause) """)
+#    library.check_if_flinitialized()
+#    library.verify_flobjectptr_type(ptr_flobject)
+#    #library.checkfatal_allowed_value_in_list(cause, xfdata.EVENTS_list)
+#    icause = library.convert_to_intc(cause)
+#    library.keep_elem_refs(ptr_flobject, cause, icause)
+#    _fl_notify_object(ptr_flobject, icause)
 
 
 def fl_set_object_lalign(ptr_flobject, align):
@@ -5495,8 +5494,8 @@ def fl_get_string_height(style, size, txtstr, strlng):
     """fl_get_string_height(style, size, txtstr, strlng)
     -> height, ascndt, descndt
 
-    Finds out the height information of a specific string and the height
-    above and below the font's baseline.
+    Finds out the font height (not string's height) of a specific string and
+    the height above and below the font's baseline.
 
     Parameters
     ----------
@@ -5660,7 +5659,7 @@ def fl_get_string_width(style, size, txtstr, strlng):
 def fl_get_string_widthTAB(style, size, txtstr, strlng):
     """fl_get_string_widthTAB(style, size, txtstr, strlng) -> width
 
-    Finds out the width information for a specific string, including Tab
+    Retrieves the width information for a specific string, including Tab
     characters.
 
     Parameters

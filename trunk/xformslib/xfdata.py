@@ -1385,7 +1385,7 @@ class FL_FORM_(cty.Structure):
             function(ptr_flform) type
         attach_data : pointer to any type
             *todo*
-        no_tooltip : int
+        in_redraw : int
             *todo*
     """
     pass
@@ -1949,7 +1949,7 @@ FL_FORM_.__slots__ = ['fdui', 'u_vdata', 'u_cdata', 'u_ldata', 'label', \
         'use_pixmap', 'frozen', 'visible', 'wm_border', 'prop', \
         'num_auto_objects', 'needs_full_redraw', 'sort_of_modal', 'parent', \
         'child', 'parent_obj', 'attached', 'pre_attach', 'attach_data', \
-        'no_tooltip',]
+        'in_redraw',]
 FL_FORM_._fields_ = [
     ('fdui', cty.c_void_p),             # for fdesign
     ('u_vdata', cty.c_void_p),          # for application
@@ -2005,7 +2005,7 @@ FL_FORM_._fields_ = [
     ('attached', cty.c_int),                  # not independent anymore
     ('pre_attach', cty.CFUNCTYPE(None, cty.POINTER(FL_FORM))),
     ('attach_data', cty.c_void_p),
-    ('no_tooltip', cty.c_int), ]
+    ('in_redraw', cty.c_int), ]
 
 FL_OBJECT_._pack_ = 4
 FL_OBJECT_.__slots__ = ['form', 'u_vdata', 'u_cdata', 'u_ldata', \

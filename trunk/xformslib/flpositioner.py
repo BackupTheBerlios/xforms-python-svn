@@ -480,5 +480,122 @@ def fl_set_positioner_ystep(ptr_flobject, step):
     library.keep_elem_refs(ptr_flobject, step, f_step)
     _fl_set_positioner_ystep(ptr_flobject, f_step)
 
+
 # fl_set_positioner_return() function placeholder (deprecated)
+
+
+def fl_set_positioner_mouse_buttons(ptr_flobject, mousebtns):
+    """fl_set_positioner_mouse_buttons(ptr_flobject, mousebtns)
+
+    Defines which mouse buttons the positioner flobject will react to.
+
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
+        mousebtns : int_pos
+            *todo*
+
+    Example
+    -------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + Demo = OK
+
+    """
+    _fl_set_positioner_mouse_buttons = library.cfuncproto(
+        library.load_so_libforms(), "fl_set_positioner_mouse_buttons",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
+        """void fl_set_positioner_mouse_buttons(FL_OBJECT * ob,
+           unsigned int mount_buttons)""")
+    library.check_if_flinitialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    ui_mousebtns = library.convert_to_uintc(mousebtns)
+    library.keep_elem_refs(ptr_flobject, mousebtns, ui_mousebtns)
+    _fl_set_positioner_ystep(ptr_flobject, ui_mousebtns)
+
+
+def fl_get_positioner_mouse_buttons(ptr_flobject):
+    """fl_get_positioner_mouse_buttons(ptr_flobject) -> mousebtns
+
+    Retrieves which mouse buttons the positioner flobject will react to.
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
+
+    Returns
+    -------
+        mousebtns : int_pos
+            *todo*
+
+    Example
+    -------
+        >>> *todo*
+
+
+    API diversion
+    -------------
+        API changed from XForms, upstream is 
+        fl_get_positioner_mouse_buttons(ptr_flobject, mousebtns)
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + Demo = OK
+
+    """
+    _fl_set_positioner_mouse_buttons = library.cfuncproto(
+        library.load_so_libforms(), "fl_set_positioner_mouse_buttons",
+        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_uint],
+        """void fl_get_positioner_mouse_buttons(FL_OBJECT * ob,
+           unsigned int mount_buttons)""")
+    library.check_if_flinitialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    ui_mousebtns,  ptr_mousebtns = library.make_uints_and_pointer(mousebtns)
+    library.keep_elem_refs(ptr_flobject, mousebtns, ui_mousebtns, \
+            ptr_mousebtns)
+    _fl_set_positioner_ystep(ptr_flobject, ptr_mousebtns)
+    return ui_mousebtns.value
+
+
+def fl_get_positioner_numb(ptr_flobject):
+    """fl_get_positioner_numb(ptr_flobject) -> mousebtn
+
+    Retrieves the number of the last used mouse button. It is returned
+    by flbasic.fl_mouse_button, too.
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            positioner flobject
+
+    Returns
+    -------
+        mousebtn : int
+            *todo*
+
+    Example
+    -------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = OK
+
+    """
+    _fl_get_positioner_numb = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_positioner_numb",
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)],
+        """int fl_get_positioner_numb(FL_OBJECT * ob)""")
+    library.check_if_flinitialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    i_mousebtn = library.convert_to_intc(mousebtn)
+    library.keep_elem_refs(ptr_flobject, mousebtn, i_mousebtn)
+    retval = _fl_get_positioner_numb(ptr_flobject, i_mousebtn)
+    return retval
+
 
