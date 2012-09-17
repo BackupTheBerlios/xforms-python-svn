@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """ xforms-python's functions to manage timer flobjects.
 """
@@ -47,15 +47,14 @@ from xformslib import xfdata
 
 
 def fl_add_timer(timertype, xpos, ypos, width, height, label):
-    """fl_add_timer(timertype, xpos, ypos, width, height, label)
-    -> ptr_flobject
+    """fl_add_timer(timertype, xpos, ypos, width, height, label) -> ptr_flobject
 
     Adds a timer flobject. It can be used to make a timer that runs down
     toward 0.0 or runs up toward a pre-set value after which it starts blinking
     and returns itself to the application program. This can be used in many
     different ways, e.g. to give a user a particular amount of time for a
     task, etc. Also a hidden timer object can be created, so the application
-    program can take action at the moment the timer expires§; e.g. you can use
+    program can take action at the moment the timer expires; e.g. you can use
     this to show a message that remains visible until the user presses the OK
     button or until a particular amount of time has passed. The precision of
     the timer is not very good. Do not count on anything better than, say,
@@ -189,8 +188,8 @@ def fl_get_timer(ptr_flobject):
 def fl_set_timer_countup(ptr_flobject, yesno):
     """fl_set_timer_countup(ptr_flobject, yesno)
 
-    Changes timer behavior so the timer counts up and shows elapsed time. By
-    default, a timer counts down toward zero and the value shown (for
+    Changes timer behavior so the timer counts up and shows elapsed time.
+    By default, a timer counts down toward zero and the value shown (for
     xfdata.FL_VALUE_TIMERs) is the time left until the timer expires.
 
     Parameters

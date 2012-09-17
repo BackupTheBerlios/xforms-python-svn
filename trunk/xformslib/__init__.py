@@ -1,5 +1,5 @@
 #!/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """
     xforms-python - Python wrapper for XForms (X11) GUI C toolkit library
@@ -26,8 +26,8 @@
 """
 
 # xforms-python version
-__mainversion__ = "0.9.02a"                # real version
-__vers_against_xforms__ = "1.0.94pre7"   # xforms version to be run against
+__mainversion__ = "0.10.20120917"        # real version
+__vers_against_xforms__ = "1.0.94pre10"  # xforms version to be run against
 __version__ = __mainversion__ + "_" + __vers_against_xforms__
 
 
@@ -41,37 +41,36 @@ __all__ = ["flbasic", "flbitmap", "flbrowser", "flbutton", "flcanvas", \
           "flspinner", "fltabfolder", "flthumbwheel", "fltimer", \
           "flxbasic", "flxyplot", "xfdata", "library", "xfstruct"]
 
-from .flbasic import *
-from .flbitmap import *
-from .flbrowser import *
-from .flbutton import *
-from .flcanvas import *
-from .flchart import *
-from .flclock import *
-from .flcounter import *
-from .flcursor import *
-from .fldial import *
-from .flfilesys import *
-from .flflimage import *
-from .flformbrowser import *
-from .flglcanvas import *
-from .flgoodies import *
-from .flinput import *
-from .flmisc import *
-from .flnmenu import *
-from .flpopup import *
-from .flpositioner import *
-from .flscrollbar import *
-from .flselect import *
-from .flslider import *
-from .flspinner import *
-from .fltabfolder import *
-from .flthumbwheel import *
-from .fltimer import *
-from .flxbasic import *
-from .flxyplot import *
-from .xfdata import *
-from .xfstruct import *
 
-
+from xformslib.flbasic import *
+from xformslib.flbitmap import *
+from xformslib.flbrowser import *
+from xformslib.flbutton import *
+from xformslib.flcanvas import *
+from xformslib.flchart import *
+from xformslib.flclock import *
+from xformslib.flcounter import *
+from xformslib.flcursor import *
+from xformslib.fldial import *
+from xformslib.flfilesys import *
+from xformslib.flflimage import *
+from xformslib.flformbrowser import *
+from xformslib.flglcanvas import *
+from xformslib.flgoodies import *
+from xformslib.flinput import *
+from xformslib.flmisc import *
+from xformslib.flnmenu import *
+from xformslib.flpopup import *
+from xformslib.flpositioner import *
+from xformslib.flscrollbar import *
+from xformslib.flselect import *
+from xformslib.flslider import *
+from xformslib.flspinner import *
+from xformslib.fltabfolder import *
+from xformslib.flthumbwheel import *
+from xformslib.fltimer import *
+from xformslib.flxbasic import *
+from xformslib.flxyplot import *
+from xformslib.xfdata import *
+from xformslib.xfstruct import *
 

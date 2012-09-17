@@ -75,8 +75,6 @@ def make_symbols():
 
     xfl.fl_end_form()
 
-    xfl.fl_adjust_form_size(pform)
-
     return pform
 
 

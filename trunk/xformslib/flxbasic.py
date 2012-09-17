@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """ xforms-python's functions to handle X Window basic and drawing stuff.
 """

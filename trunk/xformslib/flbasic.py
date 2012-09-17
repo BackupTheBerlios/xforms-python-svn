@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """ xforms-python's functions to manage basic generic flobjects.
 """
@@ -5918,6 +5918,41 @@ def fl_get_align_xy(align, xpos, ypos, width, height, xsize, ysize, \
     return i_xx.value, i_yy.value
 
 
+def fl_get_label_char_at_mouse(ptr_flobject):
+    """fl_get_label_char_at_mouse(ptr_flobject) -> labelchar
+
+    Retrieves the character in the label where mouse is positioned.
+
+    Parameters
+    ----------
+        ptr_flobject : pointer to xfdata.FL_OBJECT
+            flobject to be operated on
+
+    Returns
+    -------
+        labelchar : int
+            character of label where the mouse is, otherwise -1 (on failure)
+
+    Examples
+    --------
+        >>> mychar = fl_get_label_char_at_mouse(pobj)
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + Demo = OK
+
+    """
+    _fl_get_label_char_at_mouse = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_label_char_at_mouse", \
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], \
+        """int fl_get_label_char_at_mouse(FL_OBJECT * obj)""")
+    library.check_if_flinitialized()
+    library.verify_flobjectptr_type(ptr_flobject)
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_label_char_at_mouse(ptr_flobject)
+    return retval
+
+
 def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     """fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr)
 
@@ -7623,6 +7658,35 @@ def fl_mouse_button():
 
 
 fl_mousebutton = fl_mouse_button
+
+
+def fl_current_event():
+    """fl_current_event() -> evt
+
+    Retrieves the event currently being handled - only makes sense
+    to call this from within an object or form callback.
+
+    Returns
+    -------
+        evt : int
+            event currently being handled
+
+    Examples
+    --------
+        >>> curevt = fl_current_event()
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = OK
+
+    """
+    _fl_current_event = library.cfuncproto(
+        library.load_so_libforms(), "fl_current_event", \
+        cty.c_int, [], \
+        """int fl_current_event()""")
+    library.check_if_flinitialized()
+    retval = _fl_current_event()
+    return retval
 
 
 # fl_strdup(strng) function placeholder (low-level)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """ Data, constants and variables to be used with xforms-python.
 """
@@ -888,29 +888,33 @@ COLOR_list = [FL_BLACK, FL_RED, FL_GREEN, FL_YELLOW, FL_BLUE, FL_MAGENTA,
 # Events that a form reacts to.
 # values for enumeration 'FL_EVENTS'
 FL_EVENTS = cty.c_int           # enum
-FL_NOEVENT = 0
-FL_DRAW = 1
-FL_PUSH = 2
-FL_RELEASE = 3
-FL_ENTER = 4
-FL_LEAVE = 5
-FL_MOTION = 6
-FL_FOCUS = 7
-FL_UNFOCUS = 8
-FL_KEYPRESS = 9
-FL_UPDATE = 10
+FL_NOEVENT = 0          # No event
+FL_DRAW = 1             # flobject is asked to redraw itself
+FL_PUSH = 2             # mouse button was pressed on the flobject
+FL_RELEASE = 3          # mouse button was released again
+FL_ENTER = 4            # mouse entered the flobject
+FL_LEAVE = 5            # mouse left the flobject
+FL_MOTION = 6           # mouse motion over the flobject happened
+FL_FOCUS = 7            # flobject obtained focus
+FL_UNFOCUS = 8          # flobject lost focus
+FL_KEYPRESS = 9         # key was pressed while flobject has focus 
+FL_UPDATE = 10          # for flobjects that need to update something
+                        # from time to time
 FL_STEP = 11
 FL_SHORTCUT = 12
-FL_FREEMEM = 13
-FL_OTHER = 14
+FL_FREEMEM = 13         # flobject is asked to free all its memory
+FL_OTHER = 14           # property, selection etc
 FL_DRAWLABEL = 15
-FL_DBLCLICK = 16
-FL_TRPLCLICK = 17
-FL_ATTRIB = 18
-FL_KEYRELEASE = 19
-FL_PS = 20
-FL_MOVEORIGIN = 21
+FL_DBLCLICK = 16        # double click on flobject
+FL_TRPLCLICK = 17       # triple click on flobject
+FL_ATTRIB = 18          # a flobject attribute changed
+FL_KEYRELEASE = 19      # key was released while flobject has focus
+FL_PS = 20              # dump a form into EPS
+FL_MOVEORIGIN = 21      # dragging the form across the screen
+                        # changes its absolute x,y coords.
 FL_RESIZED = 22
+FL_PASTE = 23           # text was pasted into input flobject
+FL_TRIGGER = 24         # result of flbasic.fl_trigger_object()
 # FL_MOVE placeholder (backwards)
 # FL_KEYBOARD placeholder (backwards)
 # FL_MOUSE placeholder (backwards)
@@ -921,7 +925,7 @@ class admitted_values_for_FL_EVENTS(object):
     Admitted values
     ---------------
         FL_NOEVENT
-            *todo*
+            No event
         FL_DRAW
             The flobject has to be (re)drawn. To figure out the actual size
             of the flobject you can use the fields ptr_flobject.contents.x,
@@ -1053,7 +1057,7 @@ class admitted_values_for_FL_EVENTS(object):
             FL_DBLCLICK, FL_PUSH, FL_RELEASE sequence. Set click timeout
             to none-zero to activate FL_TRPLCLICK.
         FL_ATTRIB
-            attribute change *todo*
+            an attribute of a flobject is changed
         FL_KEYRELEASE
             A pressed key is released.
         FL_PS
@@ -1066,6 +1070,10 @@ class admitted_values_for_FL_EVENTS(object):
             the flobject has been resized by scale_form the flobject has been
             resized by scale_form. Tell it that this has happened so that
             it can resize any FL_FORMs that it contains.
+        FL_PASTE
+            text was pasted into input flobject
+        FL_TRIGGER
+            result of flbasic.fl_trigger_object()
     """
 
 # TODO: verify if bitwise OR-ed makes sense here.
@@ -1075,7 +1083,7 @@ EVENTS_list = [FL_DRAW, FL_PUSH, FL_RELEASE, FL_ENTER, FL_LEAVE,
                FL_MOTION, FL_FOCUS, FL_UNFOCUS, FL_KEYPRESS, FL_UPDATE,
                FL_STEP, FL_SHORTCUT, FL_FREEMEM, FL_OTHER, FL_DRAWLABEL,
                FL_DBLCLICK, FL_TRPLCLICK, FL_ATTRIB, FL_KEYRELEASE,
-               FL_PS, FL_MOVEORIGIN, FL_RESIZED]
+               FL_PS, FL_MOVEORIGIN, FL_RESIZED, FL_PASTE, FL_TRIGGER]
 
 
 # Resize policies

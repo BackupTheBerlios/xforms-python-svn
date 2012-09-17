@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """ Support functions to deal with xforms-python wrapper's functions.
 """

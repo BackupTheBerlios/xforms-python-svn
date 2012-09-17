@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 
 """ xforms-python's functions to manage popups.
 """
@@ -163,9 +163,9 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_long)
         specseqargslist.append(l_x)
     if u:       # pointer to void u additional arg
-        print "u", u
+        print("u", u)
         ptr_u = library.convert_userdata_to_ptrvoid(u)
-        print "ptr_u", ptr_u
+        print("ptr_u", ptr_u)
         cparam_argstypelist.append(cty.c_void_p)
         specseqargslist.append(ptr_u)
     if f:       # xfdata.FL_POPUP_CB f additional arg

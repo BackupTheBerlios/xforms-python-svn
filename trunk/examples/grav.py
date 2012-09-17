@@ -3,7 +3,7 @@
 #  This file is part of xforms-python, and it has been ported from
 #  grav.c XForms demo, with some adaptations.
 #
-#  gravv.c was written by Jens Thoms Toerring <jt@toerring.de>
+#  grav.c is written by Jens Thoms Toerring <jt@toerring.de>
 #  See CREDITS file for XForms copyright attribution, and LICENSE
 #  file for xforms-python license and copyright attribution.
 #

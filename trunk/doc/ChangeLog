@@ -2,6 +2,12 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20120917-III
+    * realign to upstream XForms (1.0.94pre10, development up to git-20120325,
+      flbasic.py and xfdata.py updated; symbols.py examples fixed; added
+      strange_button.py example)
+    * library.py fixed for python3, change files encoding to utf-8, cosmetic
+      changes: ok, I'm starting to hate python3 unicode/bytes differences ;P
     20120917-II
     * realign to upstream XForms (1.0.94pre9, development up to git-20120324,
       flbasic.py and xfdata.py updated; boxtype.py, browserop.py, symbols.py,
