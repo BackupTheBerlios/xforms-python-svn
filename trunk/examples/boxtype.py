@@ -52,8 +52,8 @@ btypes = [ {'val':xfl.FL_NO_BOX, 'name':"No box"}, \
 tobj = [None] * 18
 
 browserlines = [" ", "@C1@c@l@bObjects Demo", " ", \
-        "This demo shows you most", "objects that currently", \
-        "exist in the Forms Library.", " ", \
+        "This demo shows you many of", "objects that currently", \
+        "exist in the Forms Library.", "", \
         "You can change the boxtype", "of the different objects", \
         "using the buttons at the", "top of the form. Note that", \
         "some combinations might not", "look too good. Also realize", \

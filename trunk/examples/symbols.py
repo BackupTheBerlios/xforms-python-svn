@@ -63,8 +63,15 @@ def make_symbols():
 
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, x, y, dx, dy, symbols[i])
         xfl.fl_set_object_lcol(pobj, xfl.FL_BOTTOM_BCOL)
-        buf = " " + symbols[i]
-        xfl.fl_add_box(xfl.FL_FLAT_BOX, x, y + dy, dx, ty, buf)
+        buf = "@" + symbols[i]
+        pboxobj = xfl.fl_add_box(xfl.FL_FLAT_BOX, x, y + dy, dx, ty, buf)
+
+        txt_x, txt_y, txt_w, txt_h = xfl.fl_get_object_geometry(pboxobj)
+        w = xfl.fl_get_string_width(xfl.fl_get_object_lstyle(pboxobj), \
+                xfl.fl_get_object_lsize(pboxobj), symbols[i], len(symbols)) \
+                + 2 * xfl.fl_get_object_bw(pboxobj)
+        xfl.fl_set_object_geometry(pboxobj, txt_x + (txt_w - w) / 2, txt_y, \
+                w, txt_h )
 
     xfl.fl_end_form()
 

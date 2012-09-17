@@ -2,6 +2,10 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20120917-II
+    * realign to upstream XForms (1.0.94pre9, development up to git-20120324,
+      flbasic.py and xfdata.py updated; boxtype.py, browserop.py, symbols.py,
+      yesno.py examples fixed)
     20120917
     * realign to upstream XForms (1.0.94pre8, development up to git-20120319,
       fonts.py, goodies.py, grav.py, group.py, iconify.py, lalign.py,

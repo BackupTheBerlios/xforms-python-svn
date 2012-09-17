@@ -117,7 +117,7 @@ def fl_is_inside_lalign(align):
 
     Notes
     -----
-        Status: NATest + NoDoc + NoDemo = OK
+        Status: NA-UTest + NoDoc + NoDemo = OK
 
     """
     _fl_is_inside_lalign = library.cfuncproto(
@@ -166,7 +166,7 @@ def fl_is_outside_lalign(align):
 
     Notes
     -----
-        Status: NATest + NoDoc + NoDemo = OK
+        Status: NA-UTest + NoDoc + NoDemo = OK
 
     """
     _fl_is_outside_lalign = library.cfuncproto(
@@ -215,7 +215,7 @@ def fl_is_center_lalign(align):
 
     Notes
     -----
-        Status: NATest + NoDoc + NoDemo = OK
+        Status: NA-UTest + NoDoc + NoDemo = OK
 
     """
     _fl_is_center_lalign = library.cfuncproto(
@@ -264,7 +264,7 @@ def fl_to_inside_lalign(align):
 
     Notes
     -----
-        Status: NATest + NoDoc + NoDemo = OK
+        Status: NA-UTest + NoDoc + NoDemo = OK
 
     """
     _fl_to_inside_lalign = library.cfuncproto(
@@ -313,7 +313,7 @@ def fl_to_outside_lalign(align):
 
     Notes
     -----
-        Status: NATest + NoDoc + NoDemo = OK
+        Status: NA-UTest + NoDoc + NoDemo = OK
 
     """
     _fl_to_outside_lalign = library.cfuncproto(
@@ -2931,16 +2931,11 @@ def fl_get_object_bw(ptr_flobject):
     Returns
     -------
         borderwidth : int
-            borderwidth value of flobject
+            borderwidth value of flobject, or -1 (on failure)
 
     Examples
     --------
         >>> currbw = fl_get_object_bw(pobj)
-
-    API_diversion
-    ----------
-        API changed from XForms, upstream is
-        fl_get_object_bw(ptr_flobject, bw)
 
     Notes
     -----
@@ -2949,14 +2944,13 @@ def fl_get_object_bw(ptr_flobject):
     """
     _fl_get_object_bw = library.cfuncproto(
         library.load_so_libforms(), "fl_get_object_bw", \
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.POINTER(cty.c_int)], \
-        """void fl_get_object_bw(FL_OBJECT * ob, int * bw) """)
+        cty.c_int, [cty.POINTER(xfdata.FL_OBJECT)], \
+        """int fl_get_object_bw(FL_OBJECT * ob) """)
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    i_borderwidth, ptr_borderwidth = library.make_intc_and_pointer()
-    library.keep_elem_refs(ptr_flobject, i_borderwidth, ptr_borderwidth)
-    _fl_get_object_bw(ptr_flobject, ptr_borderwidth)
-    return i_borderwidth.value
+    library.keep_elem_refs(ptr_flobject)
+    retval = _fl_get_object_bw(ptr_flobject)
+    return retval
 
 
 def fl_set_object_resize(ptr_flobject, whatresz):
@@ -6380,6 +6374,43 @@ def fl_add_symbol(symbname, pyfn_DrawPtr, scalable):
     library.keep_cfunc_refs(cfn_DrawPtr, pyfn_DrawPtr)
     library.keep_elem_refs(symbname, s_symbname, scalable, i_scalable)
     retval = _fl_add_symbol(s_symbname, cfn_DrawPtr, i_scalable)
+    return retval
+
+
+def fl_delete_symbol(symbname):
+    """fl_delete_symbol(symbname) -> result
+
+    Deletes a known symbol *todo*
+
+
+    Parameters
+    ----------
+        symbname : str
+            name under which the symbol should be known (at most 15
+            characters), without the leading @
+
+    Returns
+    -------
+        result : int
+            1 (on success), or 0 (on failure, if no symbol)
+
+    Examples
+    --------
+        >>> rst = fl_delete_symbol("MySymbol")
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_delete_symbol = library.cfuncproto(
+        library.load_so_libforms(), "fl_delete_symbol",\
+        cty.c_int, [xfdata.STRING],\
+        """int fl_delete_symbol(const char * name)""")
+    library.check_if_flinitialized()
+    s_symbname = library.convert_to_stringc(symbname)
+    library.keep_elem_refs(symbname, s_symbname)
+    retval = _fl_delete_symbol(s_symbname)
     return retval
 
 

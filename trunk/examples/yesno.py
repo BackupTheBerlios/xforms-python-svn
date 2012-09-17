@@ -24,7 +24,7 @@ def main(lsysargv, sysargv):
 
     xfl.fl_add_box(xfl.FL_NO_BOX, 0, 10, 320, 40, "Do you want to quit?")
     pyes = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 40, 70, 80, 30," Yes")
-    pno = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
+    xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 200, 70, 80, 30, "No")
 
     xfl.fl_end_form()
 
@@ -33,6 +33,7 @@ def main(lsysargv, sysargv):
     while True:
         pobj = xfl.fl_do_forms()
         if xfl.fl_is_same_object(pobj, pyes):
+            print("\"Yes\" has been pushed")
             xfl.fl_hide_form(pform)
             sys.exit(0)
 
