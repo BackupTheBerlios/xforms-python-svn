@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  group.c XForms demo, with some adaptations and no deprecate functions.
@@ -140,7 +140,7 @@ def create_form_objsform():
     xfl.fl_add_box(xfl.FL_DOWN_BOX, 9, 90, 435, 260, "")
     fdui.group[2] = xfl.fl_bgn_group()
     pobj = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 260, 140, 80, 30, "Text")
-    xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_LEFT | xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lalign(pobj, xfl.fl_to_inside_lalign(xfl.FL_ALIGN_LEFT))
     xfl.fl_add_slider(xfl.FL_HOR_BROWSER_SLIDER, 60, 120, 170, 25, "")
     pobj = xfl.fl_add_slider(xfl.FL_HOR_FILL_SLIDER, 60, 160, 170, 30, "")
     xfl.fl_set_slider_value(pobj, 0.54)
@@ -189,7 +189,8 @@ def create_form_objsform():
             "chart")
     pobj = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 240, 130, 100, 30, \
             "Text stuff\nand more stuff")
-    xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_CENTER | xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lalign(pobj, \
+            xfl.fl_to_inside_lalign(xfl.FL_ALIGN_CENTER))
     xfl.fl_end_group()
     fdui.group[3] = xfl.fl_bgn_group()
     xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 140, 120, 150, 30, "Input")

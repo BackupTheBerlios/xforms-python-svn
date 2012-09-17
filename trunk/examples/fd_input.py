@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Forms definition originally created with XForms fdesign.
 # Converted by fd2python.py to be used with xforms-python.
 

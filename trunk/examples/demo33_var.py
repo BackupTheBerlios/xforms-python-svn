@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it is a variant of
 #  demo33.c XForms demo, with some adaptations.
@@ -26,7 +26,7 @@ def main(lsysargv, sysargv):
     xfl.fl_end_form()
     xfl.fl_set_bitmap_file(pobj, bmpfilename)
     xfl.fl_show_form(pform, xfl.FL_PLACE_MOUSE, xfl.FL_NOBORDER, \
-            X Bitmap")
+            "X Bitmap")
     xfl.fl_do_forms()
     xfl.fl_hide_form(pform)
     xfl.fl_finish()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  xyplotactivelog.c XForms demo, with some adaptations.
@@ -175,8 +175,9 @@ def create_form_axypform():
 
     xfl.fl_set_object_boxtype(fdui.xyplot, xfl.FL_DOWN_BOX)
     xfl.fl_set_object_color(fdui.xyplot, xfl.FL_BLACK, xfl.FL_GREEN)
-    xfl.fl_set_object_lalign(fdui.xyplot, xfl.FL_ALIGN_BOTTOM | \
-            xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lalign(fdui.xyplot, \
+            xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
+
     xfl.fl_set_object_callback(fdui.xyplot, xyplot_cb, 0)
     xfl.fl_set_object_gravity(fdui.xyplot, xfl.FL_NorthWest, xfl.FL_SouthEast)
 
@@ -235,8 +236,7 @@ def create_form_axypform():
     fdui.status = xfl.fl_add_box(xfl.FL_BORDER_BOX, 20, 15, 285, 25, "")
     xfl.fl_set_object_boxtype(fdui.status, xfl.FL_DOWN_BOX)
     xfl.fl_set_object_gravity(fdui.status, xfl.FL_NorthWest, xfl.FL_NorthEast)
-    xfl.fl_set_object_lalign(fdui.status, xfl.FL_ALIGN_CENTER | \
-            xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lalign(fdui.status, xfl.FL_ALIGN_CENTER)
 
     pobj = xfl.fl_add_button(xfl.FL_NORMAL_BUTTON, 325, 250, 90, 30, "Done")
     xfl.fl_set_object_gravity(pobj, xfl.FL_SouthEast, xfl.FL_SouthEast)

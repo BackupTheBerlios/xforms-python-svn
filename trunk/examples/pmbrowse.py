@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  pmbrowse.c XForms demo, with some adaptations and modifications.

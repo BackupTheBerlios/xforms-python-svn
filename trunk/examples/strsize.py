@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  strsize.c XForms demo, with some adaptations.
@@ -63,8 +63,8 @@ class Flstrsize(object):
         xfl.fl_set_object_callback(pobj, self.input_cb, 0)
         fdui.text = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 60, 90, \
                 130, 30, "Text")
-        xfl.fl_set_object_lalign(fdui.text, xfl.FL_ALIGN_LEFT | \
-                xfl.FL_ALIGN_INSIDE)
+        xfl.fl_set_object_lalign(fdui.text, \
+                xfl.fl_to_inside_lalign(xfl.FL_ALIGN_LEFT))
         xfl.fl_end_form()
         return fdui
 

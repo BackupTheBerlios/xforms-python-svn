@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it is a variant of
 #  buttonall.c XForms demo, not using deprecated functions, with

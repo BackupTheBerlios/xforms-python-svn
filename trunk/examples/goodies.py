@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  goodies.c XForms demo, with some adaptations.
@@ -32,7 +32,7 @@ def main(lsysargv, sysargv):
             " about recoverable errors", 0)
     if xfl.fl_show_question("Do you want to quit?", 0):
         sys.exit(0)
-    s = xfl.fl_show_input("Give a string:", "")
+    s = xfl.fl_show_input("Enter a string:", "")
     if not s:
         s = ""
     str1 = s
@@ -47,7 +47,7 @@ def main(lsysargv, sysargv):
         xfl.fl_show_message("You typed: Three", "", "")
     else:
         xfl.fl_show_message("An error occured!", "", "")
-    s = xfl.fl_show_input("Give another string:", str1)
+    s = xfl.fl_show_input("Enter another string:", str1)
     if not s:
         s = "<Cancel>"
     str2 = s

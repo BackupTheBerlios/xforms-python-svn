@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: iso8859-1 -*-
 
 """ xforms-python's functions to manage timer flobjects.

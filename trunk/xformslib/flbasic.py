@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: iso8859-1 -*-
 
 """ xforms-python's functions to manage basic generic flobjects.
@@ -80,6 +80,251 @@ def special_style(style):
         return True
     else:
         return False
+
+
+def fl_is_inside_lalign(align):
+    """fl_is_inside_lalign(align) -> unknown
+
+    Determines if provided alignment is bitwise OR with FL_ALIGN_INSIDE
+
+    Parameters
+    ----------
+        align : int
+            alignment of label. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+              outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+              outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
+
+    Returns
+    -------
+        unknowm : int
+            *todo*
+
+    Examples
+    --------
+        >>> isinside = fl_is_inside_lalign(FL_ALIGN_BOTTOM)
+
+
+    Notes
+    -----
+        Status: NATest + NoDoc + NoDemo = OK
+
+    """
+    _fl_is_inside_lalign = library.cfuncproto(
+        library.load_so_libforms(), "fl_is_inside_lalign", \
+        cty.c_int, [cty.c_int],
+        """int fl_is_inside_lalign(int align) """)
+    library.check_if_flinitialized()
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(align, i_align)
+    retval = _fl_is_inside_lalign(i_align)
+    return retval
+
+
+def fl_is_outside_lalign(align):
+    """fl_is_outside_lalign(align) -> unknown
+
+    Determines if provided alignment is not bitwise OR with FL_ALIGN_INSIDE
+
+    Parameters
+    ----------
+        align : int
+            alignment of label. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+              outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+              outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
+
+    Returns
+    -------
+        unknowm : int
+            *todo*
+
+    Examples
+    --------
+        >>> isoutside = fl_is_outside_lalign(FL_ALIGN_BOTTOM)
+
+
+    Notes
+    -----
+        Status: NATest + NoDoc + NoDemo = OK
+
+    """
+    _fl_is_outside_lalign = library.cfuncproto(
+        library.load_so_libforms(), "fl_is_outside_lalign", \
+        cty.c_int, [cty.c_int],
+        """int fl_is_outside_lalign(int align) """)
+    library.check_if_flinitialized()
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(align, i_align)
+    retval = _fl_is_outside_lalign(i_align)
+    return retval
+
+
+def fl_is_center_lalign(align):
+    """fl_is_center_lalign(align) -> unknown
+
+    Determines if provided alignment is bitwise OR with FL_ALIGN_CENTER
+
+    Parameters
+    ----------
+        align : int
+            alignment of label. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+              outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+              outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
+
+    Returns
+    -------
+        unknowm : int
+            *todo*
+
+    Examples
+    --------
+        >>> iscentered = fl_is_center_lalign(FL_ALIGN_BOTTOM)
+
+
+    Notes
+    -----
+        Status: NATest + NoDoc + NoDemo = OK
+
+    """
+    _fl_is_center_lalign = library.cfuncproto(
+        library.load_so_libforms(), "fl_is_center_lalign", \
+        cty.c_int, [cty.c_int],
+        """int fl_is_center_lalign(int align) """)
+    library.check_if_flinitialized()
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(align, i_align)
+    retval = _fl_is_center_lalign(i_align)
+    return retval
+
+
+def fl_to_inside_lalign(align):
+    """fl_to_inside_lalign(align) -> align
+
+    *todo*
+
+    Parameters
+    ----------
+        align : int
+            alignment of label. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+              outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+              outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
+
+    Returns
+    -------
+        align : int
+            -1 on error, otherwise alignment
+
+    Examples
+    --------
+        >>> *todo*
+
+
+    Notes
+    -----
+        Status: NATest + NoDoc + NoDemo = OK
+
+    """
+    _fl_to_inside_lalign = library.cfuncproto(
+        library.load_so_libforms(), "fl_to_inside_lalign", \
+        cty.c_int, [cty.c_int],
+        """int fl_to_inside_lalign(int align) """)
+    library.check_if_flinitialized()
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(align, i_align)
+    retval = _fl_to_inside_lalign(i_align)
+    return retval
+
+
+def fl_to_outside_lalign(align):
+    """fl_to_outside_lalign(align) -> align
+
+    *todo*
+
+    Parameters
+    ----------
+        align : int
+            alignment of label. Values (from xfdata.py)
+            - FL_ALIGN_CENTER (In the middle of the box, inside it),
+            - FL_ALIGN_TOP (To the top of the box, outside it),
+            - FL_ALIGN_BOTTOM (To the bottom of the box, outside it),
+            - FL_ALIGN_LEFT (To the left of the box, outside it),
+            - FL_ALIGN_RIGHT (To the right of the box, outside it),
+            - FL_ALIGN_LEFT_TOP (To the left and top of the box, outside it),
+            - FL_ALIGN_RIGHT_TOP (To the right and top of the box, outside it),
+            - FL_ALIGN_LEFT_BOTTOM (To the left and bottom of the box,
+              outside it),
+            - FL_ALIGN_RIGHT_BOTTOM (To the right and bottom of the box,
+              outside it), FL_ALIGN_INSIDE (places the text inside the box),
+            - FL_ALIGN_VERT (not functional yet).
+            Bitwise OR with FL_ALIGN_INSIDE is allowed.
+
+    Returns
+    -------
+        align : int
+            -1 on error, otherwise alignment
+
+    Examples
+    --------
+        >>> *todo*
+
+
+    Notes
+    -----
+        Status: NATest + NoDoc + NoDemo = OK
+
+    """
+    _fl_to_outside_lalign = library.cfuncproto(
+        library.load_so_libforms(), "fl_to_outside_lalign", \
+        cty.c_int, [cty.c_int],
+        """int fl_to_outside_lalign(int align) """)
+    library.check_if_flinitialized()
+    i_align = library.convert_to_intc(align)
+    library.keep_elem_refs(align, i_align)
+    retval = _fl_to_outside_lalign(i_align)
+    return retval
 
 
 # IO other than XEvent Q
@@ -1577,6 +1822,74 @@ def fl_set_form_size(ptr_flform, width, height):
     i_height = library.convert_to_FL_Coord(height)
     library.keep_elem_refs(ptr_flform, width, i_width, height, i_height)
     _fl_set_form_size(ptr_flform, i_width, i_height)
+
+
+def fl_set_form_background_color(ptr_flform, colr):
+    """fl_set_form_background_color(ptr_flform, colr)
+
+    Defines the background color of the form.
+
+    Parameters
+    ----------
+        ptr_flform : pointer to xfdata.FL_FORM
+            form to be set
+        colr : long_pos
+            Color *todo*
+
+    Examples
+    --------
+        >>> *todo*
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_set_form_background_color = library.cfuncproto(
+        library.load_so_libforms(), "fl_set_form_background_color", \
+        None, [cty.POINTER(xfdata.FL_FORM), xfdata.FL_COLOR], \
+        """void fl_set_form_background_color(FL_FORM * form,
+           FL_COLOR color) """)
+    library.check_if_flinitialized()
+    library.verify_flformptr_type(ptr_flform)
+    ul_colr = library.convert_to_FL_COLOR(colr)
+    library.keep_elem_refs(ptr_flform, colr, ul_colr)
+    _fl_set_form_background_color(ptr_flform, ul_colr)
+
+
+def fl_get_form_background_color(ptr_flform):
+    """fl_get_form_background_color(ptr_flform) -> colr
+
+    Retrieves the background color used for the form
+
+    Parameters
+    ----------
+        ptr_flform : pointer to xfdata.FL_FORM
+            form to be set
+
+    Returns
+    -------
+        colr : long_pos
+            Color *todo*
+
+    Examples
+    --------
+        >>> whatcolr = fl_get_form_background_color(pform2)
+
+    Notes
+    -----
+        Status: NA-UTest + Doc + NoDemo = Maybe
+
+    """
+    _fl_get_form_background_color = library.cfuncproto(
+        library.load_so_libforms(), "fl_get_form_background_color", \
+        xfdata.FL_COLOR, [cty.POINTER(xfdata.FL_FORM)], \
+        """FL_COLOR fl_get_form_background_color(FL_FORM * form) """)
+    library.check_if_flinitialized()
+    library.verify_flformptr_type(ptr_flform)
+    library.keep_elem_refs(ptr_flform)
+    retval = _fl_get_form_background_color(ptr_flform)
+    return retval
 
 
 def fl_set_form_hotspot(ptr_flform, xpos, ypos):
@@ -4523,41 +4836,41 @@ def fl_redraw_object(ptr_flobject):
     _fl_redraw_object(ptr_flobject)
 
 
-def fl_scale_object(ptr_flobject, xscale, yscale):
-    """fl_scale_object(ptr_flobject, xscale, yscale)
-
-    Scales (shrinking or enlarging) a flobject, indicating a scaling
-    factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
-
-    Parameters
-    ----------
-        ptr_flobject : pointer to xfdata.FL_OBJECT
-            flobject to be scaled
-        xscale : float
-            new horizontal factor
-        yscale : float
-            new vertical factor
-
-    Examples
-    --------
-        >>> fl_scale_object(pobj, 0.8, 1.1)
-
-    Notes
-    -----
-        Status: NA-UTest + Doc + NoDemo = Maybe
-
-    """
-    _fl_scale_object = library.cfuncproto(
-        library.load_so_libforms(), "fl_scale_object",\
-        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],\
-        """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)""")
-    library.check_if_flinitialized()
-    library.verify_flobjectptr_type(ptr_flobject)
-    f_xscale = library.convert_to_doublec(xscale)
-    f_yscale = library.convert_to_doublec(yscale)
-    library.keep_elem_refs(ptr_flobject, xscale, f_xscale, \
-            yscale, f_yscale)
-    _fl_scale_object(ptr_flobject, f_xscale, f_yscale)
+#def fl_scale_object(ptr_flobject, xscale, yscale):
+#    """fl_scale_object(ptr_flobject, xscale, yscale)
+#
+#    Scales (shrinking or enlarging) a flobject, indicating a scaling
+#    factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
+#
+#    Parameters
+#    ----------
+#        ptr_flobject : pointer to xfdata.FL_OBJECT
+#            flobject to be scaled
+#        xscale : float
+#            new horizontal factor
+#        yscale : float
+#            new vertical factor
+#
+#    Examples
+#    --------
+#        >>> fl_scale_object(pobj, 0.8, 1.1)
+#
+#    Notes
+#    -----
+#        Status: NA-UTest + Doc + NoDemo = Maybe
+#
+#    """
+#    _fl_scale_object = library.cfuncproto(
+#        library.load_so_libforms(), "fl_scale_object",\
+#        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],\
+#        """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)""")
+#    library.check_if_flinitialized()
+#    library.verify_flobjectptr_type(ptr_flobject)
+#    f_xscale = library.convert_to_doublec(xscale)
+#    f_yscale = library.convert_to_doublec(yscale)
+#    library.keep_elem_refs(ptr_flobject, xscale, f_xscale, \
+#            yscale, f_yscale)
+#    _fl_scale_object(ptr_flobject, f_xscale, f_yscale)
 
 
 def fl_show_object(ptr_flobject):

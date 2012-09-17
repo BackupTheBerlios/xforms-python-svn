@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  iconify.c XForms demo, with some adaptations.
@@ -70,7 +70,8 @@ def create_form_form():
     pform = xfl.fl_bgn_form(xfl.FL_NO_BOX, 151, 111)
     pobj = xfl.fl_add_pixmapbutton(xfl.FL_NORMAL_BUTTON, 0, 0, 151, 111, \
             "Iconify Me\nvia Window Manager")
-    xfl.fl_set_object_lalign(pobj, xfl.FL_ALIGN_BOTTOM | xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lalign(pobj, \
+            xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
     xfl.fl_set_object_lstyle(pobj, xfl.FL_BOLD_STYLE)
     xfl.fl_set_pixmap_data(pobj, crab)
     xfl.fl_end_form()

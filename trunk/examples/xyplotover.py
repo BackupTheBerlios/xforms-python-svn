@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  xyplotover.c XForms demo, with some adaptations.
@@ -85,8 +85,9 @@ def create_form_fff():
 
     fdui.xyplot = xfl.fl_add_xyplot(xfl.FL_IMPULSE_XYPLOT, 10, 20, 350, 260, \
             "An XYPlot with overlay")
-    xfl.fl_set_object_lalign(fdui.xyplot, xfl.FL_ALIGN_BOTTOM | \
-            xfl.FL_ALIGN_INSIDE)
+    xfl.fl_set_object_lalign(fdui.xyplot, \
+            xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
+
     xfl.fl_set_object_lsize(fdui.xyplot, xfl.FL_NORMAL_SIZE)
     xfl.fl_set_object_boxtype(fdui.xyplot, xfl.FL_DOWN_BOX)
     xfl.fl_set_object_color(fdui.xyplot, xfl.FL_BLACK, xfl.FL_GREEN)

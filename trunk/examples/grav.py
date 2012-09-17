@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  grav.c XForms demo, with some adaptations.
@@ -239,9 +239,8 @@ class Flgrav(object):
         label = ["NW", "N", "NE", "W", "-", "E", "SW", "S", "SE"]
         s = 25
         m = 5
-        fdui.grav = xfl.fl_bgn_form(xfl.FL_NO_BOX, 500, 400)
-        pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, self.w, self.h, "")
-        xfl.fl_set_object_bw(pobj, -1)
+        fdui.grav = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, 500, 400)
+        xfl.fl_fl_set_form_background_color(fdui.grav, xfl.FL_DARKER_COLOR)
         fdui.box = xfl.fl_add_box(xfl.FL_FRAME_BOX, (self.w - self.bw ) / 2, \
                 (self.h - self.bh ) / 2, self.bw, self.bh, "")
         xfl.fl_set_object_color(fdui.box, xfl.FL_GREEN, xfl.FL_GREEN)
@@ -328,7 +327,7 @@ class Flgrav(object):
             "settings are not taken into account by XForms. In",
             "these cases the corresponding buttons are grayed",
             "out (but not deactivated)."]
-        fdui.help_ = xfl.fl_bgn_form(xfl.FL_NO_BOX, 345, 325)
+        fdui.help_ = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, 345, 325)
         fdui.is_shown = 0
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 345, 325, "")
         xfl.fl_set_object_bw(pobj, -1)

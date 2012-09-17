@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  lalign.c XForms demo, with some adaptations.
@@ -46,7 +46,9 @@ class Flalign(object):
 
     def align_cb(self, pobj, n):
         if xfl.fl_get_button(self.fd_form0.inside):
-            n |= xfl.FL_ALIGN_INSIDE
+            n = fl_to_inside_lalign(n)
+        if n == xfl_FL_ALIGN_CENTER:
+            fl_set_button(self.fd_form0.inside, 1)
         if not TEST_PIXMAP_ALIGN:
             xfl.fl_set_object_lalign(self.fd_form0.box, n)
         else:
@@ -54,14 +56,13 @@ class Flalign(object):
 
 
     def inside_cb(self, pobj, data):
+        align = fl_get_object_lalign(self.fd_form0.box)
         if xfl.fl_get_button(pobj):
-            newalign = xfl.fl_get_object_lalign(self.fd_form0.box)
-            newalign |= xfl.FL_ALIGN_INSIDE
-            xfl.fl_set_object_lalign(self.fd_form0.box, newalign)
+            xfl.fl_set_object_lalign(self.fd_form0.box, \
+                    xfl.fl_to_inside_lalign(align))
         else:
-            newalign = xfl.fl_get_object_lalign(self.fd_form0.box)
-            newalign &= ~xfl.FL_ALIGN_INSIDE
-            xfl.fl_set_object_lalign(self.fd_form0.box, newalign)
+            xfl.fl_set_object_lalign(self.fd_form0.box, \
+                    xfl.fl_to_outside_lalign(align))
         if TEST_PIXMAP_ALIGN:
             xfl.fl_set_pixmap_align(self.fd_form0.box, \
                     xfl.fl_get_object_lalign(self.fd_form0.box), 3, 3)
@@ -83,6 +84,7 @@ class Flalign(object):
             xfl.fl_set_object_boxtype(fdui.box, xfl.FL_UP_BOX)
         fdui.inside = xfl.fl_add_lightbutton(xfl.FL_PUSH_BUTTON, 20, 125, \
                 90, 30, "Inside")
+        xfl.fl_set_button(fdui_inside, 1)
         xfl.fl_set_object_callback(fdui.inside, self.inside_cb, 0)
         xfl.fl_bgn_group()
         pobj = xfl.fl_add_button(xfl.FL_RADIO_BUTTON, 20, 20, 30, 30, "@#7->")

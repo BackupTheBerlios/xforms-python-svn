@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: iso8859-1 -*-
 
 """ Data, constants and variables to be used with xforms-python.
@@ -1361,7 +1361,7 @@ class FL_FORM_(cty.Structure):
             other attributes
         num_auto_objects : int
             *todo*
-        top : int
+        needs_full_redraw : int
             *todo*
         sort_of_modal : int
             internal use
@@ -1939,8 +1939,9 @@ FL_FORM_.__slots__ = ['fdui', 'u_vdata', 'u_cdata', 'u_ldata', 'label', \
         'all_callback', 'compress_mask', 'evmask', 'close_callback', \
         'close_data', 'flpixmap', 'icon_pixmap', 'icon_mask', 'deactivated', \
         'use_pixmap', 'frozen', 'visible', 'wm_border', 'prop', \
-        'num_auto_objects', 'top', 'sort_of_modal', 'parent', 'child', \
-        'parent_obj', 'attached', 'pre_attach', 'attach_data', 'no_tooltip',]
+        'num_auto_objects', 'needs_full_redraw', 'sort_of_modal', 'parent', \
+        'child', 'parent_obj', 'attached', 'pre_attach', 'attach_data', \
+        'no_tooltip',]
 FL_FORM_._fields_ = [
     ('fdui', cty.c_void_p),             # for fdesign
     ('u_vdata', cty.c_void_p),          # for application
@@ -1988,7 +1989,7 @@ FL_FORM_._fields_ = [
     ('wm_border', cty.c_int),                 # window manager info
     ('prop', cty.c_uint),                     # other attributes
     ('num_auto_objects', cty.c_int),
-    ('top', cty.c_int),
+    ('needs_full_redraw', cty.c_int),
     ('sort_of_modal', cty.c_int),             # internal use
     ('parent', cty.POINTER(FL_FORM)),
     ('child', cty.POINTER(FL_FORM)),
@@ -5343,7 +5344,7 @@ FL_BUTTON_BOXTYPE = FL_UP_BOX
 FL_BUTTON_COL1 = FL_COL1
 FL_BUTTON_COL2 = FL_COL1
 FL_BUTTON_LCOL = FL_LCOL
-FL_BUTTON_ALIGN = (FL_ALIGN_CENTER | FL_ALIGN_INSIDE)
+FL_BUTTON_ALIGN = FL_ALIGN_CENTER
 FL_BUTTON_MCOL1 = FL_MCOL
 FL_BUTTON_MCOL2 = FL_MCOL
 FL_BUTTON_BW = FL_BOUND_WIDTH
@@ -7065,6 +7066,8 @@ SCROLLTYPE_list = [FL_VERT_SCROLLBAR, FL_HOR_SCROLLBAR, \
                   FL_HOR_BASIC_SCROLLBAR, FL_VERT_BASIC_SCROLLBAR, \
                   FL_NORMAL_SCROLLBAR, FL_THIN_SCROLLBAR, \
                   FL_NICE_SCROLLBAR, FL_PLAIN_SCROLLBAR]
+
+FL_SCROLLBAR_ALIGN = FL_ALIGN_BOTTOM
 
 
 #####################

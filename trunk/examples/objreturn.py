@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #  This file is part of xforms-python, and it has been ported from
 #  objreturn.c XForms demo, with some adaptation.
@@ -83,14 +83,14 @@ class Flobjreturn(object):
         pobj = xfl.fl_add_box(xfl.FL_UP_BOX, 0, 0, 321, 276, "")
         fdui.pobj[0] = xfl.fl_add_valslider(xfl.FL_HOR_SLIDER, 12, 55, \
                 138, 22, "")
-        xfl.fl_set_object_lalign(fdui.pobj[0] , xfl.FL_ALIGN_BOTTOM | \
-                xfl.FL_ALIGN_INSIDE)
+        xfl.fl_set_object_lalign(fdui.pobj[0], \
+                xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
         xfl.fl_set_object_callback(fdui.pobj[0], self.return_cb, 0)
         xfl.fl_set_object_return(fdui.pobj[0], xfl.FL_RETURN_CHANGED)
         fdui.pobj[1] = xfl.fl_add_counter(xfl.FL_NORMAL_COUNTER, 12, 85, \
                 138, 22, "")
-        xfl.fl_set_object_lalign(fdui.pobj[1], xfl.FL_ALIGN_BOTTOM | \
-                xfl.FL_ALIGN_INSIDE)
+        xfl.fl_set_object_lalign(fdui.pobj[1], \
+                xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
         xfl.fl_set_object_callback(fdui.pobj[1], self.return_cb, 1)
         fdui.pobj[2] = xfl.fl_add_input(xfl.FL_NORMAL_INPUT, 12, 150, \
                 138, 25, "")
@@ -99,8 +99,8 @@ class Flobjreturn(object):
                 140, 160, "")
         fdui.pobj[3] = xfl.fl_add_input(xfl.FL_INT_INPUT, 12, 187, \
                 138, 25, "")
-        xfl.fl_set_object_lalign(fdui.pobj[3], xfl.FL_ALIGN_LEFT | \
-                xfl.FL_ALIGN_INSIDE)
+        xfl.fl_set_object_lalign(fdui.pobj[3], \
+                xfl.fl_to_inside_lalign(xfl.FL_ALIGN_LEFT))
         xfl.fl_set_object_callback(fdui.pobj[3], self.return_cb, 3)
         fdui.when = xfl.fl_add_select(xfl.FL_NORMAL_SELECT, 40, 12, \
                 240, 27, "")

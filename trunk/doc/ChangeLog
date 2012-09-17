@@ -2,6 +2,12 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20120917
+    * realign to upstream XForms (1.0.94pre8, development up to git-20120319,
+      fonts.py, goodies.py, grav.py, group.py, iconify.py, lalign.py,
+      objreturn.py, strsize.,py, xyplotactive.py, xyplotactivelog.py,
+      xyplotover.py examples fixed; flbasic.py and xfdata.py updated)
+    * fixed hashbang of *.py files to really use python3
     20120916
     * realign to upstream XForms (1.0.94pre7, development up to git-20120313,
       browserop.py and browserall.py example fixed, flxbasic.py and xfdata.py
