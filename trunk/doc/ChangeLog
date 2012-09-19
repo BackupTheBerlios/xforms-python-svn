@@ -2,6 +2,23 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20120919 (beta21)
+    * bugfix for some examples. Some fixes in library.py for bytes/str in
+      python3: some fl_* functions are currently broken because of this (as,
+      unfortunately, no automatic conversion is provided anymore in python3.2+)
+    * it seems I have to re-adjust my original target (more-or-less
+      compatibility 1:1 to  upstream XForms, in order to simplify my
+      maintainership of xforms-python, because 1) python3 seems to create
+      more adaptation problems than I expected and 2) too many functions do
+      not work here as they should. Keeping some awfully non-working functions
+      is detrimental to the diffusion of this wrapper and its short/mid-term
+      use; moreover after more then 3 years of development I really want to
+      make a stable release before the end of the year.
+      So, my next step is to cut dead woods: - definitely disable functions who
+      are known to cause SegFaults and who cannot be fixed easily; - restrict
+      flexibility in partially broken functions only in presence of a
+      particular kind of user-submitted data; - updated examples to avoid use
+      of dead woods.
     20120917-IV
     * realign to upstream XForms (1.0.94pre12, development up to git-20120704,
       flpositioner.py and xfdata.py updated; strsize.py, arrowbutton.py,

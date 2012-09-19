@@ -186,8 +186,8 @@ def fl_show_msg(fmttxt):
     Parameters
     ----------
         fmttxt : str
-            the message to show (with format parameters, e.g. %s, %d, %i,
-            %f, %c, %e, %E, %x, %X, %o, %g, %G, %u, %%)
+            the message to show. You can use format parameters (e.g. %s,
+            %d, %i, %f, %c, %e, %E, %x, %X, %o, %g, %G, %u, %%), too.
 
     Examples
     --------

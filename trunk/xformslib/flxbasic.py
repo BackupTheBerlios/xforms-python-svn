@@ -4216,6 +4216,7 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
     #numargs = 1
     i_numargs = library.convert_to_intc(numargs)
     ptr_numargs = cty.pointer(i_numargs)
+    print(type(argslist), argslist, len(argslist), type(argslist[0]), argslist[0])
     ptr_argslist = library.convert_to_ptr_stringc(argslist)
     s_appname = library.convert_to_stringc(appname)
     if not ptr_appoptions:      # if it is None

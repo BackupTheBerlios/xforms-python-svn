@@ -19,10 +19,10 @@ symbols = ["@>", "@<-", "@9->", "@DnLine", "@8>", "@circle", "@->|", \
         "@>>", "@square", "@4->|", "@8->|", "@<->", "@UpArrow", "@9+", \
         "@->", "@<", "@DnArrow", "@+", "@-->", "@line", "@3->", "@UpLine", \
         "@>|", "@2-->", "@4>|", "@8>|", "@=", "@menu", "@8=", "@|>", "@2|>", \
-        "@-32|>", "@+32|>", "@-2circle", None]
+        "@-32|>", "@+32|>", "@-2circle", ]      #None]
 
 #define N  ( sizeof symbols / sizeof * symbols - 1 )
-N = len(symbols) / 2*len(symbols[0]) - 1
+N = len(symbols) - 1
 
 
 def done_cb(pobj, data):
@@ -36,15 +36,16 @@ def make_symbols():
     x0 = y0 = 10
     dx = dy = 35
     ty = 17
-    n = 7       #7
-    xsep = 15+10
-    ysep = 5+10
+    n = 7
+    xsep = 15
+    ysep = 5
 
-    w = (2 * x0 + n * dx + (n - 1) * xsep)
+    w = 2 * x0 + n * dx + (n - 1) * xsep
+    print("w", w)
     tmpval = not (N % n)
-    h = (2 * y0 + (1 + N / n - tmpval) * (dy + ty + ysep))
-
-    pform = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, w+5, h+5)
+    h = 2 * y0 + (1 + N // n - int(tmpval)) * (dy + ty + ysep)
+    print("h", h)
+    pform = xfl.fl_bgn_form(xfl.FL_FLAT_BOX, w, h)
 
     pobj0 = xfl.fl_add_button(xfl.FL_HIDDEN_BUTTON, 0, 0, w, h, "")
     xfl.fl_set_object_callback(pobj0, done_cb, 0)
@@ -54,7 +55,7 @@ def make_symbols():
         if not symbols[i]:
             break
 
-        if (i % n == 0):
+        if (i % n) == 0:
             x = x0
             y = y0 + j * (dy + ty + ysep + 1)
             j += 1
@@ -68,10 +69,10 @@ def make_symbols():
 
         txt_x, txt_y, txt_w, txt_h = xfl.fl_get_object_geometry(pboxobj)
         w = xfl.fl_get_string_width(xfl.fl_get_object_lstyle(pboxobj), \
-                xfl.fl_get_object_lsize(pboxobj), symbols[i], len(symbols)) \
+                xfl.fl_get_object_lsize(pboxobj), symbols[i], len(symbols[i])) \
                 + 2 * xfl.fl_get_object_bw(pboxobj)
         xfl.fl_set_object_geometry(pboxobj, txt_x + (txt_w - w) / 2, txt_y, \
-                w, txt_h )
+                w, txt_h)
 
     xfl.fl_end_form()
 

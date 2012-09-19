@@ -120,7 +120,7 @@ class FlColbrowser(object):
             #print "contents[ndb]", contents[ndb]
             #print "ndb", ndb
             contents[ndb] = filep.readline()
-            print contents[ndb]
+            print(contents[ndb])
             r, g, b, name = self.read_entry(contents[ndb])
             #print "#"+str(r)+"#"+str(g)+"#"+str(b)+"#"+name
             self.rgbdb[ndb]['r'] = r

@@ -1,5 +1,5 @@
 xforms-python requires (at least) Python 3.2.x. (use in Python
->= 2.6.x is not guaranteed).
+2.x is no longer supported).
 Beware: there may be some leftover problems with utf-8 encoding
 and Unicode strings and characters).
 

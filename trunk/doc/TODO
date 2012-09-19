@@ -1,5 +1,9 @@
 *** Limitations ***
 
+- Upstream XForms-equivalent all-in-one functions who use special
+sequences as arguments (%s, %l, %L etc...) are on their way to be
+phased out, as they are too much problematic to manage: please use
+a bunch of single-purpose functions to achieve the same result.
 - Some parameters in functions maybe are not correctly handled yet
 in the proper manner (e.g. void *), as ctypes is somehow rigid and
 a free 'cast' on-the-fly (equivalent to C's) is not always viable.

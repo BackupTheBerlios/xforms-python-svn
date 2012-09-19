@@ -869,9 +869,9 @@ def fl_get_nmenu_item(ptr_flobject):
     Examples
     --------
         >>> pPpRtn = fl_get_nmenu(pnmenuobj)
-        >>> print "order number" % pPpRtn.contents.val
-        >>> print "extry text" % pPpRtn.contents.text
-        >>> print "order number" % pPpRtn.contents.val
+        >>> print("order number", pPpRtn.contents.val)
+        >>> print("extry text", pPpRtn.contents.text)
+        >>> print("order number", pPpRtn.contents.val)
 
     Notes
     -----

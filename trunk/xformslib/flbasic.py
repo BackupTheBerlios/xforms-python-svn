@@ -5211,7 +5211,7 @@ def fl_enumerate_fonts(pyfn_output, shortform):
     Examples
     --------
         >>> def pyoutput(strng):
-        >>> ... print strng
+        >>> ... print(strng)
         >>> nfonts = fl_enumerate(pyoutput, 0)
 
     Notes

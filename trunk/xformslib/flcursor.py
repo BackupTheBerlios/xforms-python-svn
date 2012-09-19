@@ -213,7 +213,7 @@ def fl_create_animated_cursor(curseries, timeout):
         """int fl_create_animated_cursor(int * cur_names, int timeout)""")
     library.check_if_flinitialized()
     ptr_curseries = library.convert_to_ptr_intc(curseries)
-    #print "pcurnums", pcurnums
+    #print("pcurnums", pcurnums)
     i_timeout = library.convert_to_intc(timeout)
     library.keep_elem_refs(curseries, timeout, ptr_curseries, i_timeout)
     retval = _fl_create_animated_cursor(ptr_curseries, i_timeout)

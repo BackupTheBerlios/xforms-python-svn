@@ -281,33 +281,36 @@ def convert_to_stringc(paramname):
     """ Converts paramname to python str and to ctypes c_char_p """
     if isinstance(paramname, cty.c_char_p):
         return paramname
+    elif isinstance(paramname, bytes):
+        #sparamname = paramname.decode("utf-8")
+        retv = cty.c_char_p(paramname)
     elif isinstance(paramname, str):
         bparamname = bytes(paramname, "utf-8")
         retv = cty.c_char_p(bparamname)
+        #retv = cty.c_char_p(paramname)
         return retv
     else:               # not a str / unicode str / c_char_p
         raise XFormsTypeError("Provided parameter '%s' is of %s, "
-                "but a 'str'/'c_char_p' type should be used." % \
+                "but a 'bytes'/'str'/'c_char_p' type should be used." % \
                 (paramname, type(paramname)))
 
 
 def convert_to_ptr_stringc(paramname):
     """ Converts paramname (list of str) to a ctypes pointer to c_char_p """
     if isinstance(paramname, list):     # list of str
-        bparamname = ["0" * len(paramname)]
         for idx in range(0, len(paramname)):
-            if not isinstance(paramname[idx], str):
-                # every part must be a str
+            if not isinstance(paramname[idx], (str, bytes)):
+                # every part must be a str/byte
                 raise XFormsTypeError("Provided parameter '%s' is of %s,"
-                        " but a 'list of str'/'pointer to c_char_p' type"
-                        " should be used." % (paramname, type(paramname)))
-            bparamname[idx] = bytes(paramname[idx], "utf-8")
+                        " but a 'list of 'bytes'/'str'/'pointer to c_char_p'"
+                        " type should be used." % (paramname, type(paramname)))
+        bparamname = [x.encode("utf-8") for x in paramname]
         retv = (cty.c_char_p * len(bparamname))(*bparamname)    # already a ptr
         return retv
     else:               # not a list
         raise XFormsTypeError("Provided parameter '%s' is of %s type, "
-                "but a 'list of str'/'array of c_char_p' type should "
-                "be used." % (paramname, type(paramname)))
+                "but a 'list of 'bytes'/'str'/'array of c_char_p' type should"
+                " be used." % (paramname, type(paramname)))
 
 
 def convert_to_intc(paramname):
@@ -454,7 +457,7 @@ def convert_to_doublec(paramname):
                     (paramname, type(paramname)))
         else:
             retv = cty.c_double(retv0)
-            #print "double", paramname, retv0, retv
+            #print("double", paramname, retv0, retv)
             return retv
     else:
         return paramname
@@ -488,7 +491,7 @@ def convert_to_floatc(paramname):
                     (paramname, type(paramname)))
         else:
             retv = cty.c_float(retv0)
-            #print "float", paramname, retv0, retv
+            #print("float", paramname, retv0, retv)
             return retv
     else:
         return paramname
@@ -599,7 +602,7 @@ def convert_userdata_to_ptrvoid(udata):
     pointer to void."""
 
     tmpvdata = None
-    #print udata, type(udata)
+    #print(udata, type(udata))
     if isinstance(udata, cty.POINTER(xfdata.FL_OBJECT)):
         ptr_vdata = udata       # passed ptr_flobject as is
     elif isinstance(udata, cty.POINTER(xfdata.FL_FORM)):

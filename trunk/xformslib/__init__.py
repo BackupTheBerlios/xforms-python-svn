@@ -26,7 +26,7 @@
 """
 
 # xforms-python version
-__mainversion__ = "0.10.20120917"        # real version
+__mainversion__ = "0.20120919"        # real version
 __vers_against_xforms__ = "1.0.94pre12"  # xforms version to be run against
 __version__ = __mainversion__ + "_" + __vers_against_xforms__
 

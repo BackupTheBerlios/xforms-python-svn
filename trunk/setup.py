@@ -10,6 +10,9 @@ version = __version__
 long_description = """
 xforms-python - Python wrapper for XForms X11 Window System GUI C toolkit.
 """
+usrdocdir = os.path.join('share/doc', name+'-'+version)
+usrdochtmldir = os.path.join('share/doc', name+'-'+version, 'html')
+usrdatadir = os.path.join('share', name+'-'+version)
 doc_files = ['./doc/ChangeLog', './doc/CREDITS', './doc/Docs.txt', './doc/INSTALL', \
         './doc/lgpl-2.1.txt', './doc/lgpl-3.0.txt', './doc/LICENSE', './doc/README', \
         './doc/TODO', './doc/USAGE']
@@ -34,7 +37,7 @@ setup(name = name,
     packages = ['xformslib'],
     package_dir = {'xformslib' : 'xformslib'},
     scripts = [bin_files, ],
-    data_files = [('share/doc/xforms-python-'+version, doc_files), \
-            (os.path.join('share/doc/xforms-python-'+version, "html"), html_files), \
-            ('share/xforms-python-'+version, example_files)]
+    data_files = [(usrdocdir, doc_files), \
+            (usrdochtmldir, html_files), \
+            (usrdatadir, example_files)]
     )

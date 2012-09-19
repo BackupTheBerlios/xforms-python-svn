@@ -30,7 +30,7 @@ class ChartAll(object):
         xfl.fl_show_form(self.pform, xfl.FL_PLACE_CENTER, xfl.FL_TRANSIENT, \
                 "Charts")
         xfl.fl_do_forms()
-        xf.fl_finish()
+        xfl.fl_finish()
         sys.exit(0)
 
 

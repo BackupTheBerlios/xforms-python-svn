@@ -144,7 +144,7 @@ class BrowserAll(object):
             else:
                 ii = -i
                 txtsel = " was deselected."
-            buf += xfl.fl_get_browser_line(pobj, ii)
+            buf += xfl.fl_get_browser_line(pobj, ii).decode("utf-8")
             buf += txtsel
 
         xfl.fl_set_object_label(self.preadout, buf)
@@ -159,9 +159,9 @@ class BrowserAll(object):
 
 
     def donothing(self, pobj, topline, pvdata):
-        print "pvdata", pvdata
+        print("pvdata", pvdata)
         ldata = xfl.fls_convert_ptrvoid_to_ptrlongc(pvdata).contents.value
-        print "ldata", ldata
+        print("ldata", ldata)
         pass        # placeholder for disabled vcallback
 
 

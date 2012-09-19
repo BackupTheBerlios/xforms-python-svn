@@ -70,7 +70,7 @@ def fl_get_dirlist(dirname, pattern, rescan):
     Examples
     --------
         >>> pdirlist, nfiles = fl_get_dirlist("/home/userdir", "*.*", 1)
-        >>> print pdirlist[1].name
+        >>> print(pdirlist[1].name)
 
     API_diversion
     ----------
