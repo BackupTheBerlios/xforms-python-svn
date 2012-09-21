@@ -314,9 +314,9 @@ def fl_delete_folder_byname(ptr_flobject, name):
     """fl_delete_folder_byname(ptr_flobject, name)
 
     Removes a folder from a tabfolder flobject by its name. After deletion,
-    the number of folders in the tabfolder as well as the sequence numbers are
-    updated. This means if you want to delete all folders after the second
-    folder, you can do that by deleting the third folder repeatedly.
+    the number of folders in the tabfolder as well as the sequence numbers
+    are updated. This means if you want to delete all folders after the
+    second folder, you can do that by deleting the third folder repeatedly.
 
     Parameters
     ----------
@@ -419,8 +419,8 @@ def fl_set_folder_bynumber(ptr_flobject, seqnum):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             tabfolder flobject
         seqnum : int
-            sequence number of folder to show. The first tab on the left has
-            a sequence number 1, the second 2 etc..
+            sequence number of folder to show. The first tab on the left
+            has a sequence number 1, the second 2 etc..
 
     Examples
     --------
@@ -445,8 +445,8 @@ def fl_set_folder_bynumber(ptr_flobject, seqnum):
 def fl_get_folder(ptr_flobject):
     """fl_get_folder(ptr_flobject) -> ptr_flform
 
-    Finds out what the last active folder is (which may be of greater interest
-    than the currently active one).
+    Finds out what the last active folder is (which may be of greater
+    interest than the currently active one).
 
     Parameters
     ----------
@@ -481,8 +481,8 @@ def fl_get_folder(ptr_flobject):
 def fl_get_folder_number(ptr_flobject):
     """fl_get_folder_number(ptr_flobject) -> seqnum
 
-    Finds out what the sequence number of the last active folder is (which may
-    be of greater interest than the currently active one).
+    Finds out what the sequence number of the last active folder is (which
+    may be of greater interest than the currently active one).
 
     Parameters
     ----------
@@ -547,7 +547,10 @@ def fl_get_folder_name(ptr_flobject):
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_folder_name(ptr_flobject)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_get_tabfolder_numfolders(ptr_flobject):
@@ -688,15 +691,18 @@ def fl_get_active_folder_name(ptr_flobject):
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_active_folder_name(ptr_flobject)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_get_folder_area(ptr_flobject):
     """fl_get_folder_area(ptr_flobject) -> xpos, ypos, width, height
 
     Finds out the actual folder size. The folder area may not be constant
-    depending on the current tabs. E.g. adding a multi-line tab will reduce
-    the area for the folders).
+    depending on the current tabs. E.g. adding a multi-line tab will
+    reduce the area for the folders).
 
     Parameters
     ----------
@@ -753,8 +759,8 @@ def fl_get_folder_area(ptr_flobject):
 def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
     """fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform)
 
-    Replaces a form associated with folder having a particular sequence number
-    with a new form.
+    Replaces a form associated with folder having a particular sequence
+    number with a new form.
 
     Parameters
     ----------
@@ -791,10 +797,10 @@ def fl_replace_folder_bynumber(ptr_flobject, seqnum, ptr_flform):
 def fl_set_tabfolder_autofit(ptr_flobject, howfit):
     """fl_set_tabfolder_autofit(ptr_flobject, howfit) -> oldhowfit
 
-    Adjusts dynamically the sizes of the folders in the tab folder so they fit.
-    Since tab size can vary depending on monitor/font resolutions, it is in
-    general not possible to design the forms (folders) so they fit exactly into
-    the folder area.
+    Adjusts dynamically the sizes of the folders in the tab folder so they
+    fit. Since tab size can vary depending on monitor/font resolutions, it
+    is in general not possible to design the forms (folders) so they fit
+    exactly into the folder area.
 
     Parameters
     ----------

@@ -51,8 +51,8 @@ def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
     Adds a spinner flobject. It is a combination of a (numerical) input field
     with two (touch) buttons that allow to increment or decrement the value in
     the (editable) input field. I.e. the user can change the spinners value by
-    either editing the value of the input field or by using the up/down buttons
-    shown beside the input field.
+    either editing the value of the input field or by using the up/down
+    buttons shown beside the input field.
 
     Parameters
     ----------
@@ -78,8 +78,8 @@ def fl_add_spinner(spinnertype, xpos, ypos, width, height, label):
 
     Examples
     --------
-        >>> pspnobj = fl_add_spinner(xfdata.FL_INT_SPINNER, 175, 75, 140, 150,
-                "My spinner")
+        >>> pspnobj = fl_add_spinner(xfdata.FL_INT_SPINNER, 175, 75, 140,
+                150, "My spinner")
 
     Notes
     -----
@@ -219,7 +219,7 @@ def fl_set_spinner_bounds(ptr_flobject, minbound, maxbound):
 def fl_get_spinner_bounds(ptr_flobject):
     """fl_get_spinner_bounds(ptr_flobject) -> minbound, maxbound
 
-    Finds out minimum and maximum value limits of a spinner flobject.
+    Retrieves minimum and maximum value limits of a spinner flobject.
 
     Parameters
     ----------
@@ -230,8 +230,8 @@ def fl_get_spinner_bounds(ptr_flobject):
     -------
         minbound : float
             minimum value bound. It can be set up to xfdata.INT_MIN for
-            xfdata.FL_INT_SPINNER, or up to negative of xfdata.DBL_MAX for
-            xfdata.FL_FLOAT_SPINNER. By default it is -10000
+            xfdata.FL_INT_SPINNER, or up to negative of xfdata.DBL_MAX
+            for xfdata.FL_FLOAT_SPINNER. By default it is -10000
         maxbound : float
             maximum value bound. It can be set up to xfdata.INT_MAX for
             xfdata.FL_INT_SPINNER, or up to xfdata.DBL_MAX for
@@ -337,8 +337,8 @@ def fl_get_spinner_step(ptr_flobject):
 def fl_set_spinner_precision(ptr_flobject, precis):
     """fl_set_spinner_precision(ptr_flobject, precis)
 
-    Defines the precision number of values in a spinner flobject. It has no
-    effect on xfdata.FL_INT_SPINNER flobjects.
+    Defines the precision number of values in a spinner flobject. It has
+    no effect on xfdata.FL_INT_SPINNER flobjects.
 
     Parameters
     ----------
@@ -442,7 +442,7 @@ def fl_get_spinner_input(ptr_flobject):
 def fl_get_spinner_up_button(ptr_flobject):
     """fl_get_spinner_up_button(ptr_flobject) -> ptr_flobject
 
-    Finds out up button element of a spinner flobject.
+    Retrieves up button element of a spinner flobject.
 
     Parameters
     ----------
@@ -477,7 +477,7 @@ def fl_get_spinner_up_button(ptr_flobject):
 def fl_get_spinner_down_button(ptr_flobject):
     """fl_get_spinner_down_button(ptr_flobject) -> ptr_flobject
 
-    Finds out down button element of a spinner flobject.
+    Retrieves down button element of a spinner flobject.
 
     Parameters
     ----------

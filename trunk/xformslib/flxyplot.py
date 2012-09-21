@@ -42,7 +42,7 @@ from xformslib import xfdata
 
 # Others
 
-# fl_create_xyplot function placeholder (internal)
+# fl_create_xyplot() function placeholder (internal)
 
 
 def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
@@ -680,8 +680,8 @@ def fl_set_xyplot_ytics(ptr_flobject, ticmajor, ticminor):
 def fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound):
     """fl_set_xyplot_xbounds(ptr_flobject, minbound, maxbound)
 
-    Defines and uses absolute value limits on x-axis of a xyplot flobject as
-    opposed to actual bounds in data.
+    Defines and uses absolute value limits on x-axis of a xyplot flobject
+    as opposed to actual bounds in data.
 
     Parameters
     ----------
@@ -1243,19 +1243,19 @@ def fl_set_xyplot_interpolate(ptr_flobject, ovlnum, degree, grid):
 def fl_set_xyplot_inspect(ptr_flobject, yesno):
     """fl_set_xyplot_inspect(ptr_flobject, yesno)
 
-    Makes aware or not xyplot flobjects of mouse clicks. Once an xyplot is in
-    inspect mode, whenever the mouse is released and the mouse position is on
-    one of the data point, the flobject is returned to the caller or its
-    callback is invoked. You can use fl_get_xyplot() to find out which point
-    the mouse was clicked on.
+    Makes aware or not xyplot flobjects of mouse clicks. Once an xyplot is
+    in inspect mode, whenever the mouse is released and the mouse position
+    is on one of the data point, the flobject is returned to the caller or
+    its callback is invoked. You can use fl_get_xyplot() to find out which
+    point the mouse was clicked on.
 
     Parameters
     ----------
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         yesno : int
-            flag to enable/disable inspect mode. Values 0 (disabled) or 1
-            (enabled)
+            flag to enable/disable inspect mode. Values 0 (disabled) or
+            1 (enabled)
 
     Examples
     --------
@@ -1738,9 +1738,9 @@ def fl_get_xyplot_numdata(ptr_flobject, ovlnum):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             xyplot flobject
         ovlnum : int
-            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY or
-            the number set via fl_set_xyplot_maxoverlays(). If it is 0 uses
-            the base dataset
+            overlay id. Values between 1 and xfdata.FL_MAX_XYPLOTOVERLAY
+            or the number set via fl_set_xyplot_maxoverlays(). If it is
+            0 uses the base dataset
 
     Returns
     -------
@@ -1926,8 +1926,8 @@ def fl_set_xyplot_xscale(ptr_flobject, scale, logbase):
 def fl_set_xyplot_yscale(ptr_flobject, scale, logbase):
     """fl_set_xyplot_yscale(ptr_flobject, scale, logbase)
 
-    Changes the scaling for a xyplot flobject. By default, a linear scale in
-    y-direction is used.
+    Changes the scaling for a xyplot flobject. By default, a linear scale
+    in y-direction is used.
 
     Parameters
     ----------
@@ -2213,15 +2213,15 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
     """fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor)
 
     Labels the major tic marks on y-axis with alphanumerical characters
-    (instead of numerical values). fl_set_xyplot_ytics cannot be active at the
-    same time and the one that gets used is the one that was set last. It can
-    be used to specify non-uniform and arbitary major divisions; to achieve
-    this, you should embed the major tic location information in the
-    alphanumerical text; the location information is introduced by the symbol
-    and followed by a float number specifying the coordinates in world
-    coordinates; the entire location info should follow the label. E.g.
-    "Begin@1.0|3/4@0.75|1.9@1.9" will produce three major tic marks at 0.75,
-    1.0, and 1.9 and labeled "3/4", "begin", and "1.9".
+    (instead of numerical values). fl_set_xyplot_ytics cannot be active at
+    the same time and the one that gets used is the one that was set last.
+    It can be used to specify non-uniform and arbitary major divisions; to
+    achieve this, you should embed the major tic location information in
+    the alphanumerical text; the location information is introduced by the
+    symbol and followed by a float number specifying the coordinates in
+    world coordinates; the entire location info should follow the label.
+    E.g. "Begin@1.0|3/4@0.75|1.9@1.9" will produce three major tic marks
+    at 0.75, 1.0, and 1.9 and labeled "3/4", "begin", and "1.9".
 
     Parameters
     ----------
@@ -2500,8 +2500,8 @@ def fl_set_xyplot_symbol(ptr_flobject, ovlnum, pyfn_XyPlotSymbol):
             Name referring to function(ptr_flobject, [int]ovlnum, ptr_flpoint,
             [int]numpoints, [int]width, [int]height).
             The parameters passed to this function are the flobject pointer,
-            the overlay id, the center of the symbol (p.x, p.y), the number of
-            data points and the preferred symbol size (width, height).
+            the overlay id, the center of the symbol (p.x, p.y), the number
+            of data points and the preferred symbol size (width, height).
 
     Returns
     -------

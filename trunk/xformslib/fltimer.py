@@ -306,9 +306,9 @@ def fl_resume_timer(ptr_flobject):
     """fl_resume_timer(ptr_flobject)
 
     Resumes timer previously paused (with fl_suspend_timer). Unlike
-    fl_set_timer() a suspended timer keeps its internal state (total delay,
-    time left etc.), so when it is resumed, it starts from where it was
-    suspended.
+    fl_set_timer() a suspended timer keeps its internal state (total
+    delay, time left etc.), so when it is resumed, it starts from where
+    it was suspended.
 
     Parameters
     ----------

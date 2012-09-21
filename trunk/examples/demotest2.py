@@ -37,6 +37,7 @@ def main(lsysargv, sysargv):
         str1 = s
     else:
         str1 = ""
+    print(str1, type(str1))
     xfl.fl_show_message("You typed:", "", str1)
     choice = xfl.fl_show_choices("Pick a choice", 2, "One", "Two", \
             "Three", 2)
@@ -53,8 +54,9 @@ def main(lsysargv, sysargv):
         str2 = s
     else:
         str2 = "<Cancel>"
+    print(str2, type(str2))
     xfl.fl_show_message("You typed:", "", str2)
-    xfl.fl_show_messages("Good Bye")
+    xfl.fl_show_messages(str2)
     xfl.fl_finish()
     return 0
 

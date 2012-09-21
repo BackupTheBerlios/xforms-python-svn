@@ -43,22 +43,19 @@ class Flstrangebutton(object):
             return
 
         digit = label[idx]      # it's an int
-
         if button == xfl.FL_LEFT_MOUSE or button == xfl.FL_SCROLLUP_MOUSE:
-            if digit == ord('9'):
-                digit = ord('0')
+            if digit == "9":
+                digit = "0"
             else:
-                digit += 1
+                digit = chr(ord(digit) + 1)
         elif button == xfl.FL_RIGHT_MOUSE or button == xfl.FL_SCROLLDOWN_MOUSE:
-            if digit == ord('0'):
-                digit = ord('9')
+            if digit == "0":
+                digit = "9"
             else:
-                digit -= 1
+                digit = chr(ord(digit) - 1)
 
-        sdigit = chr(digit)
-        strng = label.decode("utf-8")           # *TODO* verify variable copy
-        newstrng = list(strng)
-        newstrng[idx] = sdigit
+        newstrng = list(label)
+        newstrng[idx] = digit
         strng = "".join(newstrng)
         xfl.fl_set_object_label(pobj, strng)
 

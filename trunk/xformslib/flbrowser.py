@@ -1484,7 +1484,7 @@ def fl_show_browser_line(ptr_flobject, linenum):
     _fl_show_browser_line(ptr_flobject, i_linenum)
 
 
-# fl_set_default_browser_maxlinelength function placeholder (deprecated)
+# fl_set_default_browser_maxlinelength() function placeholder (deprecated)
 
 
 def fl_set_browser_hscroll_callback(ptr_flobject, pyfn_BrowserScrollCb, \

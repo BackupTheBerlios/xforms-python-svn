@@ -127,8 +127,8 @@ def fl_add_valslider(slidertype, xpos, ypos, width, height, label):
     """fl_add_valslider(slidertype, xpos, ypos, width, height, label)
     -> ptr_flobject
 
-    Adds a slider to a form. Its value is displayed above or to the left of
-    the slider.
+    Adds a slider to a form. Its value is displayed above or to the left
+    of the slider.
 
     Parameters
     ----------
@@ -425,8 +425,8 @@ def fl_set_slider_increment(ptr_flobject, leftbtnval, midbtnval):
 def fl_get_slider_increment(ptr_flobject):
     """fl_get_slider_increment(ptr_flobject) -> leftbtnval, midbtnval
 
-    Finds out current slider increments for clicks with left and middle mouse
-    buttons.
+    Finds out current slider increments for clicks with left and middle
+    mouse buttons.
 
     Parameters
     ----------
@@ -545,8 +545,8 @@ def fl_set_slider_filter(ptr_flobject, pyfn_ValFilter):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             slider flobject
         pyfn_ValFilter : python function, returned value
-            name referring to function(ptr_flobject, [float]value, [int]precis)
-            -> [str]text
+            name referring to function(ptr_flobject, [float]value,
+            [int]precis) -> [str]text
             function to show values in slider, text is what will be shown
 
     Examples

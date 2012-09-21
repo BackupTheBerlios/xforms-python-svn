@@ -2,6 +2,9 @@ SVN (first entries from top are more recent)
 --------------------------------------------
 
 BETA
+    20120921
+    * Again some corrections to comply with python3: fixed some fl_* functions
+      returning some text fixed to give unicode, not bytes. Fixed some examples.
     20120919 (beta21)
     * bugfix for some examples. Some fixes in library.py for bytes/str in
       python3: some fl_* functions are currently broken because of this (as,

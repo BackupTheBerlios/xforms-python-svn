@@ -42,7 +42,7 @@ from xformslib import xfdata
 
 # Routines
 
-# fl_create_counter function placeholder (internal)
+# fl_create_counter() function placeholder (internal)
 
 
 def fl_add_counter(countertype, xpos, ypos, width, height, label):
@@ -140,8 +140,8 @@ def fl_set_counter_value(ptr_flobject, val):
 def fl_set_counter_bounds(ptr_flobject, minbound, maxbound):
     """fl_set_counter_bounds(ptr_flobject, minbound, maxbound)
 
-    Defines the minimum and maximum values that the counter will take. For
-    conflicting settings bound takes precedence over value.
+    Defines the minimum and maximum values that the counter will take.
+    For conflicting settings bound takes precedence over value.
 
     Parameters
     ----------
@@ -280,7 +280,7 @@ def fl_get_counter_precision(ptr_flobject):
     return retval
 
 
-# fl_set_counter_return function placeholder (deprecated)
+# fl_set_counter_return() function placeholder (deprecated)
 
 
 def fl_get_counter_value(ptr_flobject):

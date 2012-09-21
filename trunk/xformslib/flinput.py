@@ -144,7 +144,7 @@ def fl_set_input(ptr_flobject, text):
     _fl_set_input(ptr_flobject, s_text)
 
 
-# fl_set_input_return function placeholder (internal)
+# fl_set_input_return() function placeholder (internal)
 
 
 def fl_set_input_color(ptr_flobject, txtcolr, curscolr):
@@ -305,8 +305,8 @@ def fl_set_input_cursorpos(ptr_flobject, xpos, ypos):
 def fl_set_input_selected(ptr_flobject, yesno):
     """fl_set_input_selected(ptr_flobject, yesno)
 
-    Selects or deselects the current input. It places the cursor at the end
-    of the string when selected.
+    Selects or deselects the current input. It places the cursor at the
+    end of the string when selected.
 
     Parameters
     ----------
@@ -423,7 +423,11 @@ def fl_get_input_selected_range(ptr_flobject):
             ptr_beginchar, ptr_endchar)
     retval = _fl_get_input_selected_range(ptr_flobject, ptr_beginchar, \
             ptr_endchar)
-    return retval, i_beginchar.value, i_endchar.value
+    if isinstance(retval, bytes):
+        nretval = retval.decode('utf-8')
+    else:       # str
+        nretval = retval
+    return nretval, i_beginchar.value, i_endchar.value
 
 
 def fl_set_input_maxchars(ptr_flobject, maxchars):
@@ -431,8 +435,8 @@ def fl_set_input_maxchars(ptr_flobject, maxchars):
 
     Limits the number of characters per line for input fields of type
     xfdata.FL_NORMAL_INPUT. Note that input flobjects of type
-    xfdata.FL_DATE_INPUT are limited to 10 characters per default and those
-    of type xfdata.FL_SECRET_INPUT to 16.
+    xfdata.FL_DATE_INPUT are limited to 10 characters per default and
+    those of type xfdata.FL_SECRET_INPUT to 16.
 
     Parameters
     ----------
@@ -812,7 +816,10 @@ def fl_set_input_fieldchar(ptr_flobject, fldchar):
     i_fldchar = library.convert_to_intc(ordfldc)
     library.keep_elem_refs(ptr_flobject, fldchar, ordfldc, i_fldchar)
     retval = _fl_set_input_fieldchar(ptr_flobject, i_fldchar)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_get_input_topline(ptr_flobject):
@@ -1046,7 +1053,11 @@ def fl_get_input_format(ptr_flobject):
     i_sep, ptr_sep = library.make_intc_and_pointer()
     library.keep_elem_refs(ptr_flobject, i_fmt, i_sep, ptr_fmt, ptr_sep)
     _fl_get_input_format(ptr_flobject, ptr_fmt, ptr_sep)
-    return i_fmt.value, i_sep.value
+    if isinstance(i_sep.value, bytes):
+        ni_sep_val = i_sep.value.decode('utf-8')
+    else:       # str
+        ni_sep_val = i_sep.value
+    return i_fmt.value, ni_sep.value
 
 
 def fl_get_input(ptr_flobject):
@@ -1081,7 +1092,10 @@ def fl_get_input(ptr_flobject):
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_input(ptr_flobject)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_set_input_filter(ptr_flobject, pyfn_InputValidator):
@@ -1288,7 +1302,7 @@ def fl_set_default_editkeymap():
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_default_editkeymap()
 
     Notes
     -----

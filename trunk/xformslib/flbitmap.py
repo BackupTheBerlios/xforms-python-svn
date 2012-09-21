@@ -304,7 +304,7 @@ def fl_create_from_bitmapdata(win, xbmdata, width, height):
 
 # PIXMAP stuff
 
-# fl_create_pixmap function placeholder (internal)
+# fl_create_pixmap() function placeholder (internal)
 
 
 def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
@@ -788,7 +788,7 @@ def fl_create_from_pixmapdata(win, xpmdata, tran):
     --------
         >>> *todo*
 
-    API diversion
+     API_diversion
     -------------
         API changed from XForms, upstream is fl_create_from_pixmapdata(win,
         xpmdata, width, height, smask, hotx, hoty, tran)

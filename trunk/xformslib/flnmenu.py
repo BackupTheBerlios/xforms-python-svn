@@ -130,7 +130,7 @@ def fl_clear_nmenu(ptr_flobject):
 
     Examples
     --------
-        >>> *todo*
+        >>> rsl = fl_clear_nmenu(nmnobj)
 
     Notes
     -----
@@ -1026,12 +1026,12 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
         ptr_flobject : pointer to xfdata.FL_OBJECT
             nmenu flobject
         policy : int
-            under which conditions the nmenu's popup gets closed. Values (from
-            xfdata.py)
+            under which conditions the nmenu's popup gets closed. Values
+            (from xfdata.py)
             - FL_POPUP_NORMAL_SELECT (default, keeps the popup opened
               when the mouse is not released on one of the selectable items),
-            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
-              button is released)
+            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the
+              mouse button is released)
 
     Returns
     -------
@@ -1040,7 +1040,7 @@ def fl_set_nmenu_policy(ptr_flobject, policy):
 
     Examples
     --------
-        >>> *todo*
+        >>> oldpolc = fl_set_nmenu_policy(nmnobj, xfdata.FL_POPUP_DRAG_SELECT)
 
     Notes
     -----

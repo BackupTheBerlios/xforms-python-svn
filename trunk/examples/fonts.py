@@ -80,12 +80,12 @@ class Flfonts(object):
         fdui.pfontobj = xfl.fl_add_browser(xfl.FL_HOLD_BROWSER, 10, 145, \
                 195, 135, "")
         xfl.fl_set_object_lalign(fdui.pfontobj, \
-                xfl.fl_set_object_lalaign(xfl.FL_ALIGN_BOTTOM)
+                xfl.fl_set_object_lalign(fdui.pfontobj, xfl.FL_ALIGN_BOTTOM))
         xfl.fl_set_object_callback(fdui.pfontobj, self.style_cb, 0)
         fdui.psizeobj = xfl.fl_add_browser(xfl.FL_HOLD_BROWSER, 215, 145, \
                 145, 135, "")
         xfl.fl_set_object_lalign(fdui.psizeobj, \
-                xfl.fl_set_object_lalaign(xfl.FL_ALIGN_BOTTOM))
+                xfl.fl_set_object_lalign(fdui.psizeobj, xfl.FL_ALIGN_BOTTOM))
         xfl.fl_set_object_callback(fdui.psizeobj, self.size_cb, 0)
         fdui.ptextobj = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 10, 5, 351, \
                 125, "The quick brown\nfox jumps over\nthe lazy dog.")

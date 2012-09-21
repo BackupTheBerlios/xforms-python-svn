@@ -666,14 +666,14 @@ def fl_popup_set_position(ptr_flpopup, xpos, ypos):
 def fl_popup_get_policy(ptr_flpopup):
     """fl_popup_get_policy(ptr_flpopup) -> policy
 
-    Finds out current policy setting for handling the popups, or changes the
-    default setting for new popup to be created.
+    Finds out current policy setting for handling the popups, or changes
+    the default setting for new popup to be created.
 
     Parameters
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
-            popup class instance. If it is None, gives the default setting for
-            the popups created afterwards
+            popup class instance. If it is None, gives the default setting
+            for the popups created afterwards
 
     Returns
     -------
@@ -1706,7 +1706,10 @@ def fl_popup_entry_set_text(ptr_flpopupentry, text):
     s_text = library.convert_to_stringc(text)
     library.keep_elem_refs(ptr_flpopupentry, text, s_text)
     retval = _fl_popup_entry_set_text(ptr_flpopupentry, s_text)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_popup_entry_set_shortcut(ptr_flpopupentry, sctext):
@@ -1756,7 +1759,7 @@ def fl_popup_entry_set_value(ptr_flpopupentry, entryval):
 
     Returns
     -------
-        oldentryval : int
+        oldentryval : long
             previous value, or xfdata.INT_MIN (on failure)
 
     Examples
@@ -2075,8 +2078,8 @@ def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
     """fl_popup_entry_set_group(ptr_flpopupentry, groupnum) -> oldgroupnum
 
     Assigns a radio entry to a different group. It makes much sense when
-    applied to radio entries. If one of the entries of the new group was in
-    "on" state the entries state will be reset to "off" if necessary.
+    applied to radio entries. If one of the entries of the new group was
+    is "on" state the entries state will be reset to "off" if necessary.
 
     Parameters
     ----------
@@ -2114,8 +2117,8 @@ def fl_popup_entry_set_group(ptr_flpopupentry, groupnum):
 def fl_popup_entry_get_subpopup(ptr_flpopupentry):
     """fl_popup_entry_get_subpopup(ptr_flpopupentry) -> ptr_flpopup
 
-    Finds out the sub-popup associated with a sub-popup-entry. It only makes
-    sense for sub-popup entries.
+    Finds out the sub-popup associated with a sub-popup-entry. It only
+    makes sense for sub-popup entries.
 
     Parameters
     ----------
@@ -2151,8 +2154,8 @@ def fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup):
     """fl_popup_entry_set_subpopup(ptr_flpopupentry, ptr_flpopup)
     -> ptr_flpopup
 
-    Defines the sub-popup associated with a sub-popup-entry. It only makes
-    sense for sub-popup entries.
+    Defines the sub-popup associated with a sub-popup-entry. It only
+    makes sense for sub-popup entries.
 
     Parameters
     ----------
@@ -2278,16 +2281,16 @@ def fl_popup_get_min_width(ptr_flpopup):
 def fl_popup_set_min_width(ptr_flpopup, width):
     """fl_popup_set_min_width(ptr_flpopup, width) -> oldwidth
 
-    Defines a new minimum width of a popup. By default the width of a popup is
-    calculated using the widths of the title and the entries.
+    Defines a new minimum width of a popup. By default the width of a popup
+    is calculated using the widths of the title and the entries.
 
     Parameters
     ----------
         ptr_flpopup : pointer to xfdata.FL_POPUP
             popup class instance
         width : int
-            minimum width to be set. If it is 0 or negative switches the use
-            of the minimum width off.
+            minimum width to be set. If it is 0 or negative switches the
+            use of the minimum width off.
 
     Returns
     -------

@@ -159,8 +159,8 @@ def fl_rectangle(fill, xpos, ypos, width, height, colr):
     Parameters
     ----------
         fill : int
-            flag if the rectangle has to be filled or just the outline is
-            needed. Values 0 (the outline only) or 1 (filled).
+            flag if the rectangle has to be filled or just the outline
+            is needed. Values 0 (the outline only) or 1 (filled).
         xpos : int
             horizontal position (upper-left corner)
         ypos : int
@@ -2701,8 +2701,8 @@ fl_set_winstepunit = fl_winstepunit
 def fl_winisvalid(win):
     """fl_winisvalid(win) -> result
 
-    Checks if a window id is valid or not. Note that excessive use of this
-    function may negatively impact performance.
+    Checks if a window id is valid or not. Note that excessive use of
+    this function may negatively impact performance.
 
     Parameters
     ----------
@@ -2945,8 +2945,8 @@ def fl_winaspect(win, xratio, yratio):
 def fl_reset_winconstraints(win):
     """fl_reset_winconstraints(win)
 
-    Changes constraints (size and aspect ratio) to default ones on an active
-    window.
+    Changes constraints (size and aspect ratio) to default ones on an
+    active window.
 
     Parameters
     ----------
@@ -3116,8 +3116,8 @@ def fl_create_colormap(ptr_xvisualinfo, numfilledcolrs):
 def fl_wingeometry(xpos, ypos, width, height):
     """fl_wingeometry(xpos, ypos, width, height)
 
-    Defines the initial geometry (position and size) of the window to be
-    opened; the window will not be resizable.
+    Defines the initial geometry (position and size) of the window to
+    be opened; the window will not be resizable.
 
     Parameters
     ----------
@@ -3247,7 +3247,7 @@ def fl_transient():
 def fl_get_winsize(win):
     """fl_get_winsize(win) -> width, height
 
-    Finds out the size of the specified window.
+    Retrieves the size of the specified window.
 
     Parameters
     ----------
@@ -3293,7 +3293,7 @@ def fl_get_winsize(win):
 def fl_get_winorigin(win):
     """fl_get_winorigin(win) -> xpos, ypos
 
-    Finds out the origin (position) of the specified window.
+    Retrieves the origin (position) of the specified window.
 
     Parameters
     ----------
@@ -3338,7 +3338,7 @@ def fl_get_winorigin(win):
 def fl_get_wingeometry(win):
     """fl_get_wingeometry(win) -> xpos, ypos, width, height
 
-    Finds out geometry (position and size) of a window.
+    Retrieves geometry (position and size) of a window.
 
     Parameters
     ----------
@@ -3546,8 +3546,8 @@ def fl_XNextEvent(ptr_xevent):
 def fl_XPeekEvent(ptr_xevent):
     """fl_XPeekEvent(ptr_xevent) -> result, ptr_xevent
 
-    X11 XPeekEvent equivalent function. Blocks if there is no event until a
-    new one has arrived.
+    X11 XPeekEvent equivalent function. Blocks if there is no event until
+    a new one has arrived.
 
     Parameters
     ----------
@@ -3740,14 +3740,14 @@ def fl_set_idle_callback(pyfn_AppEventCb, userdata):
     """fl_set_idle_callback(pyfn_AppEventCb, userdata) -> AppEventCb
 
     Registers an idle callback. Interaction with it  can used for periodic
-    tasks, e.g. rotating an image, checking the status of some external device
-    or application state etc. An idle callback is an application function that
-    is registered with the system and is called whenever there are no events
-    pending for forms (or application windows). If called with a function as
-    callback who does nothing, it removes idle callback. The time interval
-    between invocations of the idle callback can vary considerably depending
-    on interface activity and other factors. A range between 50 and 300 msec
-    should be expected.
+    tasks, e.g. rotating an image, checking the status of some external
+    device or application state etc. An idle callback is an application
+    function that is registered with the system and is called whenever there
+    are no events pending for forms (or application windows). If called with
+    a function as callback who does nothing, it removes idle callback. The
+    time interval between invocations of the idle callback can vary
+    considerably depending on interface activity and other factors. A range
+    between 50 and 300 msec should be expected.
 
     Parameters
     ----------
@@ -3937,10 +3937,10 @@ def fl_add_event_callback(win, evtnum, pyfn_AppEventCb, userdata):
     -> AppEventCb
 
     Adds an event handler for a window. Manipulates the event callback
-    functions for the window specified, which will be called when an event of
-    specified type is pending for the window. It does not solicit any event for
-    the caller, i.e. XForms assumes the caller opens the window and solicits
-    all events before calling these routines.
+    functions for the window specified, which will be called when an event
+    of specified type is pending for the window. It does not solicit any
+    event for the caller, i.e. XForms assumes the caller opens the window
+    and solicits all events before calling these routines.
 
     Parameters
     ----------
@@ -4049,11 +4049,11 @@ def fl_remove_event_callback(win, evtnum):
 def fl_activate_event_callbacks(win):
     """fl_activate_event_callbacks(win)
 
-    Handles event solicitation. Activates the default mapping of events to
-    event masks built-in in XForms, and causes the system to solicit the
-    events for you. Note, however, the mapping of events to masks are not
-    unique and depending on applications, the default mapping may or may not
-    be the one you want.
+    Handles event solicitation. Activates the default mapping of events
+    to event masks built-in in XForms, and causes the system to solicit
+    the events for you. Note, however, the mapping of events to masks are
+    not unique and depending on applications, the default mapping may or
+    may not be the one you want.
 
     Parameters
     ----------
@@ -4235,9 +4235,9 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
 def fl_finish():
     """fl_finish()
 
-    It is a final cleanup routine, restores all X server defaults, shuts down
-    the connection and frees dynamically allocated memory. To be used as the
-    last function.
+    It is a final cleanup routine, restores all X server defaults, shuts
+    down the connection and frees dynamically allocated memory. To be used
+    as the last function.
 
     Examples
     --------
@@ -4349,7 +4349,11 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
         varvalue3 = ptr_varvalue3.value
     else:       # if xfdata.FL_NONE
         ptr_varvalue3 = varvalue3 = ptr_varvalue2
-    return retval, varvalue3
+    if isinstance(retval, bytes):
+        nretval = retval.decode('utf-8')
+    else:       # str
+        nretval = retval
+    return nretval, varvalue3
 
 
 def fl_set_resource(resnamecls, txtval):
@@ -4432,12 +4436,12 @@ def fl_set_graphics_mode(vmode, doublebuf):
             visual mode. Values (from xfdata module) GrayScale, StaticGray,
             PseudoColor, StaticColor, DirectColor or TrueColor
         doublebuf : int
-            flag to enable/disable doublebuffer. Value 0 (to disable) or 1 (to
-            enable)
+            flag to enable/disable doublebuffer. Value 0 (to disable) or
+            1 (to enable)
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_graphics_mode(xfdata.TrueColor, 1)
 
     Notes
     -----
@@ -4465,12 +4469,12 @@ def fl_set_visualID(vmode):
     ----------
         vmode : long
             visual mode. Values (from xfdata.py) StaticGray, GrayScale,
-            StaticColor, PseudoColor, TrueColor, DirectColor, DefaultVisual,
-            GreyScale, StaticGrey
+            StaticColor, PseudoColor, TrueColor, DirectColor,
+            DefaultVisual, GreyScale, StaticGrey
 
     Examples
     --------
-        >>> *todo*
+        >>> fl_set_visualID(xfdata.TrueColor)
 
     Notes
     -----
@@ -4737,7 +4741,10 @@ def fl_vclass_name(vmode):
     i_vmode = library.convert_to_intc(vmode)
     library.keep_elem_refs(vmode, i_vmode)
     retval = _fl_vclass_name(i_vmode)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_vclass_val(vname):
@@ -4786,8 +4793,8 @@ def fl_set_ul_property(proportional, thickness):
     Parameters
     ----------
         proportional : int
-            if width is proportional or not. Values 0 (if fixed) or 1 (if
-            proportional)
+            if width is proportional or not. Values 0 (if fixed) or
+            1 (if proportional)
         thickness : int
             thickness of underline.
 
@@ -4844,7 +4851,7 @@ def fl_is_clipped(includeglobal):
     """fl_is_clipped(includeglobal) -> yesno
 
     Determines if "normal" (i.e. non-text) clipping is switched on.
-    
+
     Parameters
     ----------
         includeglobal : int
@@ -5055,7 +5062,7 @@ def fl_unset_text_clipping():
 def fl_get_global_clipping():
     """fl_get_global_clipping() -> yesno, xpos, ypos, width, height
 
-    Determines if global clipping is on or off and the clipping rectangle.
+    Finds out if global clipping is on or off and the clipping rectangle.
 
     Returns
     -------
@@ -5074,7 +5081,7 @@ def fl_get_global_clipping():
     -------
         >>> *todo*
 
-    API diversion
+    API_diversion
     -------------
         API changed from XForms, upstream is
         fl_get_global_clipping(px, py, pw, ph)
@@ -5135,7 +5142,7 @@ def fl_get_clipping(includeglobal):
     -------
         >>> *todo*
 
-    API diversion
+    API_diversion
     -------------
         API changed from XForms, upstream is
         fl_get_clipping(includeglobal, px, py, pw, ph)
@@ -5168,7 +5175,7 @@ def fl_get_clipping(includeglobal):
 def fl_get_text_clipping(includeglobal):
     """fl_get_text_clipping(includeglobal) -> yesno, xpos, ypos, width, height
 
-    Determines if text clipping is on and the region clipped to 
+    Finds out if text clipping is on and the region clipped to 
 
     Parameters
     ----------
@@ -5196,7 +5203,7 @@ def fl_get_text_clipping(includeglobal):
     -------
         >>> *todo*
 
-    API diversion
+    API_diversion
     -------------
         API changed from XForms, upstream is
         fl_get_text_clipping(includeglobal, px, py, pw, ph)
@@ -5304,42 +5311,7 @@ def fl_unset_gc_clipping(gctx):
     _fl_unset_gc_clipping(gctx)
 
 
-#def fl_set_clippings(ptr_rect, numrects):
-#    """fl_set_clippings(ptr_rect, numrects)
-#
-#    Changes the clip-mask in the specified GC to the specified list of
-#    rectangles and sets the clip origin. The output is clipped to remain
-#    contained within the rectangles. The clip-origin is interpreted relative
-#    to the origin of whatever destination drawable is specified in a graphics
-#    request. The rectangle coordinates are interpreted relative to the
-#    clip-origin. The rectangles should be nonintersecting, or the graphics
-#    results will be undefined.
-#
-#    Parameters
-#    ----------
-#        ptr_rect : pointer to xfdata.FL_RECT
-#            rectangle class instance
-#        numrects : int
-#            number of rectangles
-#
-#    Examples
-#    --------
-#        >>> *todo*
-#
-#    Notes
-#    -----
-#        Status: NA-UTest + Doc + NoDemo = Maybe
-#
-#    """
-#    _fl_set_clippings = library.cfuncproto(
-#        library.load_so_libforms(), "fl_set_clippings",
-#        None, [cty.POINTER(xfdata.FL_RECT), cty.c_int],
-#        """void fl_set_clippings(FL_RECT * xrect, int n)""")
-#    library.check_if_flinitialized()
-#    library.verify_otherclassptr_type(ptr_rect, cty.POINTER(xfdata.FL_RECT))
-#    i_numrects = library.convert_to_intc(numrects)
-#    library.keep_elem_refs(ptr_rect, numrects, i_numrects)
-#    _fl_set_clippings(ptr_rect, i_numrects)
+# fl_set_clippings() function placeholder (upstream removed)
 
 
 # How we pack and unpack colors

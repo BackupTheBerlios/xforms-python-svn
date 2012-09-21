@@ -392,5 +392,8 @@ def fl_fix_dirname(dirname):
     s_dirname = library.convert_to_stringc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_fix_dirname(s_dirname)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 

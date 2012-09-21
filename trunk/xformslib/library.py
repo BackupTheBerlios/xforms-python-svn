@@ -80,7 +80,7 @@ def get_xforms_version():
         complete_xf_version = ""
     else:
         complete_xf_version = str("%s.%s.%s%s") % \
-                (ver, rev, fixlvl, extrafixlvl.decode("utf-8"))
+                (ver, rev, fixlvl, extrafixlvl)
     return complete_xf_version
 
 

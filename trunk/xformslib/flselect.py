@@ -516,8 +516,8 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
 def fl_delete_select_item(ptr_flobject, ptr_flpopupentry):
     """fl_delete_select_item(ptr_flobject, ptr_flpopupentry) -> result
 
-    Deletes an item of a select flobject. The values associated with items will
-    not change due to removing an item.
+    Deletes an item of a select flobject. The values associated with items
+    will not change due to removing an item.
 
     Parameters
     ----------
@@ -873,8 +873,8 @@ def fl_get_select_item_by_text(ptr_flobject, txtstr):
 def fl_get_select_text_color(ptr_flobject):
     """fl_get_select_text_color(ptr_flobject) -> colr
 
-    Finds out the color of the text of the currenty selected item on top of
-    the select flobject.
+    Finds out the color of the text of the currenty selected item on top
+    of the select flobject.
 
     Parameters
     ----------
@@ -909,8 +909,8 @@ def fl_get_select_text_color(ptr_flobject):
 def fl_set_select_text_color(ptr_flobject, colr):
     """fl_set_select_text_color(ptr_flobject, colr) -> oldcolr
 
-    Defines the color of the text of the currenty selected item on top of
-    the select flobject.
+    Defines the color of the text of the currenty selected item on top
+    of the select flobject.
 
     Parameters
     ----------
@@ -1066,8 +1066,8 @@ def fl_set_select_text_font(ptr_flobject, style, size):
 def fl_get_select_text_align(ptr_flobject):
     """fl_get_select_text_align(ptr_flobject) -> align
 
-    Finds out the alignment of the text with the currently selected item on
-    top of the select flobject.
+    Finds out the alignment of the text with the currently selected item
+    on top of the select flobject.
 
     Parameters
     ----------
@@ -1168,10 +1168,10 @@ def fl_set_select_policy(ptr_flobject, policy):
             select flobject
         policy : int
             popup policy to be set. Values (from xfdata.py)
-            - FL_POPUP_NORMAL_SELECT (default, keeps the popup opened when the
-              mouse is not released on one of the selectable items),
-            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the mouse
-              button is released)
+            - FL_POPUP_NORMAL_SELECT (default, keeps the popup opened when
+             the  mouse is not released on one of the selectable items),
+            - FL_POPUP_DRAG_SELECT (Closes the popup immediately when the
+              mouse button is released)
 
     Returns
     -------

@@ -418,8 +418,8 @@ def fl_get_positioner_ybounds(ptr_flobject):
 def fl_set_positioner_xstep(ptr_flobject, step):
     """fl_set_positioner_xstep(ptr_flobject, step)
 
-    Handles positioner values in horizontal direction to be rounded to some
-    values (multiples of step), e.g. to integer values.
+    Handles positioner values in horizontal direction to be rounded to
+    some values (multiples of step), e.g. to integer values.
 
     Parameters
     ----------
@@ -451,8 +451,8 @@ def fl_set_positioner_xstep(ptr_flobject, step):
 def fl_set_positioner_ystep(ptr_flobject, step):
     """fl_set_positioner_ystep(ptr_flobject, step)
 
-    Handles positioner values in vertical direction to be rounded to some
-    values (multiples of step), e.g. to integer values.
+    Handles positioner values in vertical direction to be rounded to
+    some values (multiples of step), e.g. to integer values.
 
     Parameters
     ----------
@@ -488,7 +488,6 @@ def fl_set_positioner_mouse_buttons(ptr_flobject, mousebtns):
     """fl_set_positioner_mouse_buttons(ptr_flobject, mousebtns)
 
     Defines which mouse buttons the positioner flobject will react to.
-
 
     Parameters
     ----------
@@ -538,7 +537,7 @@ def fl_get_positioner_mouse_buttons(ptr_flobject):
         >>> *todo*
 
 
-    API diversion
+    API_diversion
     -------------
         API changed from XForms, upstream is 
         fl_get_positioner_mouse_buttons(ptr_flobject, mousebtns)
@@ -597,5 +596,4 @@ def fl_get_positioner_numb(ptr_flobject):
     library.keep_elem_refs(ptr_flobject, mousebtn, i_mousebtn)
     retval = _fl_get_positioner_numb(ptr_flobject, i_mousebtn)
     return retval
-
 

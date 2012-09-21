@@ -85,7 +85,7 @@ def special_style(style):
 def fl_is_inside_lalign(align):
     """fl_is_inside_lalign(align) -> unknown
 
-    Determines if provided alignment is bitwise OR with FL_ALIGN_INSIDE
+    Determines if provided alignment is bitwise OR with FL_ALIGN_INSIDE.
 
     Parameters
     ----------
@@ -134,7 +134,7 @@ def fl_is_inside_lalign(align):
 def fl_is_outside_lalign(align):
     """fl_is_outside_lalign(align) -> unknown
 
-    Determines if provided alignment is not bitwise OR with FL_ALIGN_INSIDE
+    Determines if provided alignment is not bitwise OR with FL_ALIGN_INSIDE.
 
     Parameters
     ----------
@@ -798,8 +798,12 @@ def fl_library_full_version():
             ptr_fixlvl, s_extrafixlvl, ptr_extrafixlvl)
     retval = _fl_library_full_version(ptr_ver, ptr_rev, ptr_fixlvl, \
             ptr_extrafixlvl)
+    if isinstance(s_extrafixlvl.value, bytes):
+        ns_extrafixlvl_val = s_extrafixlvl.value.decode('utf-8')
+    else:       # str
+        ns_extrafixlvl_val = s_extrafixlvl.value
     return retval, i_ver.value, i_rev.value, i_fixlvl.value, \
-            s_extrafixlvl.value
+            ns_extrafixlvl_val
 
 
 # Generic routines that deal with FORMS
@@ -3451,38 +3455,7 @@ def fl_set_object_return(ptr_flobject, whenretn):
     return retval
 
 
-#def fl_notify_object(ptr_flobject, cause):
-#    """fl_notify_object(ptr_flobject, cause)
-#
-#    Notifies to XForms if attributes, size or position are to be changed.
-#
-#    Parameters
-#    ----------
-#        ptr_flobject : pointer to xfdata.FL_OBJECT
-#            flobject
-#        cause : int
-#            cause for notification. Values (from xfdata.py) FL_ATTRIB,
-#            FL_RESIZED, FL_MOVEORIGIN
-#
-#    Examples
-#    --------
-#        >>> fl_notify_object(pobj5, xfdata.FL_RESIZED)
-#
-#    Notes
-#    -----
-#        Status: NA-UTest + Doc + NoDemo = KO (not clear purpose)
-#
-#    """
-#    _fl_notify_object = library.cfuncproto(
-#        library.load_so_libforms(), "fl_notify_object", \
-#        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_int], \
-#        """void fl_notify_object(FL_OBJECT * obj, int cause) """)
-#    library.check_if_flinitialized()
-#    library.verify_flobjectptr_type(ptr_flobject)
-#    #library.checkfatal_allowed_value_in_list(cause, xfdata.EVENTS_list)
-#    icause = library.convert_to_intc(cause)
-#    library.keep_elem_refs(ptr_flobject, cause, icause)
-#    _fl_notify_object(ptr_flobject, icause)
+# fl_notify_object() function placeholder (upstream removed)
 
 
 def fl_set_object_lalign(ptr_flobject, align):
@@ -3854,7 +3827,10 @@ def fl_get_object_label(ptr_flobject):
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_object_label(ptr_flobject)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_set_object_helper(ptr_flobject, tooltip):
@@ -4829,41 +4805,7 @@ def fl_redraw_object(ptr_flobject):
     _fl_redraw_object(ptr_flobject)
 
 
-#def fl_scale_object(ptr_flobject, xscale, yscale):
-#    """fl_scale_object(ptr_flobject, xscale, yscale)
-#
-#    Scales (shrinking or enlarging) a flobject, indicating a scaling
-#    factor in x- and y-direction (1.1 = 110 percent, 0.5 = 50, etc.)
-#
-#    Parameters
-#    ----------
-#        ptr_flobject : pointer to xfdata.FL_OBJECT
-#            flobject to be scaled
-#        xscale : float
-#            new horizontal factor
-#        yscale : float
-#            new vertical factor
-#
-#    Examples
-#    --------
-#        >>> fl_scale_object(pobj, 0.8, 1.1)
-#
-#    Notes
-#    -----
-#        Status: NA-UTest + Doc + NoDemo = Maybe
-#
-#    """
-#    _fl_scale_object = library.cfuncproto(
-#        library.load_so_libforms(), "fl_scale_object",\
-#        None, [cty.POINTER(xfdata.FL_OBJECT), cty.c_double, cty.c_double],\
-#        """void fl_scale_object(FL_OBJECT * ob, double xs, double ys)""")
-#    library.check_if_flinitialized()
-#    library.verify_flobjectptr_type(ptr_flobject)
-#    f_xscale = library.convert_to_doublec(xscale)
-#    f_yscale = library.convert_to_doublec(yscale)
-#    library.keep_elem_refs(ptr_flobject, xscale, f_xscale, \
-#            yscale, f_yscale)
-#    _fl_scale_object(ptr_flobject, f_xscale, f_yscale)
+# fl_scale_object() function placeholder (upstream removed)
 
 
 def fl_show_object(ptr_flobject):
@@ -5166,8 +5108,8 @@ def fl_object_is_active(ptr_flobject):
     Returns
     -------
         yesno : int
-            flag of activity of a flobject. Values 0 (not active)
-            or non-zero (active)
+            activity flag of a flobject. Values 0 (not active) or
+            non-zero (active)
 
     Examples
     --------
@@ -5949,7 +5891,10 @@ def fl_get_label_char_at_mouse(ptr_flobject):
     library.verify_flobjectptr_type(ptr_flobject)
     library.keep_elem_refs(ptr_flobject)
     retval = _fl_get_label_char_at_mouse(ptr_flobject)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
@@ -6674,7 +6619,7 @@ def fl_free_pixels(pixelvallist, numcolrs):
     _fl_free_pixels(ptr_pixelvallist, i_numcolrs)
 
 
-# def fl_set_color_leak(yesno) function placeholder (backwards)
+# fl_set_color_leak() function placeholder (backwards)
 
 
 def fl_getmcolor(colr):
@@ -7580,7 +7525,10 @@ def fl_now():
         """const char * fl_now()""")
     library.check_if_flinitialized()
     retval = _fl_now()
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_whoami():
@@ -7608,7 +7556,10 @@ def fl_whoami():
         """const char * fl_whoami()""")
     library.check_if_flinitialized()
     retval = _fl_whoami()
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_mouse_button():
@@ -7805,10 +7756,10 @@ def fl_set_error_handler(pyfn_ErrorFunc):
 #    return retval
 
 
-# fl_free function placeholder (low-level)
-# fl_malloc function placeholder (low-level)
-# fl_calloc function placeholder (low-level)
-# fl_realloc function placeholder (low-level)
+# fl_free() function placeholder (low-level)
+# fl_malloc() function placeholder (low-level)
+# fl_calloc() function placeholder (low-level)
+# fl_realloc() function placeholder (low-level)
 
 
 def fl_msleep(msec):

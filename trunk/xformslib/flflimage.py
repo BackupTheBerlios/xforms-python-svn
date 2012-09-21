@@ -297,8 +297,8 @@ def flimage_alloc():
 def flimage_getmem(ptr_flimage):
     """flimage_getmem(ptr_flimage) -> result
 
-    Allocates the proper amount of memory appropriate for the image type,
-    including colormaps when needed.
+    Allocates the proper amount of memory appropriate for the image
+    type, including colormaps when needed.
 
     Parameters
     ----------
@@ -443,9 +443,9 @@ def flimage_write_via_filter(ptr_flimage, cmds, formats, verbose):
             sequence of recognized image formats. Values 'ppm', 'pgm', 'pbm',
             .. etc..
         verbose : int
-            controls if some information and error messages should be printed
-            (mainly for debugging purpose). Values 0 (to disable) or 1
-            (to enable)
+            controls if some information and error messages should be
+            printed (mainly for debugging purpose). Values 0 (to disable)
+            or 1 (to enable)
 
     Returns
     -------
@@ -690,7 +690,10 @@ def flimage_type_name(imagetype):
     i_imagetype = library.convert_to_intc(imagetype)
     library.keep_elem_refs(imagetype, i_imagetype)
     retval = _flimage_type_name(i_imagetype)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
@@ -1453,8 +1456,8 @@ def flimage_get_format_info(imgfmtnum):
 def fl_get_matrix(numrows, numcols, elemsize):
     """fl_get_matrix(numrows, numcols, elemsize) -> matrix
 
-    Creates a 2-dimensional array of entities of size elemsize. The array
-    is of numrows by numcols in size.
+    Creates a 2-dimensional array of entities of size elemsize. The
+    array is of numrows by numcols in size.
 
     Parameters
     ----------

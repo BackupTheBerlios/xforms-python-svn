@@ -287,7 +287,7 @@ def fl_set_dial_step(ptr_flobject, step):
     _fl_set_dial_step(ptr_flobject, f_step)
 
 
-# fl_set_dial_return(ptr_flobject, whenretn) function placeholder (deprecated)
+# fl_set_dial_return() function placeholder (deprecated)
 
 
 def fl_set_dial_angles(ptr_flobject, anglmin, anglmax):

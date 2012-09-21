@@ -46,9 +46,9 @@ class Flalign(object):
 
     def align_cb(self, pobj, n):
         if xfl.fl_get_button(self.fd_form0.inside):
-            n = fl_to_inside_lalign(n)
-        if n == xfl_FL_ALIGN_CENTER:
-            fl_set_button(self.fd_form0.inside, 1)
+            n = xfl.fl_to_inside_lalign(n)
+        if n == xfl.FL_ALIGN_CENTER:
+            xfl.fl_set_button(self.fd_form0.inside, 1)
         if not TEST_PIXMAP_ALIGN:
             xfl.fl_set_object_lalign(self.fd_form0.box, n)
         else:
@@ -56,7 +56,7 @@ class Flalign(object):
 
 
     def inside_cb(self, pobj, data):
-        align = fl_get_object_lalign(self.fd_form0.box)
+        align = xfl.fl_get_object_lalign(self.fd_form0.box)
         if xfl.fl_get_button(pobj):
             xfl.fl_set_object_lalign(self.fd_form0.box, \
                     xfl.fl_to_inside_lalign(align))
@@ -84,7 +84,7 @@ class Flalign(object):
             xfl.fl_set_object_boxtype(fdui.box, xfl.FL_UP_BOX)
         fdui.inside = xfl.fl_add_lightbutton(xfl.FL_PUSH_BUTTON, 20, 125, \
                 90, 30, "Inside")
-        xfl.fl_set_button(fdui_inside, 1)
+        xfl.fl_set_button(fdui.inside, 1)
         xfl.fl_set_object_callback(fdui.inside, self.inside_cb, 0)
         xfl.fl_bgn_group()
         pobj = xfl.fl_add_button(xfl.FL_RADIO_BUTTON, 20, 20, 30, 30, "@#7->")
@@ -129,3 +129,4 @@ class Flalign(object):
 if __name__ == '__main__':
     print("********* lalign.py *********")
     Flalign(len(sys.argv), sys.argv)
+

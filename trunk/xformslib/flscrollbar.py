@@ -260,8 +260,8 @@ def fl_set_scrollbar_increment(ptr_flobject, leftbtnval, midlbtnval):
 def fl_get_scrollbar_increment(ptr_flobject):
     """fl_get_scrollbar_increment(ptr_flobject) -> leftbtnval, midbtnval
 
-    Finds out the increment of size of a scrollbar for left and middle mouse
-    buttons.
+    Finds out the increment of size of a scrollbar for left and middle
+    mouse buttons.
 
     Parameters
     ----------
@@ -396,7 +396,7 @@ def fl_get_scrollbar_bounds(ptr_flobject):
     return f_minbound.value, f_maxbound.value
 
 
-# fl_set_scrollbar_return function placeholder (internal)
+# fl_set_scrollbar_return() function placeholder (internal)
 
 
 def fl_set_scrollbar_step(ptr_flobject, step):

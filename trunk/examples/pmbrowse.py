@@ -77,19 +77,19 @@ class Flpmbrowse(object):
                 print("Missing file extension\n")
                 return 0
             else:
-                if fname.endswith(".xpm"):
+                if fname.endswith(b".xpm"):
                     xfl.fl_hide_object(self.fd_ttt.bm)
                     xfl.fl_free_pixmap_pixmap(self.fd_ttt.pm)
                     xfl.fl_set_pixmap_file(self.fd_ttt.pm, fname)
                     xfl.fl_show_object(self.fd_ttt.pm)
-                elif fname.endswith(".xbm"):
+                elif fname.endswith(b".xbm"):
                     xfl.fl_hide_object(self.fd_ttt.pm)
                     xfl.fl_set_bitmap_file(self.fd_ttt.bm, fname)
                     xfl.fl_show_object(self.fd_ttt.bm)
                 else:
                     message = "Invalid file extension, neither" \
                             ".xpm nor .xbm file: %s\n" % ext
-                    print message
+                    print(message)
                     return 0
         return 1
 
@@ -106,5 +106,5 @@ class Flpmbrowse(object):
 
 
 if __name__ == '__main__':
-    print ("********* pmbrowse.py *********")
+    print("********* pmbrowse.py *********")
     Flpmbrowse(len(sys.argv), sys.argv)

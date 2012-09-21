@@ -258,8 +258,8 @@ def fl_get_formbrowser_area(ptr_flobject):
     """fl_get_formbrowser_area(ptr_flobject)
     -> result, xpos, ypos, width, height
 
-    Finds out the actual size of the form's area. The area occupied by the
-    formbrowser contains the space for the scrollbars.
+    Finds out the actual size of the form's area. The area occupied by
+    the formbrowser contains the space for the scrollbars.
 
     Parameters
     ----------

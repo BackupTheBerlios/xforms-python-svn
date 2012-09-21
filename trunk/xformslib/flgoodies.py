@@ -436,7 +436,10 @@ def fl_show_input(msgtxt, defstr):
     s_defstr = library.convert_to_stringc(defstr)
     library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
     retval = _fl_show_input(s_msgtxt, s_defstr)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_hide_input():
@@ -498,7 +501,10 @@ def fl_show_simple_input(msgtxt, defstr):
     s_defstr = library.convert_to_stringc(defstr)
     library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
     retval = _fl_show_simple_input(s_msgtxt, s_defstr)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_show_colormap(oldcolr):
@@ -850,8 +856,8 @@ def fl_set_oneliner_font(style, size):
 def fl_set_oneliner_color(fgcolr, bgcolr):
     """fl_set_oneliner_color(fgcolr, bgcolr)
 
-    Defines color to use with oneliner message. By default, the background of
-    the message is yellow and the text black.
+    Defines color to use with oneliner message. By default, the background
+    of the message is yellow and the text black.
 
     Parameters
     ----------
@@ -982,8 +988,8 @@ def fl_set_tooltip_boxtype(boxtype):
             (No box at all, it is transparent, just a label), FL_UP_BOX (A
             box that comes out of the screen), FL_DOWN_BOX (A box that goes
             down into the screen), FL_BORDER_BOX (A flat box with a border),
-            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat box
-            with an engraved frame), FL_ROUNDED_BOX (A rounded box),
+            FL_SHADOW_BOX (A flat box with a shadow), FL_FRAME_BOX (A flat
+            box with an engraved frame), FL_ROUNDED_BOX (A rounded box),
             FL_EMBOSSED_BOX (A flat box with an embossed frame), FL_FLAT_BOX
             (A flat box without a border, normally invisible unless given a
             different color than the surroundings), FL_RFLAT_BOX (A rounded
@@ -1181,8 +1187,8 @@ def fl_popen(cmdtxt, opntype):
     """fl_popen(cmdtxt, opntype) -> ptr_file
 
     Executes the command in a child process, and logs the stderr messages
-    into the command log. If opntype is "w", stdout will also be logged into
-    the command browser.
+    into the command log. If opntype is "w", stdout will also be logged
+    into the command browser.
 
     Parameters
     ----------
@@ -1292,10 +1298,10 @@ def fl_show_command_log(border):
             window manager decoration. Values (from xfdata.py)
            - FL_FULLBORDER (normal, draws full border with title),
            - FL_TRANSIENT (draws borders with possibly less decoration,
-             depends on the window managers behaviour. You might not be able
-             to iconify a form under some WMs),
-           - FL_NOBORDER (Draw no border at all. You cannot iconify a form
-             with no borders)
+             depends on the window managers behaviour. You might not be
+             able to iconify a form under some WMs),
+           - FL_NOBORDER (Draw no border at all. You cannot iconify a
+             form with no borders)
 
     Examples
     --------
@@ -1540,7 +1546,10 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
     library.keep_elem_refs(msgtxt, dirname, pattern, deftxt, s_msgtxt,
             s_dirname, s_pattern, s_deftxt)
     retval = _fl_show_fselector(s_msgtxt, s_dirname, s_pattern, s_deftxt)
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str/None
+        return retval
 
 
 fl_show_file_selector = fl_show_fselector
@@ -1628,8 +1637,8 @@ def fl_set_fselector_fontstyle(style):
 def fl_set_fselector_placement(place):
     """fl_set_fselector_placement(place)
 
-    Defines the placement of the file selector. By default it is centered on
-    the screen (from xfdata.py, FL_PLACE_CENTER|FL_FREE_SIZE).
+    Defines the placement of the file selector. By default it is centered
+    on the screen (from xfdata.py, FL_PLACE_CENTER|FL_FREE_SIZE).
 
     Parameters
     ----------
@@ -1799,7 +1808,10 @@ def fl_get_filename():
         """const char * fl_get_filename()""")
     library.check_if_flinitialized()
     retval = _fl_get_filename()
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_get_directory():
@@ -1826,7 +1838,10 @@ def fl_get_directory():
         xfdata.STRING, [],
         """const char * fl_get_directory()""")
     retval = _fl_get_directory()
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_get_pattern():
@@ -1854,7 +1869,10 @@ def fl_get_pattern():
         """const char * fl_get_pattern()""")
     library.check_if_flinitialized()
     retval = _fl_get_pattern()
-    return retval
+    if isinstance(retval, bytes):
+        return retval.decode('utf-8')
+    else:       # str
+        return retval
 
 
 def fl_set_directory(dirname):

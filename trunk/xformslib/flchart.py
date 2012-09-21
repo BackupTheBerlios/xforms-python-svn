@@ -362,8 +362,8 @@ def fl_get_chart_bounds(ptr_flobject):
 def fl_set_chart_maxnumb(ptr_flobject, maxnumvals):
     """fl_set_chart_maxnumb(ptr_flobject, maxnumvals)
 
-    Defines the maximum number of values displayed in the chart. Defaults is
-    xfdata.FL_CHART_MAX; maximum set cannot be more than that.
+    Defines the maximum number of values displayed in the chart. Defaults
+    is xfdata.FL_CHART_MAX; maximum set cannot be more than that.
 
     Parameters
     ----------
@@ -554,6 +554,7 @@ def fl_set_chart_lcolor(ptr_flobject, colr):
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, colr, ul_colr)
     _fl_set_chart_lcolor(ptr_flobject, ul_colr)
+
 
 fl_set_chart_lcol = fl_set_chart_lcolor
 
