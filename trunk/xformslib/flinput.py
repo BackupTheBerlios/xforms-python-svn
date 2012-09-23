@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage input flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ def fl_add_input(inputtype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(inputtype, xpos, ypos, width, height, label, \
             i_inputtype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_input(i_inputtype, i_xpos, i_ypos, i_width, i_height, \
@@ -139,7 +139,7 @@ def fl_set_input(ptr_flobject, text):
         """void fl_set_input(FL_OBJECT * ob, const char * str)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     library.keep_elem_refs(ptr_flobject, text, s_text)
     _fl_set_input(ptr_flobject, s_text)
 

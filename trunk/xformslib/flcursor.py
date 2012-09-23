@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage cursor flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -158,11 +158,11 @@ def fl_create_bitmap_cursor(source, maskstr, width, height, hotx, hoty):
         """int fl_create_bitmap_cursor(const char * source,
            const char * mask, int w, int h, int hotx, int hoty)""")
     library.check_if_flinitialized()
-    s_source = library.convert_to_stringc(source)
+    s_source = library.convert_to_bytestrc(source)
     if not maskstr:    # if it is empty
         s_maskstr = cty.cast(maskstr, cty.c_void_p)
     else:
-        s_maskstr = library.convert_to_stringc(maskstr)
+        s_maskstr = library.convert_to_bytestrc(maskstr)
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_FL_Coord(height)
     i_hotx = library.convert_to_intc(hotx)

@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage browser flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail:  <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ def fl_add_browser(browsertype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(browsertype, xpos, ypos, width, height, label, \
             i_browsertype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_browser(i_browsertype, i_xpos, i_ypos, i_width, \
@@ -143,13 +143,13 @@ def fl_clear_browser(ptr_flobject):
 def fl_add_browser_line(ptr_flobject, newtext):
     """fl_add_browser_line(ptr_flobject, newtext)
 
-    Add a line to a browser flobject without making the line visible. The line
-    may contain embedded newline characters: these will result in the text
-    being split up into several lines, separated at the newline characters.
-    It is possible to change the appearance of individual lines in the
-    browser, prepending text with the symbol '@' and a letter who indicates
-    the special characteristics associated with this line. See xfdata.py for
-    browserlines appearance.
+    Add a line to a browser flobject without making the line visible. The
+    line may contain embedded newline characters: these will result in the
+    text being split up into several lines, separated at the newline
+    characters. It is possible to change the appearance of individual lines
+    in the browser, prepending text with the symbol '@' and a letter who
+    indicates the special characteristics associated with this line. See
+    xfdata.py for browserlines appearance.
 
     Parameters
     ----------
@@ -173,7 +173,7 @@ def fl_add_browser_line(ptr_flobject, newtext):
         """void fl_add_browser_line(FL_OBJECT * ob, const char * newtext)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_newtext = library.convert_to_stringc(newtext)
+    s_newtext = library.convert_to_bytestrc(newtext)
     library.keep_elem_refs(ptr_flobject, newtext, s_newtext)
     _fl_add_browser_line(ptr_flobject, s_newtext)
 
@@ -208,7 +208,7 @@ def fl_addto_browser(ptr_flobject, newtext):
         """void fl_addto_browser(FL_OBJECT * ob, const char * newtext)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_newtext = library.convert_to_stringc(newtext)
+    s_newtext = library.convert_to_bytestrc(newtext)
     library.keep_elem_refs(ptr_flobject, newtext, s_newtext)
     _fl_addto_browser(ptr_flobject, s_newtext)
 
@@ -245,7 +245,7 @@ def fl_addto_browser_chars(ptr_flobject, addedtext):
         """void fl_addto_browser_chars(FL_OBJECT * ob, const char * str)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_addedtext = library.convert_to_stringc(addedtext)
+    s_addedtext = library.convert_to_bytestrc(addedtext)
     library.keep_elem_refs(ptr_flobject, addedtext, s_addedtext)
     _fl_addto_browser_chars(ptr_flobject, s_addedtext)
 
@@ -290,7 +290,7 @@ def fl_insert_browser_line(ptr_flobject, linenum, newtext):
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_linenum = library.convert_to_intc(linenum)
-    s_newtext = library.convert_to_stringc(newtext)
+    s_newtext = library.convert_to_bytestrc(newtext)
     library.keep_elem_refs(ptr_flobject, linenum, newtext, i_linenum, \
             s_newtext)
     _fl_insert_browser_line(ptr_flobject, i_linenum, s_newtext)
@@ -362,7 +362,7 @@ def fl_replace_browser_line(ptr_flobject, linenum, newtext):
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_linenum = library.convert_to_intc(linenum)
-    s_newtext = library.convert_to_stringc(newtext)
+    s_newtext = library.convert_to_bytestrc(newtext)
     library.keep_elem_refs(ptr_flobject, linenum, newtext, i_linenum, \
             s_newtext)
     _fl_replace_browser_line(ptr_flobject, i_linenum, s_newtext)
@@ -441,7 +441,7 @@ def fl_load_browser(ptr_flobject, filename):
         cty.c_int, [cty.POINTER(xfdata.FL_OBJECT), xfdata.STRING],
         """int fl_load_browser(FL_OBJECT * ob, const char * filename)""")
     library.verify_flobjectptr_type(ptr_flobject)
-    s_filename = library.convert_to_stringc(filename)
+    s_filename = library.convert_to_bytestrc(filename)
     library.keep_elem_refs(ptr_flobject, filename, s_filename)
     retval = _fl_load_browser(ptr_flobject, s_filename)
     return retval

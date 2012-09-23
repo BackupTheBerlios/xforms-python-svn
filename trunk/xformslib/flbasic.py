@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage basic generic flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -85,7 +85,7 @@ def special_style(style):
 def fl_is_inside_lalign(align):
     """fl_is_inside_lalign(align) -> unknown
 
-    Determines if provided alignment is bitwise OR with FL_ALIGN_INSIDE.
+    Finds out if provided alignment is bitwise OR with FL_ALIGN_INSIDE.
 
     Parameters
     ----------
@@ -255,7 +255,7 @@ def fl_to_inside_lalign(align):
     Returns
     -------
         align : int
-            -1 on error, otherwise alignment
+            alignment, or -1 (on error)
 
     Examples
     --------
@@ -304,7 +304,7 @@ def fl_to_outside_lalign(align):
     Returns
     -------
         align : int
-            -1 on error, otherwise alignment
+            alignment, or -1 (on error)
 
     Examples
     --------
@@ -1641,7 +1641,7 @@ def fl_set_form_title(ptr_flform, title):
         """void fl_set_form_title(FL_FORM * form, const char * name) """)
     library.check_if_flinitialized()
     library.verify_flformptr_type(ptr_flform)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(ptr_flform, title, s_title)
     _fl_set_form_title(ptr_flform, s_title)
 
@@ -2226,7 +2226,7 @@ def fl_show_form(ptr_flform, place, border, title):
     library.checkfatal_allowed_value_in_list(border, \
             xfdata.DECORATION_list)
     i_border = library.convert_to_intc(border)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(ptr_flform, place, i_place, border, i_border, \
             title, s_title)
     retval = _fl_show_form(ptr_flform, i_place, i_border, s_title)
@@ -2418,7 +2418,7 @@ def fl_prepare_form_window(ptr_flform, place, border, title):
     library.checkfatal_allowed_value_in_list(border, \
             xfdata.DECORATION_list)
     i_border = library.convert_to_intc(border)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(ptr_flform, place, i_place, border, i_border, \
             title, s_title)
     retval = _fl_prepare_form_window(ptr_flform, i_place, i_border, \
@@ -3498,7 +3498,7 @@ def fl_set_object_lalign(ptr_flobject, align):
         """void fl_set_object_lalign(FL_OBJECT * ob, int align) """)
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
+    #library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     i_align = library.convert_to_intc(align)
     library.keep_elem_refs(ptr_flobject, align, i_align)
     _fl_set_object_lalign(ptr_flobject, i_align)
@@ -3592,7 +3592,7 @@ def fl_set_object_shortcut(ptr_flobject, sctext, showit):
            const char * sstr, int showit) """)
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_sctext = library.convert_to_stringc(sctext)
+    s_sctext = library.convert_to_bytestrc(sctext)
     i_showit = library.convert_to_intc(showit)
     library.keep_elem_refs(ptr_flobject, sctext, s_sctext, showit, \
             i_showit)
@@ -3790,7 +3790,7 @@ def fl_set_object_label(ptr_flobject, label):
         """void fl_set_object_label(FL_OBJECT * ob, const char * label) """)
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(ptr_flobject, label, s_label)
     _fl_set_object_label(ptr_flobject, s_label)
 
@@ -3862,7 +3862,7 @@ def fl_set_object_helper(ptr_flobject, tooltip):
         """void fl_set_object_helper(FL_OBJECT * ob, const char * tip)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_tooltip = library.convert_to_stringc(tooltip)
+    s_tooltip = library.convert_to_bytestrc(tooltip)
     library.keep_elem_refs(ptr_flobject, tooltip, s_tooltip)
     _fl_set_object_helper(ptr_flobject, s_tooltip)
 
@@ -5231,7 +5231,7 @@ def fl_set_font_name(fontnum, name):
         """int fl_set_font_name(int n, const char * name)""")
     library.check_if_flinitialized()
     i_fontnum = library.convert_to_intc(fontnum)
-    s_name = library.convert_to_stringc(name)
+    s_name = library.convert_to_bytestrc(name)
     library.keep_elem_refs(fontnum, i_fontnum, name, s_name)
     retval = _fl_set_font_name(i_fontnum, s_name)
     return retval
@@ -5511,7 +5511,7 @@ def fl_get_string_height(style, size, txtstr, strlng):
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     i_strlng = library.convert_to_intc(strlng)
     i_ascndt, ptr_ascndt = library.make_intc_and_pointer()
     i_descndt, ptr_descndt = library.make_intc_and_pointer()
@@ -5590,7 +5590,7 @@ def fl_get_string_width(style, size, txtstr, strlng):
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     i_strlng = library.convert_to_intc(strlng)
     library.keep_elem_refs(style, i_style, size, i_size, txtstr, \
             s_txtstr, strlng, i_strlng)
@@ -5666,7 +5666,7 @@ def fl_get_string_widthTAB(style, size, txtstr, strlng):
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     i_strlng = library.convert_to_intc(strlng)
     library.keep_elem_refs(style, i_style, size, i_size, txtstr, \
             s_txtstr, strlng, i_strlng)
@@ -5752,7 +5752,7 @@ def fl_get_string_dimension(style, size, txtstr, strlng):
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     i_strlng = library.convert_to_intc(strlng)
     i_width, ptr_width = library.make_intc_and_pointer()
     i_height, ptr_height = library.make_intc_and_pointer()
@@ -5996,7 +5996,7 @@ def fl_drw_text(align, xpos, ypos, width, height, colr, style, size, txtstr):
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     library.keep_elem_refs(align, i_align, xpos, i_xpos, ypos, i_ypos, \
             width, i_width, height, i_height, colr, ul_colr, style, \
             i_style, size, i_size, txtstr, s_txtstr)
@@ -6102,7 +6102,7 @@ def fl_drw_text_beside(align, xpos, ypos, width, height, colr, style,
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     library.keep_elem_refs(align, i_align, xpos, i_xpos, ypos, i_ypos, \
             width, i_width, height, i_height, colr, ul_colr, style, \
             i_style, size, i_size, txtstr, s_txtstr)
@@ -6216,7 +6216,7 @@ def fl_drw_text_cursor(align, xpos, ypos, width, height, colr, style, size,
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
     i_size = library.convert_to_intc(size)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     #library.checknonfatal_allowed_value_in_list(curscolr, xfdata.COLOR_list)
     i_curscolr = library.convert_to_intc(curscolr)
     i_pos = library.convert_to_intc(pos)
@@ -6346,7 +6346,7 @@ def fl_add_symbol(symbname, pyfn_DrawPtr, scalable):
         """int fl_add_symbol(const char * name, FL_DRAWPTR drawit,
            int scalable)""")
     library.check_if_flinitialized()
-    s_symbname = library.convert_to_stringc(symbname)
+    s_symbname = library.convert_to_bytestrc(symbname)
     i_scalable = library.convert_to_intc(scalable)
     library.verify_function_type(pyfn_DrawPtr)
     cfn_DrawPtr = xfdata.FL_DRAWPTR(pyfn_DrawPtr)
@@ -6387,7 +6387,7 @@ def fl_delete_symbol(symbname):
         cty.c_int, [xfdata.STRING],\
         """int fl_delete_symbol(const char * name)""")
     library.check_if_flinitialized()
-    s_symbname = library.convert_to_stringc(symbname)
+    s_symbname = library.convert_to_bytestrc(symbname)
     library.keep_elem_refs(symbname, s_symbname)
     retval = _fl_delete_symbol(s_symbname)
     return retval
@@ -6435,7 +6435,7 @@ def fl_draw_symbol(symbname, xpos, ypos, width, height, colr):
         """int fl_draw_symbol(const char * label, FL_Coord x, FL_Coord y,
            FL_Coord w, FL_Coord h, FL_COLOR col)""")
     library.check_if_flinitialized()
-    s_symbname = library.convert_to_stringc(symbname)
+    s_symbname = library.convert_to_bytestrc(symbname)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
@@ -6539,7 +6539,7 @@ def fl_mapcolorname(colr, rgbcolrname):
     library.check_if_flinitialized()
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
-    s_rgbcolrname = library.convert_to_stringc(rgbcolrname)
+    s_rgbcolrname = library.convert_to_bytestrc(rgbcolrname)
     library.keep_elem_refs(colr, ul_colr, rgbcolrname, s_rgbcolrname)
     retval = _fl_mapcolorname(ul_colr, s_rgbcolrname)
     return retval
@@ -7171,7 +7171,7 @@ def fl_make_object(flobjclass, otype, xpos, ypos, width, height, label,
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.verify_function_type(pyfn_HandlePtr)
     cfn_HandlePtr = xfdata.FL_HANDLEPTR(pyfn_HandlePtr)
     library.keep_cfunc_refs(cfn_HandlePtr, pyfn_HandlePtr)

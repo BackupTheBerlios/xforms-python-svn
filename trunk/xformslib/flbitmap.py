@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage bitmap flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -99,7 +99,7 @@ def fl_add_bitmap(bitmaptype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(bitmaptype, xpos, ypos, width, height, \
             label, i_bitmaptype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_bitmap(i_bitmaptype, i_xpos, i_ypos, i_width, \
@@ -183,7 +183,7 @@ def fl_set_bitmap_file(ptr_flobject, fname):
         """void fl_set_bitmap_file(FL_OBJECT * ob, const char * fname)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
     _fl_set_bitmap_file(ptr_flobject, s_fname)
 
@@ -242,7 +242,7 @@ def fl_read_bitmapfile(win, fname):
            unsigned int * w, unsigned int * h, int * hotx, int * hoty)""")
     library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     i_width, ptr_width = library.make_uintc_and_pointer()
     i_height, ptr_height = library.make_uintc_and_pointer()
     i_hotx, ptr_hotx = library.make_intc_and_pointer()
@@ -292,7 +292,7 @@ def fl_create_from_bitmapdata(win, xbmdata, width, height):
            char * data, int width, int height)""")
     library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
-    s_xbmdata = library.convert_to_stringc(xbmdata)
+    s_xbmdata = library.convert_to_bytestrc(xbmdata)
     i_width = library.convert_to_intc(width)
     i_height = library.convert_to_intc(height)
     library.keep_elem_refs(win, xbmdata, width, height, ul_win, \
@@ -360,7 +360,7 @@ def fl_add_pixmap(pixmaptype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(pixmaptype, xpos, ypos, width, height, \
             label, i_pixmaptype, i_xpos, i_ypos, i_width, i_height, \
             s_label)
@@ -442,7 +442,7 @@ def fl_set_pixmap_file(ptr_flobject, fname):
         """void fl_set_pixmap_file(FL_OBJECT * ob, const char * fname)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
     _fl_set_pixmap_file(ptr_flobject, s_fname)
 
@@ -734,7 +734,7 @@ def fl_read_pixmapfile(win, fname, tran):
            int * hotx, int * hoty, FL_COLOR tran)""")
     library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     #library.checknonfatal_allowed_value_in_list(tran, xfdata.COLOR_list)
     ul_tran = library.convert_to_FL_COLOR(tran)
     ui_width, ptr_width = library.make_uintc_and_pointer()

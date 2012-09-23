@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage xyplot flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -109,7 +109,7 @@ def fl_add_xyplot(plottype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(plottype, xpos, ypos, width, height, label, \
             i_plottype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_xyplot(i_plottype, i_xpos, i_ypos, i_width, i_height, \
@@ -164,9 +164,9 @@ def fl_set_xyplot_data(ptr_flobject, xposlist, yposlist, numpoints, title,
     ptr_xposlist = library.convert_to_ptr_floatc(xposlist)
     ptr_yposlist = library.convert_to_ptr_floatc(yposlist)
     i_numpoints = library.convert_to_intc(numpoints)
-    s_title = library.convert_to_stringc(title)
-    s_xlabel = library.convert_to_stringc(xlabel)
-    s_ylabel = library.convert_to_stringc(ylabel)
+    s_title = library.convert_to_bytestrc(title)
+    s_xlabel = library.convert_to_bytestrc(xlabel)
+    s_ylabel = library.convert_to_bytestrc(ylabel)
     library.keep_elem_refs(ptr_flobject, xposlist, yposlist, numpoints, \
                 ptr_xposlist, ptr_yposlist, title, xlabel, ylabel, \
                 i_numpoints, s_title, s_xlabel, s_ylabel)
@@ -225,9 +225,9 @@ def fl_set_xyplot_data_double(ptr_flobject, xposlist, yposlist, numpoints,
     #ptr_ylist = cty.cast(ylist, cty.POINTER(cty.c_double))
     ptr_yposlist = library.convert_to_ptr_doublec(yposlist)
     i_numpoints = library.convert_to_intc(numpoints)
-    s_title = library.convert_to_stringc(title)
-    s_xlabel = library.convert_to_stringc(xlabel)
-    s_ylabel = library.convert_to_stringc(ylabel)
+    s_title = library.convert_to_bytestrc(title)
+    s_xlabel = library.convert_to_bytestrc(xlabel)
+    s_ylabel = library.convert_to_bytestrc(ylabel)
     library.keep_elem_refs(ptr_flobject, xposlist, yposlist, numpoints, \
             title, xlabel, ylabel, ptr_xposlist, ptr_yposlist, i_numpoints, \
             s_title, s_xlabel, s_ylabel)
@@ -282,10 +282,10 @@ def fl_set_xyplot_file(ptr_flobject, fname, title, xlabel, ylabel):
            const char * title, const char * xl, const char * yl)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_fname = library.convert_to_stringc(fname)
-    s_title = library.convert_to_stringc(title)
-    s_xlabel = library.convert_to_stringc(xlabel)
-    s_ylabel = library.convert_to_stringc(ylabel)
+    s_fname = library.convert_to_bytestrc(fname)
+    s_title = library.convert_to_bytestrc(title)
+    s_xlabel = library.convert_to_bytestrc(xlabel)
+    s_ylabel = library.convert_to_bytestrc(ylabel)
     library.keep_elem_refs(ptr_flobject, fname, title, xlabel, ylabel, \
             s_fname, s_title, s_xlabel, s_ylabel)
     retval = _fl_set_xyplot_file(ptr_flobject, s_fname, s_title, \
@@ -396,7 +396,7 @@ def fl_add_xyplot_text(ptr_flobject, xpos, ypos, text, align, colr):
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     f_xpos = library.convert_to_doublec(xpos)
     f_ypos = library.convert_to_doublec(ypos)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     library.checkfatal_allowed_value_in_list(align, xfdata.ALIGN_list)
     i_align = library.convert_to_intc(align)
     ul_colr = library.convert_to_FL_COLOR(colr)
@@ -432,7 +432,7 @@ def fl_delete_xyplot_text(ptr_flobject, text):
         """void fl_delete_xyplot_text(FL_OBJECT * ob, const char * text)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     library.keep_elem_refs(ptr_flobject, text, s_text)
     _fl_delete_xyplot_text(ptr_flobject, s_text)
 
@@ -572,7 +572,7 @@ def fl_add_xyplot_overlay_file(ptr_flobject, ovlnum, fname, colr):
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     #library.checknonfatal_allowed_value_in_list(colr, xfdata.COLOR_list)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, ovlnum, fname, colr, i_ovlnum, \
@@ -1604,7 +1604,7 @@ def fl_set_xyplot_key(ptr_flobject, ovlnum, keytxt):
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     i_ovlnum = library.convert_to_intc(ovlnum)
-    s_keytxt = library.convert_to_stringc(keytxt)
+    s_keytxt = library.convert_to_bytestrc(keytxt)
     library.keep_elem_refs(ptr_flobject, ovlnum, keytxt, i_ovlnum, s_keytxt)
     _fl_set_xyplot_key(ptr_flobject, i_ovlnum, s_keytxt)
 
@@ -2202,8 +2202,8 @@ def fl_set_xyplot_alphaxtics(ptr_flobject, ticmajor, ticminor):
             const char * s)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_ticmajor = library.convert_to_stringc(ticmajor)
-    s_ticminor = library.convert_to_stringc(ticminor)
+    s_ticmajor = library.convert_to_bytestrc(ticmajor)
+    s_ticminor = library.convert_to_bytestrc(ticminor)
     library.keep_elem_refs(ptr_flobject, ticmajor, ticminor, \
             s_ticmajor, s_ticminor)
     _fl_set_xyplot_alphaxtics(ptr_flobject, s_ticmajor, s_ticminor)
@@ -2251,8 +2251,8 @@ def fl_set_xyplot_alphaytics(ptr_flobject, ticmajor, ticminor):
             const char * s)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_ticmajor = library.convert_to_stringc(ticmajor)
-    s_ticminor = library.convert_to_stringc(ticminor)
+    s_ticmajor = library.convert_to_bytestrc(ticmajor)
+    s_ticminor = library.convert_to_bytestrc(ticminor)
     library.keep_elem_refs(ptr_flobject, ticmajor, ticminor, \
             s_ticmajor, s_ticminor)
     _fl_set_xyplot_alphaytics(ptr_flobject, s_ticmajor, s_ticminor)
@@ -2294,8 +2294,8 @@ def fl_set_xyplot_fixed_xaxis(ptr_flobject, leftmrg, rightmrg):
             const char * rm)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_leftmrg = library.convert_to_stringc(leftmrg)
-    s_rightmrg = library.convert_to_stringc(rightmrg)
+    s_leftmrg = library.convert_to_bytestrc(leftmrg)
+    s_rightmrg = library.convert_to_bytestrc(rightmrg)
     library.keep_elem_refs(ptr_flobject, leftmrg, rightmrg, \
             s_leftmrg, s_rightmrg)
     _fl_set_xyplot_fixed_xaxis(ptr_flobject, s_leftmrg, s_rightmrg)
@@ -2339,8 +2339,8 @@ def fl_set_xyplot_fixed_yaxis(ptr_flobject, bottommrg, topmrg):
             const char * tm)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_bottommrg = library.convert_to_stringc(bottommrg)
-    s_topmrg = library.convert_to_stringc(topmrg)
+    s_bottommrg = library.convert_to_bytestrc(bottommrg)
+    s_topmrg = library.convert_to_bytestrc(topmrg)
     library.keep_elem_refs(ptr_flobject, bottommrg, topmrg, \
             s_bottommrg, s_topmrg)
     _fl_set_xyplot_fixed_yaxis(ptr_flobject, s_bottommrg, s_topmrg)

@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage miscellaneous flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -112,7 +112,7 @@ def fl_add_box(boxtype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(boxtype, xpos, ypos, width, height, label, \
             i_boxtype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_box(i_boxtype, i_xpos, i_ypos, i_width, \
@@ -352,7 +352,7 @@ def fl_object_ps_dump(ptr_flobject, fname):
         """int fl_object_ps_dump(FL_OBJECT * ob, const char * fname)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
     retval = _fl_object_ps_dump(ptr_flobject, s_fname)
     return retval
@@ -433,7 +433,7 @@ def fl_add_frame(frametype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(frametype, xpos, ypos, width, height, label, \
             i_frametype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_frame(i_frametype, i_xpos, i_ypos, i_width, \
@@ -507,7 +507,7 @@ def fl_add_labelframe(frametype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(frametype, xpos, ypos, width, height, label, \
             i_frametype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_labelframe(i_frametype, i_xpos, i_ypos, i_width, \
@@ -606,7 +606,7 @@ def fl_add_free(freetype, xpos, ypos, width, height, label, pyfn_HandlePtr):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.verify_function_type(pyfn_HandlePtr)
     cfn_HandlePtr = xfdata.FL_HANDLEPTR(pyfn_HandlePtr)
     library.keep_cfunc_refs(cfn_HandlePtr, pyfn_HandlePtr)
@@ -702,7 +702,7 @@ def fl_add_text(texttype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(texttype, xpos, ypos, width, height, label, \
             i_texttype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_text(i_texttype, i_xpos, i_ypos, i_width, i_height, \

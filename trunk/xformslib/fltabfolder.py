@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage tabfolder flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -100,7 +100,7 @@ def fl_add_tabfolder(foldertype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(foldertype, xpos, ypos, width, height, label, \
             i_foldertype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_tabfolder(i_foldertype, i_xpos, i_ypos, i_width, \
@@ -155,7 +155,7 @@ def fl_addto_tabfolder(ptr_flobject, tabtitle, ptr_flform):
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flformptr_type(ptr_flform)
-    s_tabtitle = library.convert_to_stringc(tabtitle)
+    s_tabtitle = library.convert_to_bytestrc(tabtitle)
     library.keep_elem_refs(ptr_flobject, tabtitle, ptr_flform, s_tabtitle)
     retval = _fl_addto_tabfolder(ptr_flobject, s_tabtitle, ptr_flform)
     return retval
@@ -234,7 +234,7 @@ def fl_get_tabfolder_folder_byname(ptr_flobject, name):
            const char * name)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_name = library.convert_to_stringc(name)
+    s_name = library.convert_to_bytestrc(name)
     library.keep_elem_refs(ptr_flobject, name, s_name)
     retval = _fl_get_tabfolder_folder_byname(ptr_flobject, s_name)
     return retval
@@ -340,7 +340,7 @@ def fl_delete_folder_byname(ptr_flobject, name):
         """void fl_delete_folder_byname(FL_OBJECT * ob, const char * name)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_name = library.convert_to_stringc(name)
+    s_name = library.convert_to_bytestrc(name)
     library.keep_elem_refs(ptr_flobject, name, s_name)
     _fl_delete_folder_byname(ptr_flobject, s_name)
 
@@ -404,7 +404,7 @@ def fl_set_folder_byname(ptr_flobject, name):
         """void fl_set_folder_byname(FL_OBJECT * ob, const char * name)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    sname = library.convert_to_stringc(name)
+    sname = library.convert_to_bytestrc(name)
     library.keep_elem_refs(ptr_flobject, name, sname)
     _fl_set_folder_byname(ptr_flobject, name)
 

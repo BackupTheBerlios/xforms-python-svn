@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage chart flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail:  <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,7 @@ def fl_add_chart(charttype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(charttype, xpos, ypos, width, height, label, \
             i_charttype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_chart(i_charttype, i_xpos, i_ypos, i_width, i_height, \
@@ -174,7 +174,7 @@ def fl_add_chart_value(ptr_flobject, itemval, label, colr):
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     f_itemval = library.convert_to_doublec(itemval)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, itemval, label, colr, f_itemval, \
             s_label, ul_colr)
@@ -220,7 +220,7 @@ def fl_insert_chart_value(ptr_flobject, indx, itemval, label, colr):
     library.verify_flobjectptr_type(ptr_flobject)
     i_indx = library.convert_to_intc(indx)
     f_itemval = library.convert_to_doublec(itemval)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, indx, itemval, label, colr, \
             i_indx, f_itemval, s_label, ul_colr)
@@ -265,7 +265,7 @@ def fl_replace_chart_value(ptr_flobject, indx, itemval, label, colr):
     library.verify_flobjectptr_type(ptr_flobject)
     i_indx = library.convert_to_intc(indx)
     f_itemval = library.convert_to_doublec(itemval)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     ul_colr = library.convert_to_FL_COLOR(colr)
     library.keep_elem_refs(ptr_flobject, indx, itemval, label, colr, \
             i_indx, f_itemval, s_label, ul_colr)

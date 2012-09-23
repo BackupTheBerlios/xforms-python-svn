@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage files and directories.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -89,8 +89,8 @@ def fl_get_dirlist(dirname, pattern, rescan):
         """const FL_Dirlist * fl_get_dirlist(const char * dir,
            const char * pattern, int * n, int rescan)""")
     library.check_if_flinitialized()
-    s_dirname = library.convert_to_stringc(dirname)
-    s_pattern = library.convert_to_stringc(pattern)
+    s_dirname = library.convert_to_bytestrc(dirname)
+    s_pattern = library.convert_to_bytestrc(pattern)
     i_numfiles, ptr_numfiles = library.make_intc_and_pointer()
     i_rescan = library.convert_to_intc(rescan)
     library.keep_elem_refs(dirname, pattern, i_numfiles, rescan, s_dirname, \
@@ -317,7 +317,7 @@ def fl_is_valid_dir(dirname):
         cty.c_int, [xfdata.STRING],
         """int fl_is_valid_dir(const char * name)""")
     library.check_if_flinitialized()
-    s_dirname = library.convert_to_stringc(dirname)
+    s_dirname = library.convert_to_bytestrc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_is_valid_dir(s_dirname)
     return retval
@@ -353,7 +353,7 @@ def fl_fmtime(fname):
         cty.c_ulong, [xfdata.STRING],
         """long unsigned int fl_fmtime(const char * s)""")
     library.check_if_flinitialized()
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _fl_fmtime(s_fname)
     return retval
@@ -389,7 +389,7 @@ def fl_fix_dirname(dirname):
         xfdata.STRING, [xfdata.STRING],
         """char * fl_fix_dirname(char * dir)""")
     library.check_if_flinitialized()
-    s_dirname = library.convert_to_stringc(dirname)
+    s_dirname = library.convert_to_bytestrc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_fix_dirname(s_dirname)
     if isinstance(retval, bytes):

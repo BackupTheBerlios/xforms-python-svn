@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage goodies flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -129,9 +129,9 @@ def fl_show_message(msgtxt1, msgtxt2, msgtxt3):
         """void fl_show_message(const char * p1, const char * p2,
            const char * p3)""")
     library.check_if_flinitialized()
-    s_msgtxt1 = library.convert_to_stringc(msgtxt1)
-    s_msgtxt2 = library.convert_to_stringc(msgtxt2)
-    s_msgtxt3 = library.convert_to_stringc(msgtxt3)
+    s_msgtxt1 = library.convert_to_bytestrc(msgtxt1)
+    s_msgtxt2 = library.convert_to_bytestrc(msgtxt2)
+    s_msgtxt3 = library.convert_to_bytestrc(msgtxt3)
     library.keep_elem_refs(msgtxt1, msgtxt2, msgtxt3, s_msgtxt1, \
             s_msgtxt2, s_msgtxt3)
     _fl_show_message(s_msgtxt1, s_msgtxt2, s_msgtxt3)
@@ -166,7 +166,7 @@ def fl_show_messages(msgtxt):
         None, [xfdata.STRING],
         """void fl_show_messages(const char * p1)""")
     library.check_if_flinitialized()
-    s_msgtxt = library.convert_to_stringc(msgtxt)
+    s_msgtxt = library.convert_to_bytestrc(msgtxt)
     library.keep_elem_refs(msgtxt, s_msgtxt)
     _fl_show_messages(s_msgtxt)
 
@@ -203,7 +203,7 @@ def fl_show_msg(fmttxt):
         None, [xfdata.STRING],
         """void fl_show_msg(const char * p1)""")
     library.check_if_flinitialized()
-    s_fmttxt = library.convert_to_stringc(fmttxt)
+    s_fmttxt = library.convert_to_bytestrc(fmttxt)
     library.keep_elem_refs(fmttxt, s_fmttxt)
     _fl_show_msg(s_fmttxt)
 
@@ -269,7 +269,7 @@ def fl_show_question(questmsg, defbtn):
         cty.c_int, [xfdata.STRING, cty.c_int],
         """int fl_show_question(const char * p1, int p2)""")
     library.check_if_flinitialized()
-    s_questmsg = library.convert_to_stringc(questmsg)
+    s_questmsg = library.convert_to_bytestrc(questmsg)
     i_defbtn = library.convert_to_intc(defbtn)
     library.keep_elem_refs(questmsg, defbtn, s_questmsg, i_defbtn)
     retval = _fl_show_question(s_questmsg, i_defbtn)
@@ -331,9 +331,9 @@ def fl_show_alert(title, msgtxt1, msgtxt2, centered):
         """void fl_show_alert(const char * p1, const char * p2,
            const char * p3, int p4)""")
     library.check_if_flinitialized()
-    s_title = library.convert_to_stringc(title)
-    s_msgtxt1 = library.convert_to_stringc(msgtxt1)
-    s_msgtxt2 = library.convert_to_stringc(msgtxt2)
+    s_title = library.convert_to_bytestrc(title)
+    s_msgtxt1 = library.convert_to_bytestrc(msgtxt1)
+    s_msgtxt2 = library.convert_to_bytestrc(msgtxt2)
     i_centered = library.convert_to_intc(centered)
     library.keep_elem_refs(title, msgtxt1, msgtxt2, centered, s_title, \
             s_msgtxt1, s_msgtxt2, i_centered)
@@ -373,7 +373,7 @@ def fl_show_alert2(centered, fmttxt):
         """void fl_show_alert2(int c, const char * fmt)""")
     library.check_if_flinitialized()
     i_centered = library.convert_to_intc(centered)
-    s_fmttxt = library.convert_to_stringc(fmttxt)
+    s_fmttxt = library.convert_to_bytestrc(fmttxt)
     library.keep_elem_refs(centered, fmttxt, i_centered, s_fmttxt)
     _fl_show_alert2(i_centered, s_fmttxt)
 
@@ -432,8 +432,8 @@ def fl_show_input(msgtxt, defstr):
         xfdata.STRING, [xfdata.STRING, xfdata.STRING],
         """const char * fl_show_input(const char * p1, const char * p2)""")
     library.check_if_flinitialized()
-    s_msgtxt = library.convert_to_stringc(msgtxt)
-    s_defstr = library.convert_to_stringc(defstr)
+    s_msgtxt = library.convert_to_bytestrc(msgtxt)
+    s_defstr = library.convert_to_bytestrc(defstr)
     library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
     retval = _fl_show_input(s_msgtxt, s_defstr)
     if isinstance(retval, bytes):
@@ -497,8 +497,8 @@ def fl_show_simple_input(msgtxt, defstr):
         """const char * fl_show_simple_input(const char * p1,
            const char * p2)""")
     library.check_if_flinitialized()
-    s_msgtxt = library.convert_to_stringc(msgtxt)
-    s_defstr = library.convert_to_stringc(defstr)
+    s_msgtxt = library.convert_to_bytestrc(msgtxt)
+    s_defstr = library.convert_to_bytestrc(defstr)
     library.keep_elem_refs(msgtxt, defstr, s_msgtxt, s_defstr)
     retval = _fl_show_simple_input(s_msgtxt, s_defstr)
     if isinstance(retval, bytes):
@@ -596,11 +596,11 @@ def fl_show_choices(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, defcho):
         """int fl_show_choices(const char * p1, int p2,
            const char * p3, const char * p4, const char * p5, int p6)""")
     library.check_if_flinitialized()
-    s_msgtxt = library.convert_to_stringc(msgtxt)
+    s_msgtxt = library.convert_to_bytestrc(msgtxt)
     i_numbtns = library.convert_to_intc(numbtns)
-    s_btn1txt = library.convert_to_stringc(btn1txt)
-    s_btn2txt = library.convert_to_stringc(btn2txt)
-    s_btn3txt = library.convert_to_stringc(btn3txt)
+    s_btn1txt = library.convert_to_bytestrc(btn1txt)
+    s_btn2txt = library.convert_to_bytestrc(btn2txt)
+    s_btn3txt = library.convert_to_bytestrc(btn3txt)
     i_defcho = library.convert_to_intc(defcho)
     library.keep_elem_refs(msgtxt, numbtns, btn1txt, btn2txt, btn3txt, \
             defcho, s_msgtxt, i_numbtns, s_btn1txt, s_btn2txt, s_btn3txt, \
@@ -661,13 +661,13 @@ def fl_show_choice(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, btn2txt,
            const char * p3, int p4, const char * p5, const char * p6,
            const char * p7, int p8)""")
     library.check_if_flinitialized()
-    s_msg1txt = library.convert_to_stringc(msg1txt)
-    s_msg2txt = library.convert_to_stringc(msg2txt)
-    s_msg3txt = library.convert_to_stringc(msg3txt)
+    s_msg1txt = library.convert_to_bytestrc(msg1txt)
+    s_msg2txt = library.convert_to_bytestrc(msg2txt)
+    s_msg3txt = library.convert_to_bytestrc(msg3txt)
     i_numbtns = library.convert_to_intc(numbtns)
-    s_btn1txt = library.convert_to_stringc(btn1txt)
-    s_btn2txt = library.convert_to_stringc(btn2txt)
-    s_btn3txt = library.convert_to_stringc(btn3txt)
+    s_btn1txt = library.convert_to_bytestrc(btn1txt)
+    s_btn2txt = library.convert_to_bytestrc(btn2txt)
+    s_btn3txt = library.convert_to_bytestrc(btn3txt)
     i_defcho = library.convert_to_intc(defcho)
     library.keep_elem_refs(msg1txt, msg2txt, msg3txt, numbtns, btn1txt, \
             btn2txt, btn3txt, defcho, s_msg1txt, s_msg2txt, s_msg3txt, \
@@ -728,9 +728,9 @@ def fl_set_choices_shortcut(sctext1, sctext2, sctext3):
         """void fl_set_choices_shortcut(const char * p1, const char * p2,
            const char * p3)""")
     library.check_if_flinitialized()
-    s_sctext1 = library.convert_to_stringc(sctext1)
-    s_sctext2 = library.convert_to_stringc(sctext2)
-    s_sctext3 = library.convert_to_stringc(sctext3)
+    s_sctext1 = library.convert_to_bytestrc(sctext1)
+    s_sctext2 = library.convert_to_bytestrc(sctext2)
+    s_sctext3 = library.convert_to_bytestrc(sctext3)
     library.keep_elem_refs(sctext1, sctext2, sctext3, s_sctext1, s_sctext2, \
             s_sctext3)
     _fl_set_choices_shortcut(s_sctext1, s_sctext2, s_sctext3)
@@ -771,7 +771,7 @@ def fl_show_oneliner(text, xpos, ypos):
         """void fl_show_oneliner(const char * p1, FL_Coord p2,
            FL_Coord p3)""")
     library.check_if_flinitialized()
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     i_xpos = library.convert_to_FL_Coord(xpos)
     i_ypos = library.convert_to_FL_Coord(ypos)
     library.keep_elem_refs(text, s_text, xpos, i_xpos, ypos, i_ypos)
@@ -1097,7 +1097,7 @@ def fl_exe_command(cmdtxt, block):
         cty.c_long, [xfdata.STRING, cty.c_int],
         """long int fl_exe_command(const char * p1, int p2)""")
     library.check_if_flinitialized()
-    s_cmdtxt = library.convert_to_stringc(cmdtxt)
+    s_cmdtxt = library.convert_to_bytestrc(cmdtxt)
     i_block = library.convert_to_intc(block)
     library.keep_elem_refs(cmdtxt, block, s_cmdtxt, i_block)
     retval = _fl_exe_command(s_cmdtxt, i_block)
@@ -1216,8 +1216,8 @@ def fl_popen(cmdtxt, opntype):
         cty.POINTER(xfdata.FILE), [xfdata.STRING, xfdata.STRING],
         """FILE * fl_popen(const char * p1, const char * p2)""")
     library.check_if_flinitialized()
-    s_cmdtxt = library.convert_to_stringc(cmdtxt)
-    s_opntype = library.convert_to_stringc(opntype)
+    s_cmdtxt = library.convert_to_bytestrc(cmdtxt)
+    s_opntype = library.convert_to_bytestrc(opntype)
     library.keep_elem_refs(cmdtxt, opntype, s_cmdtxt, s_opntype)
     retval = _fl_popen(s_cmdtxt, s_opntype)
     return retval
@@ -1392,7 +1392,7 @@ def fl_addto_command_log(txtstr):
         None, [xfdata.STRING],
         """void fl_addto_command_log(const char * p1)""")
     library.check_if_flinitialized()
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     library.keep_elem_refs(txtstr, s_txtstr)
     _fl_addto_command_log(s_txtstr)
 
@@ -1539,10 +1539,10 @@ def fl_show_fselector(msgtxt, dirname, pattern, deftxt):
         """const char * fl_show_fselector(const char * p1,
            const char * p2, const char * p3, const char * p4)""")
     library.check_if_flinitialized()
-    s_msgtxt = library.convert_to_stringc(msgtxt)
-    s_dirname = library.convert_to_stringc(dirname)
-    s_pattern = library.convert_to_stringc(pattern)
-    s_deftxt = library.convert_to_stringc(deftxt)
+    s_msgtxt = library.convert_to_bytestrc(msgtxt)
+    s_dirname = library.convert_to_bytestrc(dirname)
+    s_pattern = library.convert_to_bytestrc(pattern)
+    s_deftxt = library.convert_to_bytestrc(deftxt)
     library.keep_elem_refs(msgtxt, dirname, pattern, deftxt, s_msgtxt,
             s_dirname, s_pattern, s_deftxt)
     retval = _fl_show_fselector(s_msgtxt, s_dirname, s_pattern, s_deftxt)
@@ -1904,7 +1904,7 @@ def fl_set_directory(dirname):
         cty.c_int, [xfdata.STRING],
         """int fl_set_directory(const char * p1)""")
     library.check_if_flinitialized()
-    s_dirname = library.convert_to_stringc(dirname)
+    s_dirname = library.convert_to_bytestrc(dirname)
     library.keep_elem_refs(dirname, s_dirname)
     retval = _fl_set_directory(s_dirname)
     return retval
@@ -1934,7 +1934,7 @@ def fl_set_pattern(pattern):
         None, [xfdata.STRING],
         """void fl_set_pattern(const char * p1)""")
     library.check_if_flinitialized()
-    s_pattern = library.convert_to_stringc(pattern)
+    s_pattern = library.convert_to_bytestrc(pattern)
     library.keep_elem_refs(pattern, s_pattern)
     _fl_set_pattern(s_pattern)
 
@@ -1998,7 +1998,7 @@ def fl_add_fselector_appbutton(label, pyfn_fselappbtn, userdata):
         """void fl_add_fselector_appbutton(const char * p1,
            const char * p2, void * p3)""")
     library.check_if_flinitialized()
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.verify_function_type(pyfn_fselappbtn)
     cfn_fselappbtn = cfunc_none_voidp(pyfn_fselappbtn)
     ptr_vdata = library.convert_userdata_to_ptrvoid(userdata)
@@ -2031,7 +2031,7 @@ def fl_remove_fselector_appbutton(label):
         None, [xfdata.STRING],
         """void fl_remove_fselector_appbutton(const char * p1)""")
     library.check_if_flinitialized()
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(label, s_label)
     _fl_remove_fselector_appbutton(s_label)
 

@@ -4,7 +4,7 @@
 """ Support functions to deal with xforms-python wrapper's functions.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ def fls_make_ptr_flpopupitem(dictpopupitems):
                     dictpopupitems)
         else:
             pyclstext = dictpopupitems['text']
-            s_clstext = library.convert_to_stringc(pyclstext)
+            s_clstext = library.convert_to_bytestrc(pyclstext)
 
         if not 'callback' in dictpopupitems:  # no callback passed
             pyclscallback = donothing_flpopupcb
@@ -67,7 +67,7 @@ def fls_make_ptr_flpopupitem(dictpopupitems):
                     dictpopupitems)
         else:
             pyclsshortcut = dictpopupitems['shortcut']
-            s_clsshortcut = library.convert_to_stringc(pyclsshortcut)
+            s_clsshortcut = library.convert_to_bytestrc(pyclsshortcut)
 
         if not 'type' in dictpopupitems:    # no type passed
             pyclstype = xfdata.FL_POPUP_NORMAL
@@ -118,7 +118,7 @@ def fls_make_ptr_flpopupitem(dictpopupitems):
                         " key" % dictpopupitems[numb])
             else:
                 pyclstext[numb] = dictpopupitems[numb]['text']
-                s_clstext[numb] = library.convert_to_stringc(pyclstext[numb])
+                s_clstext[numb] = library.convert_to_bytestrc(pyclstext[numb])
             if not 'callback' in dictpopupitems[numb]:
                 pyclscallback[numb] = donothing_flpopupcb
             else:                       # no callback passed
@@ -130,7 +130,7 @@ def fls_make_ptr_flpopupitem(dictpopupitems):
                         "'shortcut' key" % dictpopupitems[numb])
             else:
                 pyclsshortcut[numb] = dictpopupitems[numb]['shortcut']
-                s_clsshortcut[numb] = library.convert_to_stringc( \
+                s_clsshortcut[numb] = library.convert_to_bytestrc( \
                         pyclsshortcut[numb])
             if not 'type' in dictpopupitems[numb]:    # no type passed
                 pyclstype[numb] = xfdata.FL_POPUP_NORMAL
@@ -310,11 +310,11 @@ def fls_make_ptr_fliopt(dictfliopt):
             fliopt[0].safe = i_safe
         if 'rgbfile' in dictfliopt:
             pyrgbfile = dictfliopt['rgbfile']
-            s_rgbfile = library.convert_to_stringc(pyrgbfile)
+            s_rgbfile = library.convert_to_bytestrc(pyrgbfile)
             fliopt[0].rgbfile = s_rgbfile
         if 'vname' in dictfliopt:
             pyvname = dictfliopt['vname']
-            s_vname = library.convert_to_stringc(pyvname)
+            s_vname = library.convert_to_bytestrc(pyvname)
             fliopt[0].vname = s_vname
 
         ptr_fliopt = cty.pointer(fliopt[0])
@@ -359,7 +359,7 @@ def fls_make_ptr_flcmdopt(dictflcmdopt):
                     dictflcmdopt)
         else:
             pyoption = dictflcmdopt['option']
-            s_option = library.convert_to_stringc(pyoption)
+            s_option = library.convert_to_bytestrc(pyoption)
 
         if not 'specifier' in dictflcmdopt:   # no specifier passed
             raise library.XFormsTypeError("fls_make_ptr_flcmdopt dict (" \
@@ -367,7 +367,7 @@ def fls_make_ptr_flcmdopt(dictflcmdopt):
                     "key" % dictflcmdopt)
         else:
             pyspecifier = dictflcmdopt['specifier']
-            s_specifier = library.convert_to_stringc(pyspecifier)
+            s_specifier = library.convert_to_bytestrc(pyspecifier)
 
         if not 'argKind' in dictflcmdopt:     # no argKind passed
             raise library.XFormsTypeError("fls_make_ptr_flcmdopt dict (" \
@@ -383,7 +383,7 @@ def fls_make_ptr_flcmdopt(dictflcmdopt):
                     dictflcmdopt)
         else:
             pyvalue = dictflcmdopt['value']
-            s_value = library.convert_to_stringc(pyvalue)
+            s_value = library.convert_to_bytestrc(pyvalue)
 
         flcmdopt = xfdata.FL_CMD_OPT()      # * 2)()
         flcmdopt.option = s_option
@@ -416,14 +416,14 @@ def fls_make_ptr_flcmdopt(dictflcmdopt):
                         "'option' key" % dictflcmdopt[numb])
             else:
                 pyoption[numb] = dictflcmdopt[numb]['option']
-                s_option[numb] = library.convert_to_stringc(pyoption[numb])
+                s_option[numb] = library.convert_to_bytestrc(pyoption[numb])
             if not 'specifier' in dictflcmdopt[numb]:   # no specifier passed
                 raise library.XFormsTypeError("fls_make_ptr_flcmdopt " \
                         "dict (whose contents is %s) should have a " \
                         "'specifier' key" % dictflcmdopt[numb])
             else:
                 pyspecifier[numb] = dictflcmdopt[numb]['specifier']
-                s_specifier[numb] = library.convert_to_stringc( \
+                s_specifier[numb] = library.convert_to_bytestrc( \
                         pyspecifier[numb])
             if not 'argKind' in dictflcmdopt[numb]:     # no argKind passed
                 raise library.XFormsTypeError("fls_make_ptr_flcmdopt dict " \
@@ -438,7 +438,7 @@ def fls_make_ptr_flcmdopt(dictflcmdopt):
                         "key" % dictflcmdopt[numb])
             else:
                 pyvalue[numb] = dictflcmdopt[numb]['value']
-                s_value[numb] = library.convert_to_stringc(pyvalue[numb])
+                s_value[numb] = library.convert_to_bytestrc(pyvalue[numb])
 
             flcmdopt[numb].option = s_option[numb]
             flcmdopt[numb].specifier = s_specifier[numb]
@@ -480,14 +480,14 @@ def fls_make_ptr_flresource(dictflresource):
                     dictflresource)
         else:
             pyclsresname = dictflresource['res_name']
-            s_clsresname = library.convert_to_stringc(pyclsresname)
+            s_clsresname = library.convert_to_bytestrc(pyclsresname)
         if not 'res_class' in dictflresource:   # no res_class passed
             raise library.XFormsTypeError("fls_make_ptr_flresource dict (" \
                     "whose contents is %s) should have a 'res_class' key" % \
                     dictflresource)
         else:
             pyclsresclass = dictflresource['res_class']
-            s_clsresclass = library.convert_to_stringc(pyclsresclass)
+            s_clsresclass = library.convert_to_bytestrc(pyclsresclass)
         if not 'type' in dictflresource:     # no type passed
             raise library.XFormsTypeError("fls_make_ptr_flresource dict (" \
                     "whose contents is %s) should have a 'type' key" % \
@@ -512,7 +512,7 @@ def fls_make_ptr_flresource(dictflresource):
             elif i_clstype.value == xfdata.FL_FLOAT:
                 tmpclsvar = library.convert_to_floatc(pyclsvar)
             elif i_clstype.value == xfdata.FL_STRING:
-                tmpclsvar = library.convert_to_stringc(pyclsvar)
+                tmpclsvar = library.convert_to_bytestrc(pyclsvar)
             else:
                 tmpclsvar = None
             ptr_clsvar = cty.pointer(tmpclsvar)
@@ -522,7 +522,7 @@ def fls_make_ptr_flresource(dictflresource):
                     dictflresource)
         else:
             pyclsdefval = dictflresource['defval']
-            s_clsdefval = library.convert_to_stringc(pyclsdefval)
+            s_clsdefval = library.convert_to_bytestrc(pyclsdefval)
         if not 'nbytes' in dictflresource:     # no nbytes passed
             raise library.XFormsTypeError("fls_make_ptr_flresource dict (" \
                     "whose contents is %s) should have a 'nbytes' key" % \
@@ -568,7 +568,7 @@ def fls_make_ptr_flresource(dictflresource):
                         "'res_name' key" % dictflresource[numb])
             else:
                 pyclsresname[numb] = dictflresource[numb]['res_name']
-                s_clsresname[numb] = library.convert_to_stringc( \
+                s_clsresname[numb] = library.convert_to_bytestrc( \
                         pyclsresname[numb])
             if not 'res_class' in dictflresource[numb]:  # no res_class passed
                 raise library.XFormsTypeError("fls_make_ptr_flresource " \
@@ -576,7 +576,7 @@ def fls_make_ptr_flresource(dictflresource):
                         "'res_class' key" % dictflresource[numb])
             else:
                 pyclsresclass[numb] = dictflresource[numb]['res_class']
-                s_clsresclass[numb] = library.convert_to_stringc( \
+                s_clsresclass[numb] = library.convert_to_bytestrc( \
                         pyclsresclass[numb])
             if not 'type' in dictflresource[numb]:     # no type passed
                 raise library.XFormsTypeError("fls_make_ptr_flresource " \
@@ -606,7 +606,7 @@ def fls_make_ptr_flresource(dictflresource):
                     tmpclsvar[numb] = library.convert_to_floatc( \
                             pyclsvar[numb])
                 elif i_clstype[numb].value == xfdata.FL_STRING:
-                    tmpclsvar[numb] = library.convert_to_stringc( \
+                    tmpclsvar[numb] = library.convert_to_bytestrc( \
                             pyclsvar[numb])
                 else:
                     tmpclsvar[numb] = None
@@ -617,7 +617,7 @@ def fls_make_ptr_flresource(dictflresource):
                         dictflresource[numb])
             else:
                 pyclsdefval[numb] = dictflresource[numb]['defval']
-                s_clsdefval[numb] = library.convert_to_stringc( \
+                s_clsdefval[numb] = library.convert_to_bytestrc( \
                         pyclsdefval[numb])
             if not 'nbytes' in dictflresource[numb]:     # no nbytes passed
                 raise library.XFormsTypeError("fls_make_ptr_flresource dict " \
@@ -890,7 +890,7 @@ def fls_make_ptr_flimagetext(dictflimagetext):
                     dictflimagetext)
         else:
             pyclsstr = dictflimagetext['str']
-            s_clsstr = library.convert_to_stringc(pyclsstr)
+            s_clsstr = library.convert_to_bytestrc(pyclsstr)
 
         if not 'len' in dictflimagetext:      # no len passed
             raise library.XFormsTypeError("fls_make_ptr_flimagetext dict (" \
@@ -1032,7 +1032,7 @@ def fls_make_ptr_flimagemarker(dictflimagemarker):
                     dictflimagemarker)
         else:
             pyclsname = dictflimagemarker['name']
-            s_clsname = library.convert_to_stringc(pyclsname)
+            s_clsname = library.convert_to_bytestrc(pyclsname)
 
         if not 'w' in dictflimagemarker:      # no w passed
             raise library.XFormsTypeError("fls_make_ptr_flimagemarker dict (" \

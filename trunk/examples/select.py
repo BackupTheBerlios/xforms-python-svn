@@ -32,7 +32,7 @@ class Flselect(object):
 
 
     def cb(self, pr):
-        message = "CallBack: %s" % pr.contents.label
+        message = "CallBack: %s" % pr.contents.label.decode('utf-8')
         print(message)
         return 0
 

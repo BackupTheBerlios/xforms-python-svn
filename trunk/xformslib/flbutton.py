@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage button flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -120,7 +120,7 @@ def fl_add_roundbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_roundbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -192,7 +192,7 @@ def fl_add_round3dbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_round3dbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -264,7 +264,7 @@ def fl_add_lightbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_lightbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -336,7 +336,7 @@ def fl_add_checkbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_checkbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -408,7 +408,7 @@ def fl_add_button(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_button(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -480,7 +480,7 @@ def fl_add_bitmapbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_bitmapbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -552,7 +552,7 @@ def fl_add_scrollbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_scrollbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -624,7 +624,7 @@ def fl_add_labelbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_labelbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -740,7 +740,7 @@ def fl_add_pixmapbutton(buttontype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(buttontype, xpos, ypos, width, height, label, \
             i_buttontype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_pixmapbutton(i_buttontype, i_xpos, i_ypos, i_width, \
@@ -848,7 +848,7 @@ def fl_set_pixmapbutton_focus_file(ptr_flobject, fname):
            const char * fname)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(ptr_flobject, fname, s_fname)
     _fl_set_pixmapbutton_focus_file(ptr_flobject, s_fname)
 
@@ -1072,7 +1072,7 @@ def fl_create_generic_button(btnclass, buttontype, xpos, ypos, width, height,
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(btnclass, buttontype, xpos, ypos, width, height, \
             label, i_btnclass, i_buttontype, i_xpos, i_ypos, i_width, \
             i_height, s_label)

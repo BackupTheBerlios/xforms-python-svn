@@ -4,7 +4,7 @@
 """ Convenience/internal functions to deal with xforms-python wrapper's
     functions.
 
-    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
     e-mail: <lukenshiro@ngi.it>
 
     This program is free software: you can redistribute it and/or modify
@@ -68,6 +68,13 @@ class XFormsFuncNotSupported(ValueError):
 class XFormsWarning(Warning):
     """ Generic warning for non fatal errors"""
     pass
+
+
+def verify_python_ver():
+    """ Bail out if python 2.x is used. """
+    if sys.version_info.major < 3:
+        raise XFormsGenericError("Beware: you need to use Python 3.x "
+                "Version 2.x is no longer supported.")
 
 
 def get_xforms_version():
@@ -224,6 +231,7 @@ def load_so_libx11():
 
 def cfuncproto(library, cfuncname, retval, arglist, doc=""):
     """ Prototype for C functions to be wrapped in python """
+    verify_python_ver()
     loadedfunc = None
     try:
         loadedfunc = getattr(library, cfuncname)
@@ -241,7 +249,6 @@ def cfuncproto(library, cfuncname, retval, arglist, doc=""):
             else:
                 uniqueargslist.append(argelems) # if it is not
         loadedfunc.argtypes = uniqueargslist
-
     return loadedfunc
 
 
@@ -277,22 +284,20 @@ def set_flimageinitialized():
 # functions to convert a parameter into a python type then into the
 # equivalent ctypes type
 
-def convert_to_stringc(paramname):
-    """ Converts paramname to python str and to ctypes c_char_p """
+def convert_to_bytestrc(paramname):
+    """ Converts paramname to python bytes and to ctypes c_char_p """
     if isinstance(paramname, cty.c_char_p):
         return paramname
     elif isinstance(paramname, bytes):
-        #sparamname = paramname.decode("utf-8")
         retv = cty.c_char_p(paramname)
     elif isinstance(paramname, str):
         bparamname = bytes(paramname, "utf-8")
         retv = cty.c_char_p(bparamname)
-        #retv = cty.c_char_p(paramname)
         return retv
-    else:               # not a str / unicode str / c_char_p
+    else:               # not a bytes str / unicode str / c_char_p
         raise XFormsTypeError("Provided parameter '%s' is of %s, "
-                "but a 'bytes'/'str'/'c_char_p' type should be used." % \
-                (paramname, type(paramname)))
+                "but a 'bytes'/'unicode-str'/'c_char_p' type should be "
+                "used." % (paramname, type(paramname)))
 
 
 def convert_to_ptr_stringc(paramname):
@@ -309,8 +314,25 @@ def convert_to_ptr_stringc(paramname):
         return retv
     else:               # not a list
         raise XFormsTypeError("Provided parameter '%s' is of %s type, "
-                "but a 'list of 'bytes'/'str'/'array of c_char_p' type should"
-                " be used." % (paramname, type(paramname)))
+                "but a 'list of 'bytes'/'str'/'array of c_char_p' type "
+                "should be used." % (paramname, type(paramname)))
+
+
+# TODO: adapt for a one byte only
+def convert_to_bytecharc(paramname):
+    """ Converts paramname to python byte and to ctypes c_char_p """
+    if isinstance(paramname, cty.c_char_p):
+        return paramname
+    elif isinstance(paramname, bytes):
+        retv = cty.c_char_p(paramname)
+    elif isinstance(paramname, str):
+        bparamname = bytes(paramname, "utf-8")
+        retv = cty.c_char_p(bparamname)
+        return retv
+    else:               # not a byte str / unicode char / c_char_p
+        raise XFormsTypeError("Provided parameter '%s' is of %s, "
+                "but a 'bytes'/'unicode-str'/'c_char_p' type should be "
+                "used." % (paramname, type(paramname)))
 
 
 def convert_to_intc(paramname):
@@ -616,7 +638,7 @@ def convert_userdata_to_ptrvoid(udata):
         tmpvdata = convert_to_doublec(udata)
         ptr_vdata = cty.pointer(tmpvdata)
     elif isinstance(udata, str):  # a str is to be passed
-        tmpvdata = convert_to_stringc(udata)
+        tmpvdata = convert_to_bytestrc(udata)
         ptr_vdata = cty.pointer(tmpvdata)
     else:
         raise XFormsTypeError("Provided parameter '%s' is of %s, "

@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage popups.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -81,7 +81,7 @@ def fl_popup_add(win, title):
     if not win:         # if it is None
         win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
-    s_title = library.convert_to_stringc(title)     # empty string handled
+    s_title = library.convert_to_bytestrc(title)     # empty string handled
     library.keep_elem_refs(win, title, ul_win, s_title)
     retval = _fl_popup_add(ul_win, s_title)
     return retval
@@ -193,16 +193,16 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
         cparam_argstypelist.append(cty.c_int)
         specseqargslist.append(i_Rr)
     if s:      # str s additional arg
-        s_s = library.convert_to_stringc(s)
+        s_s = library.convert_to_bytestrc(s)
         cparam_argstypelist.append(cty.c_char_p)
         specseqargslist.append(s_s)
 
     if not cparam_argstypelist:     # no additional separate params
         cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
-        specseqargslist = ["", ""]
+        specseqargslist = [b"", b""]
     elif len(cparam_argstypelist) < 2:  # just 1 param, add another
         cparam_argstypelist.append(cty.c_char_p)
-        specseqargslist.append("")
+        specseqargslist.append(b"")
 
     _fl_popup_add_entries = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_add_entries",
@@ -212,7 +212,7 @@ def fl_popup_add_entries(ptr_flpopup, entryitemstxt, x=None, u=None, \
            const char * p2, ...)""")
     library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    s_entryitemstxt = library.convert_to_bytestrc(entryitemstxt)
     library.keep_cfunc_refs(f, E, L, cfn_f, cfn_E, cfn_L)
     library.keep_elem_refs(ptr_flpopup, entryitemstxt, s_entryitemstxt, \
             specseqargslist, cparam_argstypelist, x, u, Rr, m, s, l_x, \
@@ -336,16 +336,16 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(cty.c_int)
         specseqargslist.append(i_Rr)
     if s:      # str s additional arg
-        s_s = library.convert_to_stringc(s)
+        s_s = library.convert_to_bytestrc(s)
         cparam_argstypelist.append(cty.c_char_p)
         specseqargslist.append(s_s)
 
     if not cparam_argstypelist:     # no additional separate params
         cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
-        specseqargslist = ["", ""]
+        specseqargslist = [b"", b""]
     elif len(cparam_argstypelist) < 2:  # just 1 param, add another
         cparam_argstypelist.append(cty.c_char_p)
-        specseqargslist.append("")
+        specseqargslist.append(b"")
 
     _fl_popup_insert_entries = library.cfuncproto(
         library.load_so_libforms(), "fl_popup_insert_entries",
@@ -361,7 +361,7 @@ def fl_popup_insert_entries(ptr_flpopup, ptr_flpopupentry, entryitemstxt, \
     else:                       # real FL_POPUP_ENTRY pointer
         ptr_flpopupentry_alt = ptr_flpopupentry
         library.verify_flpopupentryptr_type(ptr_flpopupentry_alt)
-    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    s_entryitemstxt = library.convert_to_bytestrc(entryitemstxt)
     library.keep_elem_refs(ptr_flpopup, ptr_flpopupentry, \
             ptr_flpopupentry_alt, entryitemstxt, s_entryitemstxt, \
             specseqargslist, cparam_argstypelist, x, u, f, E, L, m, Rr, s, \
@@ -419,7 +419,7 @@ def fl_popup_create(win, title, ptr_flpopupitem):
     if not win:         # if it is None
         win = flxbasic.fl_root
     ul_win = library.convert_to_Window(win)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.verify_flpopupitemptr_type(ptr_flpopupitem)
     library.keep_elem_refs(win, title, ptr_flpopupitem, ul_win, s_title)
     retval = _fl_popup_create(ul_win, s_title, ptr_flpopupitem)
@@ -1311,7 +1311,7 @@ def fl_popup_set_title(ptr_flpopup, title):
         """FL_POPUP * fl_popup_set_title(FL_POPUP * p1, const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(ptr_flpopup, title, s_title)
     retval = _fl_popup_set_title(ptr_flpopup, s_title)
     return retval
@@ -1703,7 +1703,7 @@ def fl_popup_entry_set_text(ptr_flpopupentry, text):
            const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     library.keep_elem_refs(ptr_flpopupentry, text, s_text)
     retval = _fl_popup_entry_set_text(ptr_flpopupentry, s_text)
     if isinstance(retval, bytes):
@@ -1740,7 +1740,7 @@ def fl_popup_entry_set_shortcut(ptr_flpopupentry, sctext):
            const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    s_sctext = library.convert_to_stringc(sctext)
+    s_sctext = library.convert_to_bytestrc(sctext)
     library.keep_elem_refs(ptr_flpopupentry, sctext, s_sctext)
     _fl_popup_entry_set_shortcut(ptr_flpopupentry, s_sctext)
 
@@ -1988,7 +1988,7 @@ def fl_popup_entry_get_by_text(ptr_flpopup, text):
            const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     library.keep_elem_refs(ptr_flpopup, text, s_text)
     retval = _fl_popup_entry_get_by_text(ptr_flpopup, s_text)
     return retval
@@ -2032,7 +2032,7 @@ def fl_popup_entry_get_by_label(ptr_flpopup, label):
            const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flpopupptr_type(ptr_flpopup)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(ptr_flpopup, label, s_label)
     retval = _fl_popup_entry_get_by_label(ptr_flpopup, s_label)
     return retval

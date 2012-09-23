@@ -136,7 +136,7 @@ class Flpreempt(object):
 
 
     def set_tip(self, pobj, strng):
-        pobj.contents.u_cdata = strng
+        pobj.contents.u_cdata = bytes(strng, 'utf-8')
         xfl.fl_set_object_posthandler(pobj, self.post_handler)
 
 

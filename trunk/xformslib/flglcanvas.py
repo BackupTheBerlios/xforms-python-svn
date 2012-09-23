@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage GLcanvas flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -97,7 +97,7 @@ def fl_add_glcanvas(canvastype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(canvastype, xpos, ypos, width, height, label, \
             i_canvastype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_glcanvas(i_canvastype, i_xpos, i_ypos, i_width, \

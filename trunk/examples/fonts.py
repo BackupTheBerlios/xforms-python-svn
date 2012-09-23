@@ -32,7 +32,7 @@ class Flfonts(object):
         xfl.fl_scale_form(self.ui.pfontsform, 1.1, 1.2)
         xfl.fl_set_object_dblbuffer(self.ui.ptextobj, 1)
         xfl.fl_set_object_bw(self.ui.ptextobj, 5)
-        xfl.fl_enumerate_fonts(self.addit, 1)
+        nfnt = xfl.fl_enumerate_fonts(self.addit, 1)
         xfl.fl_select_browser_line(self.ui.pfontobj, 1)
         xfl.fl_addto_browser(self.ui.psizeobj, "8  (tiny)")
         xfl.fl_addto_browser(self.ui.psizeobj, "10 (small)")
@@ -65,11 +65,14 @@ class Flfonts(object):
     def size_cb(self, pobj, arg):
         sizes = [8, 10, 11, 12, 13, 14, 18, 24, 30]
         xfl.fl_set_object_lsize(self.ui.ptextobj, \
-                sizes[xfl.fl_get_browser(pobj) - 1 ])
+                sizes[xfl.fl_get_browser(pobj) - 1])
 
 
     def addit(self, txtstr):
+        print("31")
+        print("txtstr", txtstr)
         xfl.fl_add_browser_line(self.ui.pfontobj, txtstr)
+        print("32")
 
 
     def create_form_fontsform(self):
@@ -80,12 +83,12 @@ class Flfonts(object):
         fdui.pfontobj = xfl.fl_add_browser(xfl.FL_HOLD_BROWSER, 10, 145, \
                 195, 135, "")
         xfl.fl_set_object_lalign(fdui.pfontobj, \
-                xfl.fl_set_object_lalign(fdui.pfontobj, xfl.FL_ALIGN_BOTTOM))
+                xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
         xfl.fl_set_object_callback(fdui.pfontobj, self.style_cb, 0)
         fdui.psizeobj = xfl.fl_add_browser(xfl.FL_HOLD_BROWSER, 215, 145, \
                 145, 135, "")
         xfl.fl_set_object_lalign(fdui.psizeobj, \
-                xfl.fl_set_object_lalign(fdui.psizeobj, xfl.FL_ALIGN_BOTTOM))
+                xfl.fl_to_inside_lalign(xfl.FL_ALIGN_BOTTOM))
         xfl.fl_set_object_callback(fdui.psizeobj, self.size_cb, 0)
         fdui.ptextobj = xfl.fl_add_text(xfl.FL_NORMAL_TEXT, 10, 5, 351, \
                 125, "The quick brown\nfox jumps over\nthe lazy dog.")

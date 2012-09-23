@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage select flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -110,7 +110,7 @@ def fl_add_select(selecttype, xpos, ypos, width, height, label):
     i_ypos = library.convert_to_FL_Coord(ypos)
     i_width = library.convert_to_FL_Coord(width)
     i_height = library.convert_to_FL_Coord(height)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(selecttype, xpos, ypos, width, height, label, \
             i_selecttype, i_xpos, i_ypos, i_width, i_height, s_label)
     retval = _fl_add_select(i_selecttype, i_xpos, i_ypos, i_width, \
@@ -244,15 +244,15 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
         cparam_argstypelist.append(xfdata.FL_POPUP_CB)
         specseqargslist.append(cfn_L)
     if s:      # str s additional arg
-        s_s = library.convert_to_stringc(s)
+        s_s = library.convert_to_bytestrc(s)
         cparam_argstypelist.append(cty.c_char_p)
         specseqargslist.append(s_s)
     if not cparam_argstypelist:     # no additional separate params
         cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
-        specseqargslist = ["", ""]
+        specseqargslist = [b"", b""]
     elif len(cparam_argstypelist) < 2:  # just 1 param, add another
         cparam_argstypelist.append(cty.c_char_p)
-        specseqargslist.append("")
+        specseqargslist.append(b"")
 
     _fl_add_select_items = library.cfuncproto(
         library.load_so_libforms(), "fl_add_select_items",
@@ -262,7 +262,7 @@ def fl_add_select_items(ptr_flobject, entryitemstxt, x=None, u=None,
            const char * p2, ...)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    s_entryitemstxt = library.convert_to_bytestrc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, entryitemstxt, s_entryitemstxt, \
             specseqargslist, cparam_argstypelist, x, u, f, E, L, s, \
             l_x, ptr_u, cfn_f, cfn_E, cfn_L, s_s)
@@ -363,16 +363,16 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(xfdata.FL_POPUP_CB)
         specseqargslist.append(cfn_L)
     if s:      # str s additional arg
-        s_s = library.convert_to_stringc(s)
+        s_s = library.convert_to_bytestrc(s)
         cparam_argstypelist.append(cty.c_char_p)
         specseqargslist.append(s_s)
 
     if not cparam_argstypelist:     # no additional separate params
         cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
-        specseqargslist = ["", ""]
+        specseqargslist = [b"", b""]
     elif len(cparam_argstypelist) < 2:  # just 1 param, add another
         cparam_argstypelist.append(cty.c_char_p)
-        specseqargslist.append("")
+        specseqargslist.append(b"")
 
     _fl_insert_select_items = library.cfuncproto(
         library.load_so_libforms(), "fl_insert_select_items",
@@ -384,7 +384,7 @@ def fl_insert_select_items(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    s_entryitemstxt = library.convert_to_bytestrc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
             s_entryitemstxt, specseqargslist, cparam_argstypelist, x, u, \
             f, E, L, s, l_x, ptr_u, cfn_f, cfn_E, cfn_L, s_s)
@@ -483,16 +483,16 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
         cparam_argstypelist.append(xfdata.FL_POPUP_CB)
         specseqargslist.append(cfn_L)
     if s:      # str s additional arg
-        s_s = library.convert_to_stringc(s)
+        s_s = library.convert_to_bytestrc(s)
         cparam_argstypelist.append(cty.c_char_p)
         specseqargslist.append(s_s)
 
     if not cparam_argstypelist:     # no additional separate params
         cparam_argstypelist = [cty.c_char_p, cty.c_char_p]
-        specseqargslist = ["", ""]
+        specseqargslist = [b"", b""]
     elif len(cparam_argstypelist) < 2:  # just 1 param, add another
         cparam_argstypelist.append(cty.c_char_p)
-        specseqargslist.append("")
+        specseqargslist.append(b"")
 
     _fl_replace_select_item = library.cfuncproto(
         library.load_so_libforms(), "fl_replace_select_item",
@@ -504,7 +504,7 @@ def fl_replace_select_item(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
     library.verify_flpopupentryptr_type(ptr_flpopupentry)
-    s_entryitemstxt = library.convert_to_stringc(entryitemstxt)
+    s_entryitemstxt = library.convert_to_bytestrc(entryitemstxt)
     library.keep_elem_refs(ptr_flobject, ptr_flpopupentry, entryitemstxt, \
             s_entryitemstxt, specseqargslist, cparam_argstypelist, x, u, \
             f, E, L, s, l_x, ptr_u, cfn_f, cfn_E, cfn_L, s_s)
@@ -823,7 +823,7 @@ def fl_get_select_item_by_label(ptr_flobject, label):
            const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_label = library.convert_to_stringc(label)
+    s_label = library.convert_to_bytestrc(label)
     library.keep_elem_refs(ptr_flobject, label, s_label)
     retval = _fl_get_select_item_by_label(ptr_flobject, s_label)
     return retval
@@ -864,7 +864,7 @@ def fl_get_select_item_by_text(ptr_flobject, txtstr):
            const char * p2)""")
     library.check_if_flinitialized()
     library.verify_flobjectptr_type(ptr_flobject)
-    s_txtstr = library.convert_to_stringc(txtstr)
+    s_txtstr = library.convert_to_bytestrc(txtstr)
     library.keep_elem_refs(ptr_flobject, txtstr, s_txtstr)
     retval = _fl_get_select_item_by_text(ptr_flobject, s_txtstr)
     return retval

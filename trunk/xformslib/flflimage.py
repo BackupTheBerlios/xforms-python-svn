@@ -4,7 +4,7 @@
 """ xforms-python's functions to manage image flobjects.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -127,7 +127,7 @@ def flimage_load(fname):
         cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
         """FL_IMAGE * flimage_load(const char * file)""")
     library.check_if_flimageinitialized()
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _flimage_load(s_fname)
     return retval
@@ -216,8 +216,8 @@ def flimage_dump(ptr_flimage, fname, fmt):
            const char * p3)""")
     library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    s_fname = library.convert_to_stringc(fname)
-    s_fmt = library.convert_to_stringc(fmt)     # empty handled internally
+    s_fname = library.convert_to_bytestrc(fname)
+    s_fmt = library.convert_to_bytestrc(fmt)     # empty handled internally
     library.keep_elem_refs(ptr_flimage, fname, fmt, s_fname, s_fmt)
     retval = _flimage_dump(ptr_flimage, s_fname, s_fmt)
     return retval
@@ -363,7 +363,7 @@ def flimage_is_supported(fname):
         cty.c_int, [xfdata.STRING],
         """int flimage_is_supported(const char * p1)""")
     library.check_if_flimageinitialized()
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _flimage_is_supported(s_fname)
     return retval
@@ -414,9 +414,9 @@ def flimage_description_via_filter(ptr_flimage, cmds, what, verbose):
            *cmds, const char *what, int verbose)""")
     library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    #s_cmds = library.convert_to_stringc(cmds)            # to be verified
+    #s_cmds = library.convert_to_bytestrc(cmds)            # to be verified
     s_cmds = library.convert_to_ptr_stringc(cmds)
-    s_what = library.convert_to_stringc(what)
+    s_what = library.convert_to_bytestrc(what)
     i_verbose = library.convert_to_intc(verbose)
     library.keep_elem_refs(ptr_flimage, cmds, s_what, verbose, s_cmds, \
             s_what, i_verbose)
@@ -472,7 +472,7 @@ def flimage_write_via_filter(ptr_flimage, cmds, formats, verbose):
     library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
     s_cmds = library.convert_to_ptr_stringc(cmds)    # *todo* to be verified
-    s_formats = library.convert_to_stringc(formats)
+    s_formats = library.convert_to_bytestrc(formats)
     i_verbose = library.convert_to_intc(verbose)
     library.keep_elem_refs(ptr_flimage, cmds, formats, s_formats, verbose, \
             i_verbose)
@@ -785,7 +785,7 @@ def flimage_add_text(ptr_flimage, text, length, style, size, txtcolr, bgcolr,
            int tran, double tx, double ty, int rot)""")
     library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     i_length = library.convert_to_intc(length)
     library.checkfatal_allowed_value_in_list(style, xfdata.TEXTSTYLE_list)
     i_style = library.convert_to_intc(style)
@@ -953,7 +953,7 @@ def flimage_add_marker(ptr_flimage, mkrname, xpos, ypos, width, height, \
            int p8, int p9, FL_COLOR p10, FL_COLOR p11)""")
     library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    s_mkrname = library.convert_to_stringc(mkrname)
+    s_mkrname = library.convert_to_bytestrc(mkrname)
     f_xpos = library.convert_to_doublec(xpos)
     f_ypos = library.convert_to_doublec(ypos)
     f_width = library.convert_to_doublec(width)
@@ -1059,10 +1059,10 @@ def flimage_define_marker(mkrname, pyfn_FlimageMarkerDraw, psdraw):
         """int flimage_define_marker(const char *, void ( * )
            (FLIMAGE_MARKER *), const char *)""")
     library.check_if_flimageinitialized()
-    s_mkrname = library.convert_to_stringc(mkrname)
+    s_mkrname = library.convert_to_bytestrc(mkrname)
     library.verify_function_type(pyfn_FlimageMarkerDraw)
     cfn_FlimageMarkerDraw = cfunc_none_flimagemarker(pyfn_FlimageMarkerDraw)
-    s_psdraw = library.convert_to_stringc(psdraw)
+    s_psdraw = library.convert_to_bytestrc(psdraw)
     library.keep_elem_refs(mkrname, psdraw, s_mkrname, s_psdraw)
     library.keep_cfunc_refs(cfn_FlimageMarkerDraw, pyfn_FlimageMarkerDraw)
     retval = _flimage_define_marker(s_mkrname, cfn_FlimageMarkerDraw, \
@@ -1626,7 +1626,7 @@ def fl_lookup_RGBcolor(colrname):
         """int fl_lookup_RGBcolor(const char * p1, int * p2,
            int * p3, int * p4)""")
     library.check_if_flimageinitialized()
-    scolrname = library.convert_to_stringc(colrname)
+    scolrname = library.convert_to_bytestrc(colrname)
     i_red, ptr_red = library.make_intc_and_pointer()
     i_green, ptr_green = library.make_intc_and_pointer()
     i_blue, ptr_blue = library.make_intc_and_pointer()
@@ -1731,9 +1731,9 @@ def flimage_add_format(formalname, shortname, extension, imagetype,
            FLIMAGE_Description p6, FLIMAGE_Read_Pixels p7,
            FLIMAGE_Write_Image p8)""")
     library.check_if_flimageinitialized()
-    s_formalname = library.convert_to_stringc(formalname)
-    s_shortname = library.convert_to_stringc(shortname)
-    s_extension = library.convert_to_stringc(extension)
+    s_formalname = library.convert_to_bytestrc(formalname)
+    s_shortname = library.convert_to_bytestrc(shortname)
+    s_extension = library.convert_to_bytestrc(extension)
     library.checkfatal_allowed_value_in_list(imagetype, \
             xfdata.FLIMAGETYPE_list)
     i_imagetype = library.convert_to_intc(imagetype)
@@ -3176,7 +3176,7 @@ def flimage_add_comments(ptr_flimage, text, length):
            int p3)""")
     library.check_if_flimageinitialized()
     library.verify_flflimageptr_type(ptr_flimage)
-    s_text = library.convert_to_stringc(text)
+    s_text = library.convert_to_bytestrc(text)
     i_length = library.convert_to_intc(length)
     library.keep_elem_refs(ptr_flimage, text, length, s_text, i_length)
     _flimage_add_comments(ptr_flimage, s_text, i_length)
@@ -3970,7 +3970,7 @@ def flimage_open(fname):
         cty.POINTER(xfdata.FL_IMAGE), [xfdata.STRING],
         """FL_IMAGE * flimage_open(const char * p1)""")
     library.check_if_flimageinitialized()
-    s_fname = library.convert_to_stringc(fname)
+    s_fname = library.convert_to_bytestrc(fname)
     library.keep_elem_refs(fname, s_fname)
     retval = _flimage_open(s_fname)
     return retval

@@ -36,31 +36,27 @@ class Flcanvas(object):
 
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         #xfl.fl_color(xfl.FL_BLACK)
-
         self.fd_canvasform = self.create_form_canvasform()
-
         # fill-in form initialization code
         self.init_canvas(self.fd_canvasform)
-
         xfl.fl_show_form(self.fd_canvasform.canvasform, \
                 xfl.FL_PLACE_FREE, xfl.FL_FULLBORDER, "My canvas form")
-
         xfl.fl_do_forms()
         xfl.fl_finish()
 
 
     def canvas_expose(self, pobj, win, w, h, pxev, pvdata):
         odata = xfl.fls_convert_ptrvoid_to_ptrflobject(pvdata).contents
-        print("odata:", odata)
+        #print("odata:", odata)
         #XFillRectangle( fl_get_display( ), win, canvasGC, 0, 0, w, h );
-        xfl.fl_rectangle(1, 0, 0, w, h, xfl.FL_YELLOW)
+        #xfl.fl_rectangle(1, 0, 0, w, h, xfl.FL_BLACK)
         xfl.fl_addto_browser(self.fd_canvasform.br, "Expose")
         return 0
 
 
     def canvas_key(self, pobj, win, w, h, pxev, pvdata):
         sdata = xfl.fls_convert_ptrvoid_to_ptrstringc(pvdata).contents.value
-        print("sdata:", sdata)
+        #print("sdata:", sdata)
         #sprintf( buf, "KeyPress: keysym=%ld",
         #	 XKeycodeToKeysym( fl_display, ev->xkey.keycode, 0 ) );
         buf = "KeyPress: keysym=%ld" % pxev.contents.xkey.keycode
@@ -70,7 +66,7 @@ class Flcanvas(object):
 
     def canvas_but(self, pobj, win, w, h, pxev, pvdata):
         ddata = xfl.fls_convert_ptrvoid_to_ptrfloatc(pvdata).contents.value
-        print("ddata:", ddata)
+        #print("ddata:", ddata)
         #FD_canvasform *ui = d;
         if pxev.contents.type == xfl.ButtonPress:
             tmpname = "Press"
@@ -85,7 +81,7 @@ class Flcanvas(object):
 
     def canvas_move(self, pobj, win, w, h, pxev, pvdata):
         fdata = xfl.fls_convert_ptrvoid_to_ptrflform(pvdata).contents
-        print("fdata:", fdata)
+        #print("fdata:", fdata)
         #FD_canvasform *ui = d;
         #sprintf( buf, "Position: %d %d", ev->xmotion.x, ev->xmotion.y );
         buf = "Position: %d %d" % (pxev.contents.xmotion.x, \
@@ -96,7 +92,7 @@ class Flcanvas(object):
 
     def canvas_misc(self, pobj, win, w, h, pxev, pvdata):
         fdata = xfl.fls_convert_ptrvoid_to_ptrflform(pvdata).contents
-        print("fdata:", fdata)
+        #print("fdata:", fdata)
         #FD_canvasform *ui = d;
         if pxev.contents.xcrossing.type == xfl.EnterNotify:
             tmpname = "Enter canvas"

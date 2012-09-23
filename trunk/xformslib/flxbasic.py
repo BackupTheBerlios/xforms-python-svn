@@ -4,7 +4,7 @@
 """ xforms-python's functions to handle X Window basic and drawing stuff.
 """
 
-#    Copyright (C) 2009, 2010, 2011, 2012  Luca Lazzaroni "LukenShiro"
+#    Copyright (C) 2009-2012  Luca Lazzaroni "LukenShiro"
 #    e-mail: <lukenshiro@ngi.it>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -761,7 +761,7 @@ def fl_dashedlinestyle(dash, numdash):
     #    #library.verify_tuplelist_type(dash)
     #    s_dash = cty.cast(dash, cty.c_void_p)
     #else:
-    s_dash = library.convert_to_stringc(dash)
+    s_dash = library.convert_to_bytestrc(dash)
     i_numdash = library.convert_to_intc(numdash)
     library.keep_elem_refs(dash, numdash, s_dash, i_numdash)
     _fl_dashedlinestyle(s_dash, i_numdash)
@@ -2173,7 +2173,7 @@ def fl_wincreate(title):
         xfdata.Window, [xfdata.STRING],\
         """Window fl_wincreate(const char * label)""")
     library.check_if_flinitialized()
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(title, s_title)
     retval = _fl_wincreate(s_title)
     return retval
@@ -2243,7 +2243,7 @@ def fl_winopen(title):
         xfdata.Window, [xfdata.STRING], \
         """Window fl_winopen(const char * label)""")
     library.check_if_flinitialized()
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(title, s_title)
     retval = _fl_winopen(s_title)
     return retval
@@ -2763,7 +2763,7 @@ def fl_wintitle(win, title):
         """void fl_wintitle(Window win, const char * title)""")
     library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(win, title, ul_win, s_title)
     _fl_wintitle(ul_win, s_title)
 
@@ -2795,7 +2795,7 @@ def fl_winicontitle(win, title):
         """void fl_winicontitle(Window win, const char * title)""")
     library.check_if_flinitialized()
     ul_win = library.convert_to_Window(win)
-    s_title = library.convert_to_stringc(title)
+    s_title = library.convert_to_bytestrc(title)
     library.keep_elem_refs(win, title, ul_win, s_title)
     _fl_winicontitle(ul_win, s_title)
 
@@ -4113,7 +4113,7 @@ def fl_print_xevent_name(wheretxt, ptr_xevent):
         """XEvent * fl_print_xevent_name(const char * where,
            const Xevent * xev)""")
     library.check_if_flinitialized()
-    s_wheretxt = library.convert_to_stringc(wheretxt)
+    s_wheretxt = library.convert_to_bytestrc(wheretxt)
     library.keep_elem_refs(wheretxt, ptr_xevent, s_wheretxt)
     retval = _fl_print_xevent_name(s_wheretxt, ptr_xevent)
     return retval
@@ -4216,9 +4216,8 @@ def fl_initialize(numargs, argslist, appname, ptr_appoptions, numappopts):
     #numargs = 1
     i_numargs = library.convert_to_intc(numargs)
     ptr_numargs = cty.pointer(i_numargs)
-    print(type(argslist), argslist, len(argslist), type(argslist[0]), argslist[0])
     ptr_argslist = library.convert_to_ptr_stringc(argslist)
-    s_appname = library.convert_to_stringc(appname)
+    s_appname = library.convert_to_bytestrc(appname)
     if not ptr_appoptions:      # if it is None
         ptr_appoptions = cty.cast(None, cty.POINTER(xfdata.FL_CMD_OPT))
     else:                       # if it is a real FL_CMD_OPT
@@ -4318,10 +4317,10 @@ def fl_get_resource(resname, resclass, dtype, defval, size):
         const char * cname, FL_RTYPE dtype, const char * defval, void * val,
         int size)""")
     library.checkfatal_allowed_value_in_list(dtype, xfdata.RTYPE_list)
-    s_resname = library.convert_to_stringc(resname)
-    s_resclass = library.convert_to_stringc(resclass)
+    s_resname = library.convert_to_bytestrc(resname)
+    s_resclass = library.convert_to_bytestrc(resclass)
     i_dtype = library.convert_to_intc(dtype)
-    s_defval = library.convert_to_stringc(defval)
+    s_defval = library.convert_to_bytestrc(defval)
     # handling any type who will hold the value
     if dtype == xfdata.FL_INT or dtype == xfdata.FL_BOOL:
         varvalue, ptr_varvalue = library.make_intc_and_pointer()
@@ -4384,8 +4383,8 @@ def fl_set_resource(resnamecls, txtval):
         library.load_so_libforms(), "fl_set_resource",
         None, [xfdata.STRING, xfdata.STRING],
         """void fl_set_resource(const char * str, const char * val)""")
-    s_resnamecls = library.convert_to_stringc(resnamecls)
-    s_txtval = library.convert_to_stringc(txtval)
+    s_resnamecls = library.convert_to_bytestrc(resnamecls)
+    s_txtval = library.convert_to_bytestrc(txtval)
     library.keep_elem_refs(resnamecls, txtval, s_resnamecls, s_txtval)
     _fl_set_resource(s_resnamecls, s_txtval)
 
@@ -4639,7 +4638,7 @@ def fl_set_tabstop(tabtext):
         None, [xfdata.STRING],
         """void fl_set_tabstop(const char * s)""")
     library.check_if_flinitialized()
-    s_tabtext = library.convert_to_stringc(tabtext)
+    s_tabtext = library.convert_to_bytestrc(tabtext)
     library.keep_elem_refs(tabtext, s_tabtext)
     _fl_set_tabstop(s_tabtext)
 
@@ -4779,7 +4778,7 @@ def fl_vclass_val(vname):
         cty.c_int, [xfdata.STRING],
         """int fl_vclass_val(const char * v)""")
     library.check_if_flinitialized()
-    s_vname = library.convert_to_stringc(vname)
+    s_vname = library.convert_to_bytestrc(vname)
     library.keep_elem_refs(vname, s_vname)
     retval = _fl_vclass_val(s_vname)
     return retval

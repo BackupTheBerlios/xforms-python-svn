@@ -36,8 +36,10 @@ class FlColbrowser(object):
         self.prs = None
         self.pgs = None
         self.pbs = None
-        self.dbname = rgbfile           #strcpy( dbname, rgbfile)
-        if os.path.exists(rgbfile_2):
+        self.dbname = ""
+        if os.path.exists(rgbfile):
+            self.dbname = rgbfile
+        elif os.path.exists(rgbfile_2):
             self.dbname = rgbfile_2
         xfl.fl_initialize(lsysargv, sysargv, "FormDemo", None, 0)
         self.create_form_cl()

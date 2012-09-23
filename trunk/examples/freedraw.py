@@ -54,7 +54,7 @@ def main(lsysargv, sysargv):
     xfl.fl_finish()
     return 0
 
-# Structure mantainace
+# Structure mantainance
 
 def draw_triangle(fill, x, y, w, h, colr):
     mylistpoint = [ {'x':int(x), 'y':int(y + h - 1)}, \
